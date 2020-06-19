@@ -1,0 +1,107 @@
+<%-include("../includes/header")%>
+
+<main id="contributorProfileScreen">
+    <h1>This is <%=contributor.username%>'s profile</h1>
+    <h3>Social Links</h3>
+    <%if(contributor.contacts.facebookProfileUrl){%>
+    <a href="<%=contributor.contacts.facebookProfileUrl%>" target="_blank" class="btn">Facebook</a>
+    <%}if(contributor.contacts.twitterProfileUrl){%>
+    <a href="<%=contributor.contacts.twitterProfileUrl%>" target="_blank" class="btn">Twitter</a>
+    <%}if(contributor.contacts.githubProfileUrl){%>
+    <a href="<%=contributor.contacts.githubProfileUrl%>" target="_blank" class="btn">Github</a>
+    <%}if(contributor.contacts.websiteProfileUrl){%>
+    <a href="<%=contributor.contacts.websiteProfileUrl%>" target="_blank" class="btn">Website</a>
+    <%}%>
+
+    <%if(contributor.isVisitorTheRequestedContributor){%>
+    <button type="button" id="editContacts">Edit</button>
+    <form action="/contributors/editContacts" method="Post" id="editContactsForm">
+        <input type="hidden" name="contributorId" value="<%=contributor._id%>">
+        <div id="contactsFieldWrapper">
+            <h3>Contacts</h3>
+            <%if(contributor.contacts.facebookProfileUrl){%>
+            <fieldset>
+                <label for="facebook">Facebook</label>
+                <span class="contactInputWrapper">
+                    <input type="url" id="facebook" name="facebookProfileUrl"
+                        value="<%=contributor.contacts.facebookProfileUrl%>">
+                    <span class="removeContactField" data-remove="facebook">X</span>
+                </span>
+            </fieldset>
+            <%}%>
+            <%if(contributor.contacts.twitterProfileUrl){%>
+            <fieldset>
+                <label for="twitter">Twitter</label>
+                <span class="contactInputWrapper">
+                    <input type="url" id="twitter" name="twitterProfileUrl"
+                        value="<%=contributor.contacts.twitterProfileUrl%>">
+                    <span class="removeContactField" data-remove="twitter">X</span>
+                </span>
+            </fieldset>
+            <%}%>
+            <%if(contributor.contacts.githubProfileUrl){%>
+            <fieldset>
+                <label for="github">Github</label>
+                <span class="contactInputWrapper">
+                    <input type="url" id="github" name="githubProfileUrl"
+                        value="<%=contributor.contacts.githubProfileUrl%>">
+                    <span class="removeContactField" data-remove="github">X</span>
+                </span></fieldset>
+            <%}%>
+            <%if(contributor.contacts.websiteProfileUrl){%>
+            <fieldset>
+                <label for="website">Website</label>
+                <span class="contactInputWrapper">
+                    <input type="url" id="website" name="websiteProfileUrl"
+                        value="<%=contributor.contacts.websiteProfileUrl%>">
+                    <span class="removeContactField" data-remove="website">X</span>
+                </span>
+            </fieldset>
+            <%}%>
+        </div>
+        <div id="addContactWrapper">
+        </div>
+        <button type="submit">Update</button>
+    </form>
+    <%}else{
+    if(!contributor.isVisitorFollowing){%>
+            <form action="/contributors/addFollow/<%=contributor._id%>" method="POST">
+                <button type="submit">Follow</button>
+            </form>
+            <%}
+    else{%>
+            <form action="/contributors/removeFollow/<%=contributor._id%>" method="POST">
+                <button type="submit">Unfollow</button>
+            </form>
+            <%}
+    }%>
+
+
+
+
+            <h2>Contributions</h2>
+
+            <%if(contributor.contributions.length){%>
+            <p>has a total of <strong><%=contributor.contributions.length%></strong> contributions</p>
+
+            <!-- if the visitor is not "that" contributor, filter the contributions to show only related contributions  -->
+            <%if(!contributor.isVisitorTheRequestedContributor){%>
+            <%contributor.contributions = contributor.contributions.filter((contribution)=>user.faculty === contribution.faculty && user.semester === contribution.semester)%>
+            <p>where, <strong><%=contributor.contributions.length%></strong> of them match your current subscription.
+            </p>
+            <%}%>
+    <br />
+    <div id="contributionsContainer">
+    <%contributor.contributions.forEach((contribution)=>{%>
+            <div class="contribution mb20">
+                <a href="<%=contribution.url%>" class="btn btn--brand"><%=contribution.title%></a><br />
+                <em class="ml10"><%=contribution.subject%></em>
+                <em class="ml10"><%=contribution.faculty%></em>
+                <em class="ml10"><%=contribution.semester%></em>
+            </div>
+            <%})%>
+        </div>
+        <%}%>
+</main>
+
+<%-include("../includes/footer")%>

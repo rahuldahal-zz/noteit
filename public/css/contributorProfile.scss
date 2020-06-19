@@ -1,0 +1,32 @@
+#editContactsForm{
+    display: none;
+
+    .contactInputWrapper{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+
+        input{
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .removeContactField{
+            background-color: #e92a2a;
+            color: #eee;
+            padding: 0.25rem 0.5rem;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    }
+
+    #addContactWrapper{
+        display: flex;
+        margin-bottom: 20px;
+
+        button{
+            margin-right: 10px;
+        }
+    }
+}

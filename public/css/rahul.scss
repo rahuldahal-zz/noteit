@@ -1,0 +1,403 @@
+@mixin for_1024() {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+@mixin for_768() {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+@mixin for_600() {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+@mixin for_480() {
+  @media only screen and (max-width: 480px) {
+    @content;
+  }
+}
+@mixin widerThan768() {
+  @media only screen and (min-width: 769px) {
+    @content;
+  }
+}
+@mixin widerThan1200() {
+  @media only screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+.normalText{
+  font-family: var(--paraFont);
+  color: var(--primaryText);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.thin{
+  font-weight: 300;
+}
+
+a{
+  display: inline-block;
+}
+
+.mobile {
+  display: block;
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+
+.desktop {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
+}
+
+.flex {
+  display: flex;
+}
+.centerContents{
+  justify-content: center;
+  align-items: center;
+}
+.flex--column {
+  flex-direction: column;
+}
+.flex--cr {
+  flex-direction: column;
+
+  @include widerThan1200() {
+    flex-direction: row;
+  }
+}
+.grid {
+  display: grid;
+}
+
+//margins
+
+.m5 {
+  margin: 5px;
+}
+.m10 {
+  margin: 10px;
+}
+
+.mt5 {
+  margin-top: 5px;
+}
+.mr5 {
+  margin-right: 5px;
+}
+.mb5 {
+  margin-bottom: 5px;
+}
+.ml5 {
+  margin-left: 5px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mr10 {
+  margin-right: 10px;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mt20 {
+  margin-top: 20px;
+}
+.mr20 {
+  margin-right: 20px;
+}
+.mb20 {
+  margin-bottom: 20px;
+}
+.ml20 {
+  margin-left: 20px;
+}
+
+//paddings
+
+.p5 {
+  padding: 5px;
+}
+.p10 {
+  padding: 10px;
+}
+
+.pt5 {
+  padding-top: 5px;
+}
+.pr5 {
+  padding-right: 5px;
+}
+.pb5 {
+  padding-bottom: 5px;
+}
+.pl5 {
+  padding-left: 5px;
+}
+.pt10 {
+  padding-top: 10px;
+}
+.pr10 {
+  padding-right: 10px;
+}
+.pb10 {
+  padding-bottom: 10px;
+}
+.pl10 {
+  padding-left: 10px;
+}
+
+//paddings end
+
+.noBullets {
+  list-style: none;
+}
+
+.visible{
+  visibility: visible !important;
+}
+
+.btn {
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  width: max-content;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    transform: translateY(-5px);
+  }
+}
+.btn--brand {
+  background-color: var(--brandColor) !important;
+}
+
+.color--brand{
+  color: var(--brandColor);
+}
+
+
+nav {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 7vh;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+
+  #hamBar,
+  #hamBar::before,
+  #hamBar::after {
+    width: 40px;
+    height: 4px;
+    background-color: #333;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #hamBar {
+    position: relative;
+    z-index: 2;
+    transition: background-color 0.3s ease-in-out;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+    }
+  }
+
+  .hamActive {
+    background-color: transparent !important;
+
+    &::before {
+      transform: rotate(45deg) translateY(10px);
+    }
+    &::after {
+      transform: rotate(-45deg) translateY(-10px);
+    }
+  }
+
+  ul {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    background-color: #ccc;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+
+    @include widerThan768 {
+      flex-direction: row;
+      height: max-content;
+      background-color: transparent;
+      position: relative;
+      transform: translateX(0);
+      top: 100%;
+      align-items: center;
+    }
+    li {
+      list-style: none;
+      margin-bottom: 2rem;
+
+      @include widerThan768 {
+        margin: 0;
+        margin-right: 2rem;
+      }
+      cursor: pointer;
+      &:last-child {
+        margin: 0;
+      }
+
+      a {
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: var(--primaryText);
+        transition: transform 0.3s ease-in-out;
+
+        &:hover,
+        &:focus {
+          transform: translateY(-5px);
+        }
+      }
+    }
+  }
+  .ulActive {
+    transform: translateX(0);
+  }
+}
+
+.form {
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  padding: 1rem;
+  max-width: 500px;
+
+  fieldset {
+    border: none;
+    position: relative;
+
+    label {
+      font-size: 0.8rem;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .pseudoBorder {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+      background-color: rgb(22, 134, 190);
+      transition: transform 0.3s ease-in-out;
+      transform-origin: right;
+      transform: scaleX(0);
+    }
+    .pseudoBorder--active {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+  }
+
+  .asPlaceholder {
+    display: inline-block;
+    position: relative;
+    transform: translate(0.75rem, 24px);
+    z-index: 2;
+    color: #333;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #eee;
+    border: 1px solid #444;
+    color: #333;
+    padding: 0.5rem 0.75rem;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+
+    &:focus {
+      background-color: #ccc;
+    }
+  }
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: max-content;
+    display: inline-block;
+  }
+  select{
+    padding: 0.7rem;
+    text-align: center;
+    width: 100%;
+
+    option{
+      text-align: center;
+      background-color: #eee;
+    }
+  }
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+
+  .card {
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    margin: 0 auto;
+    box-shadow: 6px 6px 12px -7px rgba(0, 0, 0, 0.4);
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem;
+  justify-content: center;
+}

@@ -1,0 +1,67 @@
+<%-include("includes/header") %>
+
+
+<main class="flex flex--cr" id="home-guestScreen">
+    <div id="intro">
+        <h2 class="mb20">A place to find reference notes based on the syllabus provided by <abbr
+                title="Tribhuvan University">TU</abbr>
+        </h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eos quas at deserunt sint fugit nobis! Error
+            doloremque blanditiis odio.</p>
+    </div>
+    <form id="registrationForm" action="/register" method="POST" class="form">
+        <h3>Register an account now!</h3>
+        <fieldset>
+            <label for="registrationUsername">Username</label>
+            <input autocomplete="off" name="username" type="text" id="registrationUsername">
+            <div class="pseudoBorder"></div>
+            <small class="validationMessage">sample message for placeholder</small>
+        </fieldset>
+        <fieldset>
+            <label for="registrationEmail">Email</label>
+            <input autocomplete="off" name="email" type="email" id="registrationEmail">
+            <div class="pseudoBorder"></div>
+            <small class="validationMessage">sample message for placeholder</small>
+
+            <label for="registrationPhone">Phone (optional)</label>
+            <input autocomplete="off" name="phone" type="number" id="registrationPhone">
+            <div class="pseudoBorder"></div>
+            <small class="validationMessage">sample message for placeholder</small>
+        </fieldset>
+        <fieldset>
+            <label for="registrationPassword">Password</label>
+            <input autocomplete="off" name="password" type="password" id="registrationPassword">
+            <div class="pseudoBorder"></div>
+            <small class="validationMessage">sample message for placeholder</small>
+        </fieldset>
+        <br> <br>
+        <fieldset>
+            <label for="registrationFaculty">Faculty</label>
+            <select name="faculty" id="registrationFaculty">
+                <option value="">-selectFaculty-</option>
+                <option value="BIM">BIM</option>
+                <option value="BCA">BCA</option>
+                <option value="CSIT">CSIT</option>
+            </select>
+            <small class="validationMessage">sample message for placeholder</small>
+        </fieldset>
+        <fieldset>
+            <label for="registrationSemester">Semester</label>
+            <select name="semester" id="registrationSemester">
+                <option value="">-selectSemester-</option>
+                <option value="first">First</option>
+                <option value="second">Second</option>
+                <option value="third">Third</option>
+                <option value="fourth">Fourth</option>
+                <option value="fifth">Fifth</option>
+                <option value="sixth">Sixth</option>
+                <option value="seventh">Seventh</option>
+                <option value="eight">Eighth</option>
+            </select>
+            <small class="validationMessage">sample message for placeholder</small>
+        </fieldset>
+        <button type="submit" class="btn btn--brand">Register</button>
+    </form>
+</main>
+
+<%-include("includes/footer") %>

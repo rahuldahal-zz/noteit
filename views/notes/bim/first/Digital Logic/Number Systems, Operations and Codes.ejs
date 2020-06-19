@@ -1,0 +1,877 @@
+<%-include("../../../sharedMarkups/header")%>
+
+<section class="content_section" id="number">
+
+
+    <h1>Number Systems, Operations and Codes</h1>
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Number System</h3>
+        <p>In any number of base/radix 'r', the numbers are written as: </p>
+        <code>N<sub>r</sub> =
+            d<sub>n-1</sub>d<sub>n-2</sub>d<sub>n-3</sub>...d<sub>1</sub>d<sub>0</sub><strong>.</strong>d<sub>-1</sub>d<sub>-2</sub>...d<sub>-m</sub>
+        </code>
+
+        <p>Where,<br>
+
+            <span class="margin_left">
+
+                N = Number,<br>
+                r = radix/base,<br>
+                n = no. of digits in <span class="difficult_words highlight">integer<span class="meaning">Counting
+                        numbers</span></span> part,<br>
+                m = no.of digits in fraction part,<br>
+                d<sub>n-1</sub> = Most Significant Bit ( MSB ),<br>
+                d<sub>-m</sub> = Least Significant Bit ( LSB )
+
+            </span>
+
+        </p>
+        <br>
+        <p>For Example, A decimal number, 2 i.e.(2<sub>10</sub>) can be written as 0002.000</p>
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">DBOH Table</h3>
+        <table>
+
+            <th>Decimal<br>(r = 10)</th>
+            <th>Binary<br>(r = 2)</th>
+            <th>Octal<br>(r = 8)</th>
+            <th>Hexadecimal<br>(r = 16)</th>
+
+            <tr>
+                <td>
+                    00
+                </td>
+                <td>
+                    0000
+                </td>
+                <td>
+                    00
+                </td>
+                <td>
+                    00
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    01
+                </td>
+                <td>
+                    0001
+                </td>
+                <td>
+                    01
+                </td>
+                <td>
+                    01
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    02
+                </td>
+                <td>
+                    0010
+                </td>
+                <td>
+                    02
+                </td>
+                <td>
+                    02
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    03
+                </td>
+                <td>
+                    0011
+                </td>
+                <td>
+                    03
+                </td>
+                <td>
+                    03
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    04
+                </td>
+                <td>
+                    0100
+                </td>
+                <td>
+                    04
+                </td>
+                <td>
+                    04
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    05
+                </td>
+                <td>
+                    0101
+                </td>
+                <td>
+                    05
+                </td>
+                <td>
+                    05
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    06
+                </td>
+                <td>
+                    0110
+                </td>
+                <td>
+                    06
+                </td>
+                <td>
+                    06
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    07
+                </td>
+                <td>
+                    0111
+                </td>
+                <td>
+                    07
+                </td>
+                <td>
+                    07
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    08
+                </td>
+                <td>
+                    1000
+                </td>
+                <td>
+                    10
+                </td>
+                <td>
+                    08
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    09
+                </td>
+                <td>
+                    1001
+                </td>
+                <td>
+                    11
+                </td>
+                <td>
+                    09
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    10
+                </td>
+                <td>
+                    1010
+                </td>
+                <td>
+                    12
+                </td>
+                <td>
+                    0A
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    11
+                </td>
+                <td>
+                    1011
+                </td>
+                <td>
+                    13
+                </td>
+                <td>
+                    0B
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    12
+                </td>
+                <td>
+                    1100
+                </td>
+                <td>
+                    14
+                </td>
+                <td>
+                    0C
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    13
+                </td>
+                <td>
+                    1101
+                </td>
+                <td>
+                    15
+                </td>
+                <td>
+                    0D
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    14
+                </td>
+                <td>
+                    1110
+                </td>
+                <td>
+                    16
+                </td>
+                <td>
+                    0E
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    15
+                </td>
+                <td>
+                    1111
+                </td>
+                <td>
+                    17
+                </td>
+                <td>
+                    0F
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    16
+                </td>
+                <td>
+                    10000
+                </td>
+                <td>
+                    20
+                </td>
+                <td>
+                    10
+                </td>
+            </tr>
+        </table>
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Decimal Number System</h3>
+        <p>
+            Decimal Numbers are the most common number system that we use in daily basis. It ranges from 0 - 9, having
+            altogether 10 digits. Therefore it has the base/radix (r) = 10.
+        </p>
+
+        <h3 class="subTopic">Octal Number System</h3>
+        <p>
+            Octa, means 8. Thus, Octal Number System ranges from 0 - 7, having altogether 8 digits. Therefore it has the
+            base/radix (r) = 8.
+        </p>
+
+    </section>
+
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Hexadecimal Number System</h3>
+        <p>
+            In mathematics and computing, hexadecimal is a positional numeral system with a radix, or base, of 16. It
+            ranges
+            from 0 - F; 0 - 9 as simple decimal numbers & 10 - 15 as A - F, having altogether 16 digits. Therefore it
+            has the
+            base/radix (r) = 16.
+        <p>The reason why Hexadecimal numbers use characters for number representation is for the fact that it would be
+            easier to represent complex "binary" combination. <br>
+
+            For example, the binary pattern "111011010111" could be represented simply as "ED7", rather than
+            "3799<sub>10</sub>" Or, "7327<sub>8</sub>".
+        </p>
+        </p>
+
+    </section>
+
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Binary Number System</h3>
+        <p>
+            Binary, means 2. Binary Numbers are the computing digits of computer system. It has two digits 0 and 1.
+            Therefore it has the base/radix (r) = 2. We will be focusing on these Binary Digits (or Bits) throughout
+            this
+            course.
+        </p>
+
+    </section>
+
+</section>
+
+
+<section class="content_section" id="conversion">
+    <h1>Conversion from one number system to another</h1>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">1. Decimal to Binary/Octal/Hexadecimal</h3>
+        <p>So, we need to convert a base 10 number i.e. Decimal into base 2/8/16 number system i.e.
+            Binary/Octal/Hexadecimal.</p><br>
+        <p>To convert a decimal number into any other form,<br> our first step will be to divide the given decimal
+            number's
+            <span class="difficult_words highlight">integer<span class="meaning">Counting numbers</span></span> part by
+            the
+            base/radix(r) of the another number system that we want to convert into and mark the remainder as we
+            continue to
+            divide until the quotient is 1. </p><br>
+        <p>If the given number has fraction parts, then we have to multiply the fraction part by the radix/base(r) of
+            the
+            number that we want to convert into. We will keep multiplying the result by 'r' for 3-4 times. </p><br>
+
+        <h4>Q. Convert (862.48)<sub>10</sub> into base 2,8 and 16.</h4>
+        <h4>A. We will convert into binary number system in this example.</h4>
+        <p>Divide the <span class="difficult_words highlight">integer<span class="meaning">Counting
+                    numbers</span></span>
+            part i.e. 862 by base(r) of binary number i.e. 2 and mark the remainder, if the number is not exactly
+            divisible,
+            try to divide it's nearest lower number.</p><br>
+
+        <span class="margin_left">862/2 = 431(Quotient); remainder = 0,</span><br>
+        <p>again divide the quotient i.e. 431 by 2, 431 will not be exactly divisible by 2, so we will divide it's
+            nearest
+            lower number i.e 430(which is divisible by 2),</p>
+        <span class="margin_left">430/2 = 215(new quotient), but we had the previous quotient as 431, not 430.
+            Therefore,
+            subtract 430 from 431, we will get 1. Thus, the remainder is 1.</span><br>
+        <p>We will continue dividing the new quotient i.e 215 and so on until we get the quotient as 1. <br>
+
+        <p>Now, for the fraction part,we will multiply it by 'r',and take out the digit before decimal point in the
+            result,
+        </p>
+        <span class="margin_left">0.48*2 = 0.96; taken out = 0,</span><br>
+        <span class="margin_left">again, multiply the result 0.96*2 = 1.92; taken out = 1,</span><br>
+        <p>our result is 1.92, but, remember we have taken out the digit before decimal point i.e(1). Therefore, we are
+            left
+            with 0.92 only. </p>
+        <span class="margin_left">Now, multiply 0.92 by 2 = 1.84; taken out = 1,</span><br>
+        <span class="margin_left">We are left with 0.84. Multiply it with 2 for the final time, we will get 1.68; taken
+            out
+            = 1.</span>
+        <br>
+        <p>We are almost done. Now, write down the marked remainders from the <span
+                class="difficult_words highlight">integer<span class="meaning">Counting numbers</span></span> part
+            starting
+            from the newest remainder = 1101011110, put a decimal point after that '.' and write the taken out digits
+            from
+            the fraction part starting from the oldest digit = 0111.</p>
+
+        <h4>Answer,<br>
+            (862)<sub>10</sub> = (110101110.0111)<sub>2</sub></h4>
+
+
+        <p>In exam, we recommend you to solve the question like this,</p><br>
+        <img src="" alt="base10-base2">
+
+
+        <br>
+        <br>
+        <p>This example had focused on converting Decimal into Binary but, you also can easily convert Decimal into
+            Octal
+            and Hexadecimal, just replace 'r' = 2 with '8'(for octal) & '16'(for hexadecimal) and follow the same
+            process.
+        </p>
+
+        <br>
+
+    </section>
+
+
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">2. Binary/Octal/Hexadecimal to Decimal</h3>
+        <p>To convert any number into decimal, just multiply the digits by 'r' of the target and raise the power of 'r'
+            by
+            the decimal weight of the digit and add them.</p>
+        <br>
+        <h4>Q. Convert (535.344)<sub>8</sub> into Decimal.</h4>
+        <h4>Solution: </h4>
+        <span class="margin_left">First, separate each digit.</span>
+        <p>5 3 5 . 3 4 4</p>
+        <span class="margin_left">Multiply each digit with 'r' = 8 (because the target is octal) and raise the power of
+            'r'
+            according to theposition of digits.</span>
+        <p>5*8<sup>2</sup> + 3*8<sup>1</sup> + 5*8<sup>0</sup> + 3*8<sup>-1</sup> + 4*8<sup>-2</sup> + 4*8<sup>-3</sup>
+        </p>
+        <span class="margin_left">Now, simplify it and you will get the result = (349.455)</span>
+
+        <h4>Therefore, (535.344)<sub>8</sub> = (349.455)<sub>10</sub></h4>
+
+
+        <br>
+        <h3 class="subTopic">3. Octal to Binary and vice-versa</h3>
+        <br>
+        <p>A complete set of octal number is represented by 3 bits of binary number.</p>
+        <span class="margin_left">3 bits binary number has weight of 4,2 and 1. 4 is for MSB and 1 is for LSB. </span>
+
+        <br>
+        <h4>Q. Convert (535.344)<sub>8</sub> into Binary.</h4>
+        <h4>Answer: </h4>
+        <br> <span class="margin_left">Find the binary equivalent of each digit and write them,</span>
+        <p>5 = 101,<br>3 = 011,<br>4 = 100</p>
+        <span class="margin_left">Now, replace those octal digits by their binary equivalent.</span>
+        <h4>Therefore, (535.344)<sub>8</sub> = (101011101.011100100)<sub>2</sub></h4>
+
+        <br>
+        <h4>Q. Convert (101011101.011100100)<sub>2</sub> into Octal :</h4>
+        <h4>Solution</h4>
+        <br>
+        <span class="margin_left">Separate the combination of 3 binary digits(remember, Octal number is represented by 3
+            bits) starting from LSB(right side for <span class="difficult_words highlight">integer<span
+                    class="meaning">Counting numbers</span></span> part and left side for fraction part).</span>
+        <p>101, 011, 101 . 011, 100, 100</p>
+        <span class="margin_left">Now, use 421 rule, i.e. place the respective binary weight on the position of
+            digits.</span>
+        <p>421, 421, 421 . 421, 421, 421</p>
+        <p>101, 011, 101 . 011, 100, 100</p>
+        <span class="margin_left">If the bits are 1, then add their weights.</span>
+        <p>In 101, add weights of both 1s i.e 4+1 = 5,</p>
+        <p>In 011, add weights of both 1s i.e 2+1 = 3,</p>
+        <p>In 100, add weight of 1 i.e 4 = 4,</p>
+        <span class="margin_left">Now, you have octal equivalent of the bits.</span>
+        <h4>Therefore, (101011101.011100100)<sub>2</sub> = (535.344)<sub>8</sub></h4>
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">4. Hexadecimal to Binary and vice-versa</h3>
+        <br>
+        <p>A complete set of hexadecimal number is represented by 4 bits of binary number.</p>
+        <span class="margin_left">4 bits binary number has weight of 8,4,2 and 1. 8 is for MSB and 1 is for LSB. </span>
+
+        <br>
+        <h4>Q. Convert (9F2)<sub>16</sub> into Binary.</h4>
+        <h4>Answer: </h4>
+        <br> <span class="margin_left">Find the binary equivalent of each digit and write them,</span>
+        <p>9 = 1001,<br>F = 1111,<br>2 = 0010</p>
+        <span class="margin_left">Now, replace those hexadecimal digits by their binary equivalent.</span>
+        <h4>Therefore, (9F2)<sub>16</sub> = (100111110010)<sub>2</sub></h4>
+
+        <br>
+        <h4>Q. Convert (110101011101.01110010)<sub>2</sub> into Hexadecimal :</h4>
+        <h4>Solution</h4>
+        <br>
+        <span class="margin_left">Separate the combination of 4 binary digits(remember, Hexadecimal number is
+            represented by
+            4 bits) starting from LSB(right side for <span class="difficult_words highlight">integer<span
+                    class="meaning">Counting numbers</span></span> part and left side for fraction part).</span>
+        <p>From right side of the <span class="difficult_words highlight">integer<span class="meaning">Counting
+                    numbers</span></span> part : 1011, 1010, 1101 , now from the left side fir fraction part, 0111, 0010
+        </p>
+        <span class="margin_left">Now, use 8421 rule, i.e. place the respective binary weight on the position of
+            digits.</span>
+        <p>In order: </p>
+        <p>8421, 8421, 8421 . 8421, 8421</p>
+        <p>1101, 0101, 1101 . 0111, 0010</p>
+        <span class="margin_left">If the bits are 1, then add their weights.</span>
+        <p>In 1101, add weights of all 1s i.e 8+4+1 = 13 ~ D,</p>
+        <p>In 0101, add weights of both 1s i.e 4+1 = 5,</p>
+        <p>In 0111, add weight of all 1s i.e 4+2+1 = 7,</p>
+        <p>In 0010, add weight of 1 i.e 2 = 2,</p>
+        <span class="margin_left">Now, you have hexadecimal equivalent of the bits.</span>
+        <h4>Therefore, (110101011101.01110010)<sub>2</sub> = (D5D.72)<sub>16</sub></h4>
+
+
+        <br>
+
+    </section>
+
+</section>
+<section class="content_section" id="complement">
+
+    <h1>Complements of Binary Numbers :</h1>
+
+    <p>Complements are used in digital electronics for simplifying the subtraction operation and for logical
+        manipulations.There are two types of complements for ease base 'r' system,
+        <span class="margin_left">
+            <ul>
+                <li>The r's complement</li>
+                <li>The (r - 1)'s complement</li>
+            </ul>
+        </span>
+    </p>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">The r's complement</h3>
+        <p>Given a positive number 'N' with base 'r' and an <span class="difficult_words highlight">integer<span
+                    class="meaning">Counting numbers</span></span> part of 'n' digits, the r's complement of 'N' is
+            defined
+            as: </p>
+        <span class="margin_left">r<sup>n</sup> - N ( where N is not equal to 0)</span>
+
+        <h4>Q. Find 10's complement of (52520)<sub>10</sub></h4>
+        <h4>Solution:</h4>
+        <span class="margin_left">Formula: r<sup>n</sup> - N,</span>
+        <p>52520 has 5 digits so, n = 5 and base 'r' = 10.<br>Therefore, (10)<sup>5</sup> - 52520 <br> = 47480, thats
+            our
+            required solution.</p>
+
+        <h4>Q. Find 10's complement of (0.3267)<sub>10</sub></h4>
+        <h4>Solution:</h4>
+        <span class="margin_left">Formula: r<sup>n</sup> - N,</span>
+        <p>0.3267 has 0 <span class="difficult_words highlight">integer<span class="meaning">Counting
+                    numbers</span></span>
+            digits so, n = 0.<br>Therefore, (10)<sup>0</sup> - 0.3267 <br> = 0.6733, thats our required solution.</p>
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">The (r - 1)'s complement</h3>
+
+        <span class="margin_left">Formula: r<sup>n</sup> - r<sup>-m</sup> - N where,</span>
+        <p>r = Base,<br>n = no. of <span class="difficult_words highlight">integer<span class="meaning">Counting
+                    numbers</span></span> digits <br> m = no. of fractional digits,<br> N = Number,</p>
+
+        <h4>Q. Find 9's complement of (25.639)<sub>10</sub></h4>
+        <h4>Solution: </h4>
+        <span class="margin_left">Formula: r<sup>n</sup> - r<sup>-m</sup> - N</span>
+        <p>10<sup>2</sup> - 10<sup>-3</sup> - 25.639</p>
+        <p> = (74.36)<sub>10</sub> is our solution.</p>
+
+        <h4>Note: 9's complement of base 10 can be quickly obtained by subtracting each digit from 9.</h4>
+
+        <br>
+        <h4>Q. Find 1s complement of (101100)<sub>2</sub></h4>
+        <h4>Solution:</h4>
+        <span class="margin_left">base 'r' = 2,<br>'n' = 6, <br>'m' = 0</span>
+        <p>Formula : r<sup>n</sup> - r<sup>-m</sup> - N </p>
+        <p>2<sub>10</sub><sup>6</sup> - 2<sub>10</sub><sup>-0</sup> - (101100)<sub>2</sub></p>
+        <p> = (64 - 1)<sub>10</sub> - (101100)<sub>2</sub></p>
+        <p> = (63)<sub>10</sub> - (44)<sub>10</sub></p>
+        <p> = (19)<sub>10</sub> </p>
+        <p> = (010011)<sub>2</sub> is our solution.</p>
+
+        <h4>Note: 1's complement of binary digits can be quickly obtained by alternating the bits.</h4>
+
+        <br>
+        <h4>Q. Find 2's complement of (101100)<sub>2</sub>.</h4>
+        <h4>Solution :</h4>
+        <span class="margin_left">First find 1's complement of (101100)<sub>2</sub>. We can either use the formula or
+            alternate the bits to find 1's complement.</span>
+        <p>1's complement : (010011)<sub>2</sub></p>
+        <span class="margin_left">Now, add 1 to the result.</span>
+        <p>(010011)<sub>2</sub> + 1 <br> = (010100)<sub>2</sub> is our required 2's complement.</p>
+        <br>
+
+    </section>
+
+</section>
+
+
+
+<section class="content_section" id="subrtaction">
+
+    <h1>Subtraction using complements :</h1>
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Using r's complement</h3>
+        <span class="margin_left">The subtracction of two positive number (M - N) both of base 'r' may be done as:
+        </span>
+        <p>Step: 1. Add the minuend(M) to r's complement of Subtrahend(N),</p>
+        <p>Step: 2. Inspect the result obtained,<br>
+            -- if any end carry occurs, discard it, <br>
+            -- if end carry doesn't occur, take r's complement of result, and place a '-ve' sign infront.</p>
+
+        <h4>Q. Perform 72532 - 3250 using 10s complement.</h4>
+        <h4>Solution: </h4>
+        <span class="margin_left">Here, M = 72532 ; N = 03250</span>
+        <p>Now, 10's complement of N = 96750</p>
+        <p>Add result to M,
+            <br> 72532<br>+96750 <br>
+            1|69282</p>
+        <span class="margin_left">Here, the carry has occured, therefore, according to the rule, <br>we will discard
+            it.</span>
+        <p>Hence, the answer is 69282.</p>
+
+
+
+
+        <h4>Q. Perform 1000100 - 1010100 using 2s complement.</h4>
+        <h4>Solution: </h4>
+        <span class="margin_left">Here, M = 1000100 ; N = 1010100</span>
+        <p>Now, 2's complement of N = 0101100</p>
+        <p>Add result to M,
+            <br> 1000100<br>+0101100 <br>
+            1110000</p>
+        <span class="margin_left">Here, the carry has not occured, therefore, according to the rule, <br>we will take
+            2's
+            complement of the result (1110000) = 0010000 and put a '-ve' sign.</span>
+        <p>Hence, the answer is - 0010000 or, simply - 10000.</p>
+
+
+
+    </section>
+
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Using (r-1)'s complement</h3>
+        <p>Step: 1. Add Minuend(M) to the (r-1)'s complement of Subtrahend(N),</p>
+        <p>Step: 2. Inspect the result, <br>
+            <span class="margin_left">-- If an end carry occurs, add 1 to the LSB(right digit), <br>
+                -- If an end carry doesn't occur, take (r-1)'s complement of the result and place a '-ve' sign
+                infront</span> </p>
+
+        <h4>Q. Perform 1010100 - 1000100 using 1s complement.</h4>
+        <h4>Solution: </h4>
+
+        <span class="margin_left">Here, M = 1010100 ; N = 1000100</span>
+        <p>Now, 1's complement of N = 0111011 (altering the bits)</p>
+        <p>Add result to M,
+            <br> 1010100<br>+0111011 <br>
+            1|0001111</p>
+        <span class="margin_left">Here, the carry has occured, therefore, according to the rule, <br>we will add 1 to
+            LSB of
+            the result (0001111) + 1 = 0010000.</span>
+        <p>Hence, the answer is 0010000. </p>
+        <br>
+
+    </section>
+
+</section>
+
+
+<section class="content_section" id="digital">
+
+    <h1>Digital Codes : </h1>
+    <p>The codes that are used in digital electronics to represent the data is called <em>Digital Codes</em>.</p>
+    <span class="margin_left">There are different types of Digital Codes,</span>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Gray Code / Reflected code</h3>
+        <p>Gray code is non-weighted code, meaning that it doesn't have weights on its head. The characteristic of this
+            code
+            is that, only one bit changes when going from one number to another.Therefore, it has minimum number of
+            errors
+            as compared to simple binary codes.</p>
+        <span class="margin_left">A typical application of gray code is, it is used for translating Analog data into
+            Digital
+            form.</span>
+        <p>Gray code is called reflected code because n-bit of gray code can be obtained by reflecting (n-1)bit code
+            about
+            an axis and at the end of code putting MSB of 0 above the axis and MSB of 1 below axis.</p>
+
+
+        <table>
+            <tr>
+                <th>Gray Code</th>
+                <th>Decimal</th>
+                <th>Binary</th>
+            </tr>
+
+            <tr>
+                <td>0000</td>
+                <td>0</td>
+                <td>0000</td>
+            </tr>
+            <tr>
+                <td>0001</td>
+                <td>1</td>
+                <td>0001</td>
+            </tr>
+            <tr>
+                <td>0011</td>
+                <td>2</td>
+                <td>0010</td>
+            </tr>
+            <tr>
+                <td>0010</td>
+                <td>3</td>
+                <td>0011</td>
+            </tr>
+            <tr>
+                <td>0110</td>
+                <td>4</td>
+                <td>0100</td>
+            </tr>
+            <tr>
+                <td>0111</td>
+                <td>5</td>
+                <td>0101</td>
+            </tr>
+            <tr>
+                <td>0101</td>
+                <td>6</td>
+                <td>0110</td>
+            </tr>
+            <tr>
+                <td>0100</td>
+                <td>7</td>
+                <td>0111</td>
+            </tr>
+            <tr>
+                <td>1100</td>
+                <td>8</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>1101</td>
+                <td>9</td>
+                <td>1001</td>
+            </tr>
+            <tr>
+                <td>1111</td>
+                <td>10</td>
+                <td>1010</td>
+            </tr>
+            <tr>
+                <td>1110</td>
+                <td>11</td>
+                <td>1011</td>
+            </tr>
+            <tr>
+                <td>1010</td>
+                <td>12</td>
+                <td>1100</td>
+            </tr>
+            <tr>
+                <td>1011</td>
+                <td>13</td>
+                <td>1101</td>
+            </tr>
+            <tr>
+                <td>1001</td>
+                <td>14</td>
+                <td>1110</td>
+            </tr>
+            <tr>
+                <td>1000</td>
+                <td>15</td>
+                <td>1111</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Conversion of Binary to Gray Code</h3>
+
+        <p>-- MSB in Gray Code is same as corresponding digit in Binary. <br> -- Starting from left, add each adjacent
+            bit
+            to get next gray code digit, discard carry if occurs.</p>
+
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Conversion of Gray to Binary Code</h3>
+
+        <p>-- MSB in Binary Code is same as corresponding digit in Gray Code. <br> -- Starting from left, add each
+            adjacent
+            bit to get next binary digit, discard carry if occurs.</p>
+
+
+
+        <iframe src="" frameborder="0">Binary to Gray Conversion</iframe>
+
+    </section>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Binary Coded Decimal (BCD)</h3>
+        <p>BCD code are sequential code i.e. each succeeding code is 1 binary number greater than its preceding code. It
+            is
+            also known as 8421 weighted code.</p>
+        <span class="margin_left">The <span class="highlight">advantage</span> of BCD is its efficiency to convert into
+            decimal.</span>
+
+        <h4>Q. Convert (396)<sub>10</sub> into BCD code.</h4>
+        <h4>Solution: </h4>
+        <p>Find 4bit binary equivalent of each digit.</p>
+        <span class="margin_left">3 = 0011 ; 9 = 1001 ; 6 = 0110</span>
+        <p>Merge them together, 001110010110, is our required answer in BCD form.</p>
+
+
+    </section>
+
+
+    <section class="subTopicWrap">
+
+        <h3 class="subTopic">ASCII Code</h3>
+        <p>American Standard Code for Informaton Exchange is a standard binary code for <span
+                class="difficult_words highlight">alphanumeric<span class="meaning">Alphabets & Numbers</span></span>*
+            characher.</p>
+        <span class="margin_left">** -- An <span class="difficult_words highlight">alphanumeric<span
+                    class="meaning">Alphabets & Numbers</span></span> code consists of 26 UPPERCASE letters, 26
+            lowercase
+            letters, 10 numberic digits, 7 punctuation marks, and 20-40 other special characters.</span>
+        <p>ASCII is a 7bit code that can represent upto 2<sup>7</sup> = 128 possible characters.</p>
+        <span class="margin_left">Although ASCII is 7-bit code, most computer manipulates 8-bit quantity called byte.The
+            extra bit is used for other purposes depending upon the application.</span>
+    </section>
+
+
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Excess-3 Code</h3>
+        <p>Excess-3 code is just like BCD code, but it represents BCD cede by exceeding 3 digits. </p>
+        <span class="margin_left">e.g. Decimal number 2 is represented as 0010 in BCD, but same number 2, is represented
+            by
+            exceeding 3 digits (2 + 3 = 5) as 0101 in Excess-3.</span>
+
+
+
+        <br>
+
+    </section>
+
+</section>
+
+
+<section class="content_section" id="error">
+
+    <h1>Error Detection Codes</h1>
+
+    <p>Binary information may be transmitted through some form of communication medium such as wires or radio-waves. Any
+        external noise introduced into physical communication medium may change bit values from 0 to 1 OR 1 to 0, which
+        causes problems.</p>
+    <span class="margin_left">An error detection code is used to detect those errors during transmission.</span>
+
+    <section class="subTopicWrap">
+        <h3 class="subTopic">Parity bit method: </h3>
+        <p>A parity bit is an extra bit included with a message to make total number of 1s either odd OR even.</p>
+
+        <h4>Odd parity bit method</h4>
+        <p>Here, during transmission, it is assumed that if number of 1s in the message is odd, then the message is
+            being
+            transmitted without any errors.</p>
+
+        <h4>Even parity bit method</h4>
+        <p>Here, during transmission, it is assumed that if number of 1s in the message is even, then the message is
+            being
+            transmitted without any errors.</p>
+
+        <span class="margin_left">parity bit helps only to <strong>detect</strong> errors, but doesn't correct
+            them.</span>
+    </section>
+</section>
+
+<%-include("../../../sharedMarkups/footer")%>

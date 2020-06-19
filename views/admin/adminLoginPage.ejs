@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/rahul.css">
+    <style>
+        main {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        main>form {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <form action="/admin" method="POST" class="form">
+            <fieldset>
+                <label for="username">username</label>
+                <input type="text" name="username" autofocus="on" autocomplete="off">
+            </fieldset>
+            <fieldset>
+                <label for="password">password</label>
+                <input type="password" name="password" autofocus="on" autocomplete="off">
+            </fieldset>
+            <button type="submit" class="btn btn--brand">Log in as Administrator</button>
+        </form>
+    </main>
+</body>
+
+</html>

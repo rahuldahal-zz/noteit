@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteIT</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div id="container">
+        <nav>
+            <div id="navWrap" class="flex">
+                <%if(user){%>
+                <a href="/">
+                    <h2><%=user.username%></h2>
+                </a>
+                <div id="links">
+                    <%if(user.isApproved){%>
+                    <button type="button" id="searchNoteBtn" class="btn">Search Note</button>
+                    <%}%>
+                    <%if(user.roles.includes("contributor")){%>
+                    <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
+                    <%}%>
+                    <form action="/users/logout" method="POST" id="logoutForm">
+                        <button type="submit" class="btn">Logout</button>
+                    </form>
+                </div>
+                <%} else {%>
+                    <h2>NoteIT</h2>
+                    <div id="links">
+                        <div id="loginFormContainer">
+
+
+                            <button type="button" class="btn" data-trigger-type="add" data-trigger-target="loginForm"
+                                data-trigger-action="loginForm--visible">Login</button>
+
+
+                            <form action="/users/login" method="POST" class="flex triggerTarget" id="loginForm">
+                                <button class="close" data-trigger-type="remove" data-trigger-target="loginForm"
+                                    data-trigger-action="loginForm--visible">X</button>
+                                <fieldset class="flex">
+                                    <input id="loginUsername" name="username" type="text" placeholder="username"
+                                        class="p5 mr10">
+                                    <input id="loginPassword" name="password" type="password" placeholder="password"
+                                        class="p5 mr10">
+                                    <button type="submit" class="btn mr10" id="loginBtn">Log In</button>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <a href="#registrationForm" class="btn">Register</a>
+                    </div>
+                    <%}%>
+            </div>
+    </nav>
+    
+    <%-include("flash-message")%>

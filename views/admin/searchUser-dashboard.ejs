@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/searchUser.css">
+</head>
+
+<body>
+    <main id="userQueryScreen">
+        <form action="/admin/userQuery" method="POST" id="userQueryForm">
+            <input type="text" name="searchTerm" placeholder="username/faculty/semester">
+            <select name="basedOn" id="">
+                <option value="username">username</option>
+                <option value="faculty">faculty</option>
+                <option value="semester">semester</option>
+            </select>
+            <button type="submit" class="btn btn--brand">Get Users</button>
+        </form>
+
+    </main>
+    <section id="userCardContainer"></section>
+    <script src="/main-bundled.js"></script>
+</body>
+
+</html>

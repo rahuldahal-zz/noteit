@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Note</title>
+    <link rel="stylesheet" href="/css/defaultsAreBoring.css">
+    <link rel="stylesheet" href="/css/searchUser.css">
+</head>
+
+<body>
+    <%-include("../includes/flash-message")%>
+    <main class="container" id="createNoteScreen">
+        <h1>Create note here</h1>
+
+        <form action="/notes/create" method="POST">
+            <input type="number" placeholder="unitNo" name="unitNo">
+            <input type="text" placeholder="title" name="title">
+            <input type="text" placeholder="subject" name="subject">
+            <select name="faculty" id="">
+                <option value="bim">BIM</option>
+                <option value="bca">BCA</option>
+                <option value="csit">CSIT</option>
+            </select>
+            <input type="text" name="semester" placeholder="semester">
+            <select name="contributor" id="contributor">
+                <!-- options are injected via JS -->
+            </select>
+            <button type="submit" class="btn">create note</button>
+        </form>
+    </main>
+    <script src="/main-bundled.js"></script>
+</body>
+
+</html>

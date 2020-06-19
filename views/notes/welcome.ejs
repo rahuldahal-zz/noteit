@@ -1,0 +1,32 @@
+<%-include("../includes/header")%>
+
+<main class="mainContainer" id="welcomeScreen">
+    <div class="mainContainer__welcomeText">
+        <h1>Hello, <span class="color--brand"><%=user.username%></span></h1>
+        <h2>Welcome to NoteIT</h2>
+    </div>
+    <%if(user.isApproved && !user.isSubscriptionExpired){%>
+
+    <div id="welcomeScreen__subjectsContainer">
+    </div>
+
+    <%}else if(!user.isApproved){%>
+    <p class="color--brand">your account is currently being reviewed and will soon be approved.</p>
+
+    <%}else if(user.isSubscriptionExpired){%>
+
+    <p>Your subscription has expired, <strong>Upgrade your Account</strong></p>
+    <%}%>
+
+    <%if(savedNotes.length){%>
+    <div id="welcomeScreen__savedNotes">
+        <h2>Saved Notes</h2>
+        <%-savedNotes.map((note)=> {
+                return `
+                <input type="hidden" value="${note}" class="savedNoteId">
+            `}).join("")%>
+    </div>
+    <%}%>
+</main>
+
+<%-include("../includes/footer")%>

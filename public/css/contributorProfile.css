@@ -1,0 +1,41 @@
+#editContactsForm {
+  display: none;
+}
+
+#editContactsForm .contactInputWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+#editContactsForm .contactInputWrapper input {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#editContactsForm .contactInputWrapper .removeContactField {
+  background-color: #e92a2a;
+  color: #eee;
+  padding: 0.25rem 0.5rem;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#editContactsForm #addContactWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#editContactsForm #addContactWrapper button {
+  margin-right: 10px;
+}
+/*# sourceMappingURL=contributorProfile.css.map */
