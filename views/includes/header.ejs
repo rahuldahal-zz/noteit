@@ -23,36 +23,32 @@
                     <%if(user.roles.includes("contributor")){%>
                     <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
                     <%}%>
-                    <form action="/users/logout" method="POST" id="logoutForm">
+                    <form action="/auth/logout" method="POST" id="logoutForm">
                         <button type="submit" class="btn">Logout</button>
                     </form>
                 </div>
                 <%} else {%>
                     <h2>NoteIT</h2>
                     <div id="links">
-                        <div id="loginFormContainer">
+                        <button type="button" class="btn" data-trigger-type="add" data-trigger-target="loginOptions"
+                            data-trigger-action="loginOptions--visible">Login</button>
 
+                        <div id="loginOptions" class="flex triggerTarget">
+                            <div id="loginOptions__buttons" class="flex">
+                                <a href="/auth/facebook" class="btn">Facebook</a>
+                                <a href="/auth/google" class="btn">Google</a>
+                            </div>
 
-                            <button type="button" class="btn" data-trigger-type="add" data-trigger-target="loginForm"
-                                data-trigger-action="loginForm--visible">Login</button>
-
-
-                            <form action="/users/login" method="POST" class="flex triggerTarget" id="loginForm">
-                                <button class="close" data-trigger-type="remove" data-trigger-target="loginForm"
-                                    data-trigger-action="loginForm--visible">X</button>
-                                <fieldset class="flex">
-                                    <input id="loginUsername" name="username" type="text" placeholder="username"
-                                        class="p5 mr10">
-                                    <input id="loginPassword" name="password" type="password" placeholder="password"
-                                        class="p5 mr10">
-                                    <button type="submit" class="btn mr10" id="loginBtn">Log In</button>
-                                </fieldset>
-                            </form>
+                            <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
+                                data-trigger-action="loginOptions--visible">Close</button>
                         </div>
-                        <a href="#registrationForm" class="btn">Register</a>
                     </div>
                     <%}%>
             </div>
     </nav>
-    
-    <%-include("flash-message")%>
+
+    <!-- flash message wrapper -->
+
+    <div id="flash-wrap" class="flex flex--column">
+
+    </div>

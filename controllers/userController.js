@@ -14,7 +14,7 @@ exports.doesEmailExist = (req, res) => {
 }
 
 exports.root = (req, res) => {
-    if (req.session.user) {
+    if (req.user) {
         res.redirect(303, "/home");
     }
 
@@ -23,17 +23,12 @@ exports.root = (req, res) => {
 }
 
 exports.home = (req, res) => {
-    if (req.session.user) {
+    if (req.user.faculty && req.user.semester) {
         res.render(`notes/welcome`);
-
-        if (!req.session.user.isApproved) {
-            setTimeout(() => {
-                console.log(req.session.user.isApproved);
-                req.session.destroy();
-            }, 30000)
-        }
     }
-    else res.redirect(401, "/");
+    else {
+        res.render("chooseFacultyAndSemester");
+    }
 }
 
 exports.register = (req, res, next) => {
@@ -69,23 +64,23 @@ exports.createSession = (req, res) => {
             })
             .catch((err) => {
                 res.status(500);
-                req.flash("errors", "Something is wrong with the server, try again in a few moments");
+
                 res.render("home-guest");
             });
     })
 }
 
 exports.mustBeLoggedIn = (req, res, next) => {
-    if (req.session.user) {
+    if (req.user) {
         next();
         return;
     }
 
     else {
-        req.flash("errors", "You must be logged in to perform that action");
-        req.session.save(() => {
-            res.redirect("/");
-        })
+        // req.flash("errors", "You must be logged in to perform that action");
+        const error = new Error("You must be logged in to perform that action");
+        error.status = "401";
+        return next(error);
     }
 }
 
@@ -104,12 +99,6 @@ exports.login = (req, res, next) => {
         })
 }
 
-exports.logout = (req, res) => {
-    req.session.destroy(() => {
-        res.redirect("/");
-    });
-
-}
 
 exports.mustBeApproved = (req, res, next) => {
     if (req.session.user.isApproved) {

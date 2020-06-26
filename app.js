@@ -1,33 +1,33 @@
 const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const flash = require("connect-flash");
+const passport = require("passport");
+const passportController = require("./controllers/passportController");
+const cookieSession = require("cookie-session");
 const app = express();
 
 
-let sessionOptions = session({
-    secret: "NoteIT is awesome",
-    store: new MongoStore({ client: require("./db") }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
-});
+let sessionOptions = {
+    keys: ["NoteITisCreatedByRahulDahal"],
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true
+};
 
-app.use(sessionOptions);
-app.use(flash());
+app.use(cookieSession(sessionOptions));
+
+// initialize passport in our app, important
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
 //middleware that the templates can use
 app.use((req, res, next) => {
-    res.locals.user = req.session.user;
-    res.locals.errors = req.flash("errors");
-    res.locals.successes = req.flash("success");
+    res.locals.user = req.user;
     next();
 })
 
 //routers
 const rootRouter = require("./routers/rootRouter");
+const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
@@ -44,23 +44,30 @@ app.set("view engine", "ejs");
 
 //using the routers
 app.use("/", rootRouter);
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
 
-//if router(s) do not handle the "route", this middleware will handle it
-// app.use((req, res, next) => {
-//     const error = new Error("The page you are looking for is not found");
-//     error.status = 404;
-//     next(error);
-// })
+// if router(s) do not handle the "route", this middleware will handle it
+app.use((req, res, next) => {
+    const error = new Error("The page you are looking for is not found");
+    error.status = 404;
+    next(error);
+})
 
-// app.use((error, req, res, next) => {
-//     res
-//         .status(error.status || 500)
-//         .render("404");
-// })
+app.use((error, req, res, next) => {
+    switch (error.status) {
+        case "401":
+            res.status(error.status).send({ message: "You are unauthorized and cannot access this resource, NoteIT" });
+        case "403":
+            res.status(error.status).send({ message: "You are forbidden to access this resource, NoteIT" });
+        case "404":
+            res.status(error.status).render("404");
+
+    }
+})
 
 module.exports = app;

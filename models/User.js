@@ -1,6 +1,5 @@
 const validator = require("validator");
 const usersCollection = require("../db").db().collection("users");
-const bcrypt = require("bcryptjs");
 const ObjectID = require("mongodb").ObjectID;
 
 let User = function (data) {
@@ -9,25 +8,29 @@ let User = function (data) {
 }
 
 User.prototype.cleanUp = function () {
-    if (typeof (this.data.username) != "string")
-        this.data.username = "";
+    if (typeof (this.data.sub) != "string")
+        this.data.sub = "";
     if (typeof (this.data.email) != "string")
         this.data.email = "";
-    if (typeof (this.data.password) != "string")
-        this.data.password = "";
-    if (typeof (this.data.faculty) != "string")
-        this.data.faculty = "";
-    if (typeof (this.data.semester) != "string")
-        this.data.semester = "";
+    if (typeof (this.data.name) != "string")
+        this.data.name = "";
+    if (typeof (this.data.given_name) != "string")
+        this.data.given_name = "";
+    if (typeof (this.data.family_name) != "string")
+        this.data.family_name = "";
+    if (typeof (this.data.picture) != "string")
+        this.data.picture = "";
 
     //ignore bogus properties
 
     this.data = {
-        username: this.data.username.trim().toLowerCase(),
-        email: this.data.email.trim().toLowerCase(),
-        password: this.data.password,
-        faculty: this.data.faculty.toLowerCase(),
-        semester: this.data.semester.toLowerCase(),
+        sub: this.data.sub,
+        email: this.data.email.trim(),
+        name: this.data.name,
+        given_name: this.data.given_name,
+        family_name: this.data.family_name,
+        faculty: null,
+        semester: null,
         roles: ["basic"],
         isApproved: false,
         isSubscriptionExpired: false,
@@ -119,61 +122,16 @@ User.prototype.validate = function () {
 }
 
 
-User.prototype.register = function () {
+User.prototype.createUser = function () {
     return new Promise((resolve, reject) => {
         this.cleanUp();
-        this.validate()
-            .then(() => {
-
-                if (!this.errors.length) {
-                    //hash user pwd
-                    let salt = bcrypt.genSaltSync(10);
-                    this.data.password = bcrypt.hashSync(this.data.password, salt);
-                    usersCollection.insertOne(this.data)
-                        .then((registeredUser) => {
-                            registeredUser = registeredUser.ops[0];
-                            resolve(registeredUser);
-                        })
-                        .catch((err) => console.log(err));
-                }
-                else {
-                    console.log(this.errors);
-                    reject(this.errors);
-                }
-
+        console.log("creating a new user...");
+        usersCollection.insertOne(this.data)
+            .then((newUser) => {
+                if (newUser.ops[0]) return resolve(newUser.ops[0])
+                else return reject("Cannot create the user");
             })
-    })
-}
-
-
-User.prototype.login = function () {
-    return new Promise((resolve, reject) => {
-        this.cleanUp();
-        usersCollection.findOne({ username: this.data.username })
-            .then((attemptedUser) => {
-                if (attemptedUser && bcrypt.compareSync(this.data.password, attemptedUser.password)) {
-                    attemptedUser = {
-                        _id: attemptedUser._id,
-                        username: attemptedUser.username,
-                        faculty: attemptedUser.faculty,
-                        semester: attemptedUser.semester,
-                        roles: attemptedUser.roles,
-                        isApproved: attemptedUser.isApproved,
-                        isSubscriptionExpired: attemptedUser.isSubscriptionExpired,
-                        savedNotes: attemptedUser.savedNotes
-                    }
-
-                    //update the "lastLogin" property
-                    usersCollection.updateOne({ _id: attemptedUser._id }, { $set: { lastLogin: new Date() } })
-                        .then(() => resolve(attemptedUser))
-                        .catch(() => reject("something wrong with the server"))
-                } else {
-                    reject("invalid username/password");
-                }
-            })
-            .catch((err) => {
-                console.log("from User.js -> login: " + err);
-            })
+            .catch((error) => console.log(error));
     })
 }
 
@@ -225,7 +183,7 @@ User.findByUsername = (username) => {
             resolve("No a valid username value");
             return;
         }
-        usersCollection.findOne({ username: username })
+        usersCollection.findOne({ name: username })
             .then((user) => {
                 if (user) {
                     resolve(user);
@@ -239,6 +197,50 @@ User.findByUsername = (username) => {
             .catch((err) => reject(err));
     })
 }
+
+User.prototype.findByGoogleId = (googleId) => {
+    return new Promise((resolve, reject) => {
+        if (typeof googleId != "string") {
+            reject("Not a valid googleId value");
+            return;
+        }
+        usersCollection.findOne({ sub: googleId })
+            .then((user) => {
+                if (user) {
+                    resolve(user);
+                    return;
+                }
+                else {
+                    reject("no match found");
+                    return;
+                }
+            })
+            .catch((err) => console.log(error));
+    })
+}
+
+
+User.prototype.findByObjectId = (id) => {
+    return new Promise((resolve, reject) => {
+        if (typeof id != "string") {
+            reject("Not a valid id value");
+            return;
+        }
+        usersCollection.findOne({ _id: new ObjectID(id) })
+            .then((user) => {
+                if (user) {
+                    resolve(user);
+                    return;
+                }
+                else {
+                    reject("no match found");
+                    return;
+                }
+            })
+            .catch((err) => console.log(error));
+    })
+}
+
 User.findByEmail = (email) => {
     return new Promise((resolve, reject) => {
         if (typeof email != "string") {
@@ -259,6 +261,8 @@ User.findByEmail = (email) => {
             .catch((err) => reject(err));
     })
 }
+
+
 User.findByFaculty = (faculty) => {
     return new Promise((resolve, reject) => {
         usersCollection.find({ faculty: faculty }).toArray()
