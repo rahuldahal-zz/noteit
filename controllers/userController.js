@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const sessionCollection = require("../db").db().collection("sessions");
+const reusable = require("./reusableFunctions");
 
 exports.doesUsernameExist = (req, res) => {
     User.findByUsername(req.body.username)
@@ -14,61 +14,31 @@ exports.doesEmailExist = (req, res) => {
 }
 
 exports.root = (req, res) => {
-    if (req.user) {
-        res.redirect(303, "/home");
-    }
 
-    else
-        res.render("home-guest");
+    // if authenticated, redirect to "home" page
+
+    if (req.user) { res.redirect(303, "/home"); }
+    else { res.render("home-guest"); }
+
 }
 
-exports.home = (req, res) => {
-    if (req.user.faculty && req.user.semester) {
-        res.render(`notes/welcome`);
-    }
-    else {
+
+
+/**
+ * will either render the "chooseFacultyAndSemester" view
+ * or, call the next middle-ware, depending upon the "authenticated" user
+ */
+
+exports.home = (req, res, next) => {
+
+    if (!req.user.faculty || !req.user.semester) {
         res.render("chooseFacultyAndSemester");
     }
+    else {
+        return next(); // notesController.findSavedNotes
+    }
 }
 
-exports.register = (req, res, next) => {
-    let user = new User(req.body);
-    user.register()
-        .then((registeredUser) => {
-            req.user = registeredUser;
-            next();
-            return;
-        })
-        .catch(() => res.status(500).end());
-}
-
-exports.createSession = (req, res) => {
-
-    //creating the session for the user
-    req.session.user = {
-        _id: req.user._id,
-        username: req.user.username,
-        faculty: req.user.faculty,
-        semester: req.user.semester,
-        roles: req.user.roles,
-        isApproved: req.user.isApproved,
-        isSubscriptionExpired: req.user.isSubscriptionExpired,
-        savedNotes: req.user.savedNotes
-    };
-    req.session.save(() => {
-        //finding the currently created session and appending the "userId" property
-        sessionCollection.findOneAndUpdate({ _id: req.sessionID }, { $set: { userId: req.session.user._id } })
-            .then((requiredSession) => {
-                //sending the "notes" summary to the client for storing in local storage
-                res.status(202).json(req.notes);
-            })
-            .catch((err) => {
-                res.status(500);
-
-                res.render("home-guest");
-            });
-    })
-}
 
 exports.mustBeLoggedIn = (req, res, next) => {
     if (req.user) {
@@ -77,27 +47,10 @@ exports.mustBeLoggedIn = (req, res, next) => {
     }
 
     else {
-        // req.flash("errors", "You must be logged in to perform that action");
-        const error = new Error("You must be logged in to perform that action");
-        error.status = "401";
-        return next(error);
+        reusable.throwError(401, "You must be logged in to perform that action", next);
     }
 }
 
-exports.login = (req, res, next) => {
-    let user = new User(req.body);
-    user.login()
-        .then((response) => {
-            req.user = response;
-            req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
-            console.log(response);
-            next(); //notesController.sendNotesDescription
-            return;
-        })
-        .catch((err) => {
-            res.send(err);
-        })
-}
 
 
 exports.mustBeApproved = (req, res, next) => {

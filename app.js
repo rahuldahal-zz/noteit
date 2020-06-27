@@ -19,7 +19,7 @@ app.use(passport.session());
 
 
 
-//middleware that the templates can use
+// this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
@@ -51,19 +51,20 @@ app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
 
-// if router(s) do not handle the "route", this middleware will handle it
+// if router(s) do not handle the "route", this middle-ware will handle it
 app.use((req, res, next) => {
     const error = new Error("The page you are looking for is not found");
     error.status = 404;
     next(error);
 })
 
+// this middle-ware sends the error to the client
+
 app.use((error, req, res, next) => {
     switch (error.status) {
         case "401":
-            res.status(error.status).send({ message: "You are unauthorized and cannot access this resource, NoteIT" });
         case "403":
-            res.status(error.status).send({ message: "You are forbidden to access this resource, NoteIT" });
+            res.status(error.status).send({ message: error.message });
         case "404":
             res.status(error.status).render("404");
 
