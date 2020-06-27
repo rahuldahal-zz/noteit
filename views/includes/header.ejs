@@ -14,7 +14,12 @@
             <div id="navWrap" class="flex">
                 <%if(user){%>
                 <a href="/">
-                    <h2><%=user.username%></h2>
+                    <%if(user.googleId){%>
+                    <h2><%=user.given_name%></h2>
+                    <%}else if(user.facebookId){%>
+                    <h2><%=user.first_name%></h2>
+                    <%}%>
+                    
                 </a>
                 <div id="links">
                     <%if(user.isApproved){%>

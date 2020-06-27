@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const Notes = require("../models/Notes");
 
+const reusable = require("./reusableFunctions");
+
 exports.checkForCorrectSubscription = (req, res, next) => {
     function checkFacultyAndSemester() {
         if (req.user.faculty === req.params.faculty &&
@@ -8,10 +10,7 @@ exports.checkForCorrectSubscription = (req, res, next) => {
             next();
             return;
         }
-        req.flash("errors", "You do not have the correct subscription to access this page.");
-        req.save(() => {
-            res.redirect("/home");
-        })
+        reusable.throwError(401, "You do not have the correct subscription to access this page.");
     }
 
     //if "visitor" is not a "contributor", check the subscription details...
@@ -34,10 +33,8 @@ exports.checkForCorrectSubscription = (req, res, next) => {
                     return;
                 }
                 //if rejects with "message", means that the "note" was not found in database, show "flash" "notfound" message
-                req.flash("errors", rejectMessage);
-                req.save(() => {
-                    res.redirect("/home");
-                })
+                reusable.throwError(400, rejectMessage);
+
             });
     }
 
@@ -155,7 +152,7 @@ exports.sendNotesDescriptionToClient = (req, res, next) => {
 }
 
 exports.handleSearch = (req, res) => {
-    Notes.search(req.body.searchTerm, req.session.user.faculty, req.session.user.semester)
+    Notes.search(req.body.searchTerm, req.user.faculty, req.user.semester)
         .then((response) => res.json(response))
         .catch((error) => res.json([]));
 }

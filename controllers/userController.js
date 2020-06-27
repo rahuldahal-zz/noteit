@@ -30,7 +30,7 @@ exports.saveFacultyAndSemester = (req, res, next) => {
     let user = new User(req.user);
     user.saveFacultyAndSemester(req.body.faculty, req.body.semester)
         .then(() => res.status("200").json({ message: "Faculty and Semester Saved Successfully." }))
-        .catch(error => reusable.throwError(400, error, next));
+        .catch(error => reusable.throwError(400, error));
 }
 
 exports.home = (req, res) => {
@@ -60,7 +60,7 @@ exports.mustBeLoggedIn = (req, res, next) => {
     }
 
     else {
-        reusable.throwError(401, "You must be logged in to perform that action", next);
+        reusable.throwError(401, "You must be logged in to perform that action");
     }
 }
 
@@ -83,41 +83,33 @@ exports.mustBeLoggedIn = (req, res, next) => {
 
 
 exports.mustBeApproved = (req, res, next) => {
-    if (req.session.user.isApproved) {
+    if (req.user.isApproved) {
         next();
         return;
     }
     else
-        req.flash("errors", "You are not approved to access this page");
-    req.session.save(() => {
-        res.redirect("/home");
-    })
+        reusable.throwError(403, "You are not approved to access this page");
 }
+
+
 exports.checkSubscriptionStatus = (req, res, next) => {
-    if (!req.session.user.isSubscriptionExpired) {
+    if (!req.user.isSubscriptionExpired) {
         next();
         return;
     }
     else
-        req.flash("errors", "Your subscription has expired, UPGRADE your account.");
-    req.session.save(() => {
-        res.redirect("/home");
-    })
+        reusable.throwError(403, "Your subscription has expired, UPGRADE your account.");
 }
 
 exports.authRole = (role) => {
     return (req, res, next) => {
-        if (req.session.user.roles.includes(role)) {
+        if (req.user.roles.includes(role)) {
             next();
             return;
         }
 
         else {
-            res.status("403");
-            req.flash("errors", "You do not have the permission to access this page.");
-            req.session.save(() => {
-                res.redirect("/home");
-            })
+            reusable.throwError(403, "You do not have the permission to access this page.");
         }
     }
 }

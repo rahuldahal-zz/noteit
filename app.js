@@ -55,20 +55,9 @@ app.use("/admin", adminRouter);
 app.use((req, res, next) => {
     const error = new Error("The page you are looking for is not found");
     error.status = 404;
-    next(error);
+    return next(error);
 })
 
-// this middle-ware sends the error to the client
 
-app.use((error, req, res, next) => {
-    switch (error.status) {
-        case "401":
-        case "403":
-            res.status(error.status).send({ message: error.message });
-        case "404":
-            res.status(error.status).render("404");
-
-    }
-})
 
 module.exports = app;
