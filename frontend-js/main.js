@@ -5,9 +5,13 @@ import CreateNote from "./modules/adminOnly/createNote";
 import NotesScreen from "./modules/notesScreen";
 import SearchNotes from "./modules/searchNotes";
 import ContributorProfile from "./modules/contributorProfile";
+import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
 
 new Base();
 
+if (document.getElementById("saveFacultyAndSemesterScreen")) {
+    new SaveFacultyAndSemester();
+}
 
 if (document.getElementById("searchNoteBtn")) {
     new SearchNotes();

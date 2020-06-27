@@ -2,41 +2,47 @@ const validator = require("validator");
 const usersCollection = require("../db").db().collection("users");
 const ObjectID = require("mongodb").ObjectID;
 
-let User = function (data) {
+let User = function (data, provider) {
     this.data = data;
+    this.provider = provider;
     this.errors = [];
 }
 
 User.prototype.cleanUp = function () {
-    if (typeof (this.data.sub) != "string")
-        this.data.sub = "";
-    if (typeof (this.data.email) != "string")
-        this.data.email = "";
-    if (typeof (this.data.name) != "string")
-        this.data.name = "";
-    if (typeof (this.data.given_name) != "string")
-        this.data.given_name = "";
-    if (typeof (this.data.family_name) != "string")
-        this.data.family_name = "";
-    if (typeof (this.data.picture) != "string")
-        this.data.picture = "";
 
-    //ignore bogus properties
+    // if data is provided by google
 
-    this.data = {
-        sub: this.data.sub,
-        email: this.data.email.trim(),
-        name: this.data.name,
-        given_name: this.data.given_name,
-        family_name: this.data.family_name,
-        faculty: null,
-        semester: null,
-        roles: ["basic"],
-        isApproved: false,
-        isSubscriptionExpired: false,
-        joinedOn: new Date(),
-        savedNotes: [],
-        lastLogin: new Date()
+    if (this.provider === "google") {
+        if (typeof (this.data.sub) != "string")
+            this.data.sub = "";
+        if (typeof (this.data.email) != "string")
+            this.data.email = "";
+        if (typeof (this.data.name) != "string")
+            this.data.name = "";
+        if (typeof (this.data.given_name) != "string")
+            this.data.given_name = "";
+        if (typeof (this.data.family_name) != "string")
+            this.data.family_name = "";
+        if (typeof (this.data.picture) != "string")
+            this.data.picture = "";
+
+        //ignore bogus properties
+
+        this.data = {
+            googleId: this.data.sub,
+            email: this.data.email.trim(),
+            name: this.data.name,
+            given_name: this.data.given_name,
+            family_name: this.data.family_name,
+            faculty: null,
+            semester: null,
+            roles: ["basic"],
+            isApproved: false,
+            isSubscriptionExpired: false,
+            joinedOn: new Date(),
+            savedNotes: [],
+            lastLogin: new Date()
+        }
     }
 }
 
@@ -135,6 +141,23 @@ User.prototype.createUser = function () {
     })
 }
 
+User.prototype.saveFacultyAndSemester = function (faculty, semester) {
+    return new Promise((resolve, reject) => {
+        console.log(this.data._id);
+        if (typeof faculty !== "string" || typeof semester !== "string")
+            return reject("Unacceptable values are provided");
+        usersCollection.findOneAndUpdate(
+            { _id: new ObjectID(this.data._id) },
+            { $set: { faculty: faculty, semester: semester } }
+        )
+            .then((updatedUser) => {
+                if (updatedUser.value) return resolve();
+                reject("The requested user cannot be found");
+            })
+            .catch((error) => console.log(error));
+    })
+}
+
 User.prototype.saveNotes = function (noteId) {
     noteId = new ObjectID(noteId);
     return new Promise((resolve, reject) => {
@@ -204,7 +227,7 @@ User.prototype.findByGoogleId = (googleId) => {
             reject("Not a valid googleId value");
             return;
         }
-        usersCollection.findOne({ sub: googleId })
+        usersCollection.findOne({ googleId: googleId })
             .then((user) => {
                 if (user) {
                     resolve(user);

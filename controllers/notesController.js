@@ -143,15 +143,13 @@ exports.sendNotesDescriptionToClient = (req, res, next) => {
     if (!req.hasNotesInLocalStorage) {
         notes.findNotes(req.user.faculty, req.user.semester)
             .then((availableNotes) => {
-                req.notes = availableNotes; //use this in the front end to render subjects and their units, also store in localStorage, this is send in JSON via the next();
-                next();
+                res.status(200).json(availableNotes); //use this in the front end to render subjects and their units, also store in localStorage, this is send in JSON via the next();
                 return;
             })
             .catch((error) => console.log(error));
     }
     else {
-        req.notes = {};
-        next();
+        res.json({});
     }
 
 }

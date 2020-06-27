@@ -14,64 +14,47 @@ exports.doesEmailExist = (req, res) => {
 }
 
 exports.root = (req, res) => {
-    if (req.user) {
-        res.redirect(303, "/home");
-    }
 
-    else
-        res.render("home-guest");
+    if (!req.user) return res.render("home-guest");
+
+    if (!req.user.faculty || !req.user.semester) {
+        return res.render("saveFacultyAndSemester");
+    }
+    // return res.render("notes/readyToGo");
+
+    return res.redirect(303, "/home");
+
+}
+
+exports.saveFacultyAndSemester = (req, res, next) => {
+    let user = new User(req.user);
+    user.saveFacultyAndSemester(req.body.faculty, req.body.semester)
+        .then(() => res.status("200").json({ message: "Faculty and Semester Saved Successfully." }))
+        .catch(error => reusable.throwError(400, error, next));
 }
 
 exports.home = (req, res) => {
+
+    // when this controller fires, set a "cookie" to signify that the "user" has been to this route before,
+    // which means they have "availableNotes" on their local storage and we are safe to render the "welcome" view
+
+    // set cookie, using express' cookie-session
+
     if (req.user.faculty && req.user.semester) {
-        res.render(`notes/welcome`);
-    }
-    else {
-        res.render("chooseFacultyAndSemester");
-    }
-}
+        res.render("notes/welcome");
 
-exports.register = (req, res, next) => {
-    let user = new User(req.body);
-    user.register()
-        .then((registeredUser) => {
-            req.user = registeredUser;
-            next();
+        // if not approved, log them out after 30 seconds
+
+        if (!req.user.isApproved) {
+            setTimeout(() => req.logout, 30000);
             return;
-        })
-        .catch(() => res.status(500).end());
+        }
+    }
 }
 
-exports.createSession = (req, res) => {
-
-    //creating the session for the user
-    req.session.user = {
-        _id: req.user._id,
-        username: req.user.username,
-        faculty: req.user.faculty,
-        semester: req.user.semester,
-        roles: req.user.roles,
-        isApproved: req.user.isApproved,
-        isSubscriptionExpired: req.user.isSubscriptionExpired,
-        savedNotes: req.user.savedNotes
-    };
-    req.session.save(() => {
-        //finding the currently created session and appending the "userId" property
-        sessionCollection.findOneAndUpdate({ _id: req.sessionID }, { $set: { userId: req.session.user._id } })
-            .then((requiredSession) => {
-                //sending the "notes" summary to the client for storing in local storage
-                res.status(202).json(req.notes);
-            })
-            .catch((err) => {
-                res.status(500);
-
-                res.render("home-guest");
-            });
-    })
-}
 
 exports.mustBeLoggedIn = (req, res, next) => {
-    if (req.user) {
+    if (req.user.faculty && req.user.semester) {
         next();
         return;
     }
@@ -83,20 +66,20 @@ exports.mustBeLoggedIn = (req, res, next) => {
 
 
 
-exports.login = (req, res, next) => {
-    let user = new User(req.body);
-    user.login()
-        .then((response) => {
-            req.user = response;
-            req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
-            console.log(response);
-            next(); //notesController.sendNotesDescription
-            return;
-        })
-        .catch((err) => {
-            res.send(err);
-        })
-}
+// exports.login = (req, res, next) => {
+//     let user = new User(req.body);
+//     user.login()
+//         .then((response) => {
+//             req.user = response;
+//             req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
+//             console.log(response);
+//             next(); //notesController.sendNotesDescription
+//             return;
+//         })
+//         .catch((err) => {
+//             res.send(err);
+//         })
+// }
 
 
 exports.mustBeApproved = (req, res, next) => {

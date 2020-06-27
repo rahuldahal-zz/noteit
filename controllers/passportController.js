@@ -52,7 +52,7 @@ passport.use(
 
 
 function createUser(profile, done) {
-    let user = new User(profile);
+    let user = new User(profile, "google");
     user.createUser()
         .then((response) => {
             console.log(response);
