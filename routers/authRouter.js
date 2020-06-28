@@ -18,7 +18,10 @@ router.get("/google", passport.authenticate("google", {
     scope: ["profile", "email"]
 }))
 
-router.get("/facebook", (req, res) => res.send("logging with facebook"))
+router.get("/facebook", passport.authenticate("facebook", {
+    scope: ["profile", "email"]
+}))
+
 
 // redirect route
 
@@ -28,8 +31,18 @@ router.get("/facebook", (req, res) => res.send("logging with facebook"))
 // this is what the second "invocation" will do, essentially firing the "passport-callback" from "passportController"
 
 router.get("/google/redirect",
-    passport.authenticate("google"),
-    (req, res) => res.redirect("/")
+    passport.authenticate("google", {
+        successRedirect: "/",
+        failureRedirect: "/auth/fail"
+    })
+
+);
+
+router.get("/facebook/redirect",
+    passport.authenticate("facebook"),
+    (req, res) => {
+        console.log("all done, will be redirected to root");
+    }
 );
 
 

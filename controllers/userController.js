@@ -20,7 +20,9 @@ exports.root = (req, res) => {
     if (!req.user.faculty || !req.user.semester) {
         return res.render("saveFacultyAndSemester");
     }
-    // return res.render("notes/readyToGo");
+    if (!req.session.canViewHomePage) {
+        return res.render("notes/readyToGo");
+    }
 
     return res.redirect(303, "/home");
 
@@ -39,6 +41,8 @@ exports.home = (req, res) => {
     // which means they have "availableNotes" on their local storage and we are safe to render the "welcome" view
 
     // set cookie, using express' cookie-session
+
+    req.session.canViewHomePage = true;
 
     if (req.user.faculty && req.user.semester) {
         res.render("notes/welcome");
