@@ -1,0 +1,14 @@
+<%-include("includes/header")%>
+
+<main id="saveFacultyAndSemesterScreen">
+    <h2>Hello <%=user.name%></h2>
+    <h3>Choose your faculty and semester</h3>
+    <form id="saveFacultyAndSemester__form" action="/users/saveFacultyAndSemester" method="POST">
+        <input id="faculty" type="text" name="faculty" placeholder="faculty">
+        <input id="semester" type="text" name="semester" placeholder="semester">
+        <button type="submit">Save</button>
+    </form>
+</main>
+
+
+<%-include("includes/footer")%>

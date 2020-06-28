@@ -4,11 +4,12 @@ const userController = require("../controllers/userController");
 const notesController = require("../controllers/notesController");
 
 
-router.post("/register", userController.register, notesController.sendNotesDescriptionToClient, userController.createSession);
-router.post("/login", userController.login, notesController.sendNotesDescriptionToClient, userController.createSession);
-router.post("/logout", userController.logout);
+router.post("/sendNotesToClient", notesController.sendNotesDescriptionToClient);
 
-//developer's actions
+router.post("/saveFacultyAndSemester", userController.saveFacultyAndSemester);
+
+
+// developer's actions
 router.post("/doesUsernameExist", userController.doesUsernameExist);
 router.post("/doesEmailExist", userController.doesEmailExist);
 

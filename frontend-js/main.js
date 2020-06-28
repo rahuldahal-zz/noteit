@@ -1,20 +1,16 @@
 import Base from "./modules/base";
-import RegistrationForm from "./modules/registration";
-import Login from "./modules/login";
 import LocalStorageHandler from "./modules/localStorageHandler";
 import UserQuery from "./modules/adminOnly/userQuery";
 import CreateNote from "./modules/adminOnly/createNote";
 import NotesScreen from "./modules/notesScreen";
 import SearchNotes from "./modules/searchNotes";
 import ContributorProfile from "./modules/contributorProfile";
+import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
 
 new Base();
 
-if (document.getElementById("registrationForm")) {
-    new RegistrationForm();
-}
-if (document.getElementById("loginForm")) {
-    new Login();
+if (document.getElementById("saveFacultyAndSemesterScreen")) {
+    new SaveFacultyAndSemester();
 }
 
 if (document.getElementById("searchNoteBtn")) {

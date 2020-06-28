@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const sessionCollection = require("../db").db().collection("sessions");
+const reusable = require("./reusableFunctions");
 
 exports.doesUsernameExist = (req, res) => {
     User.findByUsername(req.body.username)
@@ -14,139 +14,102 @@ exports.doesEmailExist = (req, res) => {
 }
 
 exports.root = (req, res) => {
-    if (req.session.user) {
-        res.redirect(303, "/home");
-    }
 
-    else
-        res.render("home-guest");
+    if (!req.user) return res.render("home-guest");
+
+    if (!req.user.faculty || !req.user.semester) {
+        return res.render("saveFacultyAndSemester");
+    }
+    // return res.render("notes/readyToGo");
+
+    return res.redirect(303, "/home");
+
+}
+
+exports.saveFacultyAndSemester = (req, res, next) => {
+    let user = new User(req.user);
+    user.saveFacultyAndSemester(req.body.faculty, req.body.semester)
+        .then(() => res.status("200").json({ message: "Faculty and Semester Saved Successfully." }))
+        .catch(error => reusable.throwError(400, error));
 }
 
 exports.home = (req, res) => {
-    if (req.session.user) {
-        res.render(`notes/welcome`);
 
-        if (!req.session.user.isApproved) {
-            setTimeout(() => {
-                console.log(req.session.user.isApproved);
-                req.session.destroy();
-            }, 30000)
+    // when this controller fires, set a "cookie" to signify that the "user" has been to this route before,
+    // which means they have "availableNotes" on their local storage and we are safe to render the "welcome" view
+
+    // set cookie, using express' cookie-session
+
+    if (req.user.faculty && req.user.semester) {
+        res.render("notes/welcome");
+
+        // if not approved, log them out after 30 seconds
+
+        if (!req.user.isApproved) {
+            setTimeout(() => req.logout, 30000);
+            return;
         }
     }
-    else res.redirect(401, "/");
 }
 
-exports.register = (req, res, next) => {
-    let user = new User(req.body);
-    user.register()
-        .then((registeredUser) => {
-            req.user = registeredUser;
-            next();
-            return;
-        })
-        .catch(() => res.status(500).end());
-}
-
-exports.createSession = (req, res) => {
-
-    //creating the session for the user
-    req.session.user = {
-        _id: req.user._id,
-        username: req.user.username,
-        faculty: req.user.faculty,
-        semester: req.user.semester,
-        roles: req.user.roles,
-        isApproved: req.user.isApproved,
-        isSubscriptionExpired: req.user.isSubscriptionExpired,
-        savedNotes: req.user.savedNotes
-    };
-    req.session.save(() => {
-        //finding the currently created session and appending the "userId" property
-        sessionCollection.findOneAndUpdate({ _id: req.sessionID }, { $set: { userId: req.session.user._id } })
-            .then((requiredSession) => {
-                //sending the "notes" summary to the client for storing in local storage
-                res.status(202).json(req.notes);
-            })
-            .catch((err) => {
-                res.status(500);
-                req.flash("errors", "Something is wrong with the server, try again in a few moments");
-                res.render("home-guest");
-            });
-    })
-}
 
 exports.mustBeLoggedIn = (req, res, next) => {
-    if (req.session.user) {
+    if (req.user.faculty && req.user.semester) {
         next();
         return;
     }
 
     else {
-        req.flash("errors", "You must be logged in to perform that action");
-        req.session.save(() => {
-            res.redirect("/");
-        })
+        reusable.throwError(401, "You must be logged in to perform that action");
     }
 }
 
-exports.login = (req, res, next) => {
-    let user = new User(req.body);
-    user.login()
-        .then((response) => {
-            req.user = response;
-            req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
-            console.log(response);
-            next(); //notesController.sendNotesDescription
-            return;
-        })
-        .catch((err) => {
-            res.send(err);
-        })
-}
 
-exports.logout = (req, res) => {
-    req.session.destroy(() => {
-        res.redirect("/");
-    });
 
-}
+// exports.login = (req, res, next) => {
+//     let user = new User(req.body);
+//     user.login()
+//         .then((response) => {
+//             req.user = response;
+//             req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
+//             console.log(response);
+//             next(); //notesController.sendNotesDescription
+//             return;
+//         })
+//         .catch((err) => {
+//             res.send(err);
+//         })
+// }
+
 
 exports.mustBeApproved = (req, res, next) => {
-    if (req.session.user.isApproved) {
+    if (req.user.isApproved) {
         next();
         return;
     }
     else
-        req.flash("errors", "You are not approved to access this page");
-    req.session.save(() => {
-        res.redirect("/home");
-    })
+        reusable.throwError(403, "You are not approved to access this page");
 }
+
+
 exports.checkSubscriptionStatus = (req, res, next) => {
-    if (!req.session.user.isSubscriptionExpired) {
+    if (!req.user.isSubscriptionExpired) {
         next();
         return;
     }
     else
-        req.flash("errors", "Your subscription has expired, UPGRADE your account.");
-    req.session.save(() => {
-        res.redirect("/home");
-    })
+        reusable.throwError(403, "Your subscription has expired, UPGRADE your account.");
 }
 
 exports.authRole = (role) => {
     return (req, res, next) => {
-        if (req.session.user.roles.includes(role)) {
+        if (req.user.roles.includes(role)) {
             next();
             return;
         }
 
         else {
-            res.status("403");
-            req.flash("errors", "You do not have the permission to access this page.");
-            req.session.save(() => {
-                res.redirect("/home");
-            })
+            reusable.throwError(403, "You do not have the permission to access this page.");
         }
     }
 }

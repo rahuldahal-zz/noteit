@@ -16,13 +16,13 @@ exports.getOne = (req, res) => {
     Contributors.getOne(req.params.username)
         .then((response) => {
             response.isVisitorTheRequestedContributor = false;
-            if (req.session.user) {
-                if (req.session.user._id.toString() === response.userId.toString())
+            if (req.user) {
+                if (req.user._id.toString() === response.userId.toString())
                     response.isVisitorTheRequestedContributor = true;
 
                 //check if the visitor is following the requested contributor
 
-                Follow.isVisitorFollowing(response._id, req.session.user._id)
+                Follow.isVisitorFollowing(response._id, req.user._id)
                     .then(() => {
                         response.isVisitorFollowing = true;
                         res.render("contributors/contributor-profile", { contributor: response });

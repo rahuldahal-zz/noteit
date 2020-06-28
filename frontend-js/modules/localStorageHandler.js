@@ -3,6 +3,7 @@ export default class LocalStorageHandler {
         this.subjectsContainer = document.getElementById("welcomeScreen__subjectsContainer");
         this.savedNotes = document.getElementById("welcomeScreen__savedNotes") || document.getElementById("notesScreen__savedUnits");
         this.subjectWiseUnits = JSON.parse(localStorage.getItem("notes"));
+        console.log(this.subjectWiseUnits);
         this.subjects = Object.keys(this.subjectWiseUnits);
         if (this.subjectsContainer) this.displaySubjects();
         if (this.savedNotes)
@@ -28,6 +29,7 @@ export default class LocalStorageHandler {
 
 
         console.log(this.subjectWiseUnits);
+        console.log(this.subjects);
 
         this.subjects.forEach((subject) => {
             let firstUnit = this.subjectWiseUnits[subject].find((unit) => unit.unitNo == 1);
