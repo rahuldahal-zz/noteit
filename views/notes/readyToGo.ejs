@@ -1,13 +1,12 @@
-<%-include("includes/header")%>
+<%-include("../includes/header")%>
 
 
 <main id="readyToGoScreen">
-    <h1>You are now successfully authenticated via "placeholder"</h1>
+    <h2>You are now successfully authenticated via "placeholder"</h2>
     <p>Click the "continue" button below to proceed.</p>
-    <form action="/login" method="post">
-        <input type="hidden" name="cameFromReadyToGo" value="true">
+    <form action="/readyToGo" method="post">
         <button type="submit" class="btn">Continue</button>
     </form>
 </main>
 
-<%-include("includes/footer")%>
+<%-include("../includes/footer")%>
