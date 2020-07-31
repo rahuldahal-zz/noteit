@@ -2,58 +2,65 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoteIT</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoteIT</title>
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-    <div id="container">
-        <nav>
-            <div id="navWrap" class="flex">
-                <%if(user){%>
-                <a href="/">
-                    <%if(user.googleId){%>
-                    <h2><%=user.given_name%></h2>
-                    <%}else if(user.facebookId){%>
-                    <h2><%=user.first_name%></h2>
-                    <%}%>
-                    
-                </a>
-                <div id="links">
-                    <%if(user.isApproved){%>
-                    <button type="button" id="searchNoteBtn" class="btn">Search Note</button>
-                    <%}%>
-                    <%if(user.roles.includes("contributor")){%>
-                    <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
-                    <%}%>
-                    <form action="/auth/logout" method="POST" id="logoutForm">
-                        <button type="submit" class="btn">Logout</button>
-                    </form>
-                </div>
-                <%} else {%>
-                    <h2>NoteIT</h2>
-                    <div id="links">
-                        <button type="button" class="btn" data-trigger-type="add" data-trigger-target="loginOptions"
-                            data-trigger-action="loginOptions--visible">Login</button>
+  <div id="container">
+    <nav>
+      <div id="navWrap" class="flex">
+        <%if(user){%>
+        <a href="/">
+          <h2><%=user.firstName%></h2>
+        </a>
+        <div id="links">
+          <%if(user.isApproved){%>
+          <button type="button" id="searchNoteBtn" class="btn">
+            Search Note
+          </button>
+          <%}%> <%if(user.roles.includes("contributor")){%>
+          <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
+          <%}%>
+            <form action="/auth/logout" method="POST" id="logoutForm">
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+          <button type="submit" class="btn">Logout</button>
+          </form>
+        </div>
+        <%} else {%>
+        <h2>NoteIT</h2>
+        <div id="links">
+          <button type="button" class="btn btn--accent" data-trigger-type="add" data-trigger-target="loginOptions"
+            data-trigger-action="loginOptions--visible">
+            Login
+          </button>
 
-                        <div id="loginOptions" class="flex triggerTarget">
-                            <div id="loginOptions__buttons" class="flex">
-                                <a href="/auth/facebook" class="btn">Facebook</a>
-                                <a href="/auth/google" class="btn">Google</a>
-                            </div>
-
-                            <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
-                                data-trigger-action="loginOptions--visible">Close</button>
-                        </div>
-                    </div>
-                    <%}%>
+          <div id="loginOptions" class="flex triggerTarget">
+            <div id="loginOptions__buttons" class="flex">
+              <a href="/auth/facebook" class="btn">Facebook</a>
+              <a href="/auth/google" class="btn">Google</a>
             </div>
-    </nav>
 
-    <!-- flash message wrapper -->
+            <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
+              data-trigger-action="loginOptions--visible">
+              Close
+            </button>
+          </div>
 
-    <div id="flash-wrap" class="flex flex--column">
+          <div id="hamBurger">
+            <div></div>
+          </div>
+        </div>
+        <%}%>
+        </div>
+      </nav>
 
-    </div>
+      <!-- flash message wrapper -->
+
+      <div id="flash-wrap" class="flex flex--column">
+        <%errors.forEach(error=>{%>
+        <p class="flashError"><%=error%></p>
+        <%})%>
+      </div>

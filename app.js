@@ -1,29 +1,42 @@
 const express = require("express");
 const passport = require("passport");
-const passportController = require("./controllers/passportController");
-const cookieSession = require("cookie-session");
+const passportController = require("./controllers/passportController"); // this need to be here, in order to "run"
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const flash = require("connect-flash");
+const csrf = require("csurf");
 const app = express();
 
+// ways to submit data to the server
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// the "API" router
+app.use("/api", require("./routers/apiRouter"));
 
 let sessionOptions = {
-    keys: ["NoteITisCreatedByRahulDahal"],
-    maxAge: 1000 * 60 * 60 * 24,
-    httpOnly: true
+  secret: process.env.sessionSecret,
+  store: new MongoStore({ client: require("./db") }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 240, httpOnly: true }, // change this to 24 in production
 };
 
-app.use(cookieSession(sessionOptions));
+app.use(session(sessionOptions));
+
+app.use(flash());
 
 // initialize passport in our app, important
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
-    res.locals.user = req.user;
-    next();
-})
+  res.locals.user = req.user;
+  res.locals.errors = req.flash("errors");
+  res.locals.successes = req.flash("successes");
+  next();
+});
 
 //routers
 const rootRouter = require("./routers/rootRouter");
@@ -33,14 +46,17 @@ const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
 const adminRouter = require("./routers/adminRouter");
 
-//ways to submit data to the server
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
 app.use(express.static("public"));
 app.set("views", "views");
 app.set("view engine", "ejs");
 
+//use the csurf, makes sure that every request that can change the state of app has a valid token
+app.use(csrf());
+
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  return next();
+});
 
 //using the routers
 app.use("/", rootRouter);
@@ -50,14 +66,12 @@ app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
-
 // if router(s) do not handle the "route", this middle-ware will handle it
-app.use((req, res, next) => {
-    const error = new Error("The page you are looking for is not found");
-    error.status = 404;
-    return next(error);
-})
-
-
+app.use((err, req, res, next) => {
+  if (err && err.code === "EBADCSRFTOKEN") {
+    return res.send("Cross site request forgery detected");
+  }
+  res.render("404");
+});
 
 module.exports = app;

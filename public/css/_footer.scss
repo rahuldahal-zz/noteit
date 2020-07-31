@@ -1,0 +1,13 @@
+footer {
+  bottom: -7vh;
+  z-index: 5;
+  width: 100vw;
+  padding: 1rem;
+  background-color: #333;
+  color: #eee;
+  text-align: center;
+
+  p {
+    margin-bottom: 0;
+  }
+}

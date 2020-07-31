@@ -17,8 +17,8 @@
 
                 N = Number,<br>
                 r = radix/base,<br>
-                n = no. of digits in <span class="difficult_words highlight">integer<span class="meaning">Counting
-                        numbers</span></span> part,<br>
+                n = no. of digits in <span class="difficult_words highlight">integer<span class="meaning"> before the
+                        "."</span></span> part,<br>
                 m = no.of digits in fraction part,<br>
                 d<sub>n-1</sub> = Most Significant Bit ( MSB ),<br>
                 d<sub>-m</sub> = Least Significant Bit ( LSB )
@@ -341,7 +341,7 @@
             Binary/Octal/Hexadecimal.</p><br>
         <p>To convert a decimal number into any other form,<br> our first step will be to divide the given decimal
             number's
-            <span class="difficult_words highlight">integer<span class="meaning">Counting numbers</span></span> part by
+            <span class="difficult_words highlight">integer<span class="meaning"> before the "."</span></span> part by
             the
             base/radix(r) of the another number system that we want to convert into and mark the remainder as we
             continue to
@@ -381,7 +381,7 @@
             = 1.</span>
         <br>
         <p>We are almost done. Now, write down the marked remainders from the <span
-                class="difficult_words highlight">integer<span class="meaning">Counting numbers</span></span> part
+                class="difficult_words highlight">integer<span class="meaning"> before the "."</span></span> part
             starting
             from the newest remainder = 1101011110, put a decimal point after that '.' and write the taken out digits
             from
@@ -448,8 +448,8 @@
         <h4>Solution</h4>
         <br>
         <span class="margin_left">Separate the combination of 3 binary digits(remember, Octal number is represented by 3
-            bits) starting from LSB(right side for <span class="difficult_words highlight">integer<span
-                    class="meaning">Counting numbers</span></span> part and left side for fraction part).</span>
+            bits) starting from LSB(right side for <span class="difficult_words highlight">integer<span class="meaning">
+                    before the "."</span></span> part and left side for fraction part).</span>
         <p>101, 011, 101 . 011, 100, 100</p>
         <span class="margin_left">Now, use 421 rule, i.e. place the respective binary weight on the position of
             digits.</span>
@@ -485,7 +485,7 @@
         <span class="margin_left">Separate the combination of 4 binary digits(remember, Hexadecimal number is
             represented by
             4 bits) starting from LSB(right side for <span class="difficult_words highlight">integer<span
-                    class="meaning">Counting numbers</span></span> part and left side for fraction part).</span>
+                    class="meaning"> before the "."</span></span> part and left side for fraction part).</span>
         <p>From right side of the <span class="difficult_words highlight">integer<span class="meaning">Counting
                     numbers</span></span> part : 1011, 1010, 1101 , now from the left side fir fraction part, 0111, 0010
         </p>
@@ -525,7 +525,7 @@
     <section class="subTopicWrap">
         <h3 class="subTopic">The r's complement</h3>
         <p>Given a positive number 'N' with base 'r' and an <span class="difficult_words highlight">integer<span
-                    class="meaning">Counting numbers</span></span> part of 'n' digits, the r's complement of 'N' is
+                    class="meaning"> before the "."</span></span> part of 'n' digits, the r's complement of 'N' is
             defined
             as: </p>
         <span class="margin_left">r<sup>n</sup> - N ( where N is not equal to 0)</span>

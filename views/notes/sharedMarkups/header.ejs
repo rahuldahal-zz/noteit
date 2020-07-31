@@ -1,27 +1,28 @@
 <%-include("../../includes/header")%>
 
-
 <aside id="notesScreen-sidebar">
-    <div id="unitsAndSubjects">
-        <h4 class="thin">Subjects & Units</h4>
-        <div id="unitsSideBarWrapper">
-            <!-- will be injected via JS -->
-        </div>
+  <div id="unitsAndSubjects">
+    <h4 class="thin">Subjects & Units</h4>
+    <div id="unitsSideBarWrapper">
+      <!-- will be injected via JS -->
     </div>
-    <div id="internalLinks">
-        <h4 class="thin">Jump to different Sections</h4>
-        <div id="internalLinksSideBarWrapper"></div>
-    </div>
-
+  </div>
+  <div id="internalLinks">
+    <h4 class="thin">Jump to different Sections</h4>
+    <div id="internalLinksSideBarWrapper"></div>
+  </div>
 </aside>
 <main id="notesScreen">
-    <%if(!hasVisitorContributedThatNote){%>
-    <form action="/notes/saveNote" method="POST" id="saveNoteForm">
-        <input type="hidden" name="noteId" value="<%=requestedNote._id%>">
-        <%if(!requestedNote.hasSaved){%>
-        <button type="submit" class="btn" id="saveNoteBtn">Save</button>
-        <%}else{%>
-        <button type="submit" class="btn saveNote--saved" id="saveNoteBtn">Saved</button>
-        <%}%>
-        </form>
+  <%if(!hasVisitorContributedThatNote){%>
+  <form action="/notes/saveNote" method="POST" id="saveNoteForm">
+    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+    <input type="hidden" name="noteId" value="<%=requestedNote._id%>" />
+    <%if(!requestedNote.hasSaved){%>
+    <button type="submit" class="btn" id="saveNoteBtn">Save</button>
+    <%}else{%>
+    <button type="submit" class="btn saveNote--saved" id="saveNoteBtn">
+      Saved
+    </button>
     <%}%>
+  </form>
+  <%}%>

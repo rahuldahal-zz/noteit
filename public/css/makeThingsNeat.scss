@@ -11,7 +11,7 @@
   padding: 0;
   margin-top: 0;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* can easily override the --customProperties or, change them with JS*/
@@ -30,7 +30,12 @@ body {
 }
 
 /*headings typography*/
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 1.5rem 0;
   font-family: var(--headingFont);
 }
@@ -50,12 +55,11 @@ h3 {
   font-weight: 400;
 }
 
-h4{
+h4 {
   font-size: 1.3rem;
   font-weight: 400;
 }
 /*ends here*/
-
 
 /*setting up some "breathing-space" between lines*/
 p {
@@ -69,12 +73,12 @@ p::first-letter {
 
 /*the default "purple" color is not so cool*/
 a {
-  color: var(--accentColor);
+  color: var(--brandColor);
 }
 
-
 /*restrict overflow from parent */
-img, video {
+img,
+video {
   width: 100%;
   height: auto;
 }
@@ -86,21 +90,29 @@ kbd {
   padding: 0.25rem;
   border-radius: 0.25rem;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
 }
 
 /*making the typography consistent for inputFields, buttons, tables*/
-input, button, table, select, textarea {
+input,
+button,
+table,
+select,
+textarea {
   font-family: inherit;
 }
 
 /*making the "table" look like a "table"*/
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   border: 2px solid var(--primaryTextColor);
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 0.5rem 0.75rem;
 }
 
@@ -110,29 +122,36 @@ table tr:nth-child(even) {
 
 /*table styles end here*/
 /*making the input, button, and other form fields look neat and easy to grab "focus"*/
-input, select, textarea {
+input,
+select,
+textarea {
   display: block;
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   border: 1px solid var(--primaryTextColor);
   border-radius: 0.3rem;
 }
 
-[type=radio], [type=checkbox] {
+[type="radio"],
+[type="checkbox"] {
   display: inline-block;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border: 1px solid var(--accentColor);
 }
 
-[type=submit], button {
+[type="submit"],
+button {
   background-color: var(--accentColor);
-  color: var(--primaryBgColor);
+  color: var(--primaryTextColor);
   border: none;
   border-radius: 0.3rem;
   padding: 0.5rem 1rem;
@@ -142,30 +161,38 @@ input:focus, textarea:focus {
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
-  -webkit-transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
-  transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out,
+    -webkit-box-shadow 0.2s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out,
+    -webkit-box-shadow 0.2s ease-in-out;
   transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
-  transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out,
+    -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
 }
 
-[type=submit]:hover, button:hover, [type=submit]:focus, button:focus {
+[type="submit"]:hover,
+button:hover,
+[type="submit"]:focus,
+button:focus {
   -webkit-transform: translateY(-5px);
-          transform: translateY(-5px);
+  transform: translateY(-5px);
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
-[type=submit]:active, button:active {
+[type="submit"]:active,
+button:active {
   -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  transform: scale(0.9);
 }
 
-[type=submit]:disabled, button:disabled {
+[type="submit"]:disabled,
+button:disabled {
   -webkit-transform: translateY(0);
-          transform: translateY(0);
+  transform: translateY(0);
   background-color: grey;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   cursor: not-allowed;
 }
 
@@ -187,14 +214,14 @@ fieldset > input {
   width: 100%;
 }
 
-fieldset [type=radio], fieldset [type=checkbox] {
+fieldset [type="radio"],
+fieldset [type="checkbox"] {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
 /*form styles end here*/
-
 
 /*the default style looks too vibrant*/
 mark {
@@ -212,7 +239,11 @@ mark::after {
   left: 0;
   width: 100%;
   height: 0.3rem;
-  background-image: linear-gradient(45deg, rgba(238, 238, 48, 0.6), rgba(255, 208, 0, 0.8));
+  background-image: linear-gradient(
+    45deg,
+    rgba(238, 238, 48, 0.6),
+    rgba(255, 208, 0, 0.8)
+  );
   -webkit-transform-origin: bottom;
   transform-origin: bottom;
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
@@ -228,22 +259,25 @@ mark:hover::after {
 
 /*<mark> style ends here*/
 
-
 /*creating the "breathing-space" between list-items*/
-ul, ol {
+ul,
+ol {
   margin: 1rem;
 }
 
-ul > li, ol > li {
+ul > li,
+ol > li {
   list-style-position: inside;
   margin-bottom: 0.5rem;
 }
 
-ul ol, ol ul {
+ul ol,
+ol ul {
   margin: 0 0 0 1rem;
 }
 
-ul > li:last-child, ol > li:last-child {
+ul > li:last-child,
+ol > li:last-child {
   margin-bottom: 0;
 }
 
@@ -253,10 +287,10 @@ dl dt {
 }
 
 /*list style ends here*/
-pre, kbd {
+pre,
+kbd {
   font-family: monospace;
 }
-
 
 [type="hidden"] {
   display: none;

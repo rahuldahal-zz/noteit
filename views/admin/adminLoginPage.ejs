@@ -29,6 +29,7 @@
                 <label for="password">password</label>
                 <input type="password" name="password" autofocus="on" autocomplete="off">
             </fieldset>
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
             <button type="submit" class="btn btn--brand">Log in as Administrator</button>
         </form>
     </main>

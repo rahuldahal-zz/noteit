@@ -515,7 +515,12 @@ body {
 }
 
 /*headings typography*/
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 1.5rem 0;
   font-family: var(--headingFont);
 }
@@ -553,11 +558,12 @@ p::first-letter {
 
 /*the default "purple" color is not so cool*/
 a {
-  color: var(--accentColor);
+  color: var(--brandColor);
 }
 
 /*restrict overflow from parent */
-img, video {
+img,
+video {
   width: 100%;
   height: auto;
 }
@@ -573,17 +579,25 @@ kbd {
 }
 
 /*making the typography consistent for inputFields, buttons, tables*/
-input, button, table, select, textarea {
+input,
+button,
+table,
+select,
+textarea {
   font-family: inherit;
 }
 
 /*making the "table" look like a "table"*/
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   border: 2px solid var(--primaryTextColor);
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 0.5rem 0.75rem;
 }
 
@@ -593,29 +607,36 @@ table tr:nth-child(even) {
 
 /*table styles end here*/
 /*making the input, button, and other form fields look neat and easy to grab "focus"*/
-input, select, textarea {
+input,
+select,
+textarea {
   display: block;
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   border: 1px solid var(--primaryTextColor);
   border-radius: 0.3rem;
 }
 
-[type=radio], [type=checkbox] {
+[type="radio"],
+[type="checkbox"] {
   display: inline-block;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border: 1px solid var(--accentColor);
 }
 
-[type=submit], button {
+[type="submit"],
+button {
   background-color: var(--accentColor);
-  color: var(--primaryBgColor);
+  color: var(--primaryTextColor);
   border: none;
   border-radius: 0.3rem;
   padding: 0.5rem 1rem;
@@ -625,25 +646,33 @@ input:focus, textarea:focus {
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   -webkit-transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
   transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-transform 0.3s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
 }
 
-[type=submit]:hover, button:hover, [type=submit]:focus, button:focus {
+[type="submit"]:hover,
+button:hover,
+[type="submit"]:focus,
+button:focus {
   -webkit-transform: translateY(-5px);
   transform: translateY(-5px);
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
-[type=submit]:active, button:active {
+[type="submit"]:active,
+button:active {
   -webkit-transform: scale(0.9);
   transform: scale(0.9);
 }
 
-[type=submit]:disabled, button:disabled {
+[type="submit"]:disabled,
+button:disabled {
   -webkit-transform: translateY(0);
   transform: translateY(0);
   background-color: grey;
@@ -670,7 +699,8 @@ fieldset > input {
   width: 100%;
 }
 
-fieldset [type=radio], fieldset [type=checkbox] {
+fieldset [type="radio"],
+fieldset [type="checkbox"] {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -709,20 +739,24 @@ mark:hover::after {
 
 /*<mark> style ends here*/
 /*creating the "breathing-space" between list-items*/
-ul, ol {
+ul,
+ol {
   margin: 1rem;
 }
 
-ul > li, ol > li {
+ul > li,
+ol > li {
   list-style-position: inside;
   margin-bottom: 0.5rem;
 }
 
-ul ol, ol ul {
+ul ol,
+ol ul {
   margin: 0 0 0 1rem;
 }
 
-ul > li:last-child, ol > li:last-child {
+ul > li:last-child,
+ol > li:last-child {
   margin-bottom: 0;
 }
 
@@ -732,7 +766,8 @@ dl dt {
 }
 
 /*list style ends here*/
-pre, kbd {
+pre,
+kbd {
   font-family: monospace;
 }
 
@@ -1183,8 +1218,9 @@ img {
 }
 
 :root {
-  --brandColor: #118cc9;
-  --brandTransparent: rgba(17, 140, 201, 0.7);
+  --brandColor: #0970c8;
+  --accentColor: #f2e419;
+  --brandTransparent: rgba(82, 109, 133, 0.4);
   --primaryBg: #f4f4f4;
   --primaryText: #333;
   --bodyFont: "open sans";
@@ -1212,7 +1248,9 @@ img {
   min-height: 93vh;
 }
 
-#404Container h1, #404Container p, #404Container a {
+#404Container h1,
+#404Container p,
+#404Container a {
   margin: auto;
 }
 
@@ -1220,25 +1258,25 @@ img {
   margin-top: 7vh;
   min-height: 93vh;
   min-width: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  background: url("/images/svgs/working_late.svg") 40%;
+  background-size: auto;
 }
 
-#home-guestScreen #intro {
-  max-width: 700px;
+#home-guestScreen__tagline {
+  position: relative;
+  bottom: -20vh;
 }
 
-#home-guestScreen .validationMessage {
-  color: #f52121;
-  visibility: hidden;
+#home-guestScreen__tagline h1 {
+  background-color: rgba(112, 112, 112, 0.36);
+  color: #f4f4f4;
+  padding: 0.5em;
+  max-width: 90%;
 }
 
 nav {
-  background-color: #eee;
-  color: var(--brandColor);
+  background-color: var(--brandColor);
+  color: #eee;
   -webkit-box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
           box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
   padding: 0;
@@ -1300,17 +1338,45 @@ nav #navWrap #loginOptions__buttons .btn {
 }
 
 h2 {
-  color: var(--brandColor);
+  color: #eee;
 }
 
 #links {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 40%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-#links .btn {
-  margin: 0 10px;
+#links #hamBurger div {
+  position: relative;
+  height: 0.25rem;
+  width: 2rem;
+  background-color: var(--primaryBg);
+  border-radius: 0.25rem;
+}
+
+#links #hamBurger div::before, #links #hamBurger div::after {
+  content: "";
+  position: absolute;
+  height: 0.25rem;
+  width: 2rem;
+  background-color: var(--primaryBg);
+  border-radius: 0.25rem;
+}
+
+#links #hamBurger div::before {
+  top: -0.5rem;
+}
+
+#links #hamBurger div::after {
+  top: 0.5rem;
 }
 
 .loginOptions--visible {
@@ -1351,7 +1417,7 @@ h2 {
 #flash-wrap p {
   color: #fff;
   padding: 1rem 1.3rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   margin-top: 1rem;
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -1364,11 +1430,16 @@ h2 {
 
 .btn {
   text-decoration: none;
-  color: #eee;
 }
 
 .btn--secondary {
   background-color: #333 !important;
+  color: var(--primaryBg);
+}
+
+.btn--accent {
+  background-color: var(--accentColor) !important;
+  color: var(--primaryText) !important;
 }
 
 footer {
@@ -1379,5 +1450,9 @@ footer {
   background-color: #333;
   color: #eee;
   text-align: center;
+}
+
+footer p {
+  margin-bottom: 0;
 }
 /*# sourceMappingURL=style.css.map */

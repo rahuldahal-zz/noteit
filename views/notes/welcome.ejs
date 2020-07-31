@@ -1,38 +1,37 @@
 <%-include("../includes/header")%>
 
+
+<%let name = user.firstName;
+    let welcomeMessage;
+
+    if(!user.isApproved)
+        welcomeMessage = "your account is currently being reviewed and will soon be approved.<br />We will notify about it via either email or, phone.";
+    else if(user.isSubscriptionExpired)
+        welcomeMessage = "Your subscription has expired, <strong>Upgrade your Account</strong>";
+    else if(user.isApproved && !user.isSubscriptionExpired)
+        welcomeMessage = "here is the list of notes available to you.";
+
+%>
+
 <main class="mainContainer" id="welcomeScreen">
     <div class="mainContainer__welcomeText">
-        <h1>Hello, <span class="color--brand">
-                <%if(user.googleId){%>
-                <%=user.given_name%>
-                <%}else if(user.facebookId){%>
-                <%=user.first_name%>
-                <%}%>
-        </span></h1>
-        <h2>Welcome to NoteIT</h2>
+        <h3><span class="color--brand"><%=name%></span>, <%-welcomeMessage%></h3>
     </div>
     <%if(user.isApproved && !user.isSubscriptionExpired){%>
 
-                <div id="welcomeScreen__subjectsContainer">
-                </div>
-
-                <%}else if(!user.isApproved){%>
-                <p class="color--brand">your account is currently being reviewed and will soon be approved.</p>
-
-                <%}else if(user.isSubscriptionExpired){%>
-
-                <p>Your subscription has expired, <strong>Upgrade your Account</strong></p>
-                <%}%>
+    <div id="welcomeScreen__subjectsContainer">
+        <h2>Available Subjects</h2>
+    </div>
 
     <%if(savedNotes.length){%>
-                <div id="welcomeScreen__savedNotes">
-                    <h2>Saved Notes</h2>
-                    <%-savedNotes.map((note)=> {
+    <div id="welcomeScreen__savedNotes">
+        <h2>Saved Notes</h2>
+        <%-savedNotes.map((note)=> {
                 return `
                 <input type="hidden" value="${note}" class="savedNoteId">
             `}).join("")%>
-                </div>
-                <%}%>
+    </div>
+    <%}}%>
 </main>
 
 <%-include("../includes/footer")%>

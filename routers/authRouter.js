@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const userController = require("../controllers/userController");
+const User = require("../models/User");
 
 
 // logout
 
 router.post("/logout", (req, res) => {
     console.log("logging out");
-    req.logout();
+    User.prototype.sessionCountHandler(req.user._id, "decrement")
+        .then(() => req.session.destroy())
+        .catch(err => console.log("from logout: " + err));
     res.status(300).redirect("/");
 })
 
@@ -18,9 +20,7 @@ router.get("/google", passport.authenticate("google", {
     scope: ["profile", "email"]
 }))
 
-router.get("/facebook", passport.authenticate("facebook", {
-    scope: ["profile", "email"]
-}))
+router.get("/facebook", passport.authenticate("facebook"))
 
 
 // redirect route
@@ -39,10 +39,11 @@ router.get("/google/redirect",
 );
 
 router.get("/facebook/redirect",
-    passport.authenticate("facebook"),
-    (req, res) => {
-        console.log("all done, will be redirected to root");
-    }
+    passport.authenticate("facebook", {
+        successRedirect: "/",
+        failureRedirect: "/auth/fail"
+    })
+
 );
 
 

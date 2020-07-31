@@ -9,11 +9,13 @@ router.post("/", adminController.login);
 router.post("/userQuery", adminController.sendUsers);
 router.post("/approve-single", adminController.approveSingle);
 router.post("/disapprove-single", adminController.disapproveSingle);
-router.post("/makeContributor", adminController.makeContributor, contributorsController.add);
-router.post("/removeAsContributor", adminController.removeAsContributor, contributorsController.remove);
+router.post(
+  "/removeAsContributor",
+  adminController.removeAsContributor,
+  contributorsController.remove
+);
 
 //this route must be the last route...
 router.post("/:action", adminController.controlAction);
 
-
-module.exports = router //exports "router" to the app.js
+module.exports = router; //exports "router" to the app.js

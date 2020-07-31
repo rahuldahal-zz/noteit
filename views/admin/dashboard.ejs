@@ -1,6 +1,9 @@
 <form action="/admin/searchUser" method="POST">
+    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
     <button type="submit" class="btn">Search Users</button>
+
 </form>
 <form action="/admin/createNote" method="POST">
+    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
     <button type="submit" class="btn">Create Note</button>
 </form>

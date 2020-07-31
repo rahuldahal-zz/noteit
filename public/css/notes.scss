@@ -1,19 +1,18 @@
 @import "rahul";
 @import "makeThingsNeat";
 
-
-body{
+body {
   position: relative;
   overflow-x: hidden;
   min-height: 93vh;
   margin: 0;
   background-color: var(--primaryBgColor);
 
-  #container{
-    @include widerThan1200{
+  #container {
+    @include widerThan1200 {
       display: flex;
-  
-      aside{
+
+      aside {
         padding-top: 3vh;
         position: sticky;
         top: 7vh;
@@ -21,10 +20,10 @@ body{
         min-width: 330px;
         max-width: 330px;
       }
-      main{
+      main {
         max-width: 900px;
       }
-      #notesScreen__savedUnits{
+      #notesScreen__savedUnits {
         position: sticky;
         top: 7vh;
         border-left: 2px solid var(--brandColor);
@@ -32,8 +31,8 @@ body{
         flex: 1;
         height: 93vh;
         min-width: 250px;
-  
-        a{
+
+        a {
           font-size: 0.9rem;
           display: block;
         }
@@ -42,7 +41,7 @@ body{
   }
 }
 
-aside{
+aside {
   position: fixed;
   z-index: 5;
   bottom: 0;
@@ -51,13 +50,11 @@ aside{
   background-color: #e3e3e3;
   color: #333;
 
-
-  .subject{
-    
+  .subject {
     border-bottom: 1px grey solid;
     background-color: #eee;
 
-    &__header{
+    &__header {
       padding: 0.5rem 0.75rem;
       width: 100%;
       display: inline-grid;
@@ -65,29 +62,27 @@ aside{
       align-items: center;
       cursor: pointer;
 
-      h4{
+      h4 {
         width: max-content;
       }
 
-      p{
+      p {
         margin: 0;
       }
 
-      strong{
+      strong {
         justify-self: end;
       }
     }
-    &__units{
+    &__units {
       transition: height 0.3s ease, opacity 0.6s ease;
       height: 0;
       opacity: 0;
       visibility: hidden;
       display: flex;
       flex-direction: column;
-      
-
     }
-    &__unit{
+    &__unit {
       position: relative;
       width: 100%;
       height: 7vh;
@@ -98,11 +93,12 @@ aside{
       color: #333;
       background-color: #ccc;
 
-      &:first-child{
-        box-shadow: 0 6px 12px -6px inset rgba(0, 0, 0, .4);
+      &:first-child {
+        box-shadow: 0 6px 12px -6px inset rgba(0, 0, 0, 0.4);
       }
 
-      &:hover::before, &:focus::before{
+      &:hover::before,
+      &:focus::before {
         content: "";
         position: absolute;
         top: 0;
@@ -115,132 +111,126 @@ aside{
     }
   }
 
-  #internalLinksSideBarWrapper{
+  #internalLinksSideBarWrapper {
     padding: 0.5rem;
     height: 400px;
     overflow-y: scroll;
 
-
-    .internalLink{
+    .internalLink {
       margin-bottom: 0.5rem;
     }
   }
-
 }
 
-main{
+main {
   padding: 1rem;
   background-color: var(--primaryBgColor);
 }
 
-#notesScreen__savedUnits{
+#notesScreen__savedUnits {
   background-color: #eee;
 }
 
-
 .noSelect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+//styles
+
+table {
+  width: 100%;
+}
+
+.highlight {
+  display: inline-block;
+  background-color: rgba(255, 255, 0, 0.6);
+  padding: 0 5px;
+  margin: 5px 0;
+}
+
+.emphasis {
+  font-size: 1.1em;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.difficult_words {
+  text-decoration: underline !important;
+  cursor: pointer;
+  position: relative;
+
+  .meaning {
+    z-index: 2;
+    width: max-content;
+    height: max-content;
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: scaleY(0) translateX(-50%);
+    transform-origin: top;
+    background: #333;
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px;
+    animation: appearFromTop 0.2s ease-in-out forwards;
   }
-  
-  
-    
-      //styles
 
-      table{
-        width: 100%;
-      }
-    
-      .highlight {
-        display: inline-block;
-        background-color: rgba(255, 255, 0, 0.6);
-        padding: 0 5px;
-        margin: 5px 0;
-      }
-  
-      .emphasis {
-        font-size: 1.1em;
-      }
-  
-      .underline {
-        text-decoration: underline;
-      }
-  
-      .difficult_words {
-        text-decoration: underline !important;
-        cursor: pointer;
-        position: relative;
-  
-        .meaning {
-          z-index: 2;
-          width: max-content;
-          height: max-content;
-          display: none;
-          position: absolute;
-          left: 50%;
-          transform: scaleY(0) translateX(-50%);
-          transform-origin: top;
-          background: #333;
-          border-radius: 5px;
-          color: #fff;
-          padding: 5px;
-          animation: appearFromTop 0.2s ease-in-out forwards;
-        }
-  
-        @keyframes appearFromTop {
-          100%{
-            transform: scaleY(1) translateX(-50%);
-          }
-        }
-  
-        &:hover .meaning {
-          display: block;
-        }
-      }
-  
-      h3,
-      h4 {
-        margin: 10px 0;
-      }
-      .subTopicWrap{
-        padding-top: 5vh;
-      }
-      .subTopic {
-        margin: 20px 0;
-        position: sticky;
-        z-index: 3;
-        top: 7vh;
-        background-color: var(--brandColor);
-        color: #eee;
-        padding: 0.5rem;
-        width: max-content;
-        max-width: 700px;
-      }
-      ul > li {
-        list-style: none;
-        width: 100%;
-      }
-      .showListStyle {
-        list-style: initial;
-      }
-      ol > li {
-        margin-left: 10px;
-      }
-  
-      img {
-        max-width: 100%;
-      }
+  @keyframes appearFromTop {
+    100% {
+      transform: scaleY(1) translateX(-50%);
+    }
+  }
 
+  &:hover .meaning {
+    display: block;
+  }
+}
 
-      //actions
+h3,
+h4 {
+  margin: 10px 0;
+}
+.subTopicWrap {
+  padding-top: 5vh;
+}
+.subTopic {
+  margin: 20px 0;
+  position: sticky;
+  z-index: 3;
+  top: 7vh;
+  background-color: var(--brandColor);
+  color: #eee;
+  padding: 0.5rem;
+  width: max-content;
+  max-width: 700px;
+}
+ul > li {
+  list-style: none;
+  width: 100%;
+}
+.showListStyle {
+  list-style: initial;
+}
+ol > li {
+  margin-left: 10px;
+}
 
-      #saveNoteBtn{
-        background-color: var(--brandColor);
-      }
-      .saveNote--saved{
-        background-color: #009985 !important;
-      }
+img {
+  max-width: 100%;
+}
+
+//actions
+
+#saveNoteBtn {
+  background-color: var(--brandColor);
+}
+.saveNote--saved {
+  background-color: #009985 !important;
+}

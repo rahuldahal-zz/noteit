@@ -4,14 +4,39 @@ const userController = require("../controllers/userController");
 const contributorsController = require("../controllers/contributorsController");
 const followController = require("../controllers/followController");
 
-router.get("/contributor-screen", userController.mustBeLoggedIn, userController.authRole("contributor"), contributorsController.showContributorScreen);
-router.get("", contributorsController.getAll);
-router.get("/:username", userController.mustBeLoggedIn, contributorsController.getOne);
-router.post("/editContacts", userController.mustBeLoggedIn, contributorsController.editContacts);
+router.get(
+  "/contributor-screen",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  userController.authRole("contributor"),
+  contributorsController.showContributorScreen
+);
+
+router.get(
+  "/:username",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  contributorsController.getOne
+);
+router.post(
+  "/editContacts",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  contributorsController.editContacts
+);
 
 //follow actions
-router.post("/addFollow/:contributorId", userController.mustBeLoggedIn, followController.addFollow);
-router.post("/removeFollow/:contributorId", userController.mustBeLoggedIn, followController.removeFollow);
+router.post(
+  "/addFollow/:contributorId",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  followController.addFollow
+);
+router.post(
+  "/removeFollow/:contributorId",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  followController.removeFollow
+);
 
-
-module.exports = router //exports "router" to the app.js
+module.exports = router; //exports "router" to the app.js
