@@ -38,6 +38,16 @@ app.use((req, res, next) => {
   next();
 });
 
+//use the csurf, makes sure that every request that can change the state of app has a valid token
+app.use(csrf());
+
+// configuring csrf
+
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  return next();
+});
+
 //routers
 const rootRouter = require("./routers/rootRouter");
 const authRouter = require("./routers/authRouter");
@@ -50,14 +60,6 @@ app.use(express.static("public"));
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-//use the csurf, makes sure that every request that can change the state of app has a valid token
-app.use(csrf());
-
-app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
-  return next();
-});
-
 //using the routers
 app.use("/", rootRouter);
 app.use("/auth", authRouter);
@@ -67,11 +69,11 @@ app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
 // if router(s) do not handle the "route", this middle-ware will handle it
-app.use((err, req, res, next) => {
-  if (err && err.code === "EBADCSRFTOKEN") {
-    return res.send("Cross site request forgery detected");
-  }
-  res.render("404");
-});
+// app.use((err, req, res, next) => {
+//   if (err && err.code === "EBADCSRFTOKEN") {
+//     return res.send("Cross site request forgery detected");
+//   }
+//   res.render("404");
+// });
 
 module.exports = app;

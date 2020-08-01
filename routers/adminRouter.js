@@ -1,21 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
-const contributorsController = require("../controllers/contributorsController");
+const userController = require("../controllers/userController");
 
-router.get("/", adminController.home);
-router.get("/getContributors", adminController.sendContributors);
-router.post("/", adminController.login);
-router.post("/userQuery", adminController.sendUsers);
-router.post("/approve-single", adminController.approveSingle);
-router.post("/disapprove-single", adminController.disapproveSingle);
-router.post(
-  "/removeAsContributor",
-  adminController.removeAsContributor,
-  contributorsController.remove
+router.get(
+  "/",
+  userController.mustBeLoggedIn,
+  userController.authRole("admin"),
+  adminController.home
 );
-
-//this route must be the last route...
-router.post("/:action", adminController.controlAction);
+router.post("/login", adminController.login);
 
 module.exports = router; //exports "router" to the app.js

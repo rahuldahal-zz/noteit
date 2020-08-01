@@ -45,49 +45,33 @@ Admin.handleSearch = (searchTerm, basedOn) => {
 
 Admin.findAndApproveOne = (userId) => {
   userId = new ObjectID(userId);
-  console.log(userId);
-  //update the isApproved field
+
+  //updates the isApproved field
   return new Promise((resolve, reject) => {
     userCollection
       .updateOne({ _id: userId }, { $set: { isApproved: true } })
       .then(() => {
         sessionCollection.deleteOne({ userId: userId });
-        resolve("updated successfully");
+        resolve("Approved successfully");
       })
       .catch((error) => reject(error));
   });
 };
 Admin.findAndDisapproveOne = (userId) => {
   userId = new ObjectID(userId);
-  //update the isApproved field
+
+  //updates the isApproved field
   return new Promise((resolve, reject) => {
     userCollection
       .updateOne({ _id: userId }, { $set: { isApproved: false } })
       .then(() => {
         sessionCollection.deleteOne({ userId: userId });
-        resolve("disapproved successfully");
-      })
-      .catch((error) => console.log(error));
-  });
-};
-
-Admin.findAndMakeContributor = (userId) => {
-  userId = new ObjectID(userId);
-
-  return new Promise((resolve, reject) => {
-    userCollection
-      .findOneAndUpdate({ _id: userId }, { $push: { roles: "contributor" } })
-      .then((recentContributor) => {
-        if (recentContributor.value)
-          resolve({
-            _id: recentContributor.value._id,
-            username: recentContributor.value.username,
-          });
-        else reject("while adding contributor: no match found for that id");
+        resolve("Disapproved successfully");
       })
       .catch((error) => reject(error));
   });
 };
+
 Admin.findAndRemoveContributor = (userId) => {
   userId = new ObjectID(userId);
   return new Promise((resolve, reject) => {

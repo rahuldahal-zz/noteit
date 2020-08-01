@@ -118,15 +118,17 @@ exports.checkSubscriptionStatus = (req, res, next) => {
 };
 
 exports.authRole = (role) => {
+  console.log(`Authenticating for ${role}`);
   return (req, res, next) => {
     if (req.user.roles.includes(role)) {
-      next();
-      return;
+      return next();
     } else {
-      reusable.throwError(
-        403,
+      reusable.sendFlashMessage(
+        req,
+        res,
+        "errors",
         "You do not have the permission to access this page.",
-        res
+        "/"
       );
     }
   };

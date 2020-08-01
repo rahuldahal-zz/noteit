@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const contributorsController = require("../controllers/contributorsController");
+const userController = require("../controllers/userController");
+const adminController = require("../controllers/adminController");
 
 // restricting CORS to only specified domain
 
@@ -12,6 +14,32 @@ router.post("/", (req, res) => {
     return res.status(200).json({});
   }
 });
+
+// Admin API
+router.post(
+  "/admin/userQuery",
+  adminController.mustHaveToken,
+  adminController.sendUsers
+);
+
+router.put(
+  "/admin/approve-single",
+  adminController.mustHaveToken,
+  adminController.approveSingle
+);
+router.put(
+  "/admin/disapprove-single",
+  adminController.mustHaveToken,
+  adminController.disapproveSingle
+);
+
+router.post(
+  "/admin/contributors",
+  adminController.mustHaveToken,
+  adminController.getAllContributors
+);
+
+// Contributors' API
 
 router.post(
   "/contributors/create",

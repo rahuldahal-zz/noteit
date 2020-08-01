@@ -67,6 +67,28 @@ Contributor.getAll = function () {
     contributorsCollection
       .find({})
       .toArray()
+      .then((contributors) => {
+        contributors = contributors.map((contributor) => {
+          contributor = {
+            name: contributor.name,
+            avatar: contributor.avatar,
+            joinedOn: contributor.joinedOn,
+            contacts: contributor.contacts,
+          };
+          return contributor;
+        });
+
+        return resolve(contributors);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+Contributor.getAllForAdmin = function () {
+  return new Promise((resolve, reject) => {
+    contributorsCollection
+      .find({})
+      .toArray()
       .then((contributors) => resolve(contributors))
       .catch((err) => reject(err));
   });
