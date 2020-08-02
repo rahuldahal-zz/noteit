@@ -2,6 +2,8 @@ const User = require("./User");
 const ObjectID = require("mongodb").ObjectID;
 const userCollection = require("../db").db().collection("users");
 const sessionCollection = require("../db").db().collection("sessions");
+const contributorsCollection = require("../db").db().collection("contributors");
+const notesCollection = require("../db").db().collection("notes");
 
 let Admin = function (data) {
   this.data = data;
@@ -85,6 +87,59 @@ Admin.findAndRemoveContributor = (userId) => {
           });
         else reject("while removing contributor: no match found for that id");
       })
+      .catch((error) => reject(error));
+  });
+};
+
+Admin.getAllContributors = () => {
+  return new Promise((resolve, reject) => {
+    contributorsCollection
+      .find({})
+      .toArray()
+      .then((contributors) => resolve(contributors))
+      .catch((err) => reject(err));
+  });
+};
+
+Admin.getAllNotes = () => {
+  return new Promise((resolve, reject) => {
+    notesCollection
+      .find({})
+      .toArray()
+      .then((notes) => resolve(notes))
+      .catch((err) => reject(err));
+  });
+};
+
+const cleanUp = (noteDetails) => {
+  if (typeof noteDetails.title !== "string") noteDetails.title = "";
+  if (typeof noteDetails.subject !== "string") noteDetails.subject = "";
+  if (typeof noteDetails.faculty !== "string") noteDetails.faculty = "";
+  if (typeof noteDetails.semester !== "string") noteDetails.semester = "";
+  if (typeof noteDetails.contributor !== "string") noteDetails.contributor = "";
+
+  this.noteDetails = {
+    unitNo: noteDetails.unitNo,
+    title: noteDetails.title,
+    subject: noteDetails.subject,
+    faculty: noteDetails.faculty,
+    semester: noteDetails.semester,
+    url: `/notes/${noteDetails.faculty}/${
+      noteDetails.semester
+    }/${encodeURIComponent(noteDetails.subject)}/${encodeURIComponent(
+      noteDetails.title
+    )}`,
+    createdDate: new Date(),
+    contributor: new ObjectID(noteDetails.contributor),
+  };
+};
+
+Admin.createNote = (noteDetails) => {
+  cleanUp(noteDetails);
+  return new Promise((resolve, reject) => {
+    notesCollection
+      .insertOne(this.noteDetails)
+      .then(() => resolve("Note Created Successfully"))
       .catch((error) => reject(error));
   });
 };

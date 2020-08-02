@@ -84,16 +84,6 @@ Contributor.getAll = function () {
   });
 };
 
-Contributor.getAllForAdmin = function () {
-  return new Promise((resolve, reject) => {
-    contributorsCollection
-      .find({})
-      .toArray()
-      .then((contributors) => resolve(contributors))
-      .catch((err) => reject(err));
-  });
-};
-
 Contributor.getOne = function (username) {
   return new Promise((resolve, reject) => {
     //aggregate operation

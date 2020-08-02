@@ -2,13 +2,10 @@
 const usersCollection = require("../db").db().collection("users");
 const ObjectID = require("mongodb").ObjectID;
 
-let User = function (data, provider, referer) {
+let User = function (data, provider) {
   this.data = data;
   this.provider = provider;
-  this.referer = referer;
   this.errors = [];
-
-  console.log(referer);
 };
 
 User.prototype.cleanUp = function () {

@@ -118,9 +118,10 @@ exports.checkSubscriptionStatus = (req, res, next) => {
 };
 
 exports.authRole = (role) => {
-  console.log(`Authenticating for ${role}`);
   return (req, res, next) => {
+    console.log(`Authenticating for ${role}`);
     if (req.user.roles.includes(role)) {
+      req.admin = req.user.firstName;
       return next();
     } else {
       reusable.sendFlashMessage(

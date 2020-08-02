@@ -6,38 +6,6 @@ let Notes = function (data) {
   this.errors = [];
 };
 
-Notes.prototype.cleanUp = function () {
-  if (typeof this.data.title !== "string") this.data.title = "";
-  if (typeof this.data.subject !== "string") this.data.subject = "";
-  if (typeof this.data.faculty !== "string") this.data.faculty = "";
-  if (typeof this.data.semester !== "string") this.data.semester = "";
-
-  this.data = {
-    unitNo: this.data.unitNo,
-    title: this.data.title,
-    subject: this.data.subject,
-    faculty: this.data.faculty,
-    semester: this.data.semester,
-    url: `/notes/${this.data.faculty}/${
-      this.data.semester
-    }/${encodeURIComponent(this.data.subject)}/${encodeURIComponent(
-      this.data.title
-    )}`,
-    createdDate: new Date(),
-    contributor: new ObjectID(this.data.contributor),
-  };
-};
-
-Notes.prototype.createNewNote = function () {
-  this.cleanUp();
-  return new Promise((resolve, reject) => {
-    notesCollection
-      .insertOne(this.data)
-      .then(() => resolve("Note Created Successfully"))
-      .catch((error) => reject(error));
-  });
-};
-
 Notes.prototype.findNotes = function () {
   return new Promise((resolve, reject) => {
     // find({ faculty: this.data.faculty, semester: this.data.semester }).toArray()

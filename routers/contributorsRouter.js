@@ -8,7 +8,6 @@ router.get(
   "/contributor-screen",
   userController.mustBeLoggedIn,
   userController.checkSessionCount,
-  userController.authRole("contributor"),
   contributorsController.showContributorScreen
 );
 

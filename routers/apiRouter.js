@@ -10,12 +10,17 @@ router.post("/", (req, res) => {
   res.header("Access-Control-Allow-Headers", "*");
 
   if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "POST", "GET");
+    res.header("Access-Control-Allow-Methods", "POST", "GET", "PUT");
     return res.status(200).json({});
   }
 });
 
-// Admin API
+/**
+ * Admin API
+ */
+
+// users
+
 router.post(
   "/admin/userQuery",
   adminController.mustHaveToken,
@@ -27,11 +32,17 @@ router.put(
   adminController.mustHaveToken,
   adminController.approveSingle
 );
+
 router.put(
   "/admin/disapprove-single",
   adminController.mustHaveToken,
   adminController.disapproveSingle
 );
+
+/**
+ * used "post" just to "securely" send JWT via the "req.body",
+ * rather than "req.headers"
+ */
 
 router.post(
   "/admin/contributors",
@@ -39,7 +50,23 @@ router.post(
   adminController.getAllContributors
 );
 
-// Contributors' API
+// notes
+
+router.post(
+  "/admin/notes",
+  adminController.mustHaveToken,
+  adminController.getAllNotes
+);
+
+router.post(
+  "/admin/create-note",
+  adminController.mustHaveToken,
+  adminController.createNote
+);
+
+/**
+ * Contributors' API
+ */
 
 router.post(
   "/contributors/create",

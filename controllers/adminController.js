@@ -2,12 +2,11 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/Admin");
 const dotenv = require("dotenv");
 const reusable = require("./reusableFunctions");
-const Contributors = require("../models/Contributors");
 
 dotenv.config();
 
 exports.home = (req, res) => {
-  res.render("admin/adminLoginPage");
+  res.render("admin/adminLoginPage", { admin: req.admin });
 };
 
 exports.login = (req, res) => {
@@ -16,7 +15,7 @@ exports.login = (req, res) => {
     req.body.password === process.env.ADMINPASSWORD
   ) {
     res.status(200).json(
-      jwt.sign({ authorized: "yesss" }, process.env.JWTSECRET, {
+      jwt.sign({ admin: req.body.admin }, process.env.JWTSECRET, {
         expiresIn: "30m",
       })
     );
@@ -28,9 +27,16 @@ exports.login = (req, res) => {
 
 exports.mustHaveToken = function (req, res, next) {
   try {
+    if (req.method === "GET") {
+      console.log(req.headers);
+      const payload = jwt.verify(req.headers.token, process.env.JWTSECRET);
+      console.log(payload.admin);
+      return next();
+    }
+
     const payload = jwt.verify(req.body.token, process.env.JWTSECRET);
-    console.log(payload);
-    next();
+    console.log(payload.admin);
+    return next();
   } catch (error) {
     reusable.throwError(400, "You must provide a valid token", res);
   }
@@ -73,7 +79,19 @@ exports.removeAsContributor = (req, res, next) => {
 };
 
 exports.getAllContributors = (req, res) => {
-  Contributors.getAllForAdmin()
+  Admin.getAllContributors()
     .then((response) => res.status(200).json(response))
+    .catch((error) => res.status(500).json({ message: error }));
+};
+
+exports.getAllNotes = (req, res) => {
+  Admin.getAllNotes()
+    .then((response) => res.status(200).json(response))
+    .catch((error) => res.status(500).json({ message: error }));
+};
+
+exports.createNote = (req, res) => {
+  Admin.createNote(req.body)
+    .then((response) => res.status(201).json(response))
     .catch((error) => res.status(500).json({ message: error }));
 };
