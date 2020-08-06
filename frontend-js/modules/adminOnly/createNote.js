@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export default class CreateNote {
-  constructor() {
-    this.form = document.querySelector('[action="/notes/createNote"]');
+  constructor(jwt) {
+    this.jwt = jwt;
+    this.form = document.getElementById("createNoteForm");
     this.unitNo = document.querySelector('[name="unitNo"]');
     this.title = document.querySelector('[name="title"]');
     this.subject = document.querySelector('[name="subject"]');
@@ -24,7 +25,7 @@ export default class CreateNote {
   //methods
   loadContributors() {
     axios
-      .get("/admin/getContributors")
+      .post("/api/admin/contributors", { token: this.jwt })
       .then((response) => this.injectContributors(response.data));
   }
 
@@ -32,25 +33,27 @@ export default class CreateNote {
     this.contributors.insertAdjacentHTML(
       "beforeend",
       `
-            ${contributors.map((contributor) => {
-              return `
-                        <option value="${contributor._id}">${contributor.username}</option>
+            ${contributors
+              .map((contributor) => {
+                return `
+                        <option value="${contributor._id}">${contributor.name}</option>
                     `;
-            })}
+              })
+              .join("")}
         `
     );
   }
 
   sendNotesToServer() {
     axios
-      .post("/notes/createNote", {
+      .post("/api/admin/notes/create", {
         unitNo: this.unitNo.value,
         title: this.title.value,
         subject: this.subject.value,
         faculty: this.faculty.value,
         semester: this.semester.value,
         contributor: this.contributors.value,
-        _csrf: this._csrf,
+        token: this.jwt,
       })
       .then((response) => {
         console.log(response.status);

@@ -1,7 +1,60 @@
-<form action="/admin/searchUser" method="POST">
-    <button type="submit" class="btn">Search Users</button>
+<!DOCTYPE html>
+<html lang="en">
 
-</form>
-<form action="/admin/createNote" method="POST">
-    <button type="submit" class="btn">Create Note</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - NoteIT</title>
+    <link rel="stylesheet" href="/css/searchUser.css">
+</head>
+
+<body id="adminDashboardScreen">
+    <input type="hidden" value="<%=jwt%>">
+
+    <aside>
+        <div id="actions">
+            <button class="action" data-action="userQuery">Users</button>
+            <button class="action" data-action="createNote">Notes</button>
+            <button class="action" data-action="contributors">Contributors</button>
+        </div>
+    </aside>
+
+    <main>
+        <div id="createNote">
+            <h1>Create note here</h1>
+
+            <form method="POST" id="createNoteForm">
+                <input type="number" placeholder="unitNo" name="unitNo">
+                <input type="text" placeholder="title" name="title">
+                <input type="text" placeholder="subject" name="subject">
+                <select name="faculty" id="">
+                    <option value="bim">BIM</option>
+                    <option value="bca">BCA</option>
+                    <option value="csit">CSIT</option>
+                </select>
+                <input type="text" name="semester" placeholder="semester">
+                <select name="contributor" id="contributor">
+                    <!-- options are injected via JS -->
+                </select>
+                <button type="submit" class="btn">create note</button>
+            </form>
+        </div>
+
+        <div id="searchUser">
+            <form method="POST" id="userQueryForm">
+                <input type="text" name="searchTerm" placeholder="username/faculty/semester">
+                <select name="basedOn" id="">
+                    <option value="username">username</option>
+                    <option value="faculty">faculty</option>
+                    <option value="semester">semester</option>
+                </select>
+                <button type="submit" class="btn btn--brand">Get Users</button>
+            </form>
+            <section id="userCardContainer"></section>
+        </div>
+    </main>
+    <script src="/main-bundled.js"></script>
+
+</body>
+
+</html>

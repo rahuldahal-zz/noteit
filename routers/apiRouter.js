@@ -59,7 +59,7 @@ router.post(
 );
 
 router.post(
-  "/admin/create-note",
+  "/admin/notes/create",
   adminController.mustHaveToken,
   adminController.createNote
 );

@@ -1,15 +1,13 @@
 import axios from "axios";
 
 export default class UserQuery {
-  constructor() {
-    this._csrf = document.querySelector('[name="_csrf"]').value;
-    this.userQuery = document.querySelector('[action="/admin/userQuery"]');
+  constructor(jwt) {
+    this.jwt = jwt;
+    this.userQueryForm = document.getElementById("userQueryForm");
     this.searchTerm = document.querySelector(
-      "#userQueryScreen input[name=searchTerm]"
+      '#searchUser input[name="searchTerm"]'
     );
-    this.basedOn = document.querySelector(
-      "#userQueryScreen select[name=basedOn]"
-    );
+    this.basedOn = document.querySelector('#searchUser select[name="basedOn"]');
     this.userCardContainer = document.getElementById("userCardContainer");
     this.events();
   }
@@ -17,7 +15,7 @@ export default class UserQuery {
   //events
 
   events() {
-    this.userQuery.addEventListener("submit", (e) => {
+    this.userQueryForm.addEventListener("submit", (e) => {
       e.preventDefault();
       this.sendUserQuery(this.searchTerm.value, this.basedOn.value);
     });
@@ -27,10 +25,10 @@ export default class UserQuery {
 
   sendUserQuery(searchTermValue, basedOnValue) {
     axios
-      .post("/admin/userQuery", {
+      .post("/api/admin/userQuery", {
         searchTerm: searchTermValue,
         basedOn: basedOnValue,
-        _csrf: this._csrf,
+        token: this.jwt,
       })
       .then((response) => {
         this.clearUserCard();

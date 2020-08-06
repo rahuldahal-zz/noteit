@@ -9,6 +9,11 @@ router.get(
   userController.authRole("admin"),
   adminController.home
 );
-router.post("/login", adminController.login);
+router.post(
+  "/login",
+  userController.mustBeLoggedIn,
+  userController.authRole("admin"),
+  adminController.login
+);
 
 module.exports = router; //exports "router" to the app.js

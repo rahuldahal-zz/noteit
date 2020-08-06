@@ -14,11 +14,11 @@ exports.login = (req, res) => {
     req.body.username === process.env.ADMINUSERNAME &&
     req.body.password === process.env.ADMINPASSWORD
   ) {
-    res.status(200).json(
-      jwt.sign({ admin: req.body.admin }, process.env.JWTSECRET, {
+    res.render("admin/dashboard", {
+      jwt: jwt.sign({ adminName: req.body.adminName }, process.env.JWTSECRET, {
         expiresIn: "30m",
-      })
-    );
+      }),
+    });
     // res.render("admin/dashboard");
   } else {
     res.redirect("/");

@@ -4,6 +4,7 @@ const passportController = require("./controllers/passportController"); // this 
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const app = express();
 
@@ -30,6 +31,10 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+// using the admin route
+
+app.use("/admin", adminRouter);
+
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
   res.locals.user = req.user;
@@ -54,7 +59,6 @@ const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
-const adminRouter = require("./routers/adminRouter");
 
 app.use(express.static("public"));
 app.set("views", "views");
@@ -66,7 +70,6 @@ app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
-app.use("/admin", adminRouter);
 
 // if router(s) do not handle the "route", this middle-ware will handle it
 // app.use((err, req, res, next) => {
