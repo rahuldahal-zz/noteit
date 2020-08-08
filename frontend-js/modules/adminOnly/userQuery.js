@@ -25,7 +25,7 @@ export default class UserQuery {
 
   sendUserQuery(searchTermValue, basedOnValue) {
     axios
-      .post("/api/admin/userQuery", {
+      .post("/api/admin/users", {
         searchTerm: searchTermValue,
         basedOn: basedOnValue,
         token: this.jwt,
@@ -91,13 +91,13 @@ export default class UserQuery {
     if (user.isApproved)
       actions.push({
         userId: user._id,
-        action: "/admin/disapprove-single",
+        action: "/admin/users/disapprove",
         value: "Disapprove",
       });
     else
       actions.push({
         userId: user._id,
-        action: "/admin/approve-single",
+        action: "/admin/users/approve",
         value: "Approve",
       });
 
@@ -105,36 +105,15 @@ export default class UserQuery {
     if (user.isSubscriptionExpired)
       actions.push({
         userId: user._id,
-        action: "/admin/renewSubscription-single",
+        action: "/admin/users/renewSubscription",
         value: "Renew Subscription",
       });
     else
       actions.push({
         userId: user._id,
-        action: "/admin/expireSubscription-single",
+        action: "/admin/users/expireSubscription",
         value: "Expire Subscription",
       });
-
-    //roles
-    if (user.roles.length > 1) {
-      user.roles.forEach((role) => {
-        switch (role) {
-          case "contributor":
-            actions.push({
-              userId: user._id,
-              action: "/admin/removeAsContributor",
-              value: "Remove as Contributor",
-            });
-        }
-      });
-    } else {
-      actions.push({
-        userId: user._id,
-        action: "/admin/makeContributor",
-        value: "Make Contributor",
-      });
-    }
-
     this.addActions(actions, userCard);
   }
 
@@ -168,7 +147,7 @@ export default class UserQuery {
   doTheAction(action) {
     let userId = action.firstElementChild.value;
     axios
-      .post(action.action, { userId: userId, _csrf: this._csrf })
+      .post(action.action, { userId: userId, token: this.jwt })
       .then((response) => {
         console.log(response);
       })

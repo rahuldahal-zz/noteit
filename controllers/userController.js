@@ -35,7 +35,7 @@ exports.saveFacultyAndSemester = (req, res, next) => {
         .status("200")
         .json({ message: "Faculty and Semester Saved Successfully." })
     )
-    .catch((error) => reusable.throwError(400, error, res));
+    .catch((error) => reusable.respond(400, error, res));
 };
 
 exports.home = (req, res) => {
@@ -79,30 +79,14 @@ exports.checkSessionCount = (req, res, next) => {
     console.log("less than 3 sessions...");
     return next();
   }
-  reusable.throwError(429, "Account is being used in more than 2 devices", res);
+  reusable.respond(429, "Account is being used in more than 2 devices", res);
 };
-
-// exports.login = (req, res, next) => {
-//     let user = new User(req.body);
-//     user.login()
-//         .then((response) => {
-//             req.user = response;
-//             req.hasNotesInLocalStorage = req.body.hasNotesInLocalStorage;
-//             console.log(response);
-//             next(); //notesController.sendNotesDescription
-//             return;
-//         })
-//         .catch((err) => {
-//             res.send(err);
-//         })
-// }
 
 exports.mustBeApproved = (req, res, next) => {
   if (req.user.isApproved) {
     next();
     return;
-  } else
-    reusable.throwError(403, "You are not approved to access this page", res);
+  } else reusable.respond(403, "You are not approved to access this page", res);
 };
 
 exports.checkSubscriptionStatus = (req, res, next) => {
@@ -110,7 +94,7 @@ exports.checkSubscriptionStatus = (req, res, next) => {
     next();
     return;
   } else
-    reusable.throwError(
+    reusable.respond(
       403,
       "Your subscription has expired, UPGRADE your account.",
       res

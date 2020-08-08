@@ -1,6 +1,5 @@
 import Base from "./modules/base";
 import LocalStorageHandler from "./modules/localStorageHandler";
-import UserQuery from "./modules/adminOnly/userQuery";
 import NotesScreen from "./modules/notesScreen";
 import ContributorProfile from "./modules/contributorProfile";
 import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
@@ -26,10 +25,6 @@ if (
   document.getElementById("notesScreen")
 ) {
   new LocalStorageHandler();
-}
-
-if (document.getElementById("userQueryScreen")) {
-  new UserQuery();
 }
 
 if (document.getElementById("notesScreen")) {

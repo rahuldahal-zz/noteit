@@ -30,15 +30,17 @@ exports.mustHaveToken = function (req, res, next) {
     if (req.method === "GET") {
       console.log(req.headers);
       const payload = jwt.verify(req.headers.token, process.env.JWTSECRET);
-      console.log(payload.admin);
+      console.log(payload);
       return next();
     }
 
     const payload = jwt.verify(req.body.token, process.env.JWTSECRET);
-    console.log(payload.admin);
+    console.log(payload);
+    // making the payload available for the next middleware
+    req.payload = payload;
     return next();
   } catch (error) {
-    reusable.throwError(400, "You must provide a valid token", res);
+    reusable.respond(400, "You must provide a valid token", res);
   }
 };
 
@@ -56,14 +58,26 @@ exports.sendUsers = (req, res) => {
     });
 };
 
-exports.approveSingle = (req, res) => {
-  Admin.findAndApproveOne(req.body.userId)
+exports.approveUser = (req, res) => {
+  Admin.findAndApproveUser(req.body.userId)
     .then((response) => res.status(202).json({ message: response }))
     .catch((error) => res.status(500).json({ message: error }));
 };
 
-exports.disapproveSingle = (req, res) => {
-  Admin.findAndDisapproveOne(req.body.userId)
+exports.approveContributor = (req, res) => {
+  Admin.findAndApproveContributor(req.body.contributorId)
+    .then((response) => res.status(202).json({ message: response }))
+    .catch((error) => res.status(500).json({ message: error }));
+};
+
+exports.disapproveUser = (req, res) => {
+  Admin.findAndDisapproveUser(req.body.userId)
+    .then((response) => res.status(202).json({ message: response }))
+    .catch((error) => res.status(500).json({ message: error }));
+};
+
+exports.disapproveContributor = (req, res) => {
+  Admin.findAndDisapproveContributor(req.body.contributorId)
     .then((response) => res.status(202).json({ message: response }))
     .catch((error) => res.status(500).json({ message: error }));
 };

@@ -1,12 +1,14 @@
 const router = require("express").Router();
 const contributorsController = require("../controllers/contributorsController");
-const userController = require("../controllers/userController");
 const adminController = require("../controllers/adminController");
 
 // restricting CORS to only specified domain
 
 router.post("/", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://noteit-editor.netlify.app"
+  );
   res.header("Access-Control-Allow-Headers", "*");
 
   if (req.method === "OPTIONS") {
@@ -22,21 +24,33 @@ router.post("/", (req, res) => {
 // users
 
 router.post(
-  "/admin/userQuery",
+  "/admin/users",
   adminController.mustHaveToken,
   adminController.sendUsers
 );
 
 router.put(
-  "/admin/approve-single",
+  "/admin/users/approve",
   adminController.mustHaveToken,
-  adminController.approveSingle
+  adminController.approveUser
 );
 
 router.put(
-  "/admin/disapprove-single",
+  "/admin/contributors/approve",
   adminController.mustHaveToken,
-  adminController.disapproveSingle
+  adminController.approveContributor
+);
+
+router.put(
+  "/admin/users/disapprove",
+  adminController.mustHaveToken,
+  adminController.disapproveUser
+);
+
+router.put(
+  "/admin/contributor/disapprove",
+  adminController.mustHaveToken,
+  adminController.disapproveContributor
 );
 
 /**
@@ -72,6 +86,11 @@ router.post(
   "/contributors/create",
   contributorsController.isContributorAlreadyRegistered,
   contributorsController.create
+);
+router.post(
+  "/contributors/submitNote",
+  adminController.mustHaveToken,
+  contributorsController.createNoteFileAndMail
 );
 router.get("/contributors", contributorsController.getAll);
 

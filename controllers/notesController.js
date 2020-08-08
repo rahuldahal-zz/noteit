@@ -169,7 +169,7 @@ exports.sendNotesDescriptionToClient = (req, res, next) => {
       })
       .catch((error) => {
         reusable.log(error);
-        reusable.throwError(400, error, res);
+        reusable.respond(400, error, res);
       });
   } else {
     res.json({});

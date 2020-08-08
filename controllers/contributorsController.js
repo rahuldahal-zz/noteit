@@ -3,6 +3,8 @@ const Contributors = require("../models/Contributors");
 const Follow = require("../models/Follow");
 const Contributor = require("../models/Contributors");
 const reusable = require("./reusableFunctions");
+const sendGrid = require("@sendgrid/mail");
+const fs = require("fs");
 
 exports.showContributorScreen = (req, res) => {
   res.render("contributors/contributor-screen");
@@ -52,33 +54,62 @@ exports.isContributorAlreadyRegistered = (req, res, next) => {
   let contributor = new Contributor(req.body);
   contributor
     .findByOAuthId()
-    .then((contributor) =>
-      res.status(200).json(
-        jwt.sign({ contributor: contributor }, process.env.JWTSECRET, {
-          expiresIn: "30m",
-        })
-      )
-    )
+    .then((contributor) => {
+      if (contributor && contributor.isApproved) {
+        const message = jwt.sign(
+          { contributor: { _id: contributor._id, name: contributor.name } },
+          process.env.JWTSECRET,
+          {
+            expiresIn: "30m",
+          }
+        );
+        return reusable.respond(202, message, res);
+      } else return reusable.respond(200, "Wait for Approval", res);
+    })
     .catch((error) => {
       if (error === "not found") {
         req.contributorObject = contributor; // making that "let contributor = new Contributor() available to the next middleware"
         return next();
-      } else reusable.throwError("500", error, res);
+      } else reusable.respond("500", error, res);
     });
 };
 
 exports.create = (req, res) => {
   req.contributorObject
     .create()
-    .then((newContributor) =>
-      res.status(201).json(
-        jwt.sign({ contributor: newContributor }, process.env.JWTSECRET, {
-          expiresIn: "30m",
-        })
-      )
+    .then(() =>
+      reusable.respond(201, "Contributor is created, Wait for approval.", res)
     )
     .catch((error) => console.log(error));
 };
+
+exports.createNoteFileAndMail = (req, res) => {
+  const body = req.body.note;
+  console.log(req.payload);
+  if (typeof body !== "string") {
+    return reusable.respond(400, "Unacceptable value type received", res);
+  }
+
+  // create file and put the body
+  console.log("\nDir name: " + __dirname);
+  fs.writeFile(
+    `${__dirname}/${req.payload.contributor.name}.html`,
+    body,
+    (err) => {
+      if (err) {
+        return reusable.respond(400, "Unacceptable value type received", res);
+      }
+      return afterFileCreation(res);
+    }
+  );
+  res.send("Done");
+};
+
+function afterFileCreation(res) {
+  res
+    .status(202)
+    .send("Ouu yeah, the file is created.\n Now send it via email");
+}
 
 exports.remove = (req, res) => {
   if (!req.recentlyRemovedContributor) {

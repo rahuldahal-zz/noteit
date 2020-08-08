@@ -21,6 +21,7 @@ Contributor.prototype.cleanUp = function () {
     lastName: this.data.last_name,
     avatar: this.data.picture.data.url,
     joinedOn: new Date(),
+    isApproved: false,
     recentContribution: null,
     contacts: {
       facebookProfileUrl: null,

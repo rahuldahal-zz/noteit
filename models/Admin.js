@@ -45,7 +45,7 @@ Admin.handleSearch = (searchTerm, basedOn) => {
   });
 };
 
-Admin.findAndApproveOne = (userId) => {
+Admin.findAndApproveUser = (userId) => {
   userId = new ObjectID(userId);
 
   //updates the isApproved field
@@ -59,7 +59,22 @@ Admin.findAndApproveOne = (userId) => {
       .catch((error) => reject(error));
   });
 };
-Admin.findAndDisapproveOne = (userId) => {
+
+Admin.findAndApproveContributor = (contributor) => {
+  contributor = new ObjectID(contributor);
+
+  //updates the isApproved field
+  return new Promise((resolve, reject) => {
+    contributorsCollection
+      .updateOne({ _id: contributor }, { $set: { isApproved: true } })
+      .then(() => {
+        resolve("Approved successfully");
+      })
+      .catch((error) => reject(error));
+  });
+};
+
+Admin.findAndDisapproveUser = (userId) => {
   userId = new ObjectID(userId);
 
   //updates the isApproved field
@@ -68,6 +83,20 @@ Admin.findAndDisapproveOne = (userId) => {
       .updateOne({ _id: userId }, { $set: { isApproved: false } })
       .then(() => {
         sessionCollection.deleteOne({ userId: userId });
+        resolve("Disapproved successfully");
+      })
+      .catch((error) => reject(error));
+  });
+};
+
+Admin.findAndDisapproveContributor = (contributorId) => {
+  contributorId = new ObjectID(contributorId);
+
+  //updates the isApproved field
+  return new Promise((resolve, reject) => {
+    contributorsCollection
+      .updateOne({ _id: contributorId }, { $set: { isApproved: false } })
+      .then(() => {
         resolve("Disapproved successfully");
       })
       .catch((error) => reject(error));
