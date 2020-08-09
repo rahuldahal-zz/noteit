@@ -5,10 +5,7 @@ const adminController = require("../controllers/adminController");
 // restricting CORS to only specified domain
 
 router.post("/", (req, res) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://noteit-editor.netlify.app"
-  );
+  res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGINS);
   res.header("Access-Control-Allow-Headers", "*");
 
   if (req.method === "OPTIONS") {

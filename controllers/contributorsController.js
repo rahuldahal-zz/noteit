@@ -5,6 +5,7 @@ const Contributor = require("../models/Contributors");
 const reusable = require("./reusableFunctions");
 const sendGrid = require("@sendgrid/mail");
 const fs = require("fs");
+const path = require("path");
 
 exports.showContributorScreen = (req, res) => {
   res.render("contributors/contributor-screen");
@@ -91,24 +92,67 @@ exports.createNoteFileAndMail = (req, res) => {
   }
 
   // create file and put the body
-  console.log("\nDir name: " + __dirname);
-  fs.writeFile(
-    `${__dirname}/${req.payload.contributor.name}.html`,
-    body,
-    (err) => {
-      if (err) {
-        return reusable.respond(400, "Unacceptable value type received", res);
+
+  // create the directory first if it doesn't exist
+  const absoluteDir = path.join(__dirname, "../contributedNotes");
+
+  fs.mkdir(absoluteDir, { recursive: true }, (err) => {
+    if (err) throw new Error(err);
+
+    // if no error, write new file
+    createFile();
+  });
+
+  function createFile() {
+    fs.writeFile(
+      `${absoluteDir.toString()}/${req.payload.contributor.name}.html`,
+      body,
+      (err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send(err);
+        }
+        afterFileCreation(
+          res,
+          `${absoluteDir.toString()}/${req.payload.contributor.name}.html`
+        );
       }
-      return afterFileCreation(res);
-    }
-  );
-  res.send("Done");
+    );
+  }
 };
 
-function afterFileCreation(res) {
-  res
-    .status(202)
-    .send("Ouu yeah, the file is created.\n Now send it via email");
+function afterFileCreation(res, attachment) {
+  sendGrid.setApiKey(process.env.SENDGRID_API);
+
+  attachmentEncoded = fs.readFileSync(attachment).toString("base64");
+
+  const message = {
+    to: process.env.ADMIN_MAIL,
+    from: "noteitteam@gmail.com",
+    subject: "Sample subject, include descriptive subject here...",
+    text: "hey...sent from the editor <make this dynamic>",
+    attachments: [
+      {
+        content: attachmentEncoded,
+        filename: "generic.html",
+        type: "text/html",
+        disposition: "attachment",
+      },
+    ],
+  };
+
+  console.log("runs");
+
+  sendGrid
+    .send(message)
+    .then(() => {
+      fs.unlink(attachment, (err) => {
+        if (err) return res.status(500).send(err);
+
+        res.status(202).send("Ouu yeah, the file is created.");
+      });
+    })
+    .catch((error) => res.status(500).send(error));
 }
 
 exports.remove = (req, res) => {
