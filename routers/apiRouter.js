@@ -1,18 +1,28 @@
 const router = require("express").Router();
 const contributorsController = require("../controllers/contributorsController");
 const adminController = require("../controllers/adminController");
+const cors = require("cors");
 
 // restricting CORS to only specified domain
 
-router.post("/", (req, res) => {
-  res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGINS);
-  res.header("Access-Control-Allow-Headers", "*");
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+}
 
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "POST", "GET", "PUT");
-    return res.status(200).json({});
-  }
-});
+router.use("/", cors(corsOptions), (req, res, next)=>{
+	res.json({message: "CORS enabled for localhost only..."});
+})
+
+// router.post("/", (req, res) => {
+//   res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGINS);
+//   res.header("Access-Control-Allow-Headers", "*");
+
+//   if (req.method === "OPTIONS") {
+//     res.header("Access-Control-Allow-Methods", "OPTIONS", "POST", "GET", "PUT");
+//     return res.status(200).json({});
+//   }
+// });
 
 /**
  * Admin API
