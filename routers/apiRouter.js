@@ -10,9 +10,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
-router.use("/", cors(corsOptions), (req, res, next)=>{
-	res.json({message: "CORS enabled for localhost only..."});
-})
+router.use(cors(corsOptions));
 
 // router.post("/", (req, res) => {
 //   res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGINS);
