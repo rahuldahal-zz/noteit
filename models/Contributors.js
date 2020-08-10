@@ -2,7 +2,7 @@ const contributorsCollection = require("../db").db().collection("contributors");
 const ObjectID = require("mongodb").ObjectID;
 
 let Contributor = function (data) {
-  this.data = JSON.parse(data);
+  this.data = data;
   this.errors = [];
 };
 

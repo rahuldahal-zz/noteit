@@ -9,7 +9,7 @@ const csrf = require("csurf");
 const app = express();
 
 // ways to submit data to the server
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // the "API" router
