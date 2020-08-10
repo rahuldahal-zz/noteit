@@ -7,19 +7,22 @@ let Contributor = function (data) {
 };
 
 Contributor.prototype.cleanUp = function () {
+
+  console.log(this.data);
+
   if (typeof this.data.id !== "string") this.data.id = "";
   if (typeof this.data.name !== "string") this.data.name = "";
   if (typeof this.data.first_name !== "string") this.data.first_name = "";
   if (typeof this.data.last_name !== "string") this.data.last_name = "";
-  if (typeof this.data.picture.data.url !== "string")
-    this.data.picture.data.url = "";
+  // if (typeof this.data.picture.data.url !== "string")
+  //   this.data.picture.data.url = "";
 
   this.data = {
     OAuthId: this.data.id,
     name: this.data.name,
     firstName: this.data.first_name,
     lastName: this.data.last_name,
-    avatar: this.data.picture.data.url,
+    // avatar: this.data.picture.data.url,
     joinedOn: new Date(),
     isApproved: false,
     recentContribution: null,
