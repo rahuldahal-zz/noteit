@@ -6,7 +6,10 @@ const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
+const helmet = require("helmet");
 const app = express();
+
+app.use(helmet());
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));
