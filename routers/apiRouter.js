@@ -6,7 +6,7 @@ const cors = require("cors");
 // restricting CORS to only specified domain
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:8888',
   optionsSuccessStatus: 200
 }
 
