@@ -85,9 +85,9 @@ exports.create = (req, res) => {
 };
 
 exports.createNoteFileAndMail = (req, res) => {
-  const body = req.body.note;
-  console.log(req.payload);
-  if (typeof body !== "string") {
+  const {details, note, contributor} = {req.body}; // contributor === req.payload
+  console.log(`${contributor.name} has submitted "${details.title}"`);
+  if (typeof req.body !== "string") {
     return reusable.respond(400, "Unacceptable value type received", res);
   }
 
@@ -105,7 +105,7 @@ exports.createNoteFileAndMail = (req, res) => {
 
   function createFile() {
     fs.writeFile(
-      `${absoluteDir.toString()}/${req.payload.contributor.name}.html`,
+      `${absoluteDir.toString()}/${contributor.name}.html`,
       body,
       (err) => {
         if (err) {
@@ -114,14 +114,18 @@ exports.createNoteFileAndMail = (req, res) => {
         }
         afterFileCreation(
           res,
-          `${absoluteDir.toString()}/${req.payload.contributor.name}.html`
+          {contributor, details},
+          `${absoluteDir.toString()}/${contributor.name}.html`
         );
       }
     );
   }
 };
 
-function afterFileCreation(res, attachment) {
+function afterFileCreation(res, {contributor, details}, attachment) {
+
+  const {unit, title, subject, faculty, semester} = details;
+
   sendGrid.setApiKey(process.env.SENDGRID_API);
 
   attachmentEncoded = fs.readFileSync(attachment).toString("base64");
@@ -129,12 +133,12 @@ function afterFileCreation(res, attachment) {
   const message = {
     to: process.env.ADMIN_MAIL,
     from: "noteitteam@gmail.com",
-    subject: "Sample subject, include descriptive subject here...",
-    text: "hey...sent from the editor <make this dynamic>",
+    subject: `${contributor.name} has submitted a new note.`,
+    text: `unit no. ${unit} titled "${title}" of "${subject}" subject for ${semester} semester, ${faculty}.`,
     attachments: [
       {
         content: attachmentEncoded,
-        filename: "generic.html",
+        filename: `${unit}_${subject}_${semester}_${faculty}.html`,
         type: "text/html",
         disposition: "attachment",
       },
