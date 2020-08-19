@@ -85,7 +85,7 @@ exports.create = (req, res) => {
 };
 
 exports.createNoteFileAndMail = (req, res) => {
-  const {details, note, contributor} = {req.body}; // contributor === req.payload
+  const {details, note, contributor} = req.body; /* contributor === req.payload */
   console.log(`${contributor.name} has submitted "${details.title}"`);
   if (typeof req.body !== "string") {
     return reusable.respond(400, "Unacceptable value type received", res);
