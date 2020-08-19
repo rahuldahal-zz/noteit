@@ -84,11 +84,23 @@ exports.create = (req, res) => {
     .catch((error) => console.log(error));
 };
 
+exports.cleanUpNoteDetails = details=>{
+  const {unit, title, subject, faculty, semester} = details;
+  for(value in details){
+    if(typeof details[value] !== "string") {return false;}
+  }
+  return true;
+}
+
 exports.createNoteFileAndMail = (req, res) => {
   const {details, note} = req.body; 
   const contributor = req.payload.contributor; /*(contributor's id and name) */
-  console.log(`${contributor.name} has submitted "${details.title}"`);
-  if (typeof req.body !== "string") {
+  console.log(`${contributor.name} is trying to submit "${details.title}"`);
+
+  const isDataValid = this.cleanUpNoteDetails(details);
+
+
+  if (!isDataValid) {
     return reusable.respond(400, "Unacceptable value type received", res);
   }
 
