@@ -99,6 +99,8 @@ exports.createNoteFileAndMail = (req, res) => {
 
   const isDataValid = this.cleanUpNoteDetails(details);
 
+  // validate "note" as well. As well as a lot of other security issues.
+
 
   if (!isDataValid) {
     return reusable.respond(400, "Unacceptable value type received", res);
@@ -119,7 +121,7 @@ exports.createNoteFileAndMail = (req, res) => {
   function createFile() {
     fs.writeFile(
       `${absoluteDir.toString()}/${contributor.name}.html`,
-      body,
+      note,
       (err) => {
         if (err) {
           console.log(err);
