@@ -85,8 +85,8 @@ exports.create = (req, res) => {
 };
 
 exports.createNoteFileAndMail = (req, res) => {
-  const {details, note, contributor} = req.body; /* contributor === req.payload */
-  console.log(`${contributor.name} has submitted "${details.title}"`);
+  const {details, note, payload} = req.body; /* contributor === req.payload */
+  console.log(`${payload.contributor.name} has submitted "${details.title}"`);
   if (typeof req.body !== "string") {
     return reusable.respond(400, "Unacceptable value type received", res);
   }
@@ -105,7 +105,7 @@ exports.createNoteFileAndMail = (req, res) => {
 
   function createFile() {
     fs.writeFile(
-      `${absoluteDir.toString()}/${contributor.name}.html`,
+      `${absoluteDir.toString()}/${payload.contributor.name}.html`,
       body,
       (err) => {
         if (err) {
@@ -114,15 +114,15 @@ exports.createNoteFileAndMail = (req, res) => {
         }
         afterFileCreation(
           res,
-          {contributor, details},
-          `${absoluteDir.toString()}/${contributor.name}.html`
+          {payload, details},
+          `${absoluteDir.toString()}/${payload.contributor.name}.html`
         );
       }
     );
   }
 };
 
-function afterFileCreation(res, {contributor, details}, attachment) {
+function afterFileCreation(res, {payload, details}, attachment) {
 
   const {unit, title, subject, faculty, semester} = details;
 
@@ -133,7 +133,7 @@ function afterFileCreation(res, {contributor, details}, attachment) {
   const message = {
     to: process.env.ADMIN_MAIL,
     from: "noteitteam@gmail.com",
-    subject: `${contributor.name} has submitted a new note.`,
+    subject: `${payload.contributor.name} has submitted a new note.`,
     text: `unit no. ${unit} titled "${title}" of "${subject}" subject for ${semester} semester, ${faculty}.`,
     attachments: [
       {
