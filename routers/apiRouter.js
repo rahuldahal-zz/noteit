@@ -5,8 +5,16 @@ const cors = require("cors");
 
 // restricting CORS to only specified domain
 
+const whiteListDomains = ["http://localhost:8888", "https://editor-for-noteit.netlify.app"];
+
 const corsOptions = {
-  origin: 'http://localhost:8888',
+  origin: function(origin, callback){
+  	if(whiteListDomains.indexOf(origin) !== -1 || !origin){ // the !origin allows tools like "postman" to send the request
+  		callback(null, true); // yes, they are allowed
+  	}else{
+  		callback(new Error("Not allowed by express-CORS"))
+  	}
+  },
   optionsSuccessStatus: 200
 }
 
