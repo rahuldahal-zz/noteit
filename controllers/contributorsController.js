@@ -168,7 +168,7 @@ function afterFileCreation(res, {contributor, details}, attachment) {
       fs.unlink(attachment, (err) => {
         if (err) return res.status(500).send(err);
 
-        res.status(202).send("Ouu yeah, the file is created.");
+        reusable.respond(202, "Ouu yeah, the file is created.", res);
       });
     })
     .catch((error) => res.status(500).send(error));
