@@ -1,16 +1,5 @@
 import axios from "axios";
-
-// save notes to local storage
-export function saveToLocalStorage(notes) {
-  console.log(notes);
-  let subjects = notes.map((note) => note.subject);
-  let subjectWiseUnits = {};
-  subjects.forEach((subject) => {
-    subjectWiseUnits[subject] = notes.filter((note) => note.subject == subject);
-  });
-  localStorage.setItem("notes", JSON.stringify(subjectWiseUnits));
-  setTimeout(() => (window.location.href = "/home"), 500);
-}
+import { saveToLocalStorage } from "./localStorageHandler";
 
 export default class SaveFacultyAndSemester {
   constructor() {
@@ -33,12 +22,13 @@ export default class SaveFacultyAndSemester {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            return axios.post("/users/sendNotesToClient", {
-              _csrf: this._csrf,
-            });
+            return axios.get("/users/availableNotes");
           }
         })
-        .then((notes) => saveToLocalStorage(notes.data))
+        .then((notes) => {
+          saveToLocalStorage(notes.data);
+          setTimeout(() => (window.location.href = "/home"), 500);
+        })
         .catch((error) => console.log(error));
     });
   }

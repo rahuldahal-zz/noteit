@@ -34,10 +34,4 @@ exports.sendFlashMessage = function (
   } else respond(400, message, res);
 };
 
-exports.log = function (message) {
-  const caller = log.caller;
-  if (!caller) console.log(`from ROOT: ${message}`);
-  else console.log(`from ${caller}: ${message}`);
-};
-
 exports.respond = respond;

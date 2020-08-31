@@ -1,7 +1,6 @@
 import axios from "axios";
 export default class SearchNotes {
   constructor() {
-    this._csrf = document.querySelector('[name="_csrf"]').value;
     this.searchButton = document.getElementById("searchNoteBtn");
     this.injectSearchOverlay();
     this.searchOverlay = document.getElementById("searchOverlay");
@@ -112,10 +111,7 @@ export default class SearchNotes {
 
   sendRequest() {
     axios
-      .post("/notes/search", {
-        searchTerm: this.searchField.value,
-        _csrf: this._csrf,
-      })
+      .get(`/notes/search/${this.searchField.value}`)
       .then((response) => {
         console.log(response.data);
         this.showResultsArea(response.data);

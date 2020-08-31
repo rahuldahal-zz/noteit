@@ -4,45 +4,27 @@ const Notes = require("../models/Notes");
 const reusable = require("./reusableFunctions");
 
 exports.checkForCorrectSubscription = (req, res, next) => {
-  function checkFacultyAndSemester() {
-    if (
-      req.user.faculty === req.params.faculty &&
-      req.user.semester === req.params.semester
-    ) {
-      next();
-      return;
-    }
-    reusable.sendFlashMessage(
-      req,
-      res,
-      "errors",
-      "You do not have the correct subscription to access this page.",
-      "/home"
-    );
+  if (
+    req.user.faculty === req.params.faculty &&
+    req.user.semester === req.params.semester
+  ) {
+    /**
+     * notes can be searched(on later middleware) in two ways,
+     * 1. toViewParticularUnit -> search basedOn "title"
+     * 2. toSaveParticularUnit -> search basedOn "objectID"
+     * on both conditions, we need to check if the "requested" note even exists
+     */
+    req.toViewParticularUnit = true; // will be used in hasUserSavedThisNote()
+    next(); // findSavedNotes()
+    return;
   }
-
-  //if "visitor" is not a "contributor", check the subscription details...
-  if (!req.user.roles.includes("contributor")) {
-    checkFacultyAndSemester();
-  } else {
-    Notes.hasVisitorContributedThatNote(req.params.unit, req.user._id)
-      .then((response) => {
-        if (response) {
-          req.hasVisitorContributedThatNote = true;
-          next();
-          return;
-        }
-      })
-      .catch((rejectMessage) => {
-        //if rejects with "false", means that the "visitor" is not the "contributor", so check the "subscription"
-        if (!rejectMessage) {
-          checkFacultyAndSemester();
-          return;
-        }
-        //if rejects with "message", means that the "note" was not found in database, show "flash" "notfound" message
-        reusable.sendFlashMessage(req, res, "errors", rejectMessage, "/");
-      });
-  }
+  reusable.sendFlashMessage(
+    req,
+    res,
+    "errors",
+    "You do not have the correct subscription to access this page.",
+    "/home"
+  );
 };
 
 exports.findSavedNotes = (req, res, next) => {
@@ -58,10 +40,9 @@ exports.findSavedNotes = (req, res, next) => {
 
       //setting savedNotes to "locals" so that all templates could use it
       res.locals.savedNotes = savedNotes;
-      next();
+      next(); // hasUserSavedThisNote();
     })
     .catch((error) => {
-      reusable.log(error);
       reusable.sendFlashMessage(req, res, "errors", error, "/");
     });
 };
@@ -75,15 +56,14 @@ exports.hasUserSavedThisNote = (req, res, next) => {
   //check if the requested "note" even exists
   const note = new Notes(req.user);
 
-  //if "_id" is on the body(like, post request), use "basedOn: id", else use "basedOn: title"(get request);
   let basedOn, value;
-  if (req.method == "GET") {
-    basedOn = "title";
-    value = req.params.unit;
-  } else if (req.method == "POST") {
-    basedOn = "id";
-    value = req.body.noteId;
+
+  if (req.toViewParticularUnit) {
+    (basedOn = "title"), (value = req.params.unit);
+  } else {
+    (basedOn = "id"), (value = req.params.noteId);
   }
+
   note
     .findRequestedNote(basedOn, value)
     .then((response) => {
@@ -100,7 +80,7 @@ exports.hasUserSavedThisNote = (req, res, next) => {
         }
       }
 
-      next();
+      next(); // viewParticularUnit()
     })
     .catch((err) => {
       res.status(404);
@@ -124,25 +104,23 @@ exports.saveNotes = (req, res) => {
   //if "note" is not saved already, then save it, else remove
   if (!req.requestedNote.hasSaved) {
     user
-      .saveNotes(req.body.noteId)
+      .saveNotes(req.params.noteId)
       .then(() => {
         console.log("Saved...", req.body.noteId);
-        res.status(200).send("saved successfully");
+        return reusable.respond(200, "Note is saved successfully!", res);
       })
       .catch((error) => {
-        reusable.log(error);
-        reusable.sendFlashMessage(req, res, "errors", error, "/");
+        return reusable.sendFlashMessage(req, res, "errors", error, "/");
       });
   } else {
     user
-      .removeSaved(req.body.noteId)
+      .removeSaved(req.params.noteId)
       .then(() => {
         console.log("Removed ?");
-        res.status(200).send("Removed successfully");
+        return reusable.respond(200, "Note is removed successfully!", res);
       })
       .catch((error) => {
-        reusable.log(error);
-        reusable.sendFlashMessage(req, res, "errors", error, "/");
+        return reusable.sendFlashMessage(req, res, "errors", error, "/");
       });
   }
 };
@@ -160,24 +138,23 @@ exports.createNewNote = (req, res) => {
 exports.sendNotesDescriptionToClient = (req, res, next) => {
   //finding notes from the db
   let notes = new Notes(req.user);
-  if (!req.hasNotesInLocalStorage) {
-    notes
-      .findNotes(req.user.faculty, req.user.semester)
-      .then((availableNotes) => {
-        res.status(200).json(availableNotes); //use this in the front end to render subjects and their units, also store in localStorage, this is send in JSON via the next();
-        return;
-      })
-      .catch((error) => {
-        reusable.log(error);
-        reusable.respond(400, error, res);
-      });
-  } else {
-    res.json({});
-  }
+  // if (!req.hasNotesInLocalStorage) {
+  notes
+    .findNotes(req.user.faculty, req.user.semester)
+    .then((availableNotes) => {
+      res.status(200).json(availableNotes); //use this in the front end to render subjects and their units, also store in localStorage
+      return;
+    })
+    .catch((error) => {
+      reusable.respond(400, error, res);
+    });
+  // } else {
+  //   res.json({});
+  // }
 };
 
 exports.handleSearch = (req, res) => {
-  Notes.search(req.body.searchTerm, req.user.faculty, req.user.semester)
+  Notes.search(req.params.searchTerm, req.user.faculty, req.user.semester)
     .then((response) => res.json(response))
     .catch((error) => res.json([]));
 };

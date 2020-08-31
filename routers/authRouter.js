@@ -3,25 +3,27 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/User");
 
-
 // logout
 
-router.post("/logout", (req, res) => {
-    console.log("logging out");
-    User.prototype.sessionCountHandler(req.user._id, "decrement")
-        .then(() => req.session.destroy())
-        .catch(err => console.log("from logout: " + err));
-    res.status(300).redirect("/");
-})
+router.get("/logout", (req, res) => {
+  console.log("logging out");
+  User.prototype
+    .sessionCountHandler(req.user._id, "decrement")
+    .then(() => req.session.destroy())
+    .catch((err) => console.log("from logout: " + err));
+  res.status(300).redirect("/");
+});
 
 // authentication
 
-router.get("/google", passport.authenticate("google", {
-    scope: ["profile", "email"]
-}))
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
 
-router.get("/facebook", passport.authenticate("facebook"))
-
+router.get("/facebook", passport.authenticate("facebook"));
 
 // redirect route
 
@@ -30,21 +32,20 @@ router.get("/facebook", passport.authenticate("facebook"))
 // after user has allowed, the service provider sends a code, using it we can access the user's profile
 // this is what the second "invocation" will do, essentially firing the "passport-callback" from "passportController"
 
-router.get("/google/redirect",
-    passport.authenticate("google", {
-        successRedirect: "/",
-        failureRedirect: "/auth/fail"
-    })
-
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/auth/fail",
+  })
 );
 
-router.get("/facebook/redirect",
-    passport.authenticate("facebook", {
-        successRedirect: "/",
-        failureRedirect: "/auth/fail"
-    })
-
+router.get(
+  "/facebook/redirect",
+  passport.authenticate("facebook", {
+    successRedirect: "/",
+    failureRedirect: "/auth/fail",
+  })
 );
-
 
 module.exports = router;

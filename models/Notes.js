@@ -9,48 +9,63 @@ let Notes = function (data) {
 Notes.prototype.findNotes = function () {
   return new Promise((resolve, reject) => {
     // find({ faculty: this.data.faculty, semester: this.data.semester }).toArray()
-    notesCollection
-      .aggregate([
-        {
-          $match: { faculty: this.data.faculty, semester: this.data.semester },
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "contributor",
-            foreignField: "_id",
-            as: "contributorDocument",
+    if (
+      typeof this.data.faculty !== "string" ||
+      typeof this.data.semester !== "string"
+    ) {
+      this.errors.push("The faculty and semester are not of valid type.");
+      reject("The faculty and semester are not of valid type.");
+    }
+
+    if (!this.errors.length) {
+      notesCollection
+        .aggregate([
+          {
+            $match: {
+              faculty: this.data.faculty,
+              semester: this.data.semester,
+            },
           },
-        },
-        {
-          $project: {
-            _id: 1,
-            unitNo: 1,
-            title: 1,
-            subject: 1,
-            faculty: 1,
-            semester: 1,
-            url: 1,
-            createdDate: 1,
-            contributor: { $arrayElemAt: ["$contributorDocument", 0] },
+          {
+            $lookup: {
+              from: "contributors", // which collection ?
+              localField: "contributor", // from current collection, what field ?
+              foreignField: "_id", // on that collection, match to what field ?
+              as: "contributorDocument",
+            },
           },
-        },
-      ])
-      .toArray()
-      .then((availableNotes) => {
-        if (availableNotes.length) {
-          //clean up contributor prop to include username and photo
-          availableNotes = availableNotes.map((note) => {
-            note.contributor = {
-              _id: "Pick Later", // note.contributor._id
-              username: "placeholdername-hardcoded", // note.contributor.username
-            };
-            return note;
-          });
-          resolve(availableNotes);
-        } else reject();
-      })
-      .catch((error) => console.log(error));
+          {
+            $project: {
+              _id: 1,
+              unitNo: 1,
+              title: 1,
+              subject: 1,
+              faculty: 1,
+              semester: 1,
+              url: 1,
+              createdDate: 1,
+              contributor: { $arrayElemAt: ["$contributorDocument", 0] },
+            },
+          },
+        ])
+        .toArray()
+        .then((availableNotes) => {
+          if (availableNotes.length) {
+            //clean up contributor prop to include username and photo
+            availableNotes = availableNotes.map((note) => {
+              note.contributor = {
+                _id: note.contributor._id,
+                username: note.contributor.name,
+              };
+              return note;
+            });
+            resolve(availableNotes);
+          } else reject("No notes are found...");
+        })
+        .catch((error) =>
+          reject("Maybe the aggregate operations went wrong ??")
+        );
+    }
   });
 };
 
@@ -105,8 +120,8 @@ Notes.hasVisitorContributedThatNote = function (title, userId) {
 
 Notes.search = function (searchTerm, faculty, semester) {
   return new Promise((resolve, reject) => {
-    if (!typeof searchTerm === "string") {
-      reject();
+    if (typeof searchTerm !== "string") {
+      reject("The search term is not valid");
       return;
     }
     notesCollection

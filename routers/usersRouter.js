@@ -3,7 +3,12 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const notesController = require("../controllers/notesController");
 
-router.post("/sendNotesToClient", notesController.sendNotesDescriptionToClient);
+router.get(
+  "/availableNotes",
+  userController.mustBeLoggedIn,
+  userController.mustBeApproved,
+  notesController.sendNotesDescriptionToClient
+);
 
 router.post("/saveFacultyAndSemester", userController.saveFacultyAndSemester);
 

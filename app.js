@@ -75,11 +75,11 @@ app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 
 // if router(s) do not handle the "route", this middle-ware will handle it
-// app.use((err, req, res, next) => {
-//   if (err && err.code === "EBADCSRFTOKEN") {
-//     return res.send("Cross site request forgery detected");
-//   }
-//   res.render("404");
-// });
+app.use((err, req, res, next) => {
+  if (err && err.code === "EBADCSRFTOKEN") {
+    return res.status(400).send("Cross site request forgery detected");
+  }
+  res.render("404");
+});
 
 module.exports = app;

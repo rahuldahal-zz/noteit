@@ -58,7 +58,7 @@ User.prototype.cleanUp = function () {
     ...this.userDetails,
     faculty: null,
     semester: null,
-    roles: ["basic"],
+    roles: ["basic"], // ["basic", "contributor", "moderator", "admin"]
     isApproved: false,
     isSubscriptionExpired: false,
     joinedOn: new Date(),
@@ -68,9 +68,8 @@ User.prototype.cleanUp = function () {
   };
 };
 
-User.prototype.validateFacultyAndSemester = function () {
-  let faculty = this.data.faculty;
-  let semester = this.data.semester;
+User.prototype.validateFacultyAndSemester = function (faculty, semester) {
+  console.log(faculty, semester);
 
   //faculty validation
   const acceptableFaculty = ["bim", "bca", "csit"];
@@ -151,25 +150,38 @@ User.prototype.sessionCountHandler = function (id, action) {
 };
 
 User.prototype.saveFacultyAndSemester = function (faculty, semester) {
+  faculty = faculty.toLowerCase();
+  semester = semester.toLowerCase();
+
   return new Promise((resolve, reject) => {
-    console.log(this.data._id);
-    if (typeof faculty !== "string" || typeof semester !== "string")
+    if (typeof faculty !== "string" || typeof semester !== "string") {
       return reject("Unacceptable values are provided");
-    usersCollection
-      .findOneAndUpdate(
-        { _id: new ObjectID(this.data._id) },
-        {
-          $set: {
-            faculty: faculty.toLowerCase(),
-            semester: semester.toLowerCase(),
-          },
-        }
-      )
-      .then((updatedUser) => {
-        if (updatedUser.value) return resolve();
-        reject("The requested user cannot be found");
-      })
-      .catch((error) => console.log(error));
+    }
+
+    this.validateFacultyAndSemester(faculty, semester);
+
+    if (!this.errors.length) {
+      usersCollection
+        .findOneAndUpdate(
+          { _id: new ObjectID(this.data._id) },
+          {
+            $set: {
+              faculty: faculty,
+              semester: semester,
+            },
+          }
+        )
+        .then((updatedUser) => {
+          if (updatedUser.value) return resolve();
+          return reject("The requested user cannot be found");
+        })
+        .catch((error) => {
+          console.log(error);
+          return reject(error);
+        });
+    } else {
+      return reject(this.errors);
+    }
   });
 };
 

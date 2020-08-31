@@ -4,6 +4,7 @@ import NotesScreen from "./modules/notesScreen";
 import ContributorProfile from "./modules/contributorProfile";
 import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
 import ReadyToGo from "./modules/readyToGoScreen";
+import SearchNotes from "./modules/searchNotes";
 import Admin from "./modules/adminOnly/adminDashboard";
 
 new Base();
@@ -14,6 +15,10 @@ if (document.getElementById("saveFacultyAndSemesterScreen")) {
 
 if (document.getElementById("readyToGoScreen")) {
   new ReadyToGo();
+}
+
+if (document.getElementById("searchNoteBtn")) {
+  new SearchNotes();
 }
 
 if (document.getElementById("adminDashboardScreen")) {

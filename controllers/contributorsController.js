@@ -84,23 +84,24 @@ exports.create = (req, res) => {
     .catch((error) => console.log(error));
 };
 
-exports.cleanUpNoteDetails = details=>{
-  const {unit, title, subject, faculty, semester} = details;
-  for(value in details){
-    if(typeof details[value] !== "string") {return false;}
+exports.cleanUpNoteDetails = (details) => {
+  const { unit, title, subject, faculty, semester } = details;
+  for (value in details) {
+    if (typeof details[value] !== "string") {
+      return false;
+    }
   }
   return true;
-}
+};
 
 exports.createNoteFileAndMail = (req, res) => {
-  const {details, note} = req.body; 
+  const { details, note } = req.body;
   const contributor = req.payload.contributor; /*(contributor's id and name) */
   console.log(`${contributor.name} is trying to submit "${details.title}"`);
 
   const isDataValid = this.cleanUpNoteDetails(details);
 
   // validate "note" as well. As well as a lot of other security issues.
-
 
   if (!isDataValid) {
     return reusable.respond(400, "Unacceptable value type received", res);
@@ -129,7 +130,7 @@ exports.createNoteFileAndMail = (req, res) => {
         }
         afterFileCreation(
           res,
-          {contributor, details},
+          { contributor, details },
           `${absoluteDir.toString()}/${contributor.name}.html`
         );
       }
@@ -137,9 +138,8 @@ exports.createNoteFileAndMail = (req, res) => {
   }
 };
 
-function afterFileCreation(res, {contributor, details}, attachment) {
-
-  const {unit, title, subject, faculty, semester} = details;
+function afterFileCreation(res, { contributor, details }, attachment) {
+  const { unit, title, subject, faculty, semester } = details;
 
   sendGrid.setApiKey(process.env.SENDGRID_API);
 
@@ -168,7 +168,11 @@ function afterFileCreation(res, {contributor, details}, attachment) {
       fs.unlink(attachment, (err) => {
         if (err) return res.status(500).send(err);
 
-        reusable.respond(202, "Ouu yeah, the file is created.", res);
+        reusable.respond(
+          202,
+          "You have successfully submitted the Note. Thank You!!",
+          res
+        );
       });
     })
     .catch((error) => res.status(500).send(error));

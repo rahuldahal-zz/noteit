@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default class NotesScreen {
   constructor() {
-    this._csrf = document.querySelector('[name="_csrf"]').value;
     this.noteId = document.querySelector('[name="noteId"]').value;
     this.sideBar = document.getElementById("notesScreen-sidebar");
     this.unitsSideBarWrapper = document.getElementById("unitsSideBarWrapper");
@@ -26,9 +25,7 @@ export default class NotesScreen {
       this.saveNoteForm.addEventListener("submit", (e) => {
         e.preventDefault();
         if (this.saveNoteForm.firstElementChild.value) {
-          this.sendAsyncRequest("/notes/save", {
-            noteId: this.noteId,
-          });
+          this.sendSaveRequest();
         }
       });
     }
@@ -127,10 +124,9 @@ export default class NotesScreen {
     this.contributorName.href = `/contributors/${contributor.username}`;
   }
 
-  sendAsyncRequest(route, body) {
-    body._csrf = this._csrf;
+  sendSaveRequest() {
     axios
-      .post(route, body)
+      .get(`/notes/save/${this.noteId}`)
       .then((response) => {
         if (response.status === 200)
           this.toggleButtons(

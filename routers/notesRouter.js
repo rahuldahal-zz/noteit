@@ -16,14 +16,17 @@ router.get(
 );
 
 router.post("/create", notesController.createNewNote);
-router.post(
-  "/save",
+router.get(
+  "/save/:noteId",
+  userController.mustBeLoggedIn,
+  userController.checkSessionCount,
+  userController.mustBeApproved,
   notesController.findSavedNotes,
   notesController.hasUserSavedThisNote,
   notesController.saveNotes
 );
-router.post(
-  "/search",
+router.get(
+  "/search/:searchTerm",
   userController.mustBeLoggedIn,
   userController.checkSessionCount,
   userController.mustBeApproved,
