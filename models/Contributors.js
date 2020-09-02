@@ -7,21 +7,23 @@ let Contributor = function (data) {
 };
 
 Contributor.prototype.cleanUp = function () {
-
-
-  if (typeof this.data.id !== "string") this.data.id = "";
-  if (typeof this.data.name !== "string") this.data.name = "";
-  if (typeof this.data.first_name !== "string") this.data.first_name = "";
-  if (typeof this.data.last_name !== "string") this.data.last_name = "";
-  if (typeof this.data.picture.data.url !== "string")
-    this.data.picture.data.url = "";
+  for (let key in this.data) {
+    if (key !== "picture" && typeof this.data[key] !== "string") {
+      this.data[key] = "";
+      this.errors.push(`"${key}" is not of valid type.`);
+    }
+    if (key === "picture" && typeof this.data[key].data.url !== "string") {
+      this.data[key].data.url = "";
+      this.errors.push("Picture URL is not of valid type");
+    }
+  }
 
   this.data = {
     OAuthId: this.data.id,
     name: this.data.name,
     firstName: this.data.first_name,
     lastName: this.data.last_name,
-    // avatar: this.data.picture.data.url,
+    avatar: this.data.picture.data.url,
     joinedOn: new Date(),
     isApproved: false,
     recentContribution: null,
@@ -37,13 +39,17 @@ Contributor.prototype.cleanUp = function () {
 Contributor.prototype.findByOAuthId = function () {
   this.cleanUp();
   return new Promise((resolve, reject) => {
-    contributorsCollection
-      .findOne({ OAuthId: this.data.OAuthId })
-      .then((contributor) => {
-        if (contributor) return resolve(contributor);
-        else reject("not found");
-      })
-      .catch((error) => reject(error));
+    if (!this.errors.length) {
+      contributorsCollection
+        .findOne({ OAuthId: this.data.OAuthId })
+        .then((contributor) => {
+          if (contributor) return resolve(contributor);
+          else reject("not found");
+        })
+        .catch((error) => reject(error));
+    } else {
+      return reject({ clientError: this.errors });
+    }
   });
 };
 

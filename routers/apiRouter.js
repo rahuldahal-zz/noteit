@@ -5,30 +5,21 @@ const cors = require("cors");
 
 // restricting CORS to only specified domain
 
-const whiteListDomains = ["http://localhost:8888", "https://editor-for-noteit.netlify.app"];
+const whiteListDomains = [process.env.ALLOWED_ORIGIN_EDITOR];
 
 const corsOptions = {
-  origin: function(origin, callback){
-  	if(whiteListDomains.indexOf(origin) !== -1 || !origin){ // the !origin allows tools like "postman" to send the request
-  		callback(null, true); // yes, they are allowed
-  	}else{
-  		callback(new Error("Not allowed by express-CORS"))
-  	}
+  origin: function (origin, callback) {
+    if (whiteListDomains.indexOf(origin) !== -1 || !origin) {
+      // the !origin allows tools like "postman" to send the request
+      callback(null, true); // yes, they are allowed
+    } else {
+      callback(new Error("Not allowed by express-CORS"));
+    }
   },
-  optionsSuccessStatus: 200
-}
+  optionsSuccessStatus: 200,
+};
 
 router.use(cors(corsOptions));
-
-// router.post("/", (req, res) => {
-//   res.header("Access-Control-Allow-Origin", process.env.ALLOWED_ORIGINS);
-//   res.header("Access-Control-Allow-Headers", "*");
-
-//   if (req.method === "OPTIONS") {
-//     res.header("Access-Control-Allow-Methods", "OPTIONS", "POST", "GET", "PUT");
-//     return res.status(200).json({});
-//   }
-// });
 
 /**
  * Admin API

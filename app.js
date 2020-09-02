@@ -9,6 +9,18 @@ const csrf = require("csurf");
 const helmet = require("helmet");
 const app = express();
 
+// webpack-dev-middleware setup(bundle in memory)
+const webpack = require("webpack");
+const webpackConfigFile = require("./webpack.config");
+const webpackDevMiddleware = require("webpack-dev-middleware");
+const compiler = webpack(webpackConfigFile);
+
+// app.use(
+//   webpackDevMiddleware(compiler, {
+//     publicPath: webpackConfigFile.output.publicPath,
+//   })
+// );
+
 app.use(helmet());
 
 // ways to submit data to the server

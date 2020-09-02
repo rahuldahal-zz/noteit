@@ -13,6 +13,7 @@ export function saveToLocalStorage(notes) {
 
 export default class LocalStorageHandler {
   constructor() {
+    console.log("The local storage runs");
     this.subjectsContainer = document.getElementById(
       "welcomeScreen__subjectsContainer"
     );

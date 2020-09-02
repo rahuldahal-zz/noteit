@@ -71,6 +71,8 @@ exports.isContributorAlreadyRegistered = (req, res, next) => {
       if (error === "not found") {
         req.contributorObject = contributor; // making that "let contributor = new Contributor() available to the next middleware"
         return next();
+      } else if (error.clientError) {
+        return reusable.respond(400, error.clientError, res);
       } else reusable.respond("500", error, res);
     });
 };

@@ -40,7 +40,7 @@ exports.mustHaveToken = function (req, res, next) {
     req.payload = payload;
     return next();
   } catch (error) {
-    reusable.respond(400, "You must provide a valid token", res);
+    reusable.respond(403, "You must provide a valid token", res);
   }
 };
 

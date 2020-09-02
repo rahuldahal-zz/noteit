@@ -1,5 +1,5 @@
 import axios from "axios";
-import { saveToLocalStorage } from "./saveFacultyAndSemester";
+import { saveToLocalStorage } from "./localStorageHandler";
 
 export default class ReadyToGo {
   constructor() {
