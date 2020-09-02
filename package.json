@@ -4,7 +4,7 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "dev": "start nodemon db --ignore frontend-js --ignore public/ && start webpack",
+    "dev": "nodemon db --ignore frontend-js --ignore public/",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

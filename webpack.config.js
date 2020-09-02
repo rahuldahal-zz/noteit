@@ -32,8 +32,8 @@ let config = {
 //separate for "development"
 if (currentTask === "dev") {
   cssConfig.use.unshift("style-loader");
-  config.watch = true;
   config.mode = "development";
+  config.devtool = "inline-source-map";
   config.output = {
     filename: "main-bundled.js",
     path: path.resolve(__dirname, "public"),

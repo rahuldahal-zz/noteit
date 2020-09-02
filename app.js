@@ -15,13 +15,13 @@ const webpackConfigFile = require("./webpack.config");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const compiler = webpack(webpackConfigFile);
 
-// app.use(
-//   webpackDevMiddleware(compiler, {
-//     publicPath: webpackConfigFile.output.publicPath,
-//   })
-// );
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: webpackConfigFile.output.publicPath,
+  })
+);
 
-app.use(helmet());
+// app.use(helmet());
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));
