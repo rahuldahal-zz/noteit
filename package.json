@@ -1,6 +1,6 @@
 {
   "name": "NoteIT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
