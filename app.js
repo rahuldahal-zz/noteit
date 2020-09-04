@@ -9,19 +9,25 @@ const csrf = require("csurf");
 const helmet = require("helmet");
 const app = express();
 
-// webpack-dev-middleware setup(bundle in memory)
-const webpack = require("webpack");
-const webpackConfigFile = require("./webpack.config");
-const webpackDevMiddleware = require("webpack-dev-middleware");
-const compiler = webpack(webpackConfigFile);
+const currentTask = process.env.npm_lifecycle_event;
 
-app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: webpackConfigFile.output.publicPath,
-  })
-);
+// while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
 
-// app.use(helmet());
+if (currentTask === "dev") {
+  // webpack-dev-middleware setup(bundle in memory)
+  const webpack = require("webpack");
+  const webpackConfigFile = require("./webpack.config");
+  const webpackDevMiddleware = require("webpack-dev-middleware");
+  const compiler = webpack(webpackConfigFile);
+
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: webpackConfigFile.output.publicPath,
+    })
+  );
+} else {
+  app.use(helmet());
+}
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));
@@ -87,11 +93,11 @@ app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 
 // if router(s) do not handle the "route", this middle-ware will handle it
-app.use((err, req, res, next) => {
-  if (err && err.code === "EBADCSRFTOKEN") {
-    return res.status(400).send("Cross site request forgery detected");
-  }
-  res.render("404");
-});
+// app.use((err, req, res, next) => {
+//   if (err && err.code === "EBADCSRFTOKEN") {
+//     return res.status(400).send("Cross site request forgery detected");
+//   }
+//   res.render("404");
+// });
 
 module.exports = app;

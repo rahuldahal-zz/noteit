@@ -5,7 +5,10 @@ const cors = require("cors");
 
 // restricting CORS to only specified domain
 
-const whiteListDomains = [process.env.ALLOWED_ORIGIN_EDITOR];
+const whiteListDomains = [
+  process.env.ALLOWED_ORIGIN_EDITOR,
+  process.env.ALLOWED_ORIGIN_LOCAL,
+];
 
 const corsOptions = {
   origin: function (origin, callback) {

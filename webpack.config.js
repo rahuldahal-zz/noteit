@@ -42,7 +42,7 @@ if (currentTask === "dev") {
 }
 
 //separate for "production"
-if (currentTask === "build") {
+if (currentTask === "prod") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
@@ -65,11 +65,5 @@ if (currentTask === "build") {
     }),
   ];
 }
-
-// output: {
-//     filename: "main-bundled.js",
-//     path: path.resolve(__dirname, "public")
-// },
-// mode: "production",
 
 module.exports = config;

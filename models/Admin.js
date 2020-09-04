@@ -140,36 +140,41 @@ Admin.getAllNotes = () => {
   });
 };
 
-const cleanUp = (noteDetails) => {
-  if (typeof noteDetails.title !== "string") noteDetails.title = "";
-  if (typeof noteDetails.subject !== "string") noteDetails.subject = "";
-  if (typeof noteDetails.faculty !== "string") noteDetails.faculty = "";
-  if (typeof noteDetails.semester !== "string") noteDetails.semester = "";
-  if (typeof noteDetails.contributor !== "string") noteDetails.contributor = "";
+Admin.prototype.cleanUp = function () {
+  for (let key in this.data) {
+    if (typeof this.data[key] !== "string") {
+      this.data[key] = "";
+      this.errors.push(`"${key}" is not of valid type.`);
+    }
+  }
 
-  this.noteDetails = {
-    unitNo: noteDetails.unitNo,
-    title: noteDetails.title,
-    subject: noteDetails.subject,
-    faculty: noteDetails.faculty,
-    semester: noteDetails.semester,
-    url: `/notes/${noteDetails.faculty}/${
-      noteDetails.semester
-    }/${encodeURIComponent(noteDetails.subject)}/${encodeURIComponent(
-      noteDetails.title
+  this.data = {
+    unitNo: this.data.unitNo,
+    title: this.data.title,
+    subject: this.data.subject,
+    faculty: this.data.faculty,
+    semester: this.data.semester,
+    url: `/notes/${this.data.faculty}/${
+      this.data.semester
+    }/${encodeURIComponent(this.data.subject)}/${encodeURIComponent(
+      this.data.title
     )}`,
-    createdDate: new Date(),
-    contributor: new ObjectID(noteDetails.contributor),
+    contributor: new ObjectID(this.data.contributor),
+    note: this.data.note,
+    createdDate: Date.now(),
   };
 };
 
-Admin.createNote = (noteDetails) => {
-  cleanUp(noteDetails);
+Admin.prototype.createNote = function () {
+  // return console.log(this);
+  this.cleanUp();
   return new Promise((resolve, reject) => {
-    notesCollection
-      .insertOne(this.noteDetails)
-      .then(() => resolve("Note Created Successfully"))
-      .catch((error) => reject(error));
+    if (!this.errors.length) {
+      notesCollection
+        .insertOne(this.data)
+        .then(() => resolve("Note Created Successfully"))
+        .catch((error) => reject(error));
+    } else reject(this.errors);
   });
 };
 

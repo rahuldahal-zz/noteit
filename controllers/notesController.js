@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Notes = require("../models/Notes");
+const GenerateView = require("./generateView");
 
 const reusable = require("./reusableFunctions");
 
@@ -68,7 +69,7 @@ exports.hasUserSavedThisNote = (req, res, next) => {
     .findRequestedNote(basedOn, value)
     .then((response) => {
       req.requestedNote = {}; //initializing an empty object before using it.
-      req.requestedNote._id = response._id; //findRequestedNote resolves with the "note" itself
+      req.requestedNote = response; //findRequestedNote resolves with the "note" itself
       req.requestedNote.hasSaved = false;
       //must convert "_id" to string for comparison
       for (let i = 0; i < req.savedNotesByUser.length; i++) {
@@ -89,13 +90,17 @@ exports.hasUserSavedThisNote = (req, res, next) => {
 };
 
 exports.viewParticularUnit = (req, res) => {
-  res.render(
-    `notes/${req.params.faculty}/${req.params.semester}/${req.params.subject}/${req.params.unit}`,
-    {
-      requestedNote: req.requestedNote,
-      hasVisitorContributedThatNote: req.hasVisitorContributedThatNote,
-    }
-  );
+  const rawNote = JSON.parse(req.requestedNote.note);
+  const generateView = new GenerateView(rawNote.blocks);
+  generateView
+    .then((content) =>
+      res.render("notes/genericNote", {
+        content,
+        requestedNote: req.requestedNote,
+        hasVisitorContributedThatNote: req.hasVisitorContributedThatNote,
+      })
+    )
+    .catch((error) => res.send(error));
 };
 
 exports.saveNotes = (req, res) => {
@@ -123,16 +128,6 @@ exports.saveNotes = (req, res) => {
         return reusable.sendFlashMessage(req, res, "errors", error, "/");
       });
   }
-};
-
-exports.createNewNote = (req, res) => {
-  let note = new Notes(req.body);
-  note
-    .createNewNote()
-    .then((response) => {
-      req.send(response).end();
-    })
-    .catch((error) => res.send(error));
 };
 
 exports.sendNotesDescriptionToClient = (req, res, next) => {

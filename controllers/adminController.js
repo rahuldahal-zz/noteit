@@ -105,7 +105,8 @@ exports.getAllNotes = (req, res) => {
 };
 
 exports.createNote = (req, res) => {
-  Admin.createNote(req.body)
-    .then((response) => res.status(201).json(response))
-    .catch((error) => res.status(500).json({ message: error }));
+  new Admin(req.body)
+    .createNote()
+    .then((message) => res.status(201).json(message))
+    .catch((error) => res.status(400).json(error));
 };

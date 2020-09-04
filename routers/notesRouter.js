@@ -15,7 +15,6 @@ router.get(
   notesController.viewParticularUnit
 );
 
-router.post("/create", notesController.createNewNote);
 router.get(
   "/save/:noteId",
   userController.mustBeLoggedIn,

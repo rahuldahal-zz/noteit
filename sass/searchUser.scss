@@ -1,39 +1,39 @@
-@import "defaultsAreBoring";
+@import "makeThingsNeat";
 
-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: space-between;
-    padding: 1rem;
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
+  padding: 1rem;
 }
 
-#userCardContainer{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    grid-gap: 2rem;
-    place-items: center;
-    margin-top: 5vh;
+#userCardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 2rem;
+  place-items: center;
+  margin-top: 5vh;
 
-    .userCard{
-        background-color: #0880af;
-        border-radius: 0.5rem;
-        padding: 1rem 0.75rem;
-        box-shadow: 0 10px 40px -6px rgba(0,0,0,.5);
-        color: #eee;
+  .userCard {
+    background-color: #0880af;
+    border-radius: 0.5rem;
+    padding: 1rem 0.75rem;
+    box-shadow: 0 10px 40px -6px rgba(0, 0, 0, 0.5);
+    color: #eee;
 
-        .actionsContainer{
-            display: flex;
-            flex-wrap: wrap;
-            
-            form{
-                margin: 0.75rem;
+    .actionsContainer {
+      display: flex;
+      flex-wrap: wrap;
 
-                button{
-                    background-color: #eee;
-                    color: #333;
-                }
-            }
+      form {
+        margin: 0.75rem;
+
+        button {
+          background-color: #eee;
+          color: #333;
         }
+      }
     }
+  }
 }

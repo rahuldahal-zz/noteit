@@ -9,6 +9,7 @@ export default class CreateNote {
     this.subject = document.querySelector('[name="subject"]');
     this.faculty = document.querySelector('[name="faculty"]');
     this.semester = document.querySelector('[name="semester"]');
+    this.note = document.querySelector('[name="note"]');
     this.contributors = document.querySelector('[name="contributor"]');
     this.loadContributors();
     this.events();
@@ -53,6 +54,7 @@ export default class CreateNote {
         faculty: this.faculty.value,
         semester: this.semester.value,
         contributor: this.contributors.value,
+        note: this.note.value,
         token: this.jwt,
       })
       .then((response) => {
