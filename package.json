@@ -43,9 +43,7 @@
     "passport-google-oauth20": "^2.0.0",
     "sanitize-html": "^1.20.1",
     "socket.io": "^2.2.0",
-    "validator": "^11.1.0",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7"
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
@@ -55,6 +53,8 @@
     "mini-css-extract-plugin": "^0.11.0",
     "sass-loader": "^10.0.1",
     "style-loader": "^1.2.1",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0"
   }
