@@ -1,5 +1,5 @@
 import axios from "axios";
-import { saveToLocalStorage } from "./localStorageHandler";
+import { saveAvailableNotes } from "./localStorageHandler";
 
 export default class SaveFacultyAndSemester {
   constructor() {
@@ -26,7 +26,7 @@ export default class SaveFacultyAndSemester {
           }
         })
         .then((notes) => {
-          saveToLocalStorage(notes.data);
+          saveAvailableNotes(notes.data);
           setTimeout(() => (window.location.href = "/home"), 500);
         })
         .catch((error) => console.log(error));

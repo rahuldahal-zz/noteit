@@ -1,11 +1,12 @@
 @import "notes";
 @import "searchNotes";
 @import "contributorProfile";
+@import "_home";
 
 :root {
   --brandColor: #0970c8;
   --accentColor: #f2e419;
-  --brandTransparent: rgba(82, 109, 133, 0.4);
+  --brandTransparent: rgba(39, 129, 207, 0.6);
   --primaryBg: #f4f4f4;
   --primaryText: #333;
   --bodyFont: "open sans";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { saveToLocalStorage } from "./localStorageHandler";
+import { saveAvailableNotes } from "./localStorageHandler";
 
 export default class ReadyToGo {
   constructor() {
@@ -14,7 +14,7 @@ export default class ReadyToGo {
       e.preventDefault();
       axios
         .post("/users/sendNotesToClient", { _csrf: this._csrf })
-        .then((notes) => saveToLocalStorage(notes.data))
+        .then((notes) => saveAvailableNotes(notes.data))
         .catch((error) => console.log(error));
     });
   }

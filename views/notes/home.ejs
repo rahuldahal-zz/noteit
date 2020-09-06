@@ -13,18 +13,19 @@
 
 %>
 
-<main class="mainContainer" id="welcomeScreen">
-    <div class="mainContainer__welcomeText">
+<main class="mainContainer" id="homeScreen">
+    <div class="mainContainer__homeText">
         <h3><span class="color--brand"><%=name%></span>, <%-welcomeMessage%></h3>
     </div>
     <%if(user.isApproved && !user.isSubscriptionExpired){%>
 
-    <div id="welcomeScreen__subjectsContainer">
+    <div id="homeScreen__subjectsContainer">
         <h2>Available Subjects</h2>
     </div>
 
+
     <%if(savedNotes.length){%>
-    <div id="welcomeScreen__savedNotes">
+    <div id="homeScreen__savedNotes">
         <h2>Saved Notes</h2>
         <%-savedNotes.map((note)=> {
                 return `

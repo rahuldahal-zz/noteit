@@ -41,14 +41,14 @@ exports.saveFacultyAndSemester = (req, res, next) => {
 exports.home = (req, res) => {
   /**
    * when this controller fires, set a "cookie" to signify that the "user" has been to this route before,
-   * which means they have "availableNotes" on their local storage and we are safe to render the "welcome" view
+   * which means they have "availableNotes" on their local storage and we are safe to render the "home" view
    **/
 
   // set cookie, using express' express-session
   req.session.canViewHomePage = true;
 
   if (req.user.faculty && req.user.semester) {
-    res.render("notes/welcome");
+    res.render("notes/home");
 
     // if not approved, log them out after 30 seconds
 

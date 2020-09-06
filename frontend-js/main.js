@@ -1,5 +1,5 @@
 import Base from "./modules/base";
-import LocalStorageHandler from "./modules/localStorageHandler";
+import HomeScreen from "./modules/homeScreen";
 import NotesScreen from "./modules/notesScreen";
 import ContributorProfile from "./modules/contributorProfile";
 import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
@@ -27,11 +27,8 @@ if (document.getElementById("adminDashboardScreen")) {
   require("../sass/searchUser.scss");
 }
 
-if (
-  document.getElementById("welcomeScreen") ||
-  document.getElementById("notesScreen")
-) {
-  new LocalStorageHandler();
+if (document.getElementById("homeScreen")) {
+  new HomeScreen();
 }
 
 if (document.getElementById("notesScreen")) {
