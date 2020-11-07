@@ -2,16 +2,42 @@
   margin-top: 7vh;
   min-height: 93vh;
   min-width: 100%;
-  background: url("/images/svgs/working_late.svg") 40%;
+  background: url("/images/svgs/working_late.svg") 40% no-repeat;
   background-size: auto;
 
   &__tagline {
     position: relative;
-    margin-top: 15vh;
+    margin-top: 10vh;
     margin-bottom: 2rem;
     background-color: rgba(112, 112, 112, 0.36);
     color: #f4f4f4;
     padding: 0.5em;
     max-width: 90%;
+  }
+}
+
+section {
+  margin: 3rem 0;
+}
+
+#processContainer {
+  #processWrap {
+    .process {
+      position: relative;
+      background-color: var(--primaryBg);
+      max-width: 300px;
+      margin: 1.5rem auto;
+
+      &::before {
+        content: attr(data-process-no);
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: var(--accentColor);
+        color: var(--primaryTextColor);
+      }
+    }
   }
 }

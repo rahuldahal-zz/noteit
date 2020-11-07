@@ -2,12 +2,11 @@ nav {
   background-color: var(--brandColor);
   color: #eee;
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
-  padding: 0;
   height: 10vh;
 
   #navWrap {
     max-width: 1600px;
-    margin: auto;
+    margin: 0 auto;
     height: 100%;
     align-items: center;
     justify-content: space-between;
@@ -54,7 +53,7 @@ nav {
 
 #links {
   display: flex;
-  width: 40%;
+  min-width: 125px;
   justify-content: space-between;
   align-items: center;
 

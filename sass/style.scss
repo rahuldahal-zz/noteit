@@ -8,8 +8,8 @@
   --accentColor: #f2e419;
   --brandTransparent: rgba(39, 129, 207, 0.6);
   --primaryBg: #f4f4f4;
-  --primaryText: #000b14;
-  --bodyFont: "open sans";
+  --primaryTextColor: #000b14;
+  --bodyFont: "roboto";
   --headingFont: "montserrat";
   font-size: 0.9375rem;
   @include widerThan768 {
@@ -20,8 +20,30 @@
 
 #container {
   max-width: 1600px;
-  margin: auto;
-  margin-top: 7vh;
+  margin: 7vh auto;
+  padding: 0.5rem;
+}
+
+.heading {
+  position: relative;
+  margin-top: 2rem;
+  width: max-content;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    width: 40%;
+    height: 0.5rem;
+    background-color: var(--brandColor);
+    border-radius: 0.5rem;
+  }
+}
+
+.brandText {
+  color: var(--brandColor);
 }
 
 #404Container {
