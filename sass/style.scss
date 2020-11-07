@@ -8,7 +8,7 @@
   --accentColor: #f2e419;
   --brandTransparent: rgba(39, 129, 207, 0.6);
   --primaryBg: #f4f4f4;
-  --primaryText: #333;
+  --primaryText: #000b14;
   --bodyFont: "open sans";
   --headingFont: "montserrat";
   font-size: 0.9375rem;
@@ -35,120 +35,8 @@
   }
 }
 
-//home-guestScreen styles
-
-#home-guestScreen {
-  margin-top: 7vh;
-  min-height: 93vh;
-  min-width: 100%;
-  background: url("/images/svgs/working_late.svg") 40%;
-  background-size: auto;
-
-  &__tagline {
-    position: relative;
-    bottom: -20vh;
-
-    h1 {
-      background-color: rgba(112, 112, 112, 0.36);
-      color: #f4f4f4;
-      padding: 0.5em;
-      max-width: 90%;
-    }
-  }
-}
-
-//home-guestScreen styles end here
-
-nav {
-  background-color: var(--brandColor);
-  color: #eee;
-  box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
-  padding: 0;
-
-  #navWrap {
-    max-width: 1600px;
-    margin: auto;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-
-    #loginOptions {
-      visibility: hidden;
-      position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      height: 100vh;
-      background-color: rgba($color: #fff, $alpha: 0.8);
-
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--brandTransparent);
-      }
-
-      &__buttons {
-        flex-direction: column;
-        justify-content: space-evenly;
-        margin: auto;
-        height: 130px;
-        width: 250px;
-
-        .btn {
-          background-color: var(--primaryBg);
-          color: var(--primaryText);
-          text-align: center;
-          margin-left: 0;
-          min-width: 100%;
-        }
-      }
-    }
-  }
-}
-
-h2 {
-  color: #eee;
-}
-
-#links {
-  display: flex;
-  width: 40%;
-  justify-content: space-between;
-  align-items: center;
-
-  #hamBurger {
-    div {
-      position: relative;
-      height: 0.25rem;
-      width: 2rem;
-      background-color: var(--primaryBg);
-      border-radius: 0.25rem;
-
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        height: 0.25rem;
-        width: 2rem;
-        background-color: var(--primaryBg);
-        border-radius: 0.25rem;
-      }
-
-      &::before {
-        top: -0.5rem;
-      }
-      &::after {
-        top: 0.5rem;
-      }
-    }
-  }
-}
+@import "guest";
+@import "nav";
 
 //modifier
 
@@ -172,32 +60,7 @@ h2 {
   visibility: visible !important;
 }
 
-#flash-wrap {
-  visibility: hidden;
-  position: fixed;
-  z-index: 15;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  padding-bottom: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.2);
-  padding-left: 1.5rem;
-  align-items: flex-start;
-  justify-content: flex-end;
-
-  p {
-    color: #fff;
-    padding: 1rem 1.3rem;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-    width: max-content;
-  }
-
-  .flashError {
-    background-color: #e51717;
-  }
-}
+@import "flash";
 
 .btn {
   text-decoration: none;

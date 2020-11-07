@@ -13,9 +13,16 @@ export default class ReadyToGo {
     this.form.addEventListener("submit", (e) => {
       e.preventDefault();
       axios
-        .post("/users/sendNotesToClient", { _csrf: this._csrf })
-        .then((notes) => saveAvailableNotes(notes.data))
-        .catch((error) => console.log(error));
+        .get("/users/availableNotes")
+        .then((notes) => {
+          saveAvailableNotes(notes.data);
+          location.replace("/home");
+        })
+        .catch((error) => {
+          const errorObj = error.response;
+          const {status, data} = errorObj;
+          console.log(status, data);
+        });
     });
   }
 }

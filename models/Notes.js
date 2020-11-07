@@ -97,7 +97,7 @@ Notes.prototype.findRequestedNote = function (basedOn, value) {
         })
         .then((note) => {
           if (note) resolve(note);
-          else reject("No match found for that value.");
+          else reject("No match found for that id.");
         })
         .catch((error) => console.log(error));
     }

@@ -25,9 +25,14 @@ export default class SaveFacultyAndSemester {
             return axios.get("/users/availableNotes");
           }
         })
-        .then((notes) => {
-          saveAvailableNotes(notes.data);
-          setTimeout(() => (window.location.href = "/home"), 500);
+        .then((response) => {
+          saveAvailableNotes(response.data);
+          switch(response.status){
+            case 200:
+              return setTimeout(() => (window.replace("/home")), 500);
+            case 403:
+              return console.error(response.status);
+          }
         })
         .catch((error) => console.log(error));
     });

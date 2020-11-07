@@ -4,7 +4,7 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "dev": "nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/",
+    "dev": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
     "prod": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "extended-normalize.css": "^2.1.1",
     "helmet": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "marked": "^0.7.0",
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.3.0",
     "css-loader": "^4.2.2",
     "html-webpack-plugin": "^4.4.1",
     "jest": "^26.1.0",

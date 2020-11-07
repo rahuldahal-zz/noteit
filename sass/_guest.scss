@@ -1,0 +1,17 @@
+#home-guestScreen {
+  margin-top: 7vh;
+  min-height: 93vh;
+  min-width: 100%;
+  background: url("/images/svgs/working_late.svg") 40%;
+  background-size: auto;
+
+  &__tagline {
+    position: relative;
+    margin-top: 15vh;
+    margin-bottom: 2rem;
+    background-color: rgba(112, 112, 112, 0.36);
+    color: #f4f4f4;
+    padding: 0.5em;
+    max-width: 90%;
+  }
+}

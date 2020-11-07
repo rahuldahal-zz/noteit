@@ -8,6 +8,7 @@ import SearchNotes from "./modules/searchNotes";
 import Admin from "./modules/adminOnly/adminDashboard";
 
 new Base();
+import "extended-normalize.css";
 import "../sass/style.scss";
 
 if (document.getElementById("saveFacultyAndSemesterScreen")) {

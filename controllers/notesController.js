@@ -69,6 +69,7 @@ exports.hasUserSavedThisNote = (req, res, next) => {
     .findRequestedNote(basedOn, value)
     .then((response) => {
       req.requestedNote = {}; //initializing an empty object before using it.
+      console.log("find requested note resolves...");
       req.requestedNote = response; //findRequestedNote resolves with the "note" itself
       req.requestedNote.hasSaved = false;
       //must convert "_id" to string for comparison
@@ -84,13 +85,14 @@ exports.hasUserSavedThisNote = (req, res, next) => {
       next(); // viewParticularUnit()
     })
     .catch((err) => {
+      console.log(err);
       res.status(404);
       res.render("404");
     });
 };
 
 exports.viewParticularUnit = (req, res) => {
-  const rawNote = JSON.parse(req.requestedNote.note);
+  const rawNote = JSON.parse(JSON.parse(req.requestedNote.note)); // the "note" property of notesCollection, contains "string" inside a "string". So, we need to parse it twice.
   const generateView = new GenerateView(rawNote.blocks);
   generateView
     .then((content) =>
