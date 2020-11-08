@@ -38,7 +38,7 @@ export default class HomeScreen {
         this.subjectWiseUnits = saveAvailableNotes(data);
         this.init();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log("You are not approved yet!!"));
   }
 
   init() {
@@ -140,5 +140,6 @@ export default class HomeScreen {
   removeNotes() {
     localStorage.removeItem("notes");
     this.logoutForm.submit();
+    location.reload();
   }
 }

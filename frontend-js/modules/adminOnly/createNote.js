@@ -31,6 +31,7 @@ export default class CreateNote {
   }
 
   injectContributors(contributors) {
+    console.log(contributors);
     this.contributors.insertAdjacentHTML(
       "beforeend",
       `

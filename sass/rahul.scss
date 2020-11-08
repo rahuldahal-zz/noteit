@@ -31,7 +31,7 @@
 
 .normalText {
   font-family: var(--paraFont);
-  color: var(--primaryText);
+  color: var(--primaryTextColor);
   text-decoration: none;
   font-size: 1rem;
 }
@@ -289,7 +289,7 @@ nav {
         padding: 0.5rem 1rem;
         text-decoration: none;
         text-transform: uppercase;
-        color: var(--primaryText);
+        color: var(--primaryTextColor);
         transition: transform 0.3s ease-in-out;
 
         &:hover,

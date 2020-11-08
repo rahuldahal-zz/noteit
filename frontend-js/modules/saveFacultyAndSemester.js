@@ -22,16 +22,9 @@ export default class SaveFacultyAndSemester {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            return axios.get("/users/availableNotes");
-          }
-        })
-        .then((response) => {
-          saveAvailableNotes(response.data);
-          switch(response.status){
-            case 200:
-              return setTimeout(() => (window.replace("/home")), 500);
-            case 403:
-              return console.error(response.status);
+            return location.replace("/home");
+          }else{
+            console.log("some error occurred while saving...");
           }
         })
         .catch((error) => console.log(error));

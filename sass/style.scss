@@ -21,7 +21,16 @@
 #container {
   max-width: 1600px;
   margin: 7vh auto;
+}
+
+main,
+section {
   padding: 0.5rem;
+}
+
+button,
+[type="submit"] {
+  color: var(--primaryTextColor);
 }
 
 .heading {
@@ -94,7 +103,7 @@
 
   &--accent {
     background-color: var(--accentColor) !important;
-    color: var(--primaryText) !important;
+    color: var(--primaryTextColor) !important;
   }
 }
 
