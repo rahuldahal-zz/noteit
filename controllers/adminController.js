@@ -6,7 +6,10 @@ const reusable = require("./reusableFunctions");
 dotenv.config();
 
 exports.home = (req, res) => {
-  res.render("admin/adminLoginPage", { admin: req.admin });
+  res.renderTemplate("index", {
+    toRender: "admin/adminLoginPage", 
+    data: { admin: req.admin }
+  });
 };
 
 exports.login = (req, res) => {
@@ -14,12 +17,15 @@ exports.login = (req, res) => {
     req.body.username === process.env.ADMINUSERNAME &&
     req.body.password === process.env.ADMINPASSWORD
   ) {
-    res.render("admin/dashboard", {
-      jwt: jwt.sign({ adminName: req.body.adminName }, process.env.JWTSECRET, {
-        expiresIn: "30m",
-      }),
+    res.renderTemplate("index", {
+      toRender: "admin/dashboard",
+      data: {
+        jwt: jwt.sign({ adminName: req.body.adminName }, process.env.JWTSECRET, {
+          expiresIn: "30m",
+        }),
+      }
     });
-    // res.render("admin/dashboard");
+    // res.renderTemplate("admin/dashboard");
   } else {
     res.redirect("/");
   }

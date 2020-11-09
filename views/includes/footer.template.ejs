@@ -1,0 +1,14 @@
+</div>
+<footer>
+    <p>Copyright &copy; NoteIT 2020, All rights reserved.</p>
+</footer>
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+<% } %>
+
+<% if (htmlWebpackPlugin.options.devServer) { %>
+<script src="/bundled.js"></script>
+<% } %>
+</body>
+
+</html>

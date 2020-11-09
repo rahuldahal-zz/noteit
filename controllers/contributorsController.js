@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 exports.showContributorScreen = (req, res) => {
-  res.render("contributors/contributor-screen");
+  res.renderTemplate("index", {toRender: "contributors/contributor-screen"});
 };
 
 exports.getAll = (req, res) => {
@@ -30,15 +30,21 @@ exports.getOne = (req, res) => {
         Follow.isVisitorFollowing(response._id, req.user._id)
           .then(() => {
             response.isVisitorFollowing = true;
-            res.render("contributors/contributor-profile", {
-              contributor: response,
-            });
+            res.renderTemplate("index", {
+              toRender: "contributors/contributor-profile",
+              data: {
+                contributor: response
+              }
+            })
           })
           .catch(() => {
             response.isVisitorFollowing = false;
-            res.render("contributors/contributor-profile", {
-              contributor: response,
-            });
+            res.renderTemplate("index", {
+              toRender: "contributors/contributor-profile",
+              data: {
+                contributor: response
+              }
+            })
           });
       }
     })

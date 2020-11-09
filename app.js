@@ -7,11 +7,19 @@ const flash = require("connect-flash");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const helmet = require("helmet");
+const path = require("path");
 const app = express();
 
 const currentTask = process.env.npm_lifecycle_event;
 
 // while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
+
+// app.use('/images',express.static(path.join(__dirname, 'public/images')));
+// app.use('/js',express.static(path.join(__dirname, 'public/js')));
+// app.use('/css',express.static(path.join(__dirname, 'public/css')));
+app.use(express.static('public'));
+app.set("views", "views");
+app.set("view engine", "ejs");
 
 if (currentTask === "dev") {
   // webpack-dev-middleware setup(bundle in memory)
@@ -23,6 +31,9 @@ if (currentTask === "dev") {
   app.use(
     webpackDevMiddleware(compiler, {
       publicPath: webpackConfigFile.output.publicPath,
+      writeToDisk: (filePath) => {
+        return /\.ejs$/.test(filePath);
+      },
     })
   );
 } else {
@@ -54,15 +65,25 @@ app.use(passport.session());
 
 // using the admin route
 
+app.use((req, res, next)=>{
+  res.renderTemplate = function(template, data = null){
+    console.log(`renders ${template}`);
+    return res.render("index", {toRender: template, data});
+  }
+  return next();
+})
+
 app.use("/admin", adminRouter);
 
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.env = currentTask;
   res.locals.errors = req.flash("errors");
   res.locals.successes = req.flash("successes");
-  next();
+  return next();
 });
+
 
 //use the csurf, makes sure that every request that can change the state of app has a valid token
 app.use(csrf());
@@ -80,10 +101,6 @@ const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
-
-app.use(express.static("public"));
-app.set("views", "views");
-app.set("view engine", "ejs");
 
 //using the routers
 app.use("/", rootRouter);

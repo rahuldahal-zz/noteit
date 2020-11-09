@@ -1,0 +1,18 @@
+<%if(toRender !== "index"){%>
+<%-include("includes/header") %>
+<%}%>
+
+<%console.log(toRender)%>
+
+<!-- {data, toRender} are passed via controllers to res.renderTemplate("index", {toRender: [String], data: [Objects]}) -->
+
+<%if(data){%>
+<%-include(toRender, data)%>
+<%}else{%>
+<%-include(toRender)%>
+<%}%>
+
+
+<%if(toRender !== "index"){%>
+<%-include("includes/footer") %>
+<%}%>

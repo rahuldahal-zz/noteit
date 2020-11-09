@@ -15,7 +15,7 @@ const respond = function (status, message, res) {
     case "500":
       return res.status(status).json({ error: message });
     case "404":
-      return res.status(status).render("404");
+      return res.status(status).renderTemplate("index", {toRender: "404"});
     case "429":
       return res.status(status).redirect("/home");
   }
@@ -35,3 +35,4 @@ exports.sendFlashMessage = function (
 };
 
 exports.respond = respond;
+

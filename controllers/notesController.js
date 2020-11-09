@@ -87,7 +87,7 @@ exports.hasUserSavedThisNote = (req, res, next) => {
     .catch((err) => {
       console.log(err);
       res.status(404);
-      res.render("404");
+      res.renderTemplate("index", {toRender: "404"});
     });
 };
 
@@ -96,10 +96,13 @@ exports.viewParticularUnit = (req, res) => {
   const generateView = new GenerateView(rawNote.blocks);
   generateView
     .then((content) =>
-      res.render("notes/genericNote", {
-        content,
-        requestedNote: req.requestedNote,
-        hasVisitorContributedThatNote: req.hasVisitorContributedThatNote,
+      res.renderTemplate("index", {
+        toRender: "notes/genericNote",
+        data: {
+          content,
+          requestedNote: req.requestedNote,
+          hasVisitorContributedThatNote: req.hasVisitorContributedThatNote,
+        }
       })
     )
     .catch((error) => res.send(error));

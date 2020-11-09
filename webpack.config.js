@@ -27,9 +27,16 @@ let config = {
       cssConfig,
     ],
   },
-  // node: {
-  //   __dirname: false,
-  // },
+  plugins: [
+    new HtmlWebPackPlugin({
+      filename: path.resolve(__dirname, "views/includes/head.ejs"),
+      template: './views/includes/head.template.ejs',
+      chunks: []
+    }),
+  ],
+  node: {
+    __dirname: false,
+  },
 };
 
 //separate for "development"
@@ -41,6 +48,12 @@ if (currentTask === "dev") {
     filename: "main-bundled.js",
     path: path.resolve(__dirname, "public/js"),
   };
+  config.plugins.push(new HtmlWebPackPlugin({
+    filename: path.resolve(__dirname, "views/includes/footer.ejs"),
+    template: './views/includes/footer.template.ejs',
+    chunks: [],
+    devServer: true
+  }),)
 }
 
 //separate for "production"
@@ -55,16 +68,15 @@ if (currentTask === "build") {
   config.optimization = {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts (vendor = editor.js)
-  config.plugins = [
-    // new HtmlWebPackPlugin({
-    //   filename: "index.html",
-    //   template: `./src/index.html`,
-    // }),
+  config.plugins.push(
+    new HtmlWebPackPlugin({
+      filename: path.resolve(__dirname, "views/includes/footer.ejs"),
+      template: './views/includes/footer.template.ejs',
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles-[chunkhash].css",
-    }),
-  ];
+    filename: "styles-[chunkhash].css",
+  }))
 }
 
 module.exports = config;

@@ -14,13 +14,13 @@ exports.doesEmailExist = (req, res) => {
 };
 
 exports.root = (req, res) => {
-  if (!req.user) return res.render("home-guest");
+  if (!req.user) return res.renderTemplate("index", {toRender: "home-guest"});
 
   if (!req.user.faculty || !req.user.semester) {
-    return res.render("saveFacultyAndSemester");
+    return res.renderTemplate("index", {toRender: "saveFacultyAndSemester"});
   }
   if (!req.session.canViewHomePage) {
-    return res.render("notes/readyToGo");
+    return res.renderTemplate("index", {toRender: "notes/readyToGo"});
   }
 
   return res.redirect(303, "/home");
@@ -48,7 +48,7 @@ exports.home = (req, res) => {
   req.session.canViewHomePage = true;
 
   if (req.user.faculty && req.user.semester) {
-    res.render("notes/home");
+    res.renderTemplate("index", {toRender: "notes/home"});
 
     // if not approved, log them out after 30 seconds
 
