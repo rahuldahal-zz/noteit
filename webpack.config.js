@@ -27,6 +27,9 @@ let config = {
       cssConfig,
     ],
   },
+  // node: {
+  //   __dirname: false,
+  // },
 };
 
 //separate for "development"
@@ -36,20 +39,18 @@ if (currentTask === "dev") {
   config.devtool = "inline-source-map";
   config.output = {
     filename: "main-bundled.js",
-    path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    path: path.resolve(__dirname, "public/js"),
   };
 }
 
 //separate for "production"
-if (currentTask === "prod") {
+if (currentTask === "build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
     filename: "[name]-[chunkhash].js",
     chunkFilename: "[name]-[chunkhash].js",
-    path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    path: path.resolve(__dirname, "public/js"),
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
