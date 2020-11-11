@@ -23,6 +23,9 @@ if (currentTask === "dev") {
   app.use(
     webpackDevMiddleware(compiler, {
       publicPath: webpackConfigFile.output.publicPath,
+      writeToDisk: (filePath) => {
+        return /\.ejs$/.test(filePath);
+      },
     })
   );
 } else {

@@ -10,6 +10,18 @@ let cssConfig = {
   use: ["css-loader?url=false", "sass-loader"],
 };
 
+const createCSSFile = new HtmlWebPackPlugin({
+  inject: false,
+  filename: path.resolve(__dirname, "views/includes/styles.ejs"),
+  template: './views/includes/styles.template.ejs',
+})
+
+const createJSFile = new HtmlWebPackPlugin({
+  inject: false,
+  filename: path.resolve(__dirname, "views/includes/scripts.ejs"),
+  template: './views/includes/scripts.template.ejs',
+})
+
 let config = {
   entry: "./frontend-js/main.js",
   module: {
@@ -27,6 +39,10 @@ let config = {
       cssConfig,
     ],
   },
+  plugins: [
+    createCSSFile,
+    createJSFile
+  ]
   // node: {
   //   __dirname: false,
   // },
@@ -40,6 +56,7 @@ if (currentTask === "dev") {
   config.output = {
     filename: "main-bundled.js",
     path: path.resolve(__dirname, "public/js"),
+    publicPath: "/js"
   };
 }
 
@@ -51,20 +68,17 @@ if (currentTask === "build") {
     filename: "[name]-[chunkhash].js",
     chunkFilename: "[name]-[chunkhash].js",
     path: path.resolve(__dirname, "public/js"),
+    publicPath: "/js"
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts (vendor = editor.js)
-  config.plugins = [
-    // new HtmlWebPackPlugin({
-    //   filename: "index.html",
-    //   template: `./src/index.html`,
-    // }),
+  config.plugins.push(
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles-[chunkhash].css",
     }),
-  ];
+  );
 }
 
 module.exports = config;
