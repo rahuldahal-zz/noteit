@@ -58,12 +58,6 @@ if (currentTask === "dev") {
     path: path.resolve(__dirname, "public/js"),
     publicPath: "/js"
   };
-  config.plugins.push(new HtmlWebPackPlugin({
-    filename: path.resolve(__dirname, "views/includes/footer.ejs"),
-    template: './views/includes/footer.template.ejs',
-    chunks: [],
-    devServer: true
-  }),)
 }
 
 //separate for "production"
