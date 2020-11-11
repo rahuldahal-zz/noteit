@@ -7,5 +7,5 @@ mongodb.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifie
 
     //start the express app
     const app = require("./app");
-    app.listen(process.env.PORT);
+    app.listen(process.env.PORT, ()=>console.log(`app is now listening on ${process.env.PORT}`));
 });
