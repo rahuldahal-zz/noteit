@@ -1,19 +1,23 @@
 <%-include("includes/header")%>
 
 <main id="saveFacultyAndSemesterScreen">
-  <h2>Hello, <%=user.name%></h2>
+  <h2>Hello, <%// user.name%></h2>
   <h3>Welcome to <span class="color--brand">NoteIT</span></h3>
   <p>
     Help us personalize the app for you by choosing your current faculty
     and semester.
   </p>
-  <form id="saveFacultyAndSemester__form" action="/users/saveFacultyAndSemester" method="POST">
-    <label for="faculty">Faculty</label>
-    <input id="faculty" type="text" name="faculty" placeholder="faculty" />
-    <label for="semester">Semester</label>
-    <input id="semester" type="text" name="semester" placeholder="semester" />
+  <form id="saveFacultyAndSemester__form" class="form" action="/users/saveFacultyAndSemester" method="POST">
+    <fieldset>
+      <label for="faculty">Faculty</label>
+      <input id="faculty" type="text" name="faculty" placeholder="faculty" />
+    </fieldset>
+    <fieldset>
+      <label for="semester">Semester</label>
+      <input id="semester" type="text" name="semester" placeholder="semester" />
+    </fieldset>
     <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
-    <button type="submit">Save</button>
+    <button type="submit">Save <i class="fas fa-save"></i></button>
   </form>
 </main>
 

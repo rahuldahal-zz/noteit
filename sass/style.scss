@@ -126,4 +126,9 @@ button,
   margin-left: 0.1rem;
 }
 
+.form,
+fieldset {
+  padding-left: 0;
+}
+
 @import "footer";
