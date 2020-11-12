@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoteIT</title>
   <%-include("styles")%>
+  <%if(env === "dev"){%>
+  <script src="https://kit.fontawesome.com/2628210dc1.js" crossorigin="anonymous"></script>
+  <%}%>
 </head>
 
 <body>
@@ -13,46 +16,47 @@
     <nav>
       <div id="navWrap" class="flex">
         <%if(user){%>
-        <a href="/">
-          <h2><%=user.firstName%></h2>
-        </a>
-        <div id="links">
-          <%if(user.isApproved){%>
-          <button type="button" id="searchNoteBtn" class="btn">
-            Search Note
-          </button>
-          <%}%> <%if(user.roles.includes("contributor")){%>
-          <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
-          <%}%>
+  <a href="/">
+    <h2><%=user.firstName%></h2>
+  </a>
+  <div id="links">
+    <%if(user.isApproved){%>
+    <button type="button" id="searchNoteBtn" class="btn">
+      Search Note
+    </button>
+    <%}%> <%if(user.roles.includes("contributor")){%>
+    <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
+    <%}%>
             <form action="/auth/logout" method="GET" id="logoutForm">
           <button type="submit" class="btn">Logout</button>
           </form>
         </div>
         <%} else {%>
-          <h2>NoteIT</h2>
-          <div id="links">
-            <button type="button" class="btn btn--accent" data-trigger-type="add" data-trigger-target="loginOptions"
-              data-trigger-action="loginOptions--visible">
-              Login
-            </button>
+    <h2>NoteIT</h2>
+    <div id="links">
+      <button type="button" class="btn btn--outline" data-trigger-type="add" data-trigger-target="loginOptions"
+        data-trigger-action="loginOptions--visible">
+        Login
+        <i class="fas fa-sign-in-alt"></i>
+      </button>
 
-            <div id="loginOptions" class="flex triggerTarget">
-              <div id="loginOptions__buttons" class="flex">
-                <a href="/auth/facebook" class="btn">Facebook</a>
-                <a href="/auth/google" class="btn">Google</a>
-              </div>
+      <div id="loginOptions" class="flex triggerTarget">
+        <div id="loginOptions__buttons" class="flex">
+          <a href="/auth/facebook" class="btn">Facebook</a>
+          <a href="/auth/google" class="btn">Google</a>
+        </div>
 
-              <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
-                data-trigger-action="loginOptions--visible">
-                Close
-              </button>
-            </div>
+        <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
+          data-trigger-action="loginOptions--visible">
+          Close
+        </button>
+      </div>
 
-            <div id="hamBurger">
-              <div></div>
-            </div>
-          </div>
-          <%}%>
+      <div id="hamBurger">
+        <div></div>
+      </div>
+    </div>
+    <%}%>
         </div>
       </nav>
 
@@ -60,6 +64,6 @@
 
       <div id="flash-wrap" class="flex flex--column">
         <%errors.forEach(error=>{%>
-          <p class="flashError"><%=error%></p>
-          <%})%>
-        </div>
+    <p class="flashError"><%=error%></p>
+    <%})%>
+  </div>

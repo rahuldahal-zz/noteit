@@ -5,9 +5,10 @@
 
 :root {
   --brandColor: #0970c8;
+  --brandRGB: 39, 129, 207;
   --accentColor: #f2e419;
   --brandTransparent: rgba(39, 129, 207, 0.6);
-  --primaryBg: #f4f4f4;
+  --primaryBgColor: #efefef;
   --primaryTextColor: #000b14;
   --bodyFont: "roboto";
   --headingFont: "montserrat";
@@ -20,7 +21,8 @@
 
 #container {
   max-width: 1600px;
-  margin: 7vh auto;
+  margin: auto;
+  padding: 10vh 0 0 0;
 }
 
 main,
@@ -30,6 +32,7 @@ section {
 
 button,
 [type="submit"] {
+  background-color: var(--accentColor);
   color: var(--primaryTextColor);
 }
 
@@ -98,13 +101,29 @@ button,
 
   &--secondary {
     background-color: #333 !important;
-    color: var(--primaryBg);
+    color: var(--primaryBgColor);
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: var(--primaryBgColor);
+    border: 2px solid var(--primaryBgColor);
+  }
+
+  &--large {
+    padding: 1em 2em;
+    font-size: 1.1rem;
   }
 
   &--accent {
     background-color: var(--accentColor) !important;
     color: var(--primaryTextColor) !important;
   }
+}
+
+.fas,
+.fab {
+  margin-left: 0.1rem;
 }
 
 @import "footer";

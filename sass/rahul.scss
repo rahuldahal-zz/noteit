@@ -392,14 +392,14 @@ nav {
     height: 200px;
     background-color: #fff;
     margin: 0 auto;
-    box-shadow: 6px 6px 12px -7px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(-6px -6px 10px rgba(0, 0, 0, 0.1));
   }
 }
 
 .card {
   border-radius: 0.5em;
-  padding: 0.5em;
-  box-shadow: 6px 6px 12px -7px rgba(0, 0, 0, 0.4);
+  padding: 1em;
+  filter: drop-shadow(-6px -6px 10px rgba(0, 0, 0, 0.1));
 }
 
 footer {

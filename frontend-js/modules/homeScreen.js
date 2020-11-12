@@ -140,6 +140,5 @@ export default class HomeScreen {
   removeNotes() {
     localStorage.removeItem("notes");
     this.logoutForm.submit();
-    location.reload();
   }
 }

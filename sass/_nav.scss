@@ -3,6 +3,7 @@ nav {
   color: #eee;
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
   height: 10vh;
+  min-height: 3.125rem;
 
   #navWrap {
     max-width: 1600px;
@@ -41,7 +42,7 @@ nav {
         width: 250px;
 
         .btn {
-          background-color: var(--primaryBg);
+          background-color: var(--primaryBgColor);
           color: var(--primaryTextColor);
           text-align: center;
           margin-left: 0;
@@ -54,7 +55,7 @@ nav {
 
 #links {
   display: flex;
-  min-width: 125px;
+  min-width: 140px;
   justify-content: space-between;
   align-items: center;
 
@@ -63,7 +64,7 @@ nav {
       position: relative;
       height: 0.25rem;
       width: 2rem;
-      background-color: var(--primaryBg);
+      background-color: var(--primaryBgColor);
       border-radius: 0.25rem;
 
       &::before,
@@ -72,7 +73,7 @@ nav {
         position: absolute;
         height: 0.25rem;
         width: 2rem;
-        background-color: var(--primaryBg);
+        background-color: var(--primaryBgColor);
         border-radius: 0.25rem;
       }
 
