@@ -7,16 +7,17 @@ const flash = require("connect-flash");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const helmet = require("helmet");
-const path = require("path");
 const app = express();
 
 const currentTask = process.env.npm_lifecycle_event;
 
 // while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
 
-// app.use('/images',express.static(path.join(__dirname, 'public/images')));
-// app.use('/js',express.static(path.join(__dirname, 'public/js')));
-// app.use('/css',express.static(path.join(__dirname, 'public/css')));
+app.use(function(req, res, next) {
+  res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com");
+  return next();
+});
+
 app.use(express.static('public'));
 app.set("views", "views");
 app.set("view engine", "ejs");
