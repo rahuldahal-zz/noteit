@@ -14,19 +14,20 @@
     <nav>
       <div id="navWrap" class="flex">
         <%if(user){%>
-        <a href="/">
+        <a href="/" id="username">
           <h2><%=user.firstName%></h2>
         </a>
         <div id="links">
-          <%if(user.isApproved){%>
-          <button type="button" id="searchNoteBtn" class="btn">
+          <%if(user.isApproved && !toRender.includes("readyToGo")){%>
+          <button type="button" id="searchNoteBtn" class="btn nav__item">
             Search Note
           </button>
-          <%}%> <%if(user.roles.includes("contributor")){%>
+          <%}%> 
+          <%if(user.roles.includes("contributor")){%>
           <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
           <%}%>
             <form action="/auth/logout" method="GET" id="logoutForm">
-          <button type="submit" class="btn">Logout</button>
+          <button type="submit" class="btn nav__item">Logout</button>
           </form>
         </div>
         <%} else {%>
@@ -50,13 +51,12 @@
                 Close
               </button>
             </div>
-
-            <div id="hamBurger">
-              <div></div>
-            </div>
           </div>
           <%}%>
           <%}%>
+          <div id="hamBurger">
+            <div></div>
+          </div>
         </div>
     </nav>
 

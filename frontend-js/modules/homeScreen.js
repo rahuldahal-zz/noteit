@@ -116,7 +116,7 @@ export default class HomeScreen {
     savedSubjectsArray.forEach((subject) => {
       let savedNoteContainer = document.createElement("div");
       savedNoteContainer.setAttribute("class", "savedNoteContainer");
-      savedNoteContainer.insertAdjacentHTML("beforeend", `<h5>${subject}</h5>`);
+      savedNoteContainer.insertAdjacentHTML("beforeend", `<h5 class="savedNote__subject">${subject}</h5>`);
       savedNoteContainer.dataset.subject = subject;
       savedNoteContainers.push(savedNoteContainer);
       this.savedNotes.appendChild(savedNoteContainer);

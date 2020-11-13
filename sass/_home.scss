@@ -11,5 +11,23 @@
 
 #availableUnits {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 6;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75em;
+  width: 100%;
+}
+
+.savedNote__subject {
+  margin-bottom: 0.5rem;
+}
+
+.savedNote a {
+  color: var(--primaryTextColor);
+  margin-left: 1rem;
 }

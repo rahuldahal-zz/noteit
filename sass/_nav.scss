@@ -4,6 +4,7 @@ nav {
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
   height: 10vh;
   min-height: 3.125rem;
+  padding: 0;
 
   #navWrap {
     max-width: 1600px;
@@ -11,7 +12,12 @@ nav {
     height: 100%;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
+
+    #username {
+      color: var(--primaryBgColor);
+      text-decoration: none;
+    }
 
     #loginOptions {
       visibility: hidden;
@@ -58,32 +64,40 @@ nav {
   min-width: 140px;
   justify-content: space-between;
   align-items: center;
+}
 
-  #hamBurger {
-    div {
-      position: relative;
+#hamBurger {
+  div {
+    position: relative;
+    height: 0.25rem;
+    width: 2rem;
+    background-color: var(--primaryBgColor);
+    border-radius: 0.25rem;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
       height: 0.25rem;
       width: 2rem;
       background-color: var(--primaryBgColor);
       border-radius: 0.25rem;
-
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        height: 0.25rem;
-        width: 2rem;
-        background-color: var(--primaryBgColor);
-        border-radius: 0.25rem;
-      }
-
-      &::before {
-        top: -0.5rem;
-      }
-      &::after {
-        top: 0.5rem;
-        width: 1.5rem;
-      }
     }
+
+    &::before {
+      top: -0.5rem;
+    }
+    &::after {
+      top: 0.5rem;
+      width: 1.5rem;
+    }
+  }
+}
+
+.nav__item {
+  display: none;
+
+  @media (min-width: 769px) {
+    display: inline-block;
   }
 }
