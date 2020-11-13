@@ -7,17 +7,12 @@ const flash = require("connect-flash");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const helmet = require("helmet");
+const contentSecurityPolicy = require("helmet-csp");
 const app = express();
 
 const currentTask = process.env.npm_lifecycle_event;
 
 // while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
-
-app.use(function(req, res, next) {
-  res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com");
-  return next();
-});
-
 app.use(express.static('public'));
 app.set("views", "views");
 app.set("view engine", "ejs");
@@ -40,6 +35,21 @@ if (currentTask === "dev") {
 } else {
   app.use(helmet());
 }
+
+ 
+app.use(
+  contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'",  "https://ka-f.fontawesome.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'",  "https://kit.fontawesome.com",],
+      connectSrc: [ "https://ka-f.fontawesome.com"],
+      styleSrc: ["'self'" , "'unsafe-inline'",  "https://ka-f.fontawesome.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+    reportOnly: false,
+  })
+);
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));
