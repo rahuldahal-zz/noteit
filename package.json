@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +53,7 @@
     "mini-css-extract-plugin": "^0.11.0",
     "sass-loader": "^10.0.1",
     "style-loader": "^1.2.1",
+    "supertest": "^6.0.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-middleware": "^3.7.2"
