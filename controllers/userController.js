@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const reusable = require("./reusableFunctions");
+const {respond, sendFlashMessage} = require("./reusableFunctions");
 
 exports.doesUsernameExist = (req, res) => {
   User.findByUsername(req.body.username)
@@ -32,7 +32,7 @@ exports.saveFacultyAndSemester = (req, res, next) => {
         .status("200")
         .json({ message: "Faculty and Semester Saved Successfully." })
     )
-    .catch((error) => reusable.respond(400, error, res));
+    .catch((error) => respond(400, error, res));
 };
 
 exports.home = (req, res) => {
@@ -53,7 +53,7 @@ exports.mustBeLoggedIn = (req, res, next) => {
     next();
     return;
   } else {
-    reusable.sendFlashMessage(
+    sendFlashMessage(
       req,
       res,
       "errors",
@@ -68,14 +68,14 @@ exports.checkSessionCount = (req, res, next) => {
     console.log("less than 3 sessions...");
     return next();
   }
-  reusable.respond(429, "Account is being used in more than 2 devices", res);
+  respond(429, "Account is being used in more than 2 devices", res);
 };
 
 exports.mustBeApproved = (req, res, next) => {
   if (req.user.isApproved) {
     next();
     return;
-  } else reusable.respond(403, "You are not approved to access this page", res);
+  } else respond(403, "You are not approved to access this page", res);
 };
 
 exports.checkSubscriptionStatus = (req, res, next) => {
@@ -83,7 +83,7 @@ exports.checkSubscriptionStatus = (req, res, next) => {
     next();
     return;
   } else
-    reusable.respond(
+    respond(
       403,
       "Your subscription has expired, UPGRADE your account.",
       res
@@ -97,7 +97,7 @@ exports.authRole = (role) => {
       req.admin = req.user.firstName;
       return next();
     } else {
-      reusable.sendFlashMessage(
+      sendFlashMessage(
         req,
         res,
         "errors",
