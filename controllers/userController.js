@@ -65,7 +65,6 @@ exports.mustBeLoggedIn = (req, res, next) => {
 
 exports.checkSessionCount = (req, res, next) => {
   if (req.user.sessionCount < 3) {
-    console.log("less than 3 sessions...");
     return next();
   }
   respond(429, "Account is being used in more than 2 devices", res);
@@ -92,9 +91,10 @@ exports.checkSubscriptionStatus = (req, res, next) => {
 
 exports.authRole = (role) => {
   return (req, res, next) => {
-    console.log(`Authenticating for ${role}`);
     if (req.user.roles.includes(role)) {
-      req.admin = req.user.firstName;
+     if(role === "admin") {
+       req.admin = req.user.firstName
+     }
       return next();
     } else {
       sendFlashMessage(
