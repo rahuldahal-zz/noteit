@@ -5,8 +5,10 @@
   "main": "main.js",
   "scripts": {
     "dev": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
+    "dev-backend": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"", 
     "build": "webpack",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "just-test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -59,6 +61,9 @@
     "webpack-dev-middleware": "^3.7.2"
   },
   "jest": {
-    "testEnvironment": "node"
-  }
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+    "/node_modules/"
+    ]
+    }
 }

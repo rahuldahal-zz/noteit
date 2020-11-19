@@ -4,6 +4,10 @@ const passportController = require("./controllers/passportController"); // this 
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const {
+  initializeFlashHelper,
+  sendFlashMessage,
+} = require("./controllers/utils/respond");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const helmet = require("helmet");
@@ -13,7 +17,7 @@ const app = express();
 const currentTask = process.env.npm_lifecycle_event;
 
 // while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.set("views", "views");
 app.set("view engine", "ejs");
 
@@ -36,14 +40,13 @@ if (currentTask === "dev") {
   app.use(helmet());
 }
 
- 
 app.use(
   contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'",  "https://ka-f.fontawesome.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'",  "https://kit.fontawesome.com",],
-      connectSrc: [ "https://ka-f.fontawesome.com"],
-      styleSrc: ["'self'" , "'unsafe-inline'",  "https://ka-f.fontawesome.com"],
+      defaultSrc: ["'self'", "https://ka-f.fontawesome.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
+      connectSrc: ["https://ka-f.fontawesome.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://ka-f.fontawesome.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
@@ -69,6 +72,7 @@ let sessionOptions = {
 app.use(session(sessionOptions));
 
 app.use(flash());
+app.use(initializeFlashHelper);
 
 // initialize passport in our app, important
 app.use(passport.initialize());
@@ -76,25 +80,25 @@ app.use(passport.session());
 
 // using the admin route
 
-app.use((req, res, next)=>{
-  res.renderTemplate = function(template, data = null){
+app.use((req, res, next) => {
+  res.renderTemplate = function (template, data = null) {
     console.log(`renders ${template}`);
-    return res.render("index", {toRender: template, data});
-  }
+    return res.render("index", { toRender: template, data });
+  };
   return next();
-})
+});
 
 app.use("/admin", adminRouter);
 
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
+  console.log(req.flash("successes"));
   res.locals.user = req.user;
   res.locals.env = currentTask;
   res.locals.errors = req.flash("errors");
   res.locals.successes = req.flash("successes");
   return next();
 });
-
 
 //use the csurf, makes sure that every request that can change the state of app has a valid token
 app.use(csrf());

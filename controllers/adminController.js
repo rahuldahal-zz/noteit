@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/Admin");
 const dotenv = require("dotenv");
-const reusable = require("./reusableFunctions");
+const reusable = require("./utils/respond");
 
 dotenv.config();
 
 exports.home = (req, res) => {
   res.renderTemplate("index", {
-    toRender: "admin/adminLoginPage", 
-    data: { admin: req.admin }
+    toRender: "admin/adminLoginPage",
+    data: { admin: req.admin },
   });
 };
 
@@ -20,10 +20,14 @@ exports.login = (req, res) => {
     res.renderTemplate("index", {
       toRender: "admin/dashboard",
       data: {
-        jwt: jwt.sign({ adminName: req.body.adminName }, process.env.JWTSECRET, {
-          expiresIn: "30m",
-        }),
-      }
+        jwt: jwt.sign(
+          { adminName: req.body.adminName },
+          process.env.JWTSECRET,
+          {
+            expiresIn: "30m",
+          }
+        ),
+      },
     });
     // res.renderTemplate("admin/dashboard");
   } else {
@@ -46,7 +50,7 @@ exports.mustHaveToken = function (req, res, next) {
     req.payload = payload;
     return next();
   } catch (error) {
-    reusable.respond(403, "You must provide a valid token", res);
+    res.status(403).json({ message: "You must provide a valid token" });
   }
 };
 

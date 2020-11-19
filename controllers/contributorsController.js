@@ -2,13 +2,13 @@ const jwt = require("jsonwebtoken");
 const Contributors = require("../models/Contributors");
 const Follow = require("../models/Follow");
 const Contributor = require("../models/Contributors");
-const reusable = require("./reusableFunctions");
+const reusable = require("./utils/respond");
 const sendGrid = require("@sendgrid/mail");
 const fs = require("fs");
 const path = require("path");
 
 exports.showContributorScreen = (req, res) => {
-  res.renderTemplate("index", {toRender: "contributors/contributor-screen"});
+  res.renderTemplate("index", { toRender: "contributors/contributor-screen" });
 };
 
 exports.getAll = (req, res) => {
@@ -33,18 +33,18 @@ exports.getOne = (req, res) => {
             res.renderTemplate("index", {
               toRender: "contributors/contributor-profile",
               data: {
-                contributor: response
-              }
-            })
+                contributor: response,
+              },
+            });
           })
           .catch(() => {
             response.isVisitorFollowing = false;
             res.renderTemplate("index", {
               toRender: "contributors/contributor-profile",
               data: {
-                contributor: response
-              }
-            })
+                contributor: response,
+              },
+            });
           });
       }
     })
@@ -70,16 +70,16 @@ exports.isContributorAlreadyRegistered = (req, res, next) => {
             expiresIn: "30m",
           }
         );
-        return reusable.respond(202, message, res);
-      } else return reusable.respond(200, "Wait for Approval", res);
+        return res.status(202).json({ message });
+      } else return res.status(200).json({ message: "Wait for Approval" });
     })
     .catch((error) => {
       if (error === "not found") {
         req.contributorObject = contributor; // making that "let contributor = new Contributor() available to the next middleware"
         return next();
       } else if (error.clientError) {
-        return reusable.respond(400, error.clientError, res);
-      } else reusable.respond("500", error, res);
+        return res.status(400).json({ message: error.clientError });
+      } else res.status(500).json({ message: error });
     });
 };
 
@@ -87,7 +87,9 @@ exports.create = (req, res) => {
   req.contributorObject
     .create()
     .then(() =>
-      reusable.respond(201, "Contributor is created, Wait for approval.", res)
+      res
+        .status(201)
+        .json({ message: "Contributor is created, Wait for approval." })
     )
     .catch((error) => console.log(error));
 };
@@ -112,7 +114,9 @@ exports.createNoteFileAndMail = (req, res) => {
   // validate "note" as well. As well as a lot of other security issues.
 
   if (!isDataValid) {
-    return reusable.respond(400, "Unacceptable value type received", res);
+    return res
+      .status(400)
+      .json({ message: "Unacceptable value type received" });
   }
 
   // create file and put the body
@@ -176,11 +180,11 @@ function afterFileCreation(res, { contributor, details }, attachment) {
       fs.unlink(attachment, (err) => {
         if (err) return res.status(500).send(err);
 
-        reusable.respond(
-          202,
-          "You have successfully submitted the Note. Thank You!!",
-          res
-        );
+        res
+          .status(202)
+          .json({
+            message: "You have successfully submitted the Note. Thank You!!",
+          });
       });
     })
     .catch((error) => res.status(500).send(error));

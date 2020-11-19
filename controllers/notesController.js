@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Notes = require("../models/Notes");
 const GenerateView = require("./generateView");
 
-const reusable = require("./reusableFunctions");
+const { sendFlashMessage } = require("./utils/respond");
 
 exports.checkForCorrectSubscription = (req, res, next) => {
   if (
@@ -19,13 +19,11 @@ exports.checkForCorrectSubscription = (req, res, next) => {
     next(); // findSavedNotes()
     return;
   }
-  reusable.sendFlashMessage(
-    req,
-    res,
-    "errors",
-    "You do not have the correct subscription to access this page.",
-    "/home"
-  );
+  return sendFlashMessage({
+    collection: "errors",
+    message: "You do not have correct subscription to access this resource.",
+    redirectURL: "/home",
+  });
 };
 
 exports.findSavedNotes = (req, res, next) => {
@@ -44,7 +42,11 @@ exports.findSavedNotes = (req, res, next) => {
       next(); // hasUserSavedThisNote();
     })
     .catch((error) => {
-      reusable.sendFlashMessage(req, res, "errors", error, "/");
+      reusable.sendFlashMessage({
+        collection: "errors",
+        message: error,
+        redirectURL: "/",
+      });
     });
 };
 
@@ -87,7 +89,7 @@ exports.hasUserSavedThisNote = (req, res, next) => {
     .catch((err) => {
       console.log(err);
       res.status(404);
-      res.renderTemplate("index", {toRender: "404"});
+      res.renderTemplate("index", { toRender: "404" });
     });
 };
 
@@ -102,7 +104,7 @@ exports.viewParticularUnit = (req, res) => {
           content,
           requestedNote: req.requestedNote,
           hasVisitorContributedThatNote: req.hasVisitorContributedThatNote,
-        }
+        },
       })
     )
     .catch((error) => res.send(error));
@@ -117,20 +119,30 @@ exports.saveNotes = (req, res) => {
       .saveNotes(req.params.noteId)
       .then(() => {
         console.log("Saved...", req.body.noteId);
-        return reusable.respond(200, "Note is saved successfully!", res);
+        return res.status(200).json({ message: "Note is saved successfully!" });
       })
       .catch((error) => {
-        return reusable.sendFlashMessage(req, res, "errors", error, "/");
+        return reusable.sendFlashMessage({
+          collection: "errors",
+          message: error,
+          redirectURL: "/",
+        });
       });
   } else {
     user
       .removeSaved(req.params.noteId)
       .then(() => {
         console.log("Removed ?");
-        return reusable.respond(200, "Note is removed successfully!", res);
+        return res
+          .status(200)
+          .json({ message: "Note is removed successfully!" });
       })
       .catch((error) => {
-        return reusable.sendFlashMessage(req, res, "errors", error, "/");
+        return reusable.sendFlashMessage({
+          collection: "errors",
+          message: error,
+          redirectURL: "/",
+        });
       });
   }
 };
@@ -146,11 +158,8 @@ exports.sendNotesDescriptionToClient = (req, res, next) => {
       return;
     })
     .catch((error) => {
-      reusable.respond(400, error, res);
+      res.status(400).json(error);
     });
-  // } else {
-  //   res.json({});
-  // }
 };
 
 exports.handleSearch = (req, res) => {
