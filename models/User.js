@@ -1,5 +1,9 @@
 // const validator = require("validator");
-const usersCollection = require("../db").db().collection("users");
+let usersCollection;
+require("../db")
+  .then((client) => (usersCollection = client.db().collection("users")))
+  .catch((err) => console.log(err));
+
 const ObjectID = require("mongodb").ObjectID;
 
 let User = function (data, provider) {
@@ -103,14 +107,18 @@ User.prototype.validateFacultyAndSemester = function (faculty, semester) {
   if (!isSemesterValid) this.errors.push("semester is not valid");
 };
 
+User.prototype.nameIs = function () {
+  return "Rahul";
+};
+
 User.prototype.createUser = function () {
   return new Promise((resolve, reject) => {
-    this.cleanUp();
+    // this.cleanUp();
     console.log("creating a new user...");
     usersCollection
       .insertOne(this.data)
       .then((newUser) => {
-        if (newUser.ops[0]) return resolve(newUser.ops[0]);
+        if (newUser.ops[0]) return resolve("created");
         else return reject("Cannot create the user");
       })
       .catch((error) => console.log(error));

@@ -1,9 +1,17 @@
 const User = require("./User");
 const ObjectID = require("mongodb").ObjectID;
-const userCollection = require("../db").db().collection("users");
-const sessionCollection = require("../db").db().collection("sessions");
-const contributorsCollection = require("../db").db().collection("contributors");
-const notesCollection = require("../db").db().collection("notes");
+let userCollection;
+let sessionCollection;
+let contributorsCollection;
+let notesCollection;
+require("../db")
+  .then((client) => {
+    usersCollection = client.db().collection("users");
+    sessionCollection = client.db().collection("session");
+    contributorsCollection = client.db().collection("contributors");
+    notesCollection = client.db().collection("notes");
+  })
+  .catch((err) => console.log(err));
 
 let Admin = function (data) {
   this.data = data;

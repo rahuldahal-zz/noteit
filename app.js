@@ -63,11 +63,15 @@ app.use("/api", require("./routers/apiRouter"));
 
 let sessionOptions = {
   secret: process.env.sessionSecret,
-  store: new MongoStore({ client: require("./db") }),
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 240, httpOnly: true }, // change this to 24 in production
 };
+
+(async function () {
+  db = await require("./db");
+  sessionOptions.store = new MongoStore(db);
+})();
 
 app.use(session(sessionOptions));
 

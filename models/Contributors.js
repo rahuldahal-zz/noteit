@@ -1,4 +1,10 @@
-const contributorsCollection = require("../db").db().collection("contributors");
+let contributorsCollection;
+require("../db")
+  .then(
+    (client) =>
+      (contributorsCollection = client.db().collection("contributors"))
+  )
+  .catch((err) => console.log(err));
 const ObjectID = require("mongodb").ObjectID;
 
 let Contributor = function (data) {

@@ -1,4 +1,7 @@
-const notesCollection = require("../db").db().collection("notes");
+let notesCollection;
+require("../db")
+  .then((client) => (notesCollection = client.db().collection("notes")))
+  .catch((err) => console.log(err));
 const ObjectID = require("mongodb").ObjectID;
 
 let Notes = function (data) {
