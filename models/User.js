@@ -1,8 +1,12 @@
 // const validator = require("validator");
 let usersCollection;
-require("../db")
-  .then((client) => (usersCollection = client.db().collection("users")))
-  .catch((err) => console.log(err));
+// require("../db")
+//   .then((client) => (usersCollection = client.db().collection("users")))
+//   .catch((err) => console.log(err));
+
+let setCollection = function (collection) {
+  usersCollection = collection;
+};
 
 const ObjectID = require("mongodb").ObjectID;
 
@@ -13,8 +17,6 @@ let User = function (data, provider) {
 };
 
 User.prototype.cleanUp = function () {
-  console.log(this.data.picture);
-
   if (this.provider === "google") {
     if (typeof this.data.sub != "string") this.data.sub = "";
     if (typeof this.data.email != "string") this.data.email = "";
@@ -31,7 +33,7 @@ User.prototype.cleanUp = function () {
       name: this.data.name,
       firstName: this.data.given_name,
       lastName: this.data.family_name,
-      picture: this.picture,
+      picture: this.data.picture,
       provider: this.provider,
     };
   }
@@ -107,18 +109,13 @@ User.prototype.validateFacultyAndSemester = function (faculty, semester) {
   if (!isSemesterValid) this.errors.push("semester is not valid");
 };
 
-User.prototype.nameIs = function () {
-  return "Rahul";
-};
-
 User.prototype.createUser = function () {
   return new Promise((resolve, reject) => {
-    // this.cleanUp();
-    console.log("creating a new user...");
+    this.cleanUp();
     usersCollection
       .insertOne(this.data)
       .then((newUser) => {
-        if (newUser.ops[0]) return resolve("created");
+        if (newUser.ops[0]) return resolve(newUser.ops[0]);
         else return reject("Cannot create the user");
       })
       .catch((error) => console.log(error));
@@ -360,4 +357,4 @@ User.findByRole = (role) => {
   });
 };
 
-module.exports = User;
+module.exports = { User, setCollection };
