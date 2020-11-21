@@ -7,7 +7,7 @@ describe("createUser", () => {
   let connection, db, usersCollection;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(process.env.TEST_CONNECTIONSTRING, {
+    connection = await MongoClient.connect("mongodb://localhost/test", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
