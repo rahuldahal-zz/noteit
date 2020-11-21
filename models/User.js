@@ -1,4 +1,5 @@
 const { currentTask } = require("../getCurrentTask");
+const ObjectID = require("mongodb").ObjectID;
 let usersCollection;
 if (currentTask !== "test") {
   require("../db")
@@ -9,8 +10,6 @@ if (currentTask !== "test") {
 let setCollection = function (collection) {
   usersCollection = collection;
 };
-
-const ObjectID = require("mongodb").ObjectID;
 
 let User = function (data, provider) {
   this.data = data;
@@ -77,9 +76,7 @@ User.prototype.cleanUp = function () {
 };
 
 User.prototype.validateFacultyAndSemester = function (faculty, semester) {
-  console.log(faculty, semester);
-
-  //faculty validation
+  // faculty validation
   const acceptableFaculty = ["bim", "bca", "csit"];
   let isFacultyValid = false;
   for (let i = 0; i < acceptableFaculty.length; i++) {
@@ -90,7 +87,7 @@ User.prototype.validateFacultyAndSemester = function (faculty, semester) {
   }
   if (!isFacultyValid) this.errors.push("faculty is not valid");
 
-  //semester validation
+  // semester validation
   const acceptableSemester = [
     "first",
     "second",
@@ -126,8 +123,18 @@ User.prototype.createUser = function () {
 
 User.prototype.sessionCountHandler = function (id, action) {
   return new Promise((resolve, reject) => {
+    if (new ObjectID(id).toString() !== id.toString()) {
+      return reject("Invalid ObjectID is provided.");
+    }
+
+    if (!["increment", "decrement"].includes(action)) {
+      return reject(
+        "Invalid action is provided. Only increment and decrement are accepted."
+      );
+    }
+
     if (action === "increment") {
-      usersCollection
+      return usersCollection
         .findOneAndUpdate(
           { _id: new ObjectID(id) },
           { $inc: { sessionCount: 1 } }
@@ -141,7 +148,7 @@ User.prototype.sessionCountHandler = function (id, action) {
     }
 
     if (action === "decrement") {
-      usersCollection
+      return usersCollection
         .findOneAndUpdate(
           { _id: new ObjectID(id) },
           { $inc: { sessionCount: -1 } }
@@ -157,13 +164,13 @@ User.prototype.sessionCountHandler = function (id, action) {
 };
 
 User.prototype.saveFacultyAndSemester = function (faculty, semester) {
-  faculty = faculty.toLowerCase();
-  semester = semester.toLowerCase();
-
   return new Promise((resolve, reject) => {
     if (typeof faculty !== "string" || typeof semester !== "string") {
       return reject("Unacceptable values are provided");
     }
+
+    faculty = faculty.toLowerCase();
+    semester = semester.toLowerCase();
 
     this.validateFacultyAndSemester(faculty, semester);
 
@@ -176,15 +183,16 @@ User.prototype.saveFacultyAndSemester = function (faculty, semester) {
               faculty: faculty,
               semester: semester,
             },
-          }
+          },
+          { returnOriginal: false }
         )
         .then((updatedUser) => {
-          if (updatedUser.value) return resolve();
+          if (updatedUser.value) return resolve(updatedUser.value);
           return reject("The requested user cannot be found");
         })
         .catch((error) => {
           console.log(error);
-          return reject(error);
+          return reject("rejected for server-side error");
         });
     } else {
       return reject(this.errors);
