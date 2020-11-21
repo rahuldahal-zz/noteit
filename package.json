@@ -7,8 +7,7 @@
     "dev": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
     "dev-backend": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
     "build": "concurrently \"webpack\" \"node db.js\"",
-    "test": "jest --watch --runInBand",
-    "just-test": "jest"
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",

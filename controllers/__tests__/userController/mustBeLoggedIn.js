@@ -1,4 +1,4 @@
-const reusable = require("../utils/init");
+const reusable = require("../../utils/initForControllersTest");
 
 const { mustBeLoggedIn } = require("../../userController");
 
