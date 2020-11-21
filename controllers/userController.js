@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User } = require("../models/User");
 const { sendFlashMessage } = require("./utils/respond");
 
 exports.doesUsernameExist = (req, res) => {

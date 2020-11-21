@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User } = require("../models/User");
 const Notes = require("../models/Notes");
 const GenerateView = require("./generateView");
 

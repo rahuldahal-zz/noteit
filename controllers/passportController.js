@@ -4,7 +4,7 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 const dotenv = require("dotenv");
 dotenv.config();
 
-const User = require("../models/User");
+const { User } = require("../models/User");
 
 passport.serializeUser((user, done) => {
   // user.id = ObjectId

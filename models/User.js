@@ -1,8 +1,10 @@
-// const validator = require("validator");
+const { currentTask } = require("../getCurrentTask");
 let usersCollection;
-// require("../db")
-//   .then((client) => (usersCollection = client.db().collection("users")))
-//   .catch((err) => console.log(err));
+if (currentTask !== "test") {
+  require("../db")
+    .then((client) => (usersCollection = client.db().collection("users")))
+    .catch((err) => console.log(err));
+}
 
 let setCollection = function (collection) {
   usersCollection = collection;

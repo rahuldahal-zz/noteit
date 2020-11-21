@@ -45,7 +45,7 @@ app.use(
     directives: {
       defaultSrc: ["'self'", "https://ka-f.fontawesome.com"],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
-      connectSrc: ["https://ka-f.fontawesome.com"],
+      connectSrc: ["'self'", "https://ka-f.fontawesome.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://ka-f.fontawesome.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
