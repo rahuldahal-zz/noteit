@@ -1,17 +1,28 @@
 const User = require("./User");
 const ObjectID = require("mongodb").ObjectID;
+const { currentTask } = require("../getCurrentTask");
 let userCollection;
 let sessionCollection;
 let contributorsCollection;
 let notesCollection;
-require("../db")
-  .then((client) => {
-    usersCollection = client.db().collection("users");
-    sessionCollection = client.db().collection("session");
-    contributorsCollection = client.db().collection("contributors");
-    notesCollection = client.db().collection("notes");
-  })
-  .catch((err) => console.log(err));
+if (currentTask !== "test") {
+  require("../db")
+    .then((client) => {
+      usersCollection = client.db().collection("users");
+      sessionCollection = client.db().collection("session");
+      contributorsCollection = client.db().collection("contributors");
+      notesCollection = client.db().collection("notes");
+    })
+    .catch((err) => console.log(err));
+}
+
+let setCollection = function (collection) {
+  // TODO: set separate collections for testing
+  usersCollection = collection;
+  sessionCollection = collection;
+  contributorsCollection = collection;
+  notesCollection = collection;
+};
 
 let Admin = function (data) {
   this.data = data;
@@ -186,4 +197,4 @@ Admin.prototype.createNote = function () {
   });
 };
 
-module.exports = Admin;
+module.exports = { Admin, setCollection };

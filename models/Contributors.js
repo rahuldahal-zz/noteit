@@ -1,12 +1,17 @@
-let contributorsCollection;
-require("../db")
-  .then(
-    (client) =>
-      (contributorsCollection = client.db().collection("contributors"))
-  )
-  .catch((err) => console.log(err));
 const ObjectID = require("mongodb").ObjectID;
+const { currentTask } = require("../getCurrentTask");
+if (currentTask !== "test") {
+  require("../db")
+    .then(
+      (client) =>
+        (contributorsCollection = client.db().collection("contributors"))
+    )
+    .catch((err) => console.log(err));
+}
 
+let setCollection = function (collection) {
+  contributorsCollection = collection;
+};
 let Contributor = function (data) {
   this.data = data;
   this.errors = [];
@@ -183,4 +188,4 @@ Contributor.editContacts = function (data) {
   });
 };
 
-module.exports = Contributor;
+module.exports = { Contributor, setCollection };

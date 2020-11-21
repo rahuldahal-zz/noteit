@@ -1,8 +1,15 @@
-let notesCollection;
-require("../db")
-  .then((client) => (notesCollection = client.db().collection("notes")))
-  .catch((err) => console.log(err));
 const ObjectID = require("mongodb").ObjectID;
+const { currentTask } = require("../getCurrentTask");
+let notesCollection;
+if (currentTask !== "test") {
+  require("../db")
+    .then((client) => (notesCollection = client.db().collection("notes")))
+    .catch((err) => console.log(err));
+}
+
+let setCollection = function (collection) {
+  notesCollection = collection;
+};
 
 let Notes = function (data) {
   this.data = data;
@@ -157,4 +164,4 @@ Notes.search = function (searchTerm, faculty, semester) {
   });
 };
 
-module.exports = Notes;
+module.exports = { Notes, setCollection };

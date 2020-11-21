@@ -1,12 +1,20 @@
+const ObjectID = require("mongodb").ObjectID;
+const { currentTask } = require("../getCurrentTask");
 let contributorsCollection;
 let followsCollection;
-require("../db")
-  .then((client) => {
-    followsCollection = client.db().collection("follows");
-    contributorsCollection = client.db().collection("contributors");
-  })
-  .catch((err) => console.log(err));
-const ObjectID = require("mongodb").ObjectID;
+if (currentTask !== "test") {
+  require("../db")
+    .then((client) => {
+      followsCollection = client.db().collection("follows");
+      contributorsCollection = client.db().collection("contributors");
+    })
+    .catch((err) => console.log(err));
+}
+
+let setCollection = function (collection) {
+  followsCollection = collection;
+  contributorsCollection = collection; // TODO: set a different collection
+};
 
 let Follow = function (contributorId, visitorId) {
   this.contributorId = contributorId;
@@ -86,4 +94,4 @@ Follow.isVisitorFollowing = function (contributorId, visitorId) {
   });
 };
 
-module.exports = Follow;
+module.exports = { Follow, setCollection };
