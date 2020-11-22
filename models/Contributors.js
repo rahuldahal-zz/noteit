@@ -1,13 +1,12 @@
 const ObjectID = require("mongodb").ObjectID;
-const { currentTask } = require("../getCurrentTask");
-if (currentTask !== "test") {
-  require("../db")
-    .then(
-      (client) =>
-        (contributorsCollection = client.db().collection("contributors"))
-    )
-    .catch((err) => console.log(err));
-}
+
+require("./utils/dbCollectionInit")(["contributors"])
+  .then((collections) => {
+    if (collections !== null) {
+      [contributorsCollection] = collections;
+    }
+  })
+  .catch((error) => console.log(error));
 
 let setCollection = function (collection) {
   contributorsCollection = collection;

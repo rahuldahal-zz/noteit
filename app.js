@@ -69,8 +69,8 @@ let sessionOptions = {
 };
 
 (async function () {
-  db = await require("./db");
-  sessionOptions.store = new MongoStore(db);
+  client = await require("./db");
+  sessionOptions.store = new MongoStore({ client });
 })();
 
 app.use(session(sessionOptions));

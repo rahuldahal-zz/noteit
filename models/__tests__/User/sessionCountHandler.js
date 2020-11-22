@@ -21,20 +21,6 @@ describe("createUser", () => {
     await connection.close();
   });
 
-  const additionalDefaults = {
-    _id: expect.any(require("mongodb").ObjectID),
-    provider: expect.stringMatching(/(facebook)?(google)?/),
-    faculty: null,
-    semester: null,
-    isApproved: false,
-    isSubscriptionExpired: false,
-    joinedOn: expect.any(Date),
-    lastLogin: expect.any(Date),
-    roles: ["basic"],
-    savedNotes: [],
-    sessionCount: 0,
-  };
-
   const googleOAuthData = {
     sub: "123456GoogleID",
     email: "test@testing.com",
@@ -46,17 +32,15 @@ describe("createUser", () => {
 
   const user = new User(googleOAuthData, "google");
 
-  test("should resolve by increasing the sessionCount", async () => {
+  test("should resolve by increasing or decreasing the sessionCount", async () => {
     const { _id } = await user.createUser();
-    const message = await user.sessionCountHandler(_id, "increment");
-    expect(message).toEqual("Successfully Incremented sessionCount");
+    const incrementedDoc = await user.sessionCountHandler(_id, "increment");
+    const decrementedDoc = await user.sessionCountHandler(_id, "decrement");
+    expect(incrementedDoc.sessionCount).toEqual(1);
+    expect(decrementedDoc.sessionCount).toEqual(0);
   });
 
-  test("should resolve by decreasing the sessionCount", async () => {
-    const { _id } = await user.createUser();
-    const message = await user.sessionCountHandler(_id, "decrement");
-    expect(message).toEqual("Successfully Decremented sessionCount");
-  });
+  // rejections
 
   test("should reject for invalid ObjectID", async () => {
     try {

@@ -1,11 +1,13 @@
-const { currentTask } = require("../getCurrentTask");
 const ObjectID = require("mongodb").ObjectID;
 let usersCollection;
-if (currentTask !== "test") {
-  require("../db")
-    .then((client) => (usersCollection = client.db().collection("users")))
-    .catch((err) => console.log(err));
-}
+
+require("./utils/dbCollectionInit")(["users"])
+  .then((collections) => {
+    if (collections !== null) {
+      [usersCollection] = collections;
+    }
+  })
+  .catch((error) => console.log(error));
 
 let setCollection = function (collection) {
   usersCollection = collection;
@@ -137,11 +139,12 @@ User.prototype.sessionCountHandler = function (id, action) {
       return usersCollection
         .findOneAndUpdate(
           { _id: new ObjectID(id) },
-          { $inc: { sessionCount: 1 } }
+          { $inc: { sessionCount: 1 } },
+          { returnOriginal: false }
         )
         .then((updatedUser) => {
           if (updatedUser.value) {
-            resolve("Successfully Incremented sessionCount");
+            resolve(updatedUser.value);
           } else reject("Cannot find the user");
         })
         .catch((err) => reject(err));
@@ -151,11 +154,12 @@ User.prototype.sessionCountHandler = function (id, action) {
       return usersCollection
         .findOneAndUpdate(
           { _id: new ObjectID(id) },
-          { $inc: { sessionCount: -1 } }
+          { $inc: { sessionCount: -1 } },
+          { returnOriginal: false }
         )
         .then((updatedUser) => {
           if (updatedUser.value) {
-            resolve("Successfully Decremented sessionCount");
+            resolve(updatedUser.value);
           } else reject("Cannot find the user");
         })
         .catch((err) => reject(err));

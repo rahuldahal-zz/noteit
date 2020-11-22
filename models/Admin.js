@@ -1,20 +1,27 @@
 const User = require("./User");
 const ObjectID = require("mongodb").ObjectID;
-const { currentTask } = require("../getCurrentTask");
 let userCollection;
 let sessionCollection;
 let contributorsCollection;
 let notesCollection;
-if (currentTask !== "test") {
-  require("../db")
-    .then((client) => {
-      usersCollection = client.db().collection("users");
-      sessionCollection = client.db().collection("session");
-      contributorsCollection = client.db().collection("contributors");
-      notesCollection = client.db().collection("notes");
-    })
-    .catch((err) => console.log(err));
-}
+
+require("./utils/dbCollectionInit")([
+  "users",
+  "session",
+  "contributors",
+  "notes",
+])
+  .then((collections) => {
+    if (collections !== null) {
+      [
+        usersCollection,
+        sessionCollection,
+        contributorsCollection,
+        notesCollection,
+      ] = collections;
+    }
+  })
+  .catch((error) => console.log(error));
 
 let setCollection = function (collection) {
   // TODO: set separate collections for testing

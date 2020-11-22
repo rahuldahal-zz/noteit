@@ -8,7 +8,8 @@
     "dev-backend": "concurrently \"mongod\" \"nodemon db --ignore frontend-js --ignore public/ --ignore node_modules/\"",
     "build": "webpack",
     "check-build": "concurrently \"webpack\" \"node db.js\"",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test-watch": "jest --watch --runInBand"
   },
   "keywords": [],
   "author": "",
