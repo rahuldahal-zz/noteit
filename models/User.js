@@ -204,80 +204,105 @@ User.prototype.saveFacultyAndSemester = function (faculty, semester) {
   });
 };
 
-User.prototype.saveNotes = function (noteId) {
-  noteId = new ObjectID(noteId);
+User.prototype.saveNotesHandler = function (noteId, action = "save") {
   return new Promise((resolve, reject) => {
+    if (
+      !ObjectID.isValid(noteId) ||
+      new ObjectID(noteId).toString() !== noteId.toString()
+    ) {
+      return reject("Invalid ObjectID is provided for that note.");
+    }
+
+    if (!["save", "remove"].includes(action)) {
+      return reject(
+        "Invalid action is provided. Only save and remove are accepted."
+      );
+    }
+
+    let queryObject =
+      action === "save"
+        ? { $push: { savedNotes: noteId } }
+        : { $pull: { savedNotes: noteId } };
+
     usersCollection
-      .findOneAndUpdate(
-        { _id: new ObjectID(this.data._id) },
-        { $push: { savedNotes: noteId } }
-      )
+      .findOneAndUpdate({ _id: new ObjectID(this.data._id) }, queryObject, {
+        returnOriginal: false,
+      })
       .then((updatedUser) => {
-        if (updatedUser.value) resolve("saved successfully");
-        else reject("cannot find that document...or similar");
+        if (updatedUser.value) resolve(updatedUser.value);
+        else reject("Cannot find the user");
       })
       .catch((error) => console.log(error));
   });
 };
-User.prototype.removeSaved = function (noteId) {
-  noteId = new ObjectID(noteId);
-  return new Promise((resolve, reject) => {
-    usersCollection
-      .findOneAndUpdate(
-        { _id: new ObjectID(this.data._id) },
-        { $pull: { savedNotes: noteId } }
-      )
-      .then((updatedUser) => {
-        if (updatedUser.value) resolve("removed saved successfully");
-        else reject("cannot find that document...or similar");
-      })
-      .catch((error) => console.log(error));
-  });
-};
+
 User.prototype.findSavedNotes = function () {
   return new Promise((resolve, reject) => {
     usersCollection
       .findOne({ _id: new ObjectID(this.data._id) })
       .then((user) => {
         if (user) resolve(user.savedNotes);
-        else reject("cannot find the user");
+        else reject("Cannot find the user");
       })
       .catch((error) => console.log(error));
   });
 };
 
-User.findByUsername = (username) => {
+User.prototype.findBy = function ({ criteria, value, updateFilter }) {
   return new Promise((resolve, reject) => {
-    if (typeof username != "string") {
-      resolve("No a valid username value");
-      return;
+    if (
+      typeof criteria !== "string" ||
+      !["ObjectId", "OAuthId", "email", "faculty", "semester", "role"].includes(
+        criteria
+      )
+    ) {
+      return reject("Invalid criteria is provided");
     }
+
+    let queryObject;
+    switch (criteria) {
+      case "ObjectId":
+        queryObject = { _id: value };
+        break;
+      case "OAuthId":
+        queryObject = { OAuthId: value };
+        break;
+      case "email":
+        queryObject = { email: value };
+        break;
+      case "faculty":
+        queryObject = { faculty: value };
+        break;
+      case "semester":
+        queryObject = { semester: value };
+        break;
+      case "role":
+        queryObject = { roles: value };
+        break;
+    }
+
     usersCollection
-      .findOne({ name: username })
-      .then((user) => {
-        if (user) {
-          resolve(user);
-          return;
-        } else {
-          reject("from findByUsername: no match found");
-          return;
+      .find(queryObject)
+      .toArray()
+      .then((users) => {
+        if (users.length) {
+          return resolve(users);
         }
+        return reject(`Cannot find any user with that ${criteria}`);
       })
-      .catch((err) => reject(err));
+      .catch((error) => console.log(error));
   });
 };
 
 User.prototype.findByOAuthId = (id) => {
   return new Promise((resolve, reject) => {
-    if (typeof id != "string") {
-      reject("Not a valid OAuthId value");
-      return;
+    if (typeof id !== "string") {
+      return reject("invalid OAuthId value type");
     }
     usersCollection
       .findOneAndUpdate({ OAuthId: id }, { $set: { lastLogin: new Date() } })
       .then((updatedUser) => {
         if (updatedUser.value) {
-          console.log(".....found...");
           resolve(updatedUser);
           return;
         } else {
