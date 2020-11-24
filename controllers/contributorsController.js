@@ -58,9 +58,12 @@ exports.getOne = (req, res) => {
 };
 
 exports.isContributorAlreadyRegistered = (req, res, next) => {
-  let contributor = new Contributor(req.body);
+  let { id } = new Contributor(req.body);
   contributor
-    .findByOAuthId()
+    .findBy({
+      criteria: "OAuthId",
+      value: id,
+    })
     .then((contributor) => {
       if (contributor && contributor.isApproved) {
         const message = jwt.sign(
@@ -180,11 +183,9 @@ function afterFileCreation(res, { contributor, details }, attachment) {
       fs.unlink(attachment, (err) => {
         if (err) return res.status(500).send(err);
 
-        res
-          .status(202)
-          .json({
-            message: "You have successfully submitted the Note. Thank You!!",
-          });
+        res.status(202).json({
+          message: "You have successfully submitted the Note. Thank You!!",
+        });
       });
     })
     .catch((error) => res.status(500).send(error));

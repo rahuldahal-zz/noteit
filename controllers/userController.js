@@ -1,19 +1,6 @@
 const { User } = require("../models/User");
 const { sendFlashMessage } = require("./utils/respond");
 
-exports.doesUsernameExist = (req, res) => {
-  User.findByUsername(req.body.username)
-    .then(() => res.json(true))
-    .catch(() => res.json(false));
-};
-
-exports.doesEmailExist = (req, res) => {
-  console.log(req.body.email);
-  User.findByEmail(req.body.email)
-    .then(() => res.json(true))
-    .catch(() => res.json(false));
-};
-
 exports.root = (req, res) => {
   if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
 

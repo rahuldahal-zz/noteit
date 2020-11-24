@@ -248,7 +248,7 @@ User.prototype.findSavedNotes = function () {
   });
 };
 
-User.prototype.findBy = function ({ criteria, value, updateFilter }) {
+User.prototype.findBy = function ({ criteria, value, update }) {
   return new Promise((resolve, reject) => {
     if (
       typeof criteria !== "string" ||
@@ -259,16 +259,27 @@ User.prototype.findBy = function ({ criteria, value, updateFilter }) {
       return reject("Invalid criteria is provided");
     }
 
-    let queryObject;
+    if (
+      update &&
+      (typeof update !== "string" || !["lastLogin"].includes(update))
+    ) {
+      return reject("Invalid update value is provided");
+    }
+
+    let queryObject,
+      atMostOne = false;
     switch (criteria) {
       case "ObjectId":
         queryObject = { _id: value };
+        atMostOne = true;
         break;
       case "OAuthId":
         queryObject = { OAuthId: value };
+        atMostOne = true;
         break;
       case "email":
         queryObject = { email: value };
+        atMostOne = true;
         break;
       case "faculty":
         queryObject = { faculty: value };
@@ -281,118 +292,43 @@ User.prototype.findBy = function ({ criteria, value, updateFilter }) {
         break;
     }
 
-    usersCollection
-      .find(queryObject)
-      .toArray()
-      .then((users) => {
-        if (users.length) {
-          return resolve(users);
-        }
-        return reject(`Cannot find any user with that ${criteria}`);
-      })
-      .catch((error) => console.log(error));
-  });
-};
-
-User.prototype.findByOAuthId = (id) => {
-  return new Promise((resolve, reject) => {
-    if (typeof id !== "string") {
-      return reject("invalid OAuthId value type");
+    if (!update) {
+      usersCollection
+        .find(queryObject)
+        .toArray()
+        .then((users) => {
+          if (users.length) {
+            if (atMostOne) {
+              return resolve(users[0]);
+            } else {
+              return resolve(users);
+            }
+          }
+          return reject(`Cannot find any user with that ${criteria}`);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      let updateFilter;
+      switch (update) {
+        case "lastLogin":
+          updateFilter = {
+            $set: {
+              lastLogin: new Date(),
+            },
+          };
+          break;
+      }
+      usersCollection
+        .findOneAndUpdate(queryObject, updateFilter, { returnOriginal: false })
+        .then((updatedUser) => {
+          if (updatedUser.value) {
+            return resolve(updatedUser.value);
+          } else {
+            return reject(`Cannot find any user with that ${criteria}`);
+          }
+        })
+        .catch((err) => console.log(err));
     }
-    usersCollection
-      .findOneAndUpdate({ OAuthId: id }, { $set: { lastLogin: new Date() } })
-      .then((updatedUser) => {
-        if (updatedUser.value) {
-          resolve(updatedUser);
-          return;
-        } else {
-          reject("from findByOAuthId: no match found");
-          return;
-        }
-      })
-      .catch((err) => console.log(error));
-  });
-};
-
-User.prototype.findByObjectId = (id) => {
-  return new Promise((resolve, reject) => {
-    if (typeof id != "string") {
-      reject("Not a valid id value");
-      return;
-    }
-    usersCollection
-      .findOne({ _id: new ObjectID(id) })
-      .then((user) => {
-        if (user) {
-          resolve(user);
-          return;
-        } else {
-          reject("from findByObjectId: no match found");
-          return;
-        }
-      })
-      .catch((err) => console.log(error));
-  });
-};
-
-User.findByEmail = (email) => {
-  return new Promise((resolve, reject) => {
-    if (typeof email != "string") {
-      resolve("No a valid username value");
-      return;
-    }
-    usersCollection
-      .findOne({ email: email })
-      .then((user) => {
-        if (user) {
-          resolve(user);
-          return;
-        } else {
-          reject("from findByEmail: No match found");
-          return;
-        }
-      })
-      .catch((err) => reject(err));
-  });
-};
-
-User.findByFaculty = (faculty) => {
-  return new Promise((resolve, reject) => {
-    usersCollection
-      .find({ faculty: faculty })
-      .toArray()
-      .then((users) => {
-        resolve(users);
-      })
-      .catch((error) => reject(error));
-
-    /**
-     * the collection.find() would return the data that makes sense to the MongoDB env, but for JS, we want to
-     * extract the data that we actually want into an array
-     * find().toArray() does exactly that. Also, it returns a promise
-     */
-  });
-};
-
-User.findByRole = (role) => {
-  return new Promise((resolve, reject) => {
-    usersCollection
-      .find({ roles: role })
-      .toArray()
-      .then((users) => {
-        users = users.map((user) => {
-          return (user = {
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            faculty: user.faculty,
-            semester: user.semester,
-            joinedOn: user.joinedOn,
-          });
-        });
-        resolve(users);
-      })
-      .catch((error) => reject(error));
   });
 };
 

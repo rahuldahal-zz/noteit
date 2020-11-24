@@ -18,7 +18,11 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   console.log("deserialize fires...");
   User.prototype
-    .findByObjectId(id)
+    .findBy({
+      criteria: "ObjectId",
+      value: id,
+      update: "lastLogin",
+    })
     .then((user) => {
       done(null, user);
     })
@@ -43,7 +47,10 @@ passport.use(
       //check if user exists
 
       User.prototype
-        .findByOAuthId(profile._json.sub)
+        .findBy({
+          criteria: "OAuthId",
+          value: profile._json.sub,
+        })
         .then((currentUser) => {
           console.log("The user already exists");
           // done will call the serialize
@@ -74,7 +81,10 @@ passport.use(
       //check if user exists
 
       User.prototype
-        .findByOAuthId(profile._json.id)
+        .findBy({
+          criteria: "OAuthId",
+          value: profile._json.id,
+        })
         .then((currentUser) => {
           console.log("The user already exists");
 

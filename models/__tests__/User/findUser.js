@@ -39,8 +39,7 @@ describe("findUser method", () => {
         criteria: "ObjectId",
         value: _id,
       });
-      expect(userQuery.length).toBe(1);
-      expect(userQuery[0]._id).toEqual(user.data._id);
+      expect(userQuery._id).toEqual(user.data._id);
     });
 
     test("user for given OAuthId", async () => {
@@ -49,8 +48,7 @@ describe("findUser method", () => {
         criteria: "OAuthId",
         value: OAuthId,
       });
-      expect(userQuery.length).toBe(1);
-      expect(userQuery[0].OAuthId).toEqual(user.data.OAuthId);
+      expect(userQuery.OAuthId).toEqual(user.data.OAuthId);
     });
 
     test("user for given email", async () => {
@@ -59,8 +57,7 @@ describe("findUser method", () => {
         criteria: "email",
         value: email,
       });
-      expect(userQuery.length).toBe(1);
-      expect(userQuery[0].email).toEqual(user.data.email);
+      expect(userQuery.email).toEqual(user.data.email);
     });
   });
 
@@ -134,5 +131,27 @@ describe("findUser method", () => {
         );
       }
     });
+
+    test("for invalid update value", async () => {
+      try {
+        await user.findBy({
+          criteria: "email",
+          value: "whatever@doesntmatter.com",
+          update: "randomValue",
+        });
+      } catch (rejectionMessage) {
+        expect(rejectionMessage).toEqual("Invalid update value is provided");
+      }
+    });
+  });
+
+  test("should update lastLogin", async () => {
+    const { _id } = createdUser;
+    const { lastLogin } = await user.findBy({
+      criteria: "ObjectId",
+      value: _id,
+      update: "lastLogin",
+    });
+    expect(lastLogin.getMinutes()).toEqual(new Date().getMinutes());
   });
 });
