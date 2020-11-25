@@ -63,7 +63,7 @@ Notes.prototype.findNotes = function () {
         .toArray()
         .then((availableNotes) => {
           if (availableNotes.length) {
-            //clean up contributor prop to include username and photo
+            // TODO: clean up contributor prop to include username and photo
             availableNotes = availableNotes.map((note) => {
               note.contributor = {
                 _id: note.contributor._id,

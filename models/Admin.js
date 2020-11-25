@@ -23,12 +23,13 @@ require("./utils/dbCollectionInit")([
   })
   .catch((error) => console.log(error));
 
-let setCollection = function (collection) {
-  // TODO: set separate collections for testing
-  usersCollection = collection;
-  sessionCollection = collection;
-  contributorsCollection = collection;
-  notesCollection = collection;
+let setCollection = function (collections) {
+  ({
+    userCollection,
+    sessionCollection,
+    contributorsCollection,
+    notesCollection,
+  } = collections);
 };
 
 let Admin = function (data) {
@@ -71,65 +72,96 @@ Admin.handleSearch = (searchTerm, basedOn) => {
   });
 };
 
-Admin.findAndApproveUser = (userId) => {
-  userId = new ObjectID(userId);
-
-  //updates the isApproved field
+/**
+ *
+ * @param {Object} object - containing the userId and an optional action
+ * @param {ObjectID} object.userId - ObjectID of the user in question
+ * @param {String} [object.action=approve] - Acceptable: disapprove
+ * @summary updates the isApproved field of the user doc.
+ * @returns Promise
+ */
+Admin.prototype.handleUserApproval = ({ userId, action = "approve" }) => {
   return new Promise((resolve, reject) => {
+    if (
+      !ObjectID.isValid(userId) ||
+      new ObjectID(userId).toString() !== userId.toString()
+    ) {
+      return reject("Invalid ObjectID is provided");
+    }
+
+    if (!["approve", "disapprove"].includes(action)) {
+      return reject("Invalid action is provided");
+    }
+
+    userId = new ObjectID(userId);
+    let updatedUserReference = false;
+    let updateQuery = { $set: { isApproved: true } };
+
+    if (action === "disapprove") {
+      updateQuery = { $set: { isApproved: false } };
+    }
+
     userCollection
-      .updateOne({ _id: userId }, { $set: { isApproved: true } })
-      .then(() => {
-        sessionCollection.deleteOne({ userId: userId });
-        resolve("Approved successfully");
+      .findOneAndUpdate({ _id: userId }, updateQuery, { returnOriginal: false })
+      .then((updatedUser) => {
+        if (updatedUser.value) {
+          updatedUserReference = updatedUser.value; // check this in the catch block
+          return sessionCollection.deleteOne({ userId: userId });
+        } else return reject("The user was not found");
       })
-      .catch((error) => reject(error));
+      .then(() => resolve(updatedUserReference))
+      .catch(() => {
+        if (updatedUserReference.value) {
+          return reject(
+            `${action}d the user, but had problem deleting their session`
+          );
+        } else {
+          return reject("Server error, cannot approve the user");
+        }
+      });
   });
 };
 
-Admin.findAndApproveContributor = (contributor) => {
-  contributor = new ObjectID(contributor);
-
-  //updates the isApproved field
+Admin.prototype.handleContributorApproval = ({
+  contributorId,
+  action = "approve",
+}) => {
   return new Promise((resolve, reject) => {
+    if (
+      !ObjectID.isValid(contributorId) ||
+      new ObjectID(contributorId).toString() !== contributorId.toString()
+    ) {
+      return reject("Invalid ObjectID is provided");
+    }
+
+    if (!["approve", "disapprove"].includes(action)) {
+      return reject("Invalid action is provided");
+    }
+
+    contributorId = new ObjectID(contributorId);
+    let updateQuery = { $set: { isApproved: true } };
+
+    if (action === "disapprove") {
+      updateQuery = { $set: { isApproved: false } };
+    }
+
+    contributorId = new ObjectID(contributorId);
     contributorsCollection
-      .updateOne({ _id: contributor }, { $set: { isApproved: true } })
-      .then(() => {
-        resolve("Approved successfully");
+      .findOneAndUpdate({ _id: contributorId }, updateQuery, {
+        returnOriginal: false,
+      })
+      .then((updatedContributor) => {
+        if (updatedContributor.value) {
+          return resolve(updatedContributor.value);
+        } else {
+          return reject("The contributor was not found");
+        }
       })
       .catch((error) => reject(error));
   });
 };
 
-Admin.findAndDisapproveUser = (userId) => {
-  userId = new ObjectID(userId);
-
-  //updates the isApproved field
-  return new Promise((resolve, reject) => {
-    userCollection
-      .updateOne({ _id: userId }, { $set: { isApproved: false } })
-      .then(() => {
-        sessionCollection.deleteOne({ userId: userId });
-        resolve("Disapproved successfully");
-      })
-      .catch((error) => reject(error));
-  });
-};
-
-Admin.findAndDisapproveContributor = (contributorId) => {
-  contributorId = new ObjectID(contributorId);
-
-  //updates the isApproved field
-  return new Promise((resolve, reject) => {
-    contributorsCollection
-      .updateOne({ _id: contributorId }, { $set: { isApproved: false } })
-      .then(() => {
-        resolve("Disapproved successfully");
-      })
-      .catch((error) => reject(error));
-  });
-};
-
-Admin.findAndRemoveContributor = (userId) => {
+Admin.prototype.findAndRemoveContributor = (userId) => {
   userId = new ObjectID(userId);
   return new Promise((resolve, reject) => {
     userCollection
@@ -146,7 +178,7 @@ Admin.findAndRemoveContributor = (userId) => {
   });
 };
 
-Admin.getAllContributors = () => {
+Admin.prototype.getAllContributors = () => {
   return new Promise((resolve, reject) => {
     contributorsCollection
       .find({})
@@ -156,7 +188,7 @@ Admin.getAllContributors = () => {
   });
 };
 
-Admin.getAllNotes = () => {
+Admin.prototype.getAllNotes = () => {
   return new Promise((resolve, reject) => {
     notesCollection
       .find({})

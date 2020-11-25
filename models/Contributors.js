@@ -33,7 +33,8 @@ Contributor.prototype.cleanUp = function () {
     name: this.data.name,
     firstName: this.data.first_name,
     lastName: this.data.last_name,
-    avatar: this.data.picture.data.url,
+    email: this.data.email,
+    picture: this.data.picture.data.url,
     joinedOn: new Date(),
     isApproved: false,
     recentContribution: null,
@@ -46,25 +47,85 @@ Contributor.prototype.cleanUp = function () {
   };
 };
 
-Contributor.prototype.findByOAuthId = function () {
-  this.cleanUp();
+Contributor.prototype.findBy = function ({ criteria, value, update }) {
   return new Promise((resolve, reject) => {
-    if (!this.errors.length) {
+    if (
+      typeof criteria !== "string" ||
+      !["ObjectId", "OAuthId", "email"].includes(criteria)
+    ) {
+      return reject("Invalid criteria is provided");
+    }
+
+    if (
+      update &&
+      (typeof update !== "string" || !["lastLogin"].includes(update))
+    ) {
+      return reject("Invalid update value is provided");
+    }
+
+    let queryObject,
+      atMostOne = false;
+    switch (criteria) {
+      case "ObjectId":
+        queryObject = { _id: value };
+        atMostOne = true;
+        break;
+      case "OAuthId":
+        queryObject = { OAuthId: value };
+        atMostOne = true;
+        break;
+      case "email":
+        queryObject = { email: value };
+        atMostOne = true;
+        break;
+    }
+
+    if (!update) {
       contributorsCollection
-        .findOne({ OAuthId: this.data.OAuthId })
-        .then((contributor) => {
-          if (contributor) return resolve(contributor);
-          else reject("not found");
+        .find(queryObject)
+        .toArray()
+        .then((contributors) => {
+          if (contributors.length) {
+            if (atMostOne) {
+              return resolve(contributors[0]);
+            } else {
+              return resolve(contributors);
+            }
+          }
+          return reject(`Cannot find any contributor with that ${criteria}`);
         })
-        .catch((error) => reject(error));
+        .catch((error) => console.log(error));
     } else {
-      return reject({ clientError: this.errors });
+      let updateFilter;
+      switch (update) {
+        case "lastLogin":
+          updateFilter = {
+            $set: {
+              lastLogin: new Date(),
+            },
+          };
+          break;
+      }
+      contributorsCollection
+        .findOneAndUpdate(queryObject, updateFilter, { returnOriginal: false })
+        .then((updatedContributor) => {
+          if (updatedContributor.value) {
+            return resolve(updatedContributor.value);
+          } else {
+            return reject(`Cannot find any contributor with that ${criteria}`);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   });
 };
 
 Contributor.prototype.create = function () {
+  this.cleanUp();
   return new Promise((resolve, reject) => {
+    if (this.errors.length > 0) {
+      return reject({ clientError: this.errors });
+    }
     contributorsCollection
       .insertOne(this.data)
       .then((contributor) => resolve(contributor.ops[0]))

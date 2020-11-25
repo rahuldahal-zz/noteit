@@ -57,8 +57,14 @@ exports.getOne = (req, res) => {
     });
 };
 
+/**
+ *
+ * @description if already registered and approved, returns by responding 202 and JWT, else if registered but not approved yet, returns by responding 200, else returns by calling next().
+ */
+
 exports.isContributorAlreadyRegistered = (req, res, next) => {
-  let { id } = new Contributor(req.body);
+  let { id } = req.body;
+  let contributor = new Contributor();
   contributor
     .findBy({
       criteria: "OAuthId",
@@ -77,24 +83,26 @@ exports.isContributorAlreadyRegistered = (req, res, next) => {
       } else return res.status(200).json({ message: "Wait for Approval" });
     })
     .catch((error) => {
-      if (error === "not found") {
-        req.contributorObject = contributor; // making that "let contributor = new Contributor() available to the next middleware"
+      if (error === "Cannot find any contributor with that OAuthId") {
         return next();
-      } else if (error.clientError) {
-        return res.status(400).json({ message: error.clientError });
       } else res.status(500).json({ message: error });
     });
 };
 
 exports.create = (req, res) => {
-  req.contributorObject
+  const contributor = new Contributor(req.body);
+  contributor
     .create()
     .then(() =>
       res
         .status(201)
         .json({ message: "Contributor is created, Wait for approval." })
     )
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      if (error.clientError) {
+        return res.status(400).json({ message: error.clientError });
+      }
+    });
 };
 
 exports.cleanUpNoteDetails = (details) => {

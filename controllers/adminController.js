@@ -69,26 +69,48 @@ exports.sendUsers = (req, res) => {
 };
 
 exports.approveUser = (req, res) => {
-  Admin.findAndApproveUser(req.body.userId)
-    .then((response) => res.status(202).json({ message: response }))
+  const { userId } = req.body;
+  Admin.handleUserApproval({
+    userId,
+  })
+    .then((response) =>
+      res.status(202).json({ message: "Approved Successfully" })
+    )
     .catch((error) => res.status(500).json({ message: error }));
 };
 
 exports.approveContributor = (req, res) => {
-  Admin.findAndApproveContributor(req.body.contributorId)
-    .then((response) => res.status(202).json({ message: response }))
+  const { contributorId } = req.body;
+  Admin.handleContributorApproval({
+    contributorId,
+  })
+    .then((response) =>
+      res.status(202).json({ message: "Approved Successfully" })
+    )
     .catch((error) => res.status(500).json({ message: error }));
 };
 
 exports.disapproveUser = (req, res) => {
-  Admin.findAndDisapproveUser(req.body.userId)
-    .then((response) => res.status(202).json({ message: response }))
+  const { userId } = req.body;
+  Admin.handleUserApproval({
+    userId,
+    action: "disapprove",
+  })
+    .then((response) =>
+      res.status(202).json({ message: "Disapproved Successfully" })
+    )
     .catch((error) => res.status(500).json({ message: error }));
 };
 
 exports.disapproveContributor = (req, res) => {
-  Admin.findAndDisapproveContributor(req.body.contributorId)
-    .then((response) => res.status(202).json({ message: response }))
+  const { contributorId } = req.body;
+  Admin.handleContributorApproval({
+    contributorId,
+    action: "disapprove",
+  })
+    .then((response) =>
+      res.status(202).json({ message: "Disapproved Successfully" })
+    )
     .catch((error) => res.status(500).json({ message: error }));
 };
 
