@@ -1,0 +1,30 @@
+@mixin for_1024() {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+@mixin for_768() {
+  @media only screen and (max-width: 768px) {
+    @content;
+  }
+}
+@mixin for_600() {
+  @media only screen and (max-width: 600px) {
+    @content;
+  }
+}
+@mixin for_480() {
+  @media only screen and (max-width: 480px) {
+    @content;
+  }
+}
+@mixin widerThan768() {
+  @media only screen and (min-width: 769px) {
+    @content;
+  }
+}
+@mixin widerThan1200() {
+  @media only screen and (min-width: 1200px) {
+    @content;
+  }
+}

@@ -18,23 +18,55 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem;
+
+    @include widerThan768 {
+      padding: 1rem;
+    }
+
+    @include widerThan1200 {
+      padding: 1.5rem;
+    }
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30vw;
   }
 
   &__links {
     background-color: var(--primaryTextColor);
+
+    @include widerThan1200 {
+      background-color: transparent;
+    }
   }
 
   &__link {
     &:nth-child(odd) {
       background-color: var(--primaryTextColor--dark);
+
+      @include widerThan1200 {
+        background-color: transparent;
+      }
     }
     &:nth-child(even) {
       background-color: var(--primaryTextColor--light);
+
+      @include widerThan1200 {
+        background-color: transparent;
+      }
     }
   }
 
   &__hamBurger {
     background-color: var(--primaryBgColor);
+
+    @include widerThan1200 {
+      display: none;
+    }
+
     &::before,
     &::after {
       background-color: var(--primaryBgColor);

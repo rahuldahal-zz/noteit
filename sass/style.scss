@@ -30,6 +30,14 @@
 main,
 section {
   padding: 0.5rem;
+
+  @include widerThan768 {
+    padding: 1rem;
+  }
+
+  @include widerThan1200 {
+    padding: 1.5rem;
+  }
 }
 
 button,
@@ -101,7 +109,7 @@ button,
 .btn {
   text-decoration: none;
   transform-origin: left;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: linear;
 
   &--secondary {
     background-color: #333 !important;

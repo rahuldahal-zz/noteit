@@ -1,33 +1,4 @@
-@mixin for_1024() {
-  @media only screen and (max-width: 1024px) {
-    @content;
-  }
-}
-@mixin for_768() {
-  @media only screen and (max-width: 768px) {
-    @content;
-  }
-}
-@mixin for_600() {
-  @media only screen and (max-width: 600px) {
-    @content;
-  }
-}
-@mixin for_480() {
-  @media only screen and (max-width: 480px) {
-    @content;
-  }
-}
-@mixin widerThan768() {
-  @media only screen and (min-width: 769px) {
-    @content;
-  }
-}
-@mixin widerThan1200() {
-  @media only screen and (min-width: 1200px) {
-    @content;
-  }
-}
+@import "media";
 
 .normalText {
   font-family: var(--paraFont);
@@ -47,7 +18,7 @@ a {
 .mobile {
   display: block;
 
-  @media screen and (min-width: 768px) {
+  @include widerThan768 {
     display: none;
   }
 }
@@ -55,7 +26,7 @@ a {
 .desktop {
   display: none;
 
-  @media screen and (min-width: 768px) {
+  @include widerThan768 {
     display: block;
   }
 }
@@ -266,7 +237,7 @@ a {
     margin: 0;
     padding-top: 10vh;
     transform: translateX(100%);
-    box-shadow: -6px 0 -12px rgba(0, 0, 0, 0.1);
+    box-shadow: -6px 0 12px rgba(0, 0, 0, 0.8);
     transition: transform 0.3s ease-in-out;
 
     &::before {
@@ -280,16 +251,23 @@ a {
       height: 100%;
       background-color: var(--brandTransparent);
       transition: opacity 0.3s ease-in-out;
+
+      @include widerThan1200 {
+        display: none;
+      }
     }
 
-    @include widerThan768 {
-      flex-direction: row;
-      height: max-content;
-      background-color: transparent;
+    @include widerThan1200 {
       position: relative;
-      transform: translateX(0);
       top: 100%;
+      visibility: visible;
+      flex-direction: row;
       align-items: center;
+      padding-top: 0;
+      background-color: transparent;
+      transform: translateX(0);
+      width: max-content;
+      height: 100%;
     }
   }
 
@@ -301,8 +279,16 @@ a {
     background-color: #1f1e1e;
     cursor: pointer;
 
+    @include widerThan1200 {
+      background-color: transparent;
+    }
+
     &:nth-child(even) {
       background-color: rgb(77, 76, 76);
+
+      @include widerThan1200 {
+        background-color: transparent;
+      }
     }
 
     &:last-child {
