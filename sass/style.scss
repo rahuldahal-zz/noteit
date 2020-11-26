@@ -9,7 +9,9 @@
   --accentColor: #f2e419;
   --brandTransparent: rgba(39, 129, 207, 0.6);
   --primaryBgColor: #efefef;
+  --primaryTextColor--light: #031524;
   --primaryTextColor: #000b14;
+  --primaryTextColor--dark: #02060a;
   --bodyFont: "roboto";
   --headingFont: "montserrat";
   font-size: 0.9375rem;
@@ -98,6 +100,8 @@ button,
 
 .btn {
   text-decoration: none;
+  transform-origin: left;
+  transition-timing-function: ease-in-out;
 
   &--secondary {
     background-color: #333 !important;
@@ -111,13 +115,25 @@ button,
   }
 
   &--large {
-    padding: 1em 2em;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
   }
 
   &--accent {
     background-color: var(--accentColor) !important;
     color: var(--primaryTextColor) !important;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    transform-origin: bottom;
+    box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    transform: translateY(-3px) scale(0.95);
+    transform-origin: bottom;
+    box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.5);
   }
 }
 

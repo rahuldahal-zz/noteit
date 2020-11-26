@@ -197,30 +197,30 @@ a {
   color: var(--brandColor);
 }
 
-nav {
+.nav {
   position: fixed;
   z-index: 10;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%; // vh made it go behind the scrollbar
   height: 7vh;
   padding: 0.5rem 1rem;
   justify-content: space-between;
   align-items: center;
   background-color: #eee;
 
-  #hamBar,
-  #hamBar::before,
-  #hamBar::after {
-    width: 40px;
-    height: 4px;
+  &__hamBurger,
+  &__hamBurger::before,
+  &__hamBurger::after {
+    width: 2rem;
+    height: 0.25rem;
     background-color: #333;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
   }
 
-  #hamBar {
+  &__hamBurger {
     position: relative;
     z-index: 2;
     transition: background-color 0.3s ease-in-out;
@@ -228,19 +228,19 @@ nav {
     &::before {
       content: "";
       position: absolute;
-      top: -8px;
+      top: -0.5rem;
       left: 0;
     }
 
     &::after {
       content: "";
       position: absolute;
-      bottom: -8px;
+      bottom: -0.5rem;
       left: 0;
     }
   }
 
-  .hamActive {
+  &__hamBurger--active {
     background-color: transparent !important;
 
     &::before {
@@ -251,17 +251,36 @@ nav {
     }
   }
 
-  ul {
+  &__links {
+    display: flex;
+    visibility: hidden;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     text-align: center;
+    width: 80vw;
     height: 100vh;
-    background-color: #ccc;
+    background-color: #333;
     position: fixed;
     top: 0;
     right: 0;
+    margin: 0;
+    padding-top: 10vh;
     transform: translateX(100%);
+    box-shadow: -6px 0 -12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--brandTransparent);
+      transition: opacity 0.3s ease-in-out;
+    }
 
     @include widerThan768 {
       flex-direction: row;
@@ -272,109 +291,36 @@ nav {
       top: 100%;
       align-items: center;
     }
-    li {
-      list-style: none;
-      margin-bottom: 2rem;
+  }
 
-      @include widerThan768 {
-        margin: 0;
-        margin-right: 2rem;
-      }
-      cursor: pointer;
-      &:last-child {
-        margin: 0;
-      }
+  &__link {
+    list-style: none;
+    margin: 0;
+    font-size: 1.1rem;
+    padding: 0.5em;
+    background-color: #1f1e1e;
+    cursor: pointer;
 
-      a {
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        text-transform: uppercase;
-        color: var(--primaryTextColor);
-        transition: transform 0.3s ease-in-out;
+    &:nth-child(even) {
+      background-color: rgb(77, 76, 76);
+    }
 
-        &:hover,
-        &:focus {
-          transform: translateY(-5px);
-        }
-      }
+    &:last-child {
+      margin: 0;
+    }
+
+    @include widerThan768 {
+      margin: 0;
+      margin-right: 2rem;
     }
   }
-  .ulActive {
+
+  &__links--active {
+    visibility: visible;
     transform: translateX(0);
-  }
-}
 
-.form {
-  width: 100%;
-  display: grid;
-  grid-gap: 10px;
-  padding: 1rem;
-  max-width: 500px;
-
-  fieldset {
-    border: none;
-    position: relative;
-
-    label {
-      font-size: 0.8rem;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .pseudoBorder {
-      position: absolute;
-      bottom: 0;
-      height: 2px;
-      width: 100%;
-      background-color: rgb(22, 134, 190);
-      transition: transform 0.3s ease-in-out;
-      transform-origin: right;
-      transform: scaleX(0);
-    }
-    .pseudoBorder--active {
-      transform-origin: left;
-      transform: scaleX(1);
-    }
-  }
-
-  .asPlaceholder {
-    display: inline-block;
-    position: relative;
-    transform: translate(0.75rem, 24px);
-    z-index: 2;
-    color: #333;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  input,
-  textarea {
-    display: block;
-    width: 100%;
-    border: none;
-    background-color: #eee;
-    border: 1px solid #444;
-    color: #333;
-    padding: 0.5rem 0.75rem;
-    position: relative;
-    transition: background-color 0.3s ease-in-out;
-
-    &:focus {
-      background-color: #ccc;
-    }
-  }
-  input[type="radio"],
-  input[type="checkbox"] {
-    width: max-content;
-    display: inline-block;
-  }
-  select {
-    padding: 0.7rem;
-    text-align: center;
-    width: 100%;
-
-    option {
-      text-align: center;
-      background-color: #eee;
+    &::before {
+      opacity: 1;
     }
   }
 }
@@ -400,12 +346,4 @@ nav {
   border-radius: 0.5em;
   padding: 1em;
   filter: drop-shadow(-6px -6px 10px rgba(0, 0, 0, 0.1));
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 1rem;
-  justify-content: center;
 }

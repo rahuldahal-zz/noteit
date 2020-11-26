@@ -1,4 +1,5 @@
 import Base from "./modules/base";
+import Hamburger from "./modules/hamburger";
 import HomeScreen from "./modules/homeScreen";
 import NotesScreen from "./modules/notesScreen";
 import ContributorProfile from "./modules/contributorProfile";
@@ -8,6 +9,7 @@ import SearchNotes from "./modules/searchNotes";
 import Admin from "./modules/adminOnly/adminDashboard";
 
 new Base();
+Hamburger();
 import "extended-normalize.css";
 import "../sass/style.scss";
 

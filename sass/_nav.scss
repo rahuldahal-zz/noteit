@@ -1,4 +1,4 @@
-nav {
+.nav {
   background-color: var(--brandColor);
   color: #eee;
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
@@ -6,98 +6,79 @@ nav {
   min-height: 3.125rem;
   padding: 0;
 
-  #navWrap {
+  &__home {
+    color: var(--primaryBgColor);
+    text-decoration: none;
+  }
+
+  &__wrap {
     max-width: 1600px;
     margin: 0 auto;
     height: 100%;
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem;
+  }
 
-    #username {
-      color: var(--primaryBgColor);
-      text-decoration: none;
+  &__links {
+    background-color: var(--primaryTextColor);
+  }
+
+  &__link {
+    &:nth-child(odd) {
+      background-color: var(--primaryTextColor--dark);
     }
-
-    #loginOptions {
-      visibility: hidden;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      min-width: 100%;
-      height: 100vh;
-      background-color: rgba($color: #fff, $alpha: 0.8);
-
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--brandTransparent);
-      }
-
-      &__buttons {
-        flex-direction: column;
-        justify-content: space-evenly;
-        margin: auto;
-        height: 130px;
-        width: 250px;
-
-        .btn {
-          background-color: var(--primaryBgColor);
-          color: var(--primaryTextColor);
-          text-align: center;
-          margin-left: 0;
-          min-width: 100%;
-        }
-      }
+    &:nth-child(even) {
+      background-color: var(--primaryTextColor--light);
     }
   }
-}
 
-#links {
-  display: flex;
-  min-width: 140px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#hamBurger {
-  div {
-    position: relative;
-    height: 0.25rem;
-    width: 2rem;
+  &__hamBurger {
     background-color: var(--primaryBgColor);
-    border-radius: 0.25rem;
-
     &::before,
     &::after {
-      content: "";
-      position: absolute;
-      height: 0.25rem;
-      width: 2rem;
       background-color: var(--primaryBgColor);
-      border-radius: 0.25rem;
-    }
-
-    &::before {
-      top: -0.5rem;
     }
     &::after {
-      top: 0.5rem;
       width: 1.5rem;
     }
   }
 }
 
-.nav__item {
-  display: none;
+.loginOptions {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 18;
+  min-width: 100%;
+  height: 100vh;
+  background-color: rgba($color: #fff, $alpha: 0.8);
 
-  @media (min-width: 769px) {
-    display: inline-block;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--brandTransparent);
+  }
+
+  &__buttons {
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: auto;
+    height: 130px;
+    width: 250px;
+
+    .btn {
+      background-color: var(--primaryBgColor);
+      color: var(--primaryTextColor);
+      text-align: center;
+      margin-left: 0;
+      min-width: 100%;
+    }
   }
 }
