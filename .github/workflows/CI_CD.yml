@@ -1,9 +1,7 @@
-name: Run tests
+name: Run tests and then deploy
 
 on:  
   push:
-    branches: [ master ]
-  pull_request:
     branches: [ master ]
 
 jobs:  
@@ -24,3 +22,13 @@ jobs:
         mongodb-version: 4
     - run: npm ci
     - run: npm test
+  deploy:
+    needs: [testing]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.6.8 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: mynoteit #Must be unique in Heroku
+          heroku_email: rdaahal@gmail.com
