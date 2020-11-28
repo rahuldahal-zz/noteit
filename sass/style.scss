@@ -12,8 +12,8 @@
   --primaryTextColor--light: #031524;
   --primaryTextColor: #000b14;
   --primaryTextColor--dark: #02060a;
-  --bodyFont: "roboto";
-  --headingFont: "montserrat";
+  --bodyFont: "open sans";
+  --headingFont: "roboto";
   font-size: 0.9375rem;
   @include widerThan768 {
     font-size: 1rem;
@@ -145,9 +145,12 @@ button,
   }
 }
 
-.fas,
-.fab {
+.btn__icon {
   margin-left: 0.1rem;
+}
+
+.link__icon {
+  margin-left: 0.5rem;
 }
 
 .form,

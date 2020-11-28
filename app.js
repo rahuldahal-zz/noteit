@@ -43,10 +43,19 @@ if (currentTask === "dev") {
 app.use(
   contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", "https://ka-f.fontawesome.com"],
+      defaultSrc: [
+        "'self'",
+        "https://ka-f.fontawesome.com",
+        "https://fonts.gstatic.com",
+      ],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
       connectSrc: ["'self'", "https://ka-f.fontawesome.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://ka-f.fontawesome.com"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://ka-f.fontawesome.com",
+        "https://fonts.googleapis.com",
+      ],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
