@@ -272,15 +272,23 @@ a {
   }
 
   &__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     list-style: none;
     margin: 0;
     font-size: 1.1rem;
     padding: 0.5em;
     background-color: #1f1e1e;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
 
     @include widerThan1200 {
       background-color: transparent;
+
+      &:hover {
+        transform: translateX(5px);
+      }
     }
 
     &:nth-child(even) {

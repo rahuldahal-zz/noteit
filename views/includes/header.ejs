@@ -56,17 +56,19 @@
 
             <%if(!toRender.includes("readyToGo")){%>
             <div class="nav__items">
-              <button type="button" class="btn btn--outline" data-trigger-type="add" data-trigger-target="loginOptions"
-                data-trigger-action="loginOptions--visible">
-                Login
-                <i class="fas fa-sign-in-alt btn__icon"></i>
-              </button>
 
               <ul class="nav__links">
                 <li class="nav__link">About <i class="fas fa-info-circle link__icon"></i></li>
                 <li class="nav__link">Colleges <i class="fas fa-university link__icon"></i></li>
                 <li class="nav__link">Contact <i class="fas fa-address-book link__icon"></i></li>
               </ul>
+
+              <button type="button" class="btn btn--accent" data-trigger-type="add" data-trigger-target="loginOptions"
+                data-trigger-action="loginOptions--visible">
+                Login
+                <i class="fas fa-sign-in-alt btn__icon"></i>
+              </button>
+
 
               <div class="nav__hamBurger" tabindex="0"></div>
             </div>

@@ -7,6 +7,8 @@ import SaveFacultyAndSemester from "./modules/saveFacultyAndSemester";
 import ReadyToGo from "./modules/readyToGoScreen";
 import SearchNotes from "./modules/searchNotes";
 import Admin from "./modules/adminOnly/adminDashboard";
+import misc from "./modules/misc";
+misc();
 
 new Base();
 Hamburger();

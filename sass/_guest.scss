@@ -1,12 +1,11 @@
-#home-guestScreen {
+.guestScreen {
   position: relative;
   height: 93vh;
   min-width: 100%;
-  background: url("/images/svgs/working_late.svg") 40% no-repeat;
-  background-size: auto;
+  clip-path: url(#guestScreenMask);
 
   @include widerThan768 {
-    max-height: 80vh;
+    max-height: 90vh;
   }
 
   &::before {
@@ -14,29 +13,48 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 2;
     width: 100%;
     height: 100%;
     background-image: linear-gradient(
-      to top,
-      rgba(var(--brandRGB), 0.8),
-      rgba(var(--brandRGB), 0.3)
+      to right,
+      rgba(var(--brandRGB), 0.6),
+      rgba(var(--brandRGB), 0)
     );
   }
 
-  &__tagline {
+  &__illustration {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+  }
+
+  &__taglineWrap {
     position: relative;
+    z-index: 3;
     margin-top: 10vh;
     margin-bottom: 2rem;
-    background-color: rgba(53, 53, 53, 0.36);
+    background-color: rgba(#000b14, 0.5);
+    border-radius: 0.5rem;
+    box-shadow: 6px 6px 12px rgba(#000b14, 0.3);
     color: #f4f4f4;
     padding: 0.5em;
     max-width: 90%;
 
     @include widerThan768 {
-      max-width: 768px;
+      max-width: 700px;
       padding: 1.5rem;
     }
+  }
+
+  &__tagline {
+    font-size: 3.7rem;
+  }
+
+  &__cta {
+    position: relative;
+    z-index: 3;
+    box-shadow: 6px 6px 12px rgba(#000b14, 0.3);
   }
 }
 
