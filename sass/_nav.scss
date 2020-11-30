@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 30vw;
+    width: 20vw;
     min-width: 150px;
 
     @include widerThan1200 {
@@ -50,6 +50,7 @@
   }
 
   &__link {
+    justify-content: space-around;
     &:nth-child(odd) {
       background-color: var(--primaryTextColor--dark);
 

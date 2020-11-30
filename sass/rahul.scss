@@ -44,7 +44,7 @@ a {
 .flex--cr {
   flex-direction: column;
 
-  @include widerThan1200() {
+  @include widerThan768() {
     flex-direction: row;
   }
 }

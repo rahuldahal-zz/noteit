@@ -1,8 +1,8 @@
-.guestScreen {
+.hero {
   position: relative;
-  height: 93vh;
+  height: 110vh;
   min-width: 100%;
-  clip-path: url(#guestScreenMask);
+  clip-path: url(#heroMask);
 
   @include widerThan768 {
     max-height: 90vh;
@@ -62,25 +62,24 @@ section {
   margin: 3rem 0;
 }
 
-#processContainer {
-  #processWrap {
-    .process {
-      position: relative;
-      background-color: #f4f4f4;
-      max-width: 300px;
-      margin: 1.5rem auto;
-      padding-top: 1rem;
+.processContainer {
+  &__process {
+    position: relative;
+    background-color: #f4f4f4;
+    max-width: 300px;
+    margin: 2rem;
+    padding-top: 1rem;
 
-      &::before {
-        content: attr(data-process-no);
-        position: absolute;
-        top: -1rem;
-        left: -1rem;
-        padding: 0.5rem 0.8rem;
-        border-radius: 0.5rem;
-        background-color: var(--accentColor);
-        color: var(--primaryTextColor);
-      }
+    &::before {
+      content: attr(data-process-no);
+      position: absolute;
+      top: -1rem;
+      left: -1rem;
+      font-weight: 600;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.5rem;
+      background-color: var(--accentColor);
+      color: var(--primaryTextColor);
     }
   }
 }
