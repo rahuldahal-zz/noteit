@@ -62,6 +62,14 @@ button,
     background-color: var(--brandColor);
     border-radius: 0.5rem;
   }
+
+  &--white {
+    color: #f4f4f4;
+
+    &::before {
+      background-color: #f4f4f4;
+    }
+  }
 }
 
 .brandText {

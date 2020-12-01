@@ -10,7 +10,6 @@ module.exports = async function (collectionNames) {
       collectionNames = collectionNames.map((name) =>
         client.db().collection(name)
       );
-      console.log("collection names", collectionNames[0]);
       return collectionNames;
     } catch (error) {
       console.log(error);

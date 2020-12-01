@@ -2,7 +2,6 @@
   position: relative;
   height: 110vh;
   min-width: 100%;
-  clip-path: url(#heroMask);
 
   @include widerThan768 {
     max-height: 90vh;
@@ -17,15 +16,20 @@
     width: 100%;
     height: 100%;
     background-image: linear-gradient(
-      to right,
+      to top,
       rgba(var(--brandRGB), 0.6),
       rgba(var(--brandRGB), 0)
     );
+
+    @include widerThan768 {
+      background: url(/images/svgs/noteit_hero_details.svg) no-repeat;
+      filter: blur(5px);
+    }
   }
 
   &__illustration {
     position: absolute;
-    right: 0;
+    right: 2rem;
     z-index: 1;
   }
 
@@ -42,13 +46,20 @@
     max-width: 90%;
 
     @include widerThan768 {
-      max-width: 700px;
-      padding: 1.5rem;
+      background-color: transparent;
+      box-shadow: none;
+      padding: 0;
+      color: var(--primaryTextColor);
+      max-width: 650px;
     }
   }
 
   &__tagline {
     font-size: 3.7rem;
+  }
+
+  &__subTagLine {
+    font-size: 1.5rem;
   }
 
   &__cta {
@@ -58,8 +69,20 @@
   }
 }
 
-section {
+.info,
+.processContainer {
   margin: 3rem 0;
+}
+
+.info {
+  position: relative;
+  z-index: 3;
+  margin-top: -20vh;
+  padding-top: 10vh;
+  width: 100%;
+  background: url("/images/svgs/Intro\ path.svg") no-repeat;
+  background-size: cover;
+  color: #f4f4f4;
 }
 
 .processContainer {
