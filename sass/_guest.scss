@@ -83,15 +83,26 @@
   background: url("/images/svgs/Intro\ path.svg") no-repeat;
   background-size: cover;
   color: #f4f4f4;
+
+  &__details {
+    @include widerThan768 {
+      margin-top: 20vh;
+    }
+  }
+
+  &__illustration {
+    height: 600px;
+  }
 }
 
 .processContainer {
   &__process {
     position: relative;
     background-color: #f4f4f4;
-    max-width: 300px;
+    max-width: 350px;
     margin: 2rem;
     padding-top: 1rem;
+    line-height: 1.5;
 
     &::before {
       content: attr(data-process-no);

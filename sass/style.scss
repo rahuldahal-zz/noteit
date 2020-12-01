@@ -36,7 +36,7 @@ section {
   }
 
   @include widerThan1200 {
-    padding: 1.5rem;
+    padding: 2rem;
   }
 }
 
@@ -48,7 +48,7 @@ button,
 
 .heading {
   position: relative;
-  margin-top: 2rem;
+  margin: 2rem 0;
   width: max-content;
 
   &::before {
