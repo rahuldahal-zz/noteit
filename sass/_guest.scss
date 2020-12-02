@@ -2,6 +2,7 @@
   position: relative;
   height: 110vh;
   min-width: 100%;
+  overflow: hidden;
 
   @include widerThan768 {
     max-height: 90vh;
@@ -16,7 +17,6 @@
     width: 100%;
     height: 100%;
     background-image: linear-gradient(
-      to top,
       rgba(var(--brandRGB), 0.6),
       rgba(var(--brandRGB), 0)
     );
@@ -27,10 +27,26 @@
     }
   }
 
-  &__illustration {
+  &__mockup {
     position: absolute;
-    right: 2rem;
-    z-index: 1;
+    top: 25%;
+    left: 12%;
+    transform: rotate(-30deg);
+    border-radius: 0.5rem;
+    filter: blur(2px);
+
+    @include widerThan768 {
+      position: fixed;
+      z-index: 5;
+      top: unset;
+      left: unset;
+      right: 2rem;
+      bottom: 10vh;
+      width: 60%;
+      filter: blur(1px);
+      transform: rotate(0);
+      box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
+    }
   }
 
   &__taglineWrap {
@@ -59,7 +75,12 @@
   }
 
   &__subTagLine {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+
+    @include widerThan1200 {
+      font-size: 1.5rem;
+      max-width: 70%;
+    }
   }
 
   &__cta {
@@ -77,21 +98,54 @@
 .info {
   position: relative;
   z-index: 3;
-  margin-top: -20vh;
-  padding-top: 10vh;
+  align-items: flex-end;
+  margin-top: -35vh;
+  padding-top: 20vh;
   width: 100%;
-  background: url("/images/svgs/Intro\ path.svg") no-repeat;
-  background-size: cover;
   color: #f4f4f4;
+  overflow-x: hidden;
 
-  &__details {
+  @include widerThan768 {
+    margin-top: -10vh;
+  }
+
+  &__detailsWrap {
     @include widerThan768 {
       margin-top: 20vh;
     }
   }
 
+  &__details {
+    background-color: var(--primaryTextColor);
+    padding: 1em 1.25em;
+    border-radius: 16px;
+    background: var(--primaryTextColor);
+    // box-shadow: 16px 16px 38px #000204, -16px -16px 38px #011628;
+    max-width: 800px;
+  }
+
+  &__list {
+    font-style: italic;
+  }
+
   &__illustration {
     height: 600px;
+  }
+
+  &__backgroundWrap {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    height: 100vh;
+
+    @include widerThan1200 {
+      width: 100vw;
+      max-height: 110vh;
+    }
+  }
+
+  &__backgroundPath {
+    fill: var(--primaryTextColor);
   }
 }
 

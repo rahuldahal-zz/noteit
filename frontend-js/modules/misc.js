@@ -1,19 +1,14 @@
-const clipReferencePath = document.querySelector("#guestScreenMask>path");
+const heroMockupElement = document.querySelector(".hero__mockup");
 
 export default function misc() {
-  if (window.innerWidth < 768) {
-    clipReferencePath.setAttribute(
-      "d",
-      `      
-            M 0 0
-            H 540
-            V 720
-            C 
-              540 963
-              540 648
-              0 900
-            V 0
-          `
-    );
+  if (window.innerWidth > 768) {
+    window.addEventListener("scroll", heroMockup);
+  }
+}
+
+function heroMockup(e) {
+  if (window.scrollY > 800) {
+    heroMockupElement.style.position = "absolute";
+    window.removeEventListener("scroll", heroMockup);
   }
 }
