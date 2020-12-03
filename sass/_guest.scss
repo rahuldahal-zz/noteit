@@ -1,10 +1,14 @@
 .hero {
   position: relative;
-  height: 110vh;
+  align-items: center;
+  padding-bottom: 10vh;
+  height: 100vh;
   min-width: 100%;
   overflow: hidden;
 
   @include widerThan768 {
+    overflow: unset;
+    align-items: flex-end;
     max-height: 90vh;
   }
 
@@ -31,28 +35,34 @@
     position: absolute;
     top: 25%;
     left: 12%;
-    transform: rotate(-30deg);
+    transform: rotate(-30deg) scale(1.3);
     border-radius: 0.5rem;
     filter: blur(2px);
+    transition: transform 0.3s ease-in-out;
 
     @include widerThan768 {
-      position: fixed;
+      position: relative;
       z-index: 5;
       top: unset;
       left: unset;
-      right: 2rem;
-      bottom: 10vh;
       width: 60%;
       filter: blur(1px);
+      transform-origin: bottom right;
       transform: rotate(0);
+      transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
       box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
+
+      &:hover {
+        transform: translateY(50px);
+        filter: blur(0);
+        cursor: pointer;
+      }
     }
   }
 
   &__taglineWrap {
     position: relative;
     z-index: 3;
-    margin-top: 10vh;
     margin-bottom: 2rem;
     background-color: rgba(#000b14, 0.5);
     border-radius: 0.5rem;
@@ -99,11 +109,14 @@
   position: relative;
   z-index: 3;
   align-items: flex-end;
-  margin-top: -35vh;
-  padding-top: 20vh;
+  margin-top: -20vh;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
   width: 100%;
   color: #f4f4f4;
   overflow-x: hidden;
+  background: url("/images/svgs/wave.svg") no-repeat;
+  background-size: cover;
 
   @include widerThan768 {
     margin-top: -10vh;
@@ -111,41 +124,16 @@
 
   &__detailsWrap {
     @include widerThan768 {
-      margin-top: 20vh;
+      margin-top: 10vh;
     }
   }
 
   &__details {
-    background-color: var(--primaryTextColor);
-    padding: 1em 1.25em;
-    border-radius: 16px;
-    background: var(--primaryTextColor);
-    // box-shadow: 16px 16px 38px #000204, -16px -16px 38px #011628;
-    max-width: 800px;
+    max-width: 600px;
   }
 
   &__list {
     font-style: italic;
-  }
-
-  &__illustration {
-    height: 600px;
-  }
-
-  &__backgroundWrap {
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    height: 100vh;
-
-    @include widerThan1200 {
-      width: 100vw;
-      max-height: 110vh;
-    }
-  }
-
-  &__backgroundPath {
-    fill: var(--primaryTextColor);
   }
 }
 
