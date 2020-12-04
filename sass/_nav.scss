@@ -109,14 +109,16 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin: auto;
-    height: 130px;
-    width: 250px;
+    width: 60vw;
+    height: 30vh;
 
     .btn {
       background-color: var(--primaryBgColor);
       color: var(--primaryTextColor);
       text-align: center;
       margin-left: 0;
+      font-size: 1.2rem;
+      padding: 1.2rem;
       min-width: 100%;
     }
   }

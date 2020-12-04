@@ -1,4 +1,4 @@
-const heroMockupElement = document.querySelector(".hero__mockup");
+const heroMockupWrap = document.querySelector(".hero__mockupWrap");
 const heroElement = document.querySelector(".hero");
 const infoElement = document.querySelector(".info");
 
@@ -6,7 +6,7 @@ export default class GuestScreen {
   constructor() {
     if (window.innerWidth > 1200) {
       this.infoBoundingRectBottom = infoElement.getBoundingClientRect().bottom;
-      this.mockupBoundingRectBottom = heroMockupElement.getBoundingClientRect().bottom;
+      this.mockupBoundingRectBottom = heroMockupWrap.getBoundingClientRect().bottom;
       this.tenViewport = this.getVH(10);
       this.intersection([0.75]).observe(heroElement);
       this.intersection([0.25]).observe(infoElement);
@@ -46,7 +46,7 @@ export default class GuestScreen {
     isIntersecting,
   }) {
     if (isIntersecting) {
-      heroMockupElement.style.transform = `translateY(${
+      heroMockupWrap.style.transform = `translateY(${
         this.infoBoundingRectBottom -
         this.mockupBoundingRectBottom -
         this.tenViewport
@@ -60,7 +60,7 @@ export default class GuestScreen {
     isIntersecting,
   }) {
     if (isIntersecting) {
-      heroMockupElement.style.transform = `scale(1) translateY(0px)`;
+      heroMockupWrap.style.transform = `scale(1) translateY(0px)`;
     }
   }
 

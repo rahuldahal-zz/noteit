@@ -31,13 +31,12 @@
     }
   }
 
-  &__mockup {
+  &__mockupWrap {
     position: absolute;
     top: 25%;
     left: 12%;
-    transform: rotate(-30deg) scale(1.3);
+    transform: rotate(-30deg) scale(1.4);
     border-radius: 0.5rem;
-    filter: blur(2px);
     transition: transform 0.3s ease-in-out;
 
     @include widerThan768 {
@@ -45,18 +44,41 @@
       z-index: 5;
       top: unset;
       left: unset;
-      width: 60%;
-      filter: blur(1px);
       transform-origin: bottom right;
       transform: rotate(0);
-      transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-      box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
 
-      &:hover {
-        transform: translateY(50px);
-        filter: blur(0);
-        cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 0.5rem;
+
+      @include widerThan768 {
+        box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
       }
+    }
+
+    .fa-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__mockup {
+    width: 100%;
+    border-radius: 0.5rem;
+    filter: blur(2px);
+
+    @include widerThan768 {
+      filter: blur(1px);
     }
   }
 
@@ -113,7 +135,7 @@
   padding-top: 10vh;
   padding-bottom: 10vh;
   width: 100%;
-  color: #f4f4f4;
+  color: #eee;
   overflow-x: hidden;
   background: url("/images/svgs/wave.svg") no-repeat;
   background-size: cover;
