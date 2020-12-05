@@ -1,4 +1,5 @@
 const heroMockupWrap = document.querySelector(".hero__mockupWrap");
+const playBtn = document.querySelector(".fa-play");
 const heroElement = document.querySelector(".hero");
 const infoElement = document.querySelector(".info");
 
@@ -51,6 +52,7 @@ export default class GuestScreen {
         this.mockupBoundingRectBottom -
         this.tenViewport
       }px) scale(0.75)`;
+      playBtn.classList.add("fa-play--active");
     }
   }
 
@@ -61,6 +63,7 @@ export default class GuestScreen {
   }) {
     if (isIntersecting) {
       heroMockupWrap.style.transform = `scale(1) translateY(0px)`;
+      playBtn.classList.remove("fa-play--active");
     }
   }
 

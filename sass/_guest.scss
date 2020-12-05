@@ -65,10 +65,15 @@
     }
 
     .fa-play {
+      visibility: hidden;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) scale(1.25);
+
+      &--active {
+        visibility: visible;
+      }
     }
   }
 
@@ -78,7 +83,7 @@
     filter: blur(2px);
 
     @include widerThan768 {
-      filter: blur(1px);
+      filter: blur(0px);
     }
   }
 

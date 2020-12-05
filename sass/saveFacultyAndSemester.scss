@@ -1,0 +1,33 @@
+.saveFacultyAndSemester {
+  height: 93vh;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -25%;
+    width: 1200px;
+    height: 100%;
+    background-color: var(--primaryTextColor);
+    box-shadow: -12px -12px 24px rgba(0, 0, 0, 0.6);
+    transform: skewX(-20deg);
+  }
+
+  &__content {
+    position: relative;
+    padding: 0;
+    color: var(--primaryBgColor);
+    max-width: 600px;
+  }
+
+  &__greeting {
+    margin-bottom: 5vh;
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+  }
+}

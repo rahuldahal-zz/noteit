@@ -9,11 +9,14 @@ import SearchNotes from "./modules/searchNotes";
 import Admin from "./modules/adminOnly/adminDashboard";
 import GuestScreen from "./modules/guestScreen";
 
-new GuestScreen();
 new Base();
 Hamburger();
 import "extended-normalize.css";
 import "../sass/style.scss";
+
+if (document.getElementById("home-guestScreen")) {
+  new GuestScreen();
+}
 
 if (document.getElementById("saveFacultyAndSemesterScreen")) {
   new SaveFacultyAndSemester();

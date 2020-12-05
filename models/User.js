@@ -270,7 +270,7 @@ User.prototype.findBy = function ({ criteria, value, update }) {
       atMostOne = false;
     switch (criteria) {
       case "ObjectId":
-        queryObject = { _id: value };
+        queryObject = { _id: new ObjectID(value) };
         atMostOne = true;
         break;
       case "OAuthId":
