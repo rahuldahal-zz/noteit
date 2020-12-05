@@ -20,7 +20,7 @@ exports.saveFacultyAndSemester = (req, res, next) => {
         .status("200")
         .json({ message: "Faculty and Semester Saved Successfully." })
     )
-    .catch((error) => res.status(400).json(err));
+    .catch((error) => res.status(400).json(error));
 };
 
 exports.home = (req, res) => {
