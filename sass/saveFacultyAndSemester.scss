@@ -1,8 +1,6 @@
 .saveFacultyAndSemester {
   height: 93vh;
   position: relative;
-  display: flex;
-  justify-content: space-between;
   overflow: hidden;
 
   &::before {
@@ -10,7 +8,7 @@
     position: absolute;
     top: 0;
     left: -35%;
-    width: 1300px;
+    width: 85vw;
     height: 100%;
     background-color: var(--primaryTextColor);
     box-shadow: -12px -12px 24px rgba(0, 0, 0, 0.6);
@@ -23,6 +21,12 @@
 
   &__content {
     position: relative;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__details {
+    position: relative;
     padding: 0;
     color: #eee;
     max-width: 600px;
@@ -34,5 +38,9 @@
     h1 {
       margin-bottom: 1rem;
     }
+  }
+
+  &__illustration {
+    width: 20vw;
   }
 }

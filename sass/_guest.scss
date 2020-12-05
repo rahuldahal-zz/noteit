@@ -1,3 +1,7 @@
+.guestScreen {
+  padding: 0;
+}
+
 .hero {
   position: relative;
   align-items: center;
@@ -8,8 +12,11 @@
 
   @include widerThan768 {
     overflow: unset;
-    align-items: flex-end;
     max-height: 90vh;
+  }
+
+  @include widerThan1600 {
+    max-height: 70vh;
   }
 
   &::before {
@@ -28,6 +35,13 @@
     @include widerThan768 {
       background: url(/images/svgs/noteit_hero_details.svg) no-repeat;
       filter: blur(5px);
+    }
+  }
+
+  &__content {
+    @include widerThan1200 {
+      align-items: flex-end;
+      margin: auto;
     }
   }
 

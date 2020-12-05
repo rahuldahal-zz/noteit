@@ -16,6 +16,7 @@
   --bodyFont: "open sans";
   --headingFont: "roboto";
   font-size: 0.9375rem;
+
   @include widerThan768 {
     font-size: 1rem;
   }
@@ -23,7 +24,6 @@
 }
 
 #container {
-  max-width: 1600px;
   margin: auto;
   padding: 10vh 0 0 0;
 }
@@ -39,6 +39,18 @@ section {
   @include widerThan1200 {
     padding: 2rem;
   }
+}
+
+.maximumWidth {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.content {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .font-3x {

@@ -1,27 +1,30 @@
-<div id="home-guestScreen" class="guestScreen">
-    <main class="hero flex">
+<main id="home-guestScreen" class="guestScreen maximumWidth">
+    <section class="hero maximumWidth">
 
-        <div class="hero__taglineWrap">
-            <h1 class="hero__tagline">We care<br /> about your time.</h1>
-            <p class="hero__subTagLine">And will help you save it by providing quality notes, that are easy to refer and
-                understand.</p>
+        <div class="content hero__content flex">
+            <div class="hero__taglineWrap">
+                <h1 class="hero__tagline">We care<br /> about your time.</h1>
+                <p class="hero__subTagLine">And will help you save it by providing quality notes, that are easy to refer
+                    and
+                    understand.</p>
 
-            <button type="button" class="hero__cta btn btn--accent btn--large" data-trigger-type="add"
-                data-trigger-target="loginOptions" data-trigger-action="loginOptions--visible">Let's NoteIT <i
-                    class="fas fa-sign-in-alt btn__icon"></i></button>
+                <button type="button" class="hero__cta btn btn--accent btn--large" data-trigger-type="add"
+                    data-trigger-target="loginOptions" data-trigger-action="loginOptions--visible">Let's NoteIT <i
+                        class="fas fa-sign-in-alt btn__icon"></i></button>
+            </div>
+
+            <div class="hero__mockupWrap">
+                <img src="/images/notesScreen.png" alt="notes screen sample" class="hero__mockup">
+                <i class="fas fa-play font-3x desktop"></i>
+            </div>
         </div>
 
-        <div class="hero__mockupWrap">
-            <img src="/images/notesScreen.png" alt="notes screen sample" class="hero__mockup">
-            <i class="fas fa-play font-3x desktop"></i>
-        </div>
 
+    </section>
 
-    </main>
+    <section class="maximumWidth info">
 
-    <section class="info">
-
-        <div class="info__detailsWrap">
+        <div class="info__detailsWrap content">
             <h2 class="info__heading heading heading--white">What is NoteIT ?</h2>
             <div class="info__details">
                 <p>Being a student, its pretty challenging to prepare "well organized" notes.</p>
@@ -31,7 +34,8 @@
                     <li>"confusion" regarding the topic or,</li>
                     <li>lack of "good" reference.</li>
                 </ul>
-                <p>Whatever the reason is, most of us will agree that its pretty difficult to prepare "organized" and
+                <p>Whatever the reason is, most of us will agree that its pretty difficult to prepare "organized"
+                    and
                     "readable"
                     notes. </p>
 
@@ -45,30 +49,32 @@
 
     </section>
 
-    <section class="processContainer">
-        <h2 class="heading">This is how it works</h2>
+    <section class="processContainer maximumWidth">
+        <div class="content">
+            <h2 class="heading">This is how it works</h2>
 
-        <div class="processContainer__processWrap flex centerContents flex--cr flex--wrap">
-            <div class="processContainer__process card" data-process-no="1">
-                <h3>Sign up for an account</h3>
-                <p>You can easily sign up via "Facebook" or "Google" and be a member of NoteIT.</p>
-            </div>
-            <div class="processContainer__process card" data-process-no="2">
-                <h3>Get a list of available notes</h3>
-                <p>We will send you a list of notes based on your faculty and semester.</p>
-            </div>
-            <div class="processContainer__process card" data-process-no="3">
-                <h3>View the notes</h3>
-                <p>Easily view and read notes on up to three different device(s), using the same account.</p>
-            </div>
-            <div class="processContainer__process card" data-process-no="4">
-                <h3>Save the notes</h3>
-                <p>You can "save" the notes into your account to have easy access later on.</p>
-            </div>
-            <div class="processContainer__process card" data-process-no="5">
-                <h3>Ask questions</h3>
-                <p>Clear your confusions by chatting with the "note contributor" themselves.</p>
+            <div class="processContainer__processWrap flex centerContents flex--cr flex--wrap">
+                <div class="processContainer__process card" data-process-no="1">
+                    <h3>Sign up for an account</h3>
+                    <p>You can easily sign up via "Facebook" or "Google" and be a member of NoteIT.</p>
+                </div>
+                <div class="processContainer__process card" data-process-no="2">
+                    <h3>Get a list of available notes</h3>
+                    <p>We will send you a list of notes based on your faculty and semester.</p>
+                </div>
+                <div class="processContainer__process card" data-process-no="3">
+                    <h3>View the notes</h3>
+                    <p>Easily view and read notes on up to three different device(s), using the same account.</p>
+                </div>
+                <div class="processContainer__process card" data-process-no="4">
+                    <h3>Save the notes</h3>
+                    <p>You can "save" the notes into your account to have easy access later on.</p>
+                </div>
+                <div class="processContainer__process card" data-process-no="5">
+                    <h3>Ask questions</h3>
+                    <p>Clear your confusions by chatting with the "note contributor" themselves.</p>
+                </div>
             </div>
         </div>
     </section>
-</div>
+</main>
