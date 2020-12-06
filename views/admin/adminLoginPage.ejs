@@ -1,43 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<main>
+    <h1>Hello, <%=admin%></h1>
+    <form action="/admin/login" method="POST" class="form">
+        <fieldset>
+            <label for="username">username</label>
+            <input type="text" name="username" autofocus="on" autocomplete="off">
+        </fieldset>
+        <fieldset>
+            <label for="password">password</label>
+            <input type="password" name="password" autocomplete="off">
+        </fieldset>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        main {
-            display: flex;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        main>form {
-            margin: auto;
-        }
-
-        button {
-            background-color: aqua;
-        }
-    </style>
-</head>
-
-<body>
-    <main>
-        <h1>Hello, <%=admin%></h1>
-        <form action="/admin/login" method="POST" class="form">
-            <fieldset>
-                <label for="username">username</label>
-                <input type="text" name="username" autofocus="on" autocomplete="off">
-            </fieldset>
-            <fieldset>
-                <label for="password">password</label>
-                <input type="password" name="password" autofocus="on" autocomplete="off">
-            </fieldset>
-
-            <input type="hidden" name="adminName" value="<%=admin%>" />
-            <button type="submit" class="btn">Log in as Administrator</button>
-        </form>
-    </main>
-</body>
-
-</html>
+        <input type="hidden" name="adminName" value="<%=admin%>" />
+        <button type="submit" class="btn">Log in as Administrator</button>
+    </form>
+</main>

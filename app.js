@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const passportController = require("./controllers/passportController"); // this need to be here, in order to "run"
+const passportController = require("./controllers/passportController"); // this needs to be here, in order to "run"
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
@@ -91,8 +91,6 @@ app.use(initializeFlashHelper);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// using the admin route
-
 app.use((req, res, next) => {
   res.renderTemplate = function (template, data = null) {
     console.log(`renders ${template}`);
@@ -100,8 +98,6 @@ app.use((req, res, next) => {
   };
   return next();
 });
-
-app.use("/admin", adminRouter);
 
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
@@ -112,6 +108,10 @@ app.use((req, res, next) => {
   res.locals.successes = req.flash("successes");
   return next();
 });
+
+// using the admin route
+
+app.use("/admin", adminRouter);
 
 //use the csurf, makes sure that every request that can change the state of app has a valid token
 app.use(csrf());

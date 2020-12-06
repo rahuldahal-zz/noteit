@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - NoteIT</title>
-</head>
-
-<body id="adminDashboardScreen">
+<div id="adminDashboardScreen">
     <input type="hidden" value="<%=jwt%>">
 
     <aside>
@@ -18,7 +9,7 @@
         </div>
     </aside>
 
-    <main>
+    <section>
         <div id="createNote">
             <h1>Create note here</h1>
 
@@ -45,7 +36,7 @@
             <form method="POST" id="userQueryForm">
                 <input type="text" name="searchTerm" placeholder="username/faculty/semester">
                 <select name="basedOn" id="">
-                    <option value="username">username</option>
+                    <option value="email">email</option>
                     <option value="faculty">faculty</option>
                     <option value="semester">semester</option>
                 </select>
@@ -60,9 +51,5 @@
             </form>
             <section id="contributorCardContainer"></section>
         </div>
-    </main>
-    <script src="/main-bundled.js"></script>
-
-</body>
-
-</html>
+    </section>
+</div>

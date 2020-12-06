@@ -9,6 +9,7 @@ router.get(
   userController.authRole("admin"),
   adminController.home
 );
+
 router.post(
   "/login",
   userController.mustBeLoggedIn,

@@ -4,6 +4,7 @@ export default class UserQuery {
   constructor(jwt) {
     this.jwt = jwt;
     this.userQueryForm = document.getElementById("userQueryForm");
+    console.log(userQueryForm);
     this.searchTerm = document.querySelector(
       '#searchUser input[name="searchTerm"]'
     );
@@ -114,17 +115,17 @@ export default class UserQuery {
         action: "/admin/users/expireSubscription",
         value: "Expire Subscription",
       });
-    this.addActions(actions, userCard);
+    this.addActionsToDOM(actions, userCard);
   }
 
-  addActions(actions, userCard) {
+  addActionsToDOM(actions, userCard) {
     let actionsContainer = document.createElement("div");
     actionsContainer.setAttribute("class", "actionsContainer");
     actions.forEach((action) => {
       actionsContainer.insertAdjacentHTML(
         "beforeend",
         `
-                    <form action="${action.action}" method="POST" class="adminAction">
+                <form action="/api${action.action}" method="POST" class="adminAction">
                          <input type="hidden" value="${action.userId}" name="userId">
                          <button type="submit">${action.value}</button>
                 </form>
@@ -147,7 +148,7 @@ export default class UserQuery {
   doTheAction(action) {
     let userId = action.firstElementChild.value;
     axios
-      .post(action.action, { userId: userId, token: this.jwt })
+      .put(action.action, { userId: userId, token: this.jwt })
       .then((response) => {
         console.log(response);
       })

@@ -1,4 +1,4 @@
-const User = require("./User");
+const { User } = require("./User");
 const ObjectID = require("mongodb").ObjectID;
 let userCollection;
 let sessionCollection;
@@ -14,7 +14,7 @@ require("./utils/dbCollectionInit")([
   .then((collections) => {
     if (collections !== null) {
       [
-        usersCollection,
+        userCollection,
         sessionCollection,
         contributorsCollection,
         notesCollection,
@@ -37,11 +37,12 @@ let Admin = function (data) {
   this.errors = [];
 };
 
-Admin.handleSearch = (searchTerm, basedOn) => {
+Admin.prototype.handleSearch = (searchTerm, basedOn) => {
   return new Promise((resolve, reject) => {
     if (typeof searchTerm == "string" && typeof basedOn == "string") {
-      if (basedOn === "username") {
-        User.findByUsername(searchTerm)
+      if (basedOn === "email") {
+        User.prototype
+          .findBy({ criteria: "email", value: searchTerm })
           .then((user) => {
             user.joinedOn = {
               date: user.joinedOn.getDate(),

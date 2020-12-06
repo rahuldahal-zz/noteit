@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
+const { Admin } = require("../models/Admin");
 const dotenv = require("dotenv");
 const reusable = require("./utils/respond");
 
@@ -31,6 +31,7 @@ exports.login = (req, res) => {
     });
     // res.renderTemplate("admin/dashboard");
   } else {
+    console.log("incorrect admin credentials");
     res.redirect("/");
   }
 };
@@ -58,7 +59,8 @@ exports.sendUsers = (req, res) => {
   let searchTerm = req.body.searchTerm;
   let basedOn = req.body.basedOn;
 
-  Admin.handleSearch(searchTerm, basedOn)
+  Admin.prototype
+    .handleSearch(searchTerm, basedOn)
     .then((user) => {
       console.log("Sending user query");
       res.json(user);
@@ -70,20 +72,22 @@ exports.sendUsers = (req, res) => {
 
 exports.approveUser = (req, res) => {
   const { userId } = req.body;
-  Admin.handleUserApproval({
-    userId,
-  })
+  Admin.prototype
+    .handleUserApproval({
+      userId,
+    })
     .then((response) =>
       res.status(202).json({ message: "Approved Successfully" })
     )
-    .catch((error) => res.status(500).json({ message: error }));
+    .catch((error) => console.log(error));
 };
 
 exports.approveContributor = (req, res) => {
   const { contributorId } = req.body;
-  Admin.handleContributorApproval({
-    contributorId,
-  })
+  Admin.prototype
+    .handleContributorApproval({
+      contributorId,
+    })
     .then((response) =>
       res.status(202).json({ message: "Approved Successfully" })
     )
@@ -92,10 +96,11 @@ exports.approveContributor = (req, res) => {
 
 exports.disapproveUser = (req, res) => {
   const { userId } = req.body;
-  Admin.handleUserApproval({
-    userId,
-    action: "disapprove",
-  })
+  Admin.prototype
+    .handleUserApproval({
+      userId,
+      action: "disapprove",
+    })
     .then((response) =>
       res.status(202).json({ message: "Disapproved Successfully" })
     )
@@ -104,10 +109,11 @@ exports.disapproveUser = (req, res) => {
 
 exports.disapproveContributor = (req, res) => {
   const { contributorId } = req.body;
-  Admin.handleContributorApproval({
-    contributorId,
-    action: "disapprove",
-  })
+  Admin.prototype
+    .handleContributorApproval({
+      contributorId,
+      action: "disapprove",
+    })
     .then((response) =>
       res.status(202).json({ message: "Disapproved Successfully" })
     )
@@ -125,7 +131,8 @@ exports.removeAsContributor = (req, res, next) => {
 };
 
 exports.getAllContributors = (req, res) => {
-  Admin.getAllContributors()
+  Admin.prototype
+    .getAllContributors()
     .then((response) => res.status(200).json(response))
     .catch((error) => res.status(500).json({ message: error }));
 };
