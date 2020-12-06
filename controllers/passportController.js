@@ -54,8 +54,7 @@ passport.use(
         .then((currentUser) => {
           console.log("The user already exists");
           // done will call the serialize
-          currentUser.value.provider = "google";
-          return done(null, currentUser.value);
+          return done(null, currentUser);
         })
         .catch((error) => createUser(profile._json, done, "google"));
     }
@@ -89,8 +88,7 @@ passport.use(
           console.log("The user already exists");
 
           // done will call the serialize
-          currentUser.value.provider = "facebook";
-          return done(null, currentUser.value);
+          return done(null, currentUser);
         })
         .catch((error) => createUser(profile._json, done, "facebook"));
     }
@@ -98,6 +96,7 @@ passport.use(
 );
 
 function createUser(profile, done, provider) {
+  console.log("creating a new user...");
   let user = new User(profile, provider);
   user
     .createUser()

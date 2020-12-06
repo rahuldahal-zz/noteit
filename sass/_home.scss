@@ -46,7 +46,7 @@
     width: 1000px;
     height: 100%;
     background-color: var(--primaryTextColor);
-    box-shadow: -12px -12px 24px rgba(0, 0, 0, 0.6);
+    box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.4);
     transform: skewX(-20deg);
 
     @include widerThan768 {
@@ -58,6 +58,10 @@
     position: relative;
     color: #eee;
     max-width: 600px;
+
+    .btn {
+      margin-top: 5vh;
+    }
   }
 
   &__thankingIllustration {
