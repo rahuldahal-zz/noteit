@@ -5,8 +5,7 @@ module.exports = async function (collectionNames) {
     return null;
   } else {
     try {
-      const db = require("../../db");
-      const client = await db;
+      const client = require("../../db")(true);
       collectionNames = collectionNames.map((name) =>
         client.db().collection(name)
       );

@@ -3,16 +3,22 @@ const { currentTask } = require("./getCurrentTask");
 const dotenv = require("dotenv");
 dotenv.config();
 
-module.exports = new Promise((resolve, reject) => {
-  mongodb.connect(
+let clientReference = null;
+
+module.exports = function (returnClientOnly) {
+  if (returnClientOnly) {
+    return clientReference;
+  }
+
+  return mongodb.connect(
     process.env.CONNECTIONSTRING,
     { useNewUrlParser: true, useUnifiedTopology: true },
     (err, client) => {
       if (err) {
         return reject("Cannot connect to MongoDB");
       }
-      // returns the db client, (the whole db)
-      resolve(client);
+
+      clientReference = client;
 
       //   start the express app
       const app = require("./app");
@@ -21,4 +27,4 @@ module.exports = new Promise((resolve, reject) => {
       );
     }
   );
-});
+};

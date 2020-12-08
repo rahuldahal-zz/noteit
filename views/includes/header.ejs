@@ -26,7 +26,7 @@
 
         <div class="nav__items">
           <div class="nav__userActions">
-            <%if(user.isApproved && !toRender.includes("readyToGo")){%>
+            <%if(user.isApproved && !["readyToGo", "admin/dashboard"].includes(toRender)){%>
             <button type="button" id="searchNoteBtn" class="btn">Search Note</button>
             <%}%> 
     

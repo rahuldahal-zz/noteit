@@ -1,5 +1,5 @@
 const { User } = require("../models/User");
-const Notes = require("../models/Notes");
+const { Notes } = require("../models/Notes");
 const GenerateView = require("./generateView");
 
 const { sendFlashMessage } = require("./utils/respond");

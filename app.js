@@ -4,10 +4,7 @@ const passportController = require("./controllers/passportController"); // this 
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
-const {
-  initializeFlashHelper,
-  sendFlashMessage,
-} = require("./controllers/utils/respond");
+const { initializeFlashHelper } = require("./controllers/utils/respond");
 const adminRouter = require("./routers/adminRouter");
 const csrf = require("csurf");
 const helmet = require("helmet");
@@ -74,13 +71,9 @@ let sessionOptions = {
   secret: process.env.sessionSecret,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }, // change this to 24 in production
+  cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
+  store: new MongoStore({ client: require("./db")(true) }),
 };
-
-(async function () {
-  client = await require("./db");
-  sessionOptions.store = new MongoStore({ client });
-})();
 
 app.use(session(sessionOptions));
 
