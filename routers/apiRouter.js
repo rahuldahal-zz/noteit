@@ -8,6 +8,7 @@ const cors = require("cors");
 const whiteListDomains = [
   process.env.ALLOWED_ORIGIN_EDITOR,
   process.env.ALLOWED_ORIGIN_LOCAL,
+  process.env.ALLOWED_ORIGIN_PRODUCTION,
 ];
 
 const corsOptions = {
