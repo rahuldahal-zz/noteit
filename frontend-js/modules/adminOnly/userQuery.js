@@ -6,10 +6,10 @@ export default class UserQuery {
     this.userQueryForm = document.getElementById("userQueryForm");
     console.log(userQueryForm);
     this.searchTerm = document.querySelector(
-      '#searchUser input[name="searchTerm"]'
+      '.searchUser input[name="searchTerm"]'
     );
-    this.basedOn = document.querySelector('#searchUser select[name="basedOn"]');
-    this.userCardContainer = document.getElementById("userCardContainer");
+    this.basedOn = document.querySelector('.searchUser select[name="basedOn"]');
+    this.resultContainer = document.querySelector(".result__data");
     this.events();
   }
 
@@ -36,7 +36,7 @@ export default class UserQuery {
         if (Object.keys(response.data).length)
           this.createUserCard(response.data);
         else
-          this.userCardContainer.insertAdjacentHTML(
+          this.resultContainer.insertAdjacentHTML(
             "beforeend",
             `<h2>No users found</h2>`
           );
@@ -47,7 +47,7 @@ export default class UserQuery {
   }
 
   clearUserCard() {
-    this.userCardContainer.innerHTML = "";
+    this.resultContainer.innerHTML = "";
   }
 
   createUserCard(users) {
@@ -59,28 +59,69 @@ export default class UserQuery {
     }
     console.log(newUsersArray);
     for (let i = 0; i < newUsersArray.length; i++) {
+      const {
+        _id,
+        name,
+        firstName,
+        picture,
+        faculty,
+        semester,
+        email,
+        roles,
+        joinedOn,
+        lastLogin,
+      } = newUsersArray[i];
+
       let userCard = document.createElement("div");
-      userCard.setAttribute("class", "userCard");
+      userCard.setAttribute("class", "user");
+
       userCard.innerHTML = `
-                <p>id: ${newUsersArray[i]._id} </p>
-                <p>name: ${newUsersArray[i].name} </p>
-                <p>email: ${newUsersArray[i].email} </p>
-                <p>provider: ${newUsersArray[i].provider}</p>
-                <p>sessionCount: ${newUsersArray[i].sessionCount}</p>
-                <p>faculty: ${newUsersArray[i].faculty} </p>
-                <p>semester: ${newUsersArray[i].semester} </p>
-                <p>joinedOn: ${newUsersArray[i].joinedOn.date}/${
-        newUsersArray[i].joinedOn.month
-      }/${newUsersArray[i].joinedOn.year}</p>
-                <ul>
-                    ${newUsersArray[i].roles
-                      .map((role) => `<li>${role}</li>`)
+                <div class="user__info">
+                  <img src="${picture}" alt="${firstName} picture">
+                  <div>
+                    <h4>${name} </h4>
+                    <p><em>${newUsersArray[
+                      i
+                    ].faculty.toUpperCase()}</em> <em> ${semester}</em></p>
+                  </div>
+                  </div>
+
+                  <hr />
+
+                  <p class="user__roles">
+                    <i class="fas fa-user-tag"></i>
+                    ${roles
+                      .map(
+                        (role) => `<span class="${role}Badge">${role}</span>`
+                      )
                       .join("")}
-                </ul>
+                  </p>
+                
+                <p class="user__email">
+                  <i class="fas fa-at"></i>
+                  <span>${email}</span> 
+                </p>
+
+                <p class="user__joinedOn">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <span>${joinedOn.date}/${joinedOn.month}/${
+        joinedOn.year
+      }</span>
+                </p>
+
+
+                <p class="user__lastLogin">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>${lastLogin}</span>
+                </p>
+
+                <hr />
+
+                </div>
             `;
       this.setActions(newUsersArray[i], userCard);
 
-      this.userCardContainer.appendChild(userCard);
+      this.resultContainer.appendChild(userCard);
     }
     this.actionsHandler();
   }

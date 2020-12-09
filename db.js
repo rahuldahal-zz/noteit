@@ -15,7 +15,8 @@ module.exports = function (returnClientOnly) {
     { useNewUrlParser: true, useUnifiedTopology: true },
     (err, client) => {
       if (err) {
-        return reject("Cannot connect to MongoDB");
+        console.log(err);
+        return console.log("Cannot connect to MongoDB");
       }
 
       clientReference = client;

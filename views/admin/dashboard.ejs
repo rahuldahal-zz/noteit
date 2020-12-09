@@ -1,17 +1,16 @@
-<div id="adminDashboardScreen">
+<div id="adminDashboardScreen" class="adminDashboard">
     <input type="hidden" value="<%=jwt%>">
 
 
-    <aside>
-        <div id="actions">
-            <button class="action" data-action="userQuery">Users</button>
-            <button class="action" data-action="createNote">Notes</button>
-            <button class="action" data-action="contributors">Contributors</button>
-        </div>
+    <aside class="sideNav">
+        <button class="sideNav__item sideNav__item--active" data-action="userQuery">Users</button>
+        <button class="sideNav__item" data-action="createNote">Notes</button>
+        <button class="sideNav__item" data-action="contributors">Contributors</button>
     </aside>
 
-    <section>
-        <div id="createNote">
+    <section class="queryContainer">
+        <h1 class="queryContainer__title">User Query</h1>
+        <div class="createNote">
             <h1>Create note here</h1>
 
             <form method="POST" id="createNoteForm">
@@ -33,24 +32,36 @@
             </form>
         </div>
 
-        <div id="searchUser">
-            <form method="POST" id="userQueryForm">
+        <div class="searchUser">
+            <form method="POST" id="userQueryForm" class="searchUser__form">
                 <input type="text" name="searchTerm" placeholder="username/faculty/semester">
                 <select name="basedOn" id="">
                     <option value="email">email</option>
                     <option value="faculty">faculty</option>
                     <option value="semester">semester</option>
                 </select>
-                <button type="submit" class="btn btn--brand">Get Users</button>
+                <button type="submit" class="btn btn--accent">Get Users</button>
             </form>
-            <section id="userCardContainer"></section>
         </div>
 
-        <div id="contributorHandler">
+        <div class="searchContributor">
             <form method="POST" action="" id="contributorHandlerForm">
                 <button type="submit">Get Contributors</button>
             </form>
             <section id="contributorCardContainer"></section>
         </div>
     </section>
+
+    <section class="result">
+        <div class="result__title">
+            <p>Showing results for <strong class="result__searchTerm">rdaahal@gmail.com</strong> based on <strong
+                    class="result__basedOn">email</strong>:</p>
+
+            <em>Count: <strong class="result__count">1</strong></em>
+        </div>
+
+        <div class="result__data"></div>
+    </section>
+
+
 </div>

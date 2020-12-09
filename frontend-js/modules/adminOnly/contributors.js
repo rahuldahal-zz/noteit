@@ -4,9 +4,7 @@ export default class ContributorsHandler {
   constructor(jwt) {
     this.jwt = jwt;
     this.form = document.getElementById("contributorHandlerForm");
-    this.contributorCardContainer = document.getElementById(
-      "contributorCardContainer"
-    );
+    this.resultContainer = document.querySelector(".result");
     this.events();
   }
 
@@ -31,7 +29,7 @@ export default class ContributorsHandler {
             `;
       this.setActions(contributors[i], contributorCard);
 
-      this.contributorCardContainer.appendChild(contributorCard);
+      this.resultContainer.appendChild(contributorCard);
     }
     this.actionsHandler();
   }

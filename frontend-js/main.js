@@ -32,7 +32,6 @@ if (document.getElementById("searchNoteBtn")) {
 
 if (document.getElementById("adminDashboardScreen")) {
   new Admin();
-  require("../sass/searchUser.scss");
 }
 
 if (document.getElementById("homeScreen")) {

@@ -1,0 +1,146 @@
+.createNote,
+.searchContributor {
+  display: none;
+}
+
+.adminDashboard {
+  position: relative;
+  min-height: 93vh;
+}
+
+.sideNav {
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  background-color: var(--brandColor);
+  color: #f4f4f4;
+  width: 165px;
+  padding: 7vh 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  &__item {
+    display: block;
+    width: 100% !important;
+    background-color: var(--brandLight);
+    color: #f4f4f4;
+    font-weight: bold;
+
+    &--active {
+      background-color: #f4f4f4;
+      color: var(--primaryTextColor);
+    }
+  }
+}
+
+.queryContainer {
+  position: fixed;
+  top: 10vh;
+  left: 165px;
+  padding: 7vh 1rem;
+  width: 365px;
+  height: 100%;
+  background-color: var(--primaryTextColor);
+  color: #f4f4f4;
+
+  &__title {
+    margin-top: 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.result {
+  position: fixed;
+  top: 10vh;
+  left: 530px;
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+  overflow-y: scroll;
+
+  &__title {
+    margin-bottom: 5vh;
+  }
+
+  &__data {
+    display: grid;
+  }
+}
+
+.user {
+  padding: 1rem;
+  background-color: var(--primaryTextColor);
+  color: #f4f4f4;
+  width: 380px;
+  height: 400px;
+  border-radius: 0.5rem;
+  box-shadow: 6px 6px 12px -6px rgba(0, 0, 0, 0.5);
+
+  &__info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    img {
+      width: 60px;
+      border-radius: 50%;
+    }
+
+    h4 {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  }
+
+  hr {
+    color: #c4c4c4;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  &__roles,
+  &__email,
+  &__joinedOn,
+  &__lastLogin {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .actionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    button {
+      background-color: red;
+      color: #f4f4f4;
+    }
+  }
+}
+
+.basicBadge,
+.adminBadge,
+.contributorBadge {
+  display: inline-block;
+  width: max-content;
+  padding: 3px 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.basicBadge {
+  background-color: var(--brandColor);
+  color: #f4f4f4;
+}
+
+.adminBadge {
+  background-color: red;
+}

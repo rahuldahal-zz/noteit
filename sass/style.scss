@@ -3,12 +3,14 @@
 @import "contributorProfile";
 @import "_home";
 @import "saveFacultyAndSemester";
+@import "adminDashboard";
 
 :root {
   --brandColor: #0970c8;
   --brandRGB: 39, 129, 207;
   --accentColor: #f2e419;
   --brandTransparent: rgba(39, 129, 207, 0.6);
+  --brandLight: #3082c8;
   --primaryBgColor: #efefef;
   --primaryTextColor--light: #031524;
   --primaryTextColor: #000b14;
