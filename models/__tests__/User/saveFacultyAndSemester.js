@@ -1,5 +1,6 @@
 const { MongoClient, ObjectID } = require("mongodb");
 const { User, setCollection } = require("../../User");
+const fetch = require("node-fetch");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -66,6 +67,34 @@ describe("createUser", () => {
           "semester is not valid",
         ])
       );
+    }
+  });
+
+  test("should reject for bogus values", async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json"
+    );
+    const bogusValues = await response.json();
+    for (let i = 0; i < bogusValues.length; i += 2) {
+      const user = await newUser.createUser();
+      const thatUserData = new User(user);
+      try {
+        if (i + 1 < bogusValues.length) {
+          return await thatUserData.saveFacultyAndSemester(
+            bogusValues[i],
+            bogusValues[i + 1]
+          );
+        } else {
+          return await thatUserData.saveFacultyAndSemester(bogusValues[i], "");
+        }
+      } catch (rejectionMessage) {
+        expect(rejectionMessage).toEqual(
+          expect.arrayContaining([
+            "faculty is not valid",
+            "semester is not valid",
+          ])
+        );
+      }
     }
   });
 
