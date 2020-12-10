@@ -7,6 +7,7 @@ export default class AdminDashboard {
     this.jwt = document.querySelector('[type="hidden"]').value;
     this.sideNavItems = document.querySelectorAll(".sideNav__item");
     this.queryContainers = document.querySelectorAll(".queryContainer__query");
+    this.queryTitle = document.querySelector(".queryContainer__title");
     new UserQuery(this.jwt);
     this.events();
   }
@@ -20,15 +21,18 @@ export default class AdminDashboard {
         switch (target.dataset.action) {
           case "user":
             this.activateTab(target, "user");
+            this.queryTitle.textContent = "User Query";
             new UserQuery(this.jwt);
             break;
           case "contributor":
             this.activateTab(target, "contributor");
+            this.queryTitle.textContent = "Contributor Query";
             new ContributorQuery(this.jwt);
             break;
           case "note":
             this.activateTab(target, "note");
-            new Note(this.jwt);
+            this.queryTitle.textContent = "Create Note";
+            new CreateNote(this.jwt);
             break;
         }
       });
