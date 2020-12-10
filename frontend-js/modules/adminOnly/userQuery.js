@@ -1,10 +1,10 @@
 import axios from "axios";
 
+let eventAttachedToForm = false;
 export default class UserQuery {
   constructor(jwt) {
     this.jwt = jwt;
     this.userQueryForm = document.getElementById("userQueryForm");
-    console.log(userQueryForm);
     this.searchTerm = document.querySelector(
       '.searchUser input[name="searchTerm"]'
     );
@@ -17,10 +17,12 @@ export default class UserQuery {
   //events
 
   events() {
-    this.userQueryForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.sendUserQuery(this.searchTerm.value, this.basedOn.value);
-    });
+    !eventAttachedToForm &&
+      this.userQueryForm.addEventListener("submit", (e) => {
+        eventAttachedToForm = true;
+        e.preventDefault();
+        this.sendUserQuery(this.searchTerm.value, this.basedOn.value);
+      });
   }
 
   //methods
@@ -61,6 +63,7 @@ export default class UserQuery {
   }
 
   clearUserCard() {
+    console.log("clearing...");
     this.resultDataContainer.innerHTML = "";
   }
 

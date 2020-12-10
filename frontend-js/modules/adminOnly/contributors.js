@@ -1,5 +1,7 @@
 import axios from "axios";
 
+let eventAttachedToForm = false;
+
 export default class ContributorQuery {
   constructor(jwt) {
     this.jwt = jwt;
@@ -9,13 +11,15 @@ export default class ContributorQuery {
   }
 
   events() {
-    this.form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      axios
-        .post("/api/admin/contributors", { token: this.jwt })
-        .then((response) => this.populateContributors(response.data))
-        .catch((error) => console.error(error));
-    });
+    !eventAttachedToForm &&
+      this.form.addEventListener("submit", (e) => {
+        eventAttachedToForm = true;
+        e.preventDefault();
+        axios
+          .post("/api/admin/contributors", { token: this.jwt })
+          .then((response) => this.populateContributors(response.data))
+          .catch((error) => console.error(error));
+      });
   }
 
   populateContributors(contributors) {
