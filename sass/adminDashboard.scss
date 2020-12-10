@@ -1,8 +1,3 @@
-.createNote,
-.searchContributor {
-  display: none;
-}
-
 .adminDashboard {
   position: relative;
   min-height: 93vh;
@@ -48,6 +43,14 @@
 
   &__title {
     margin-top: 0;
+  }
+
+  &__query {
+    display: none;
+
+    &--active {
+      display: block;
+    }
   }
 
   form {

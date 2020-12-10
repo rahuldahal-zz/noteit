@@ -17,6 +17,7 @@ const corsOptions = {
       // the !origin allows tools like "postman" to send the request
       callback(null, true); // yes, they are allowed
     } else {
+      console.log("Requested by origin: " + origin);
       callback(new Error("Not allowed by express-CORS"));
     }
   },
@@ -44,21 +45,9 @@ router.put(
 );
 
 router.put(
-  "/admin/contributors/approve",
-  adminController.mustHaveToken,
-  adminController.approveContributor
-);
-
-router.put(
   "/admin/users/disapprove",
   adminController.mustHaveToken,
   adminController.disapproveUser
-);
-
-router.put(
-  "/admin/contributor/disapprove",
-  adminController.mustHaveToken,
-  adminController.disapproveContributor
 );
 
 /**
@@ -95,11 +84,24 @@ router.post(
   contributorsController.isContributorAlreadyRegistered,
   contributorsController.create
 );
+
+router.put(
+  "/admin/contributors/approve",
+  adminController.mustHaveToken,
+  adminController.approveContributor
+);
+
+router.put(
+  "/admin/contributor/disapprove",
+  adminController.mustHaveToken,
+  adminController.disapproveContributor
+);
 router.post(
   "/contributors/submitNote",
   adminController.mustHaveToken,
   contributorsController.createNoteFileAndMail
 );
+
 router.get("/contributors", contributorsController.getAll);
 
 module.exports = router;

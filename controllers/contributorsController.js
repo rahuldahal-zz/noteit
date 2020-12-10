@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
-const Contributors = require("../models/Contributors");
-const Follow = require("../models/Follow");
-const Contributor = require("../models/Contributors");
-const reusable = require("./utils/respond");
+const { Contributor } = require("../models/Contributors");
+const { Follow } = require("../models/Follow");
 const sendGrid = require("@sendgrid/mail");
 const fs = require("fs");
 const path = require("path");
@@ -18,7 +16,7 @@ exports.getAll = (req, res) => {
 };
 
 exports.getOne = (req, res) => {
-  Contributors.getOne(req.params.username)
+  Contributor.getOne(req.params.username)
     .then((response) => {
       response.isVisitorTheRequestedContributor = false;
       if (req.user) {
@@ -208,13 +206,13 @@ exports.remove = (req, res) => {
       );
     return;
   }
-  Contributors.removeOne(req.recentlyRemovedContributor._id)
+  Contributor.removeOne(req.recentlyRemovedContributor._id)
     .then(() => res.send("success"))
     .catch((error) => console.log(error));
 };
 
 exports.editContacts = (req, res) => {
-  Contributors.editContacts(req.body)
+  Contributor.editContacts(req.body)
     .then((editedProfile) => res.status(201).send(editedProfile))
     .catch((error) => res.send(error));
 };

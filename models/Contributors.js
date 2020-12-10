@@ -148,70 +148,9 @@ Contributor.getAll = function () {
       .find({})
       .toArray()
       .then((contributors) => {
-        contributors = contributors.map((contributor) => {
-          contributor = {
-            name: contributor.name,
-            avatar: contributor.avatar,
-            joinedOn: contributor.joinedOn,
-            contacts: contributor.contacts,
-          };
-          return contributor;
-        });
-
         return resolve(contributors);
       })
       .catch((err) => reject(err));
-  });
-};
-
-Contributor.getOne = function (username) {
-  return new Promise((resolve, reject) => {
-    //aggregate operation
-    contributorsCollection
-      .aggregate([
-        { $match: { username: username } },
-        {
-          $lookup: {
-            from: "notes",
-            localField: "userId",
-            foreignField: "contributor",
-            as: "contributions",
-          },
-        },
-        {
-          $project: {
-            userId: 1,
-            username: 1,
-            contacts: 1,
-            recentContribution: 1,
-            contributions: 1,
-          },
-        },
-      ])
-      .toArray()
-      .then((requestedContributor) => {
-        if (requestedContributor.length) {
-          //cleaning up the contributed notes for each contribution of each contributor
-          requestedContributor.forEach((contributor) => {
-            contributor.contributions = contributor.contributions.map(
-              (contribution) => {
-                contribution = {
-                  unitNo: contribution.unitNo,
-                  title: contribution.title,
-                  subject: contribution.subject,
-                  faculty: contribution.faculty,
-                  semester: contribution.semester,
-                  url: contribution.url,
-                  createdDate: contribution.createdDate,
-                };
-                return contribution;
-              }
-            );
-          });
-          resolve(requestedContributor[0]);
-        } else reject(`"${username}" is not a contributor`);
-      })
-      .catch((error) => reject(error));
   });
 };
 

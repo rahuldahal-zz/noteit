@@ -3,14 +3,14 @@
 
 
     <aside class="sideNav">
-        <button class="sideNav__item sideNav__item--active" data-action="userQuery">Users</button>
-        <button class="sideNav__item" data-action="createNote">Notes</button>
-        <button class="sideNav__item" data-action="contributors">Contributors</button>
+        <button class="sideNav__item sideNav__item--active" data-action="user">Users</button>
+        <button class="sideNav__item" data-action="note">Notes</button>
+        <button class="sideNav__item" data-action="contributor">Contributors</button>
     </aside>
 
     <section class="queryContainer">
         <h1 class="queryContainer__title">User Query</h1>
-        <div class="createNote">
+        <div class="queryContainer__query createNote" data-query="note">
             <h1>Create note here</h1>
 
             <form method="POST" id="createNoteForm">
@@ -32,7 +32,7 @@
             </form>
         </div>
 
-        <div class="searchUser">
+        <div class="queryContainer__query queryContainer__query--active searchUser" data-query="user">
             <form method="POST" id="userQueryForm" class="searchUser__form">
                 <input type="text" name="searchTerm" placeholder="username/faculty/semester">
                 <select name="basedOn" id="">
@@ -44,7 +44,7 @@
             </form>
         </div>
 
-        <div class="searchContributor">
+        <div class="queryContainer__query searchContributor" data-query="contributor">
             <form method="POST" action="" id="contributorHandlerForm">
                 <button type="submit">Get Contributors</button>
             </form>

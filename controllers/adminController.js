@@ -39,8 +39,9 @@ exports.login = (req, res) => {
 exports.mustHaveToken = function (req, res, next) {
   try {
     if (req.method === "GET") {
-      console.log(req.headers);
-      const payload = jwt.verify(req.headers.token, process.env.JWTSECRET);
+      const token = req.headers["authorization"].split(" ")[1];
+      console.log(token);
+      const payload = jwt.verify(token, process.env.JWTSECRET);
       console.log(payload);
       return next();
     }

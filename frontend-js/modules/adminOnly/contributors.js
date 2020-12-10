@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export default class ContributorsHandler {
+export default class ContributorQuery {
   constructor(jwt) {
     this.jwt = jwt;
     this.form = document.getElementById("contributorHandlerForm");
-    this.resultContainer = document.querySelector(".result");
+    this.resultContainer = document.querySelector(".result__data");
     this.events();
   }
 
@@ -19,6 +19,7 @@ export default class ContributorsHandler {
   }
 
   populateContributors(contributors) {
+    this.resultContainer.innerHTML = "";
     for (let i = 0; i < contributors.length; i++) {
       let contributorCard = document.createElement("div");
       contributorCard.setAttribute("class", "contributorCard");
