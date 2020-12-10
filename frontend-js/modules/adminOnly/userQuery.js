@@ -9,7 +9,8 @@ export default class UserQuery {
       '.searchUser input[name="searchTerm"]'
     );
     this.basedOn = document.querySelector('.searchUser select[name="basedOn"]');
-    this.resultContainer = document.querySelector(".result__data");
+    this.resultDataContainer = document.querySelector(".result__data");
+    this.resultTitleContainer = document.querySelector(".result__title");
     this.events();
   }
 
@@ -25,6 +26,7 @@ export default class UserQuery {
   //methods
 
   sendUserQuery(searchTermValue, basedOnValue) {
+    this.clearUserCard();
     axios
       .post("/api/admin/users", {
         searchTerm: searchTermValue,
@@ -32,25 +34,37 @@ export default class UserQuery {
         token: this.jwt,
       })
       .then((response) => {
-        this.clearUserCard();
-        if (Object.keys(response.data).length)
+        if (response.status === 200) {
           this.createUserCard(response.data);
-        else
-          this.resultContainer.insertAdjacentHTML(
-            "beforeend",
-            `<h2>No users found</h2>`
-          );
+          this.updateResultTitle(response.data.users.length);
+        } else {
+        }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(({ response }) => {
+        if (response.status === 400) {
+          this.resultDataContainer.insertAdjacentHTML(
+            "beforeend",
+            `<h2>${response.data.error}</h2>`
+          );
+        } else {
+          console.log(response);
+        }
       });
   }
 
-  clearUserCard() {
-    this.resultContainer.innerHTML = "";
+  updateResultTitle(resultCount) {
+    document.querySelector(
+      ".result__searchTerm"
+    ).textContent = this.searchTerm.value;
+    document.querySelector(".result__basedOn").textContent = this.basedOn.value;
+    document.querySelector(".result__count").textContent = resultCount;
   }
 
-  createUserCard(users) {
+  clearUserCard() {
+    this.resultDataContainer.innerHTML = "";
+  }
+
+  createUserCard({ users }) {
     let newUsersArray = [];
     try {
       newUsersArray.push(...users); //if multiple users, "spread" and push
@@ -99,7 +113,7 @@ export default class UserQuery {
                 
                 <p class="user__email">
                   <i class="fas fa-at"></i>
-                  <span>${email}</span> 
+                  <span>${email ? email : "N/A"}</span> 
                 </p>
 
                 <p class="user__joinedOn">
@@ -112,7 +126,9 @@ export default class UserQuery {
 
                 <p class="user__lastLogin">
                   <i class="fas fa-calendar-check"></i>
-                  <span>${lastLogin}</span>
+                  <span>${lastLogin.date}/${lastLogin.month}/${
+        lastLogin.year
+      }</span><em>${lastLogin.timeAgo}</em>
                 </p>
 
                 <hr />
@@ -121,7 +137,7 @@ export default class UserQuery {
             `;
       this.setActions(newUsersArray[i], userCard);
 
-      this.resultContainer.appendChild(userCard);
+      this.resultDataContainer.appendChild(userCard);
     }
     this.actionsHandler();
   }

@@ -71,6 +71,10 @@
 
   &__data {
     display: grid;
+    grid-template-columns: 380px 380px;
+    grid-template-rows: auto;
+    grid-gap: 1rem;
+    align-items: center;
   }
 }
 

@@ -61,12 +61,12 @@ exports.sendUsers = (req, res) => {
 
   Admin.prototype
     .handleSearch(searchTerm, basedOn)
-    .then((user) => {
+    .then((users) => {
       console.log("Sending user query");
-      res.json(user);
+      res.status(200).json({ users });
     })
     .catch((error) => {
-      res.send(error);
+      res.status(400).json({ error });
     });
 };
 

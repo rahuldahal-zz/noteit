@@ -44,6 +44,8 @@ app.use(
         "'self'",
         "https://ka-f.fontawesome.com",
         "https://fonts.gstatic.com",
+        "https://lh3.googleusercontent.com",
+        "https://platform-lookaside.fbsbx.com",
       ],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
       connectSrc: ["'self'", "https://ka-f.fontawesome.com"],

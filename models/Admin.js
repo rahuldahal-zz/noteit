@@ -32,6 +32,39 @@ let setCollection = function (collections) {
   } = collections);
 };
 
+function timeAgo(date) {
+  const milliseconds = new Date() - date;
+  let seconds = parseInt(milliseconds / 1000);
+  let minutes = 0,
+    hours = 0,
+    days = 0;
+
+  if (seconds > 60) {
+    minutes = parseInt(seconds / 60);
+    seconds = parseInt(seconds) % 60;
+  }
+
+  if (minutes > 60) {
+    hours = parseInt(minutes / 60);
+    minutes = parseInt(minutes) % 60;
+  }
+
+  if (hours > 24) {
+    days = parseInt(hours / 60);
+    hours = parseInt(hours) % 24;
+  }
+
+  if (days > 0) {
+    return days + (days === 1 ? " day ago" : " days ago");
+  } else if (hours > 0) {
+    return hours + (hours === 1 ? " hour ago" : " hours ago");
+  } else if (minutes > 0) {
+    return minutes + (minutes === 1 ? " minute ago" : " minutes ago");
+  } else {
+    return seconds + (seconds === 1 ? " second ago" : " seconds ago");
+  }
+}
+
 let Admin = function (data) {
   this.data = data;
   this.errors = [];
@@ -39,8 +72,15 @@ let Admin = function (data) {
 
 Admin.prototype.handleSearch = (searchTerm, basedOn) => {
   return new Promise((resolve, reject) => {
-    if (typeof searchTerm == "string" && typeof basedOn == "string") {
-      if (basedOn === "email") {
+    if (
+      (typeof searchTerm !== "string" && typeof basedOn !== "string") ||
+      !["email", "faculty", "semester"].includes(basedOn)
+    ) {
+      return reject("The parameters provided are invalid");
+    }
+
+    switch (basedOn) {
+      case "email":
         User.prototype
           .findBy({ criteria: "email", value: searchTerm })
           .then((user) => {
@@ -49,11 +89,20 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
               month: user.joinedOn.getMonth(),
               year: user.joinedOn.getFullYear(),
             };
-            resolve(user);
+            user.lastLogin = {
+              date: user.lastLogin.getDate(),
+              month: user.lastLogin.getMonth(),
+              year: user.lastLogin.getFullYear(),
+              timeAgo: timeAgo(user.lastLogin),
+            };
+            return resolve(user);
           })
           .catch((err) => reject(err));
-      } else if (basedOn === "faculty") {
-        User.findByFaculty(searchTerm)
+        break;
+
+      case "faculty":
+        User.prototype
+          .findBy({ criteria: "faculty", value: searchTerm })
           .then((users) => {
             users = users.map((user) => {
               user.joinedOn = {
@@ -61,14 +110,45 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
                 month: user.joinedOn.getMonth(),
                 year: user.joinedOn.getFullYear(),
               };
+              user.lastLogin = {
+                date: user.lastLogin.getDate(),
+                month: user.lastLogin.getMonth(),
+                year: user.lastLogin.getFullYear(),
+                timeAgo: timeAgo(user.lastLogin),
+              };
               return user;
             });
-            resolve(users);
+            return resolve(users);
           })
-          .catch((error) => reject(error));
-      }
-    } else {
-      reject("the value is not of type 'string'");
+          .catch((err) => {
+            console.log(err);
+            return reject(err);
+          });
+
+      case "semester":
+        User.prototype
+          .findBy({ criteria: "semester", value: searchTerm })
+          .then((users) => {
+            users = users.map((user) => {
+              user.joinedOn = {
+                date: user.joinedOn.getDate(),
+                month: user.joinedOn.getMonth(),
+                year: user.joinedOn.getFullYear(),
+              };
+              user.lastLogin = {
+                date: user.lastLogin.getDate(),
+                month: user.lastLogin.getMonth(),
+                year: user.lastLogin.getFullYear(),
+                timeAgo: timeAgo(user.lastLogin),
+              };
+              return user;
+            });
+            return resolve(users);
+          })
+          .catch((err) => {
+            console.log(err);
+            return reject(err);
+          });
     }
   });
 };

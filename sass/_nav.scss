@@ -41,6 +41,11 @@
     }
   }
 
+  &__userActions {
+    display: flex;
+    gap: 1rem;
+  }
+
   &__links {
     background-color: var(--primaryTextColor);
 
