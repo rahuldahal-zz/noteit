@@ -1,4 +1,4 @@
-const { currentTask } = require("../../getCurrentTask");
+const { currentTask } = require("../../../getCurrentTask");
 
 module.exports = async function (collectionNames) {
   if (["test", "test-watch"].includes(currentTask)) {
