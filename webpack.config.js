@@ -16,12 +16,25 @@ let babelConfig = {
   use: "babel-loader",
 };
 
+let svgLoader = {
+  test: /\.svg$/i,
+  use: "@svgr/webpack",
+};
+
 let config = {
   entry: "./frontend/App.js",
   module: {
-    rules: [babelConfig, cssConfig],
+    rules: [svgLoader, babelConfig, cssConfig],
   },
   plugins: [],
+  resolve: {
+    alias: {
+      "@svgs": path.resolve(__dirname, "./frontend/assets/svgs"),
+      "@utils": path.resolve(__dirname, "./frontend/utils"),
+      "@components": path.resolve(__dirname, "./frontend/Components"),
+      "@screens": path.resolve(__dirname, "./frontend/Screens"),
+    },
+  },
 };
 
 //separate for "development"

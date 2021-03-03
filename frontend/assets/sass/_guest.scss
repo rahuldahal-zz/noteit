@@ -33,9 +33,17 @@
     );
 
     @include widerThan768 {
-      background: url(/images/svgs/noteit_hero_details.svg) no-repeat;
-      filter: blur(5px);
+      background: transparent;
+      visibility: hidden;
     }
+  }
+
+  &__illustration {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(5px);
   }
 
   &__content {
@@ -155,12 +163,17 @@
   padding-bottom: 10vh;
   width: 100%;
   color: #eee;
-  overflow-x: hidden;
-  background: url("/images/svgs/wave.svg") no-repeat;
-  background-size: cover;
+  overflow: hidden;
 
   @include widerThan768 {
     margin-top: -10vh;
+  }
+
+  &__wave {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    width: 100%;
   }
 
   &__detailsWrap {

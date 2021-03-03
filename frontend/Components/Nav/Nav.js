@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import getIconPaths from "../../utils/iconDetails";
+import getIconPaths from "@utils/iconDetails";
 import TextWithIcon from "../TextWithIcon";
 import Links from "./Links";
 

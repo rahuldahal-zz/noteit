@@ -30,6 +30,11 @@
   padding: 10vh 0 0 0;
 }
 
+p {
+  line-height: calc(1.5em + 0.2vw); // ref. smashing magazine
+  margin: calc(1em + 0.5vw) 0;
+}
+
 main,
 section {
   padding: 0.5rem;
