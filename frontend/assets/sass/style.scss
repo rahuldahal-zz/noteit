@@ -25,7 +25,7 @@
   scroll-behavior: smooth;
 }
 
-#container {
+#root {
   margin: auto;
   padding: 10vh 0 0 0;
 }
@@ -40,6 +40,26 @@ section {
 
   @include widerThan1200 {
     padding: 2rem;
+  }
+}
+
+.textWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+
+  svg {
+    margin-right: 0.5em;
+  }
+
+  &--iconRight {
+    flex-direction: row-reverse;
+
+    svg {
+      margin-right: 0;
+      margin-left: 0.5em;
+    }
   }
 }
 

@@ -47,6 +47,7 @@
     "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "sanitize-html": "^1.20.1",
     "socket.io": "^2.2.0",
     "validator": "^11.1.0"

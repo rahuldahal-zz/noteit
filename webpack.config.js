@@ -32,7 +32,6 @@ if (currentTask === "dev" || currentTask === "frontend") {
   config.devServer = {
     port: 5000,
     contentBase: path.resolve(__dirname, "/frontend/public"),
-    writeToDisk: true,
   };
   config.plugins.push(
     new HtmlWebPackPlugin({
