@@ -41,6 +41,12 @@
     }
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &__userActions {
     display: flex;
     gap: 1rem;
@@ -56,7 +62,11 @@
   }
 
   &__link {
-    justify-content: space-around;
+    a {
+      text-decoration: none;
+      color: #f4f4f4;
+    }
+
     &:nth-child(odd) {
       background-color: var(--primaryTextColor--dark);
 
@@ -75,6 +85,7 @@
 
   &__hamBurger {
     background-color: var(--primaryBgColor);
+    margin-left: 1rem;
 
     @include widerThan1200 {
       display: none;
