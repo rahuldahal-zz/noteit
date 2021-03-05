@@ -1,4 +1,5 @@
 const ObjectID = require("mongodb").ObjectID;
+let contributorsCollection;
 
 require("./utils/dbCollectionInit")(["contributors"])
   .then((collections) => {
