@@ -10,53 +10,39 @@ let cssConfig = {
   use: ["css-loader?url=false", "sass-loader"],
 };
 
-const createCSSFile = new HtmlWebPackPlugin({
-  inject: false,
-  filename: path.resolve(__dirname, "views/includes/styles.ejs"),
-  template: './views/includes/styles.template.ejs',
-})
-
-const createJSFile = new HtmlWebPackPlugin({
-  inject: false,
-  filename: path.resolve(__dirname, "views/includes/scripts.ejs"),
-  template: './views/includes/scripts.template.ejs',
-})
+let babelConfig = {
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: "babel-loader",
+};
 
 let config = {
-  entry: "./frontend-js/main.js",
+  entry: "./frontend/App.js",
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
-      },
-      cssConfig,
-    ],
+    rules: [babelConfig, cssConfig],
   },
-  plugins: [
-    createCSSFile,
-    createJSFile
-  ]
-  // node: {
-  //   __dirname: false,
-  // },
+  plugins: [],
 };
 
 //separate for "development"
-if (currentTask === "dev") {
+if (currentTask === "dev" || currentTask === "frontend") {
   cssConfig.use.unshift("style-loader");
   config.mode = "development";
   config.devtool = "inline-source-map";
+  config.devServer = {
+    port: 5000,
+    contentBase: path.resolve(__dirname, "/frontend/public"),
+    writeToDisk: true,
+  };
+  config.plugins.push(
+    new HtmlWebPackPlugin({
+      filename: "index.html",
+      template: "./frontend/index.ejs",
+    })
+  );
   config.output = {
     filename: "main-bundled.js",
-    path: path.resolve(__dirname, "public/js"),
-    publicPath: "/js"
+    path: path.resolve(__dirname, "./frontend/public"),
   };
 }
 
@@ -65,19 +51,23 @@ if (currentTask === "build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
-    filename: "[name]-[chunkhash].js",
-    chunkFilename: "[name]-[chunkhash].js",
-    path: path.resolve(__dirname, "public/js"),
-    publicPath: "/js"
+    filename: "[name].js",
+    chunkFilename: "[name].js",
+    path: path.resolve(__dirname, "./frontend/public"),
+    publicPath: "/public",
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts (vendor = editor.js)
   config.plugins.push(
+    new HtmlWebPackPlugin({
+      filename: "index.html",
+      template: "./frontend/index.ejs",
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles-[chunkhash].css",
-    }),
+      filename: "styles.css",
+    })
   );
 }
 

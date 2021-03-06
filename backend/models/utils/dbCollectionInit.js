@@ -1,4 +1,5 @@
-const { currentTask } = require("../../getCurrentTask");
+const { currentTask } = require("../../../getCurrentTask");
+require("regenerator-runtime/runtime");
 
 module.exports = async function (collectionNames) {
   if (["test", "test-watch"].includes(currentTask)) {

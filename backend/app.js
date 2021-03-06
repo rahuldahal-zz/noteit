@@ -16,26 +16,7 @@ const currentTask = process.env.npm_lifecycle_event;
 // while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
 app.use(express.static("public"));
 app.set("views", "views");
-app.set("view engine", "ejs");
-
-if (currentTask === "dev") {
-  // webpack-dev-middleware setup(bundle in memory)
-  const webpack = require("webpack");
-  const webpackConfigFile = require("./webpack.config");
-  const webpackDevMiddleware = require("webpack-dev-middleware");
-  const compiler = webpack(webpackConfigFile);
-
-  app.use(
-    webpackDevMiddleware(compiler, {
-      publicPath: webpackConfigFile.output.publicPath,
-      writeToDisk: (filePath) => {
-        return /\.ejs$/.test(filePath);
-      },
-    })
-  );
-} else {
-  app.use(helmet());
-}
+app.use(helmet());
 
 app.use(
   contentSecurityPolicy({
@@ -74,7 +55,7 @@ let sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
-  store: new MongoStore({ client: require("./db")(true) }),
+  store: new MongoStore({ client: require("../db")(true) }),
 };
 
 app.use(session(sessionOptions));

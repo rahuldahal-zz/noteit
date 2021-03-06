@@ -4,8 +4,9 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "dev": "concurrently \"mongod\" \"nodemon init --ignore frontend-js --ignore public/ --ignore node_modules/\"",
-    "dev-backend": "concurrently \"mongod\" \"nodemon init --ignore frontend-js --ignore public/ --ignore node_modules/\"",
+    "backend": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
+    "frontend": "webpack-dev-server",
+    "dev": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
     "build": "webpack",
     "check-build": "concurrently \"webpack\" \"node init\"",
     "test": "jest --runInBand",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.12.13",
     "@sendgrid/mail": "^6.5.5",
     "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
@@ -43,6 +45,8 @@
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "sanitize-html": "^1.20.1",
     "socket.io": "^2.2.0",
     "validator": "^11.1.0"
@@ -55,12 +59,14 @@
     "jest": "^26.1.0",
     "mini-css-extract-plugin": "^0.11.0",
     "node-fetch": "^2.6.1",
+    "regenerator-runtime": "^0.13.7",
     "sass-loader": "^10.0.1",
     "style-loader": "^1.2.1",
     "supertest": "^6.0.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-middleware": "^3.7.2"
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
   "jest": {
     "testEnvironment": "node",
