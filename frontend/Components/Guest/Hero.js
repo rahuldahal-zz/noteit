@@ -4,7 +4,7 @@ import isScreenLargerThan from "@utils/screenSize";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 
-export default function Hero() {
+export default function Hero({ setShowLoginOptions }) {
   const [isScreenWide, setIsScreenWide] = useState(false);
 
   useEffect(() => {
@@ -34,9 +34,7 @@ export default function Hero() {
           <button
             type="button"
             className="hero__cta btn btn--accent btn--large"
-            data-trigger-type="add"
-            data-trigger-target="loginOptions"
-            data-trigger-action="loginOptions--visible"
+            onClick={() => setShowLoginOptions(true)}
           >
             <TextWithIcon
               textContent="Let's NoteIT"

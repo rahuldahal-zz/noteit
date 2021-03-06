@@ -45,6 +45,15 @@ if (currentTask === "dev" || currentTask === "frontend") {
   config.devServer = {
     port: 5000,
     contentBase: path.resolve(__dirname, "/frontend/public"),
+    hot: true,
+    proxy: {
+      "/api": "http://127.0.0.1:3000",
+      "/auth": "http://127.0.0.1:3000",
+      "/users": "http://127.0.0.1:3000",
+      "/notes": "http://127.0.0.1:3000",
+      "/contributors": "http://127.0.0.1:3000",
+      "/admin": "http://127.0.0.1:3000",
+    },
   };
   config.plugins.push(
     new HtmlWebPackPlugin({
