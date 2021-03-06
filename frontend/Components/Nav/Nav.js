@@ -3,26 +3,9 @@ import { Link } from "react-router-dom";
 import getIconPaths from "@utils/iconDetails";
 import TextWithIcon from "../TextWithIcon";
 import Links from "./Links";
+import linksData from "./utils/linksData";
 
 export default function Nav() {
-  const links = [
-    {
-      label: "About",
-      to: "/about",
-      iconData: getIconPaths("info"),
-    },
-    {
-      label: "Colleges",
-      to: "/colleges",
-      iconData: getIconPaths("library"),
-    },
-    {
-      label: "Team",
-      to: "/team",
-      iconData: getIconPaths("users"),
-    },
-  ];
-
   return (
     <nav className="nav">
       <div className="nav__wrap flex">
@@ -33,7 +16,7 @@ export default function Nav() {
         </h2>
 
         <div className="nav__items">
-          <Links links={links} />
+          <Links links={linksData} />
           <div className="nav__actions">
             <button
               type="button"
