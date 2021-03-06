@@ -1,3 +1,5 @@
+@use "../utils/media";
+
 .guestScreen {
   padding: 0;
 }
@@ -10,12 +12,12 @@
   min-width: 100%;
   overflow: hidden;
 
-  @include widerThan768 {
+  @include media.widerThan768 {
     overflow: unset;
     max-height: 90vh;
   }
 
-  @include widerThan1600 {
+  @include media.widerThan1600 {
     max-height: 70vh;
   }
 
@@ -32,7 +34,7 @@
       rgba(var(--brandRGB), 0)
     );
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       background: transparent;
       visibility: hidden;
     }
@@ -47,7 +49,7 @@
   }
 
   &__content {
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       align-items: flex-end;
       margin: auto;
     }
@@ -61,7 +63,7 @@
     border-radius: 0.5rem;
     transition: transform 0.3s ease-in-out;
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       position: relative;
       z-index: 5;
       top: unset;
@@ -81,7 +83,7 @@
       bottom: 0;
       border-radius: 0.5rem;
 
-      @include widerThan768 {
+      @include media.widerThan768 {
         box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
       }
     }
@@ -104,7 +106,7 @@
     border-radius: 0.5rem;
     filter: blur(2px);
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       filter: blur(0px);
     }
   }
@@ -120,11 +122,11 @@
     padding: 0.5em;
     max-width: 90%;
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       background-color: transparent;
       box-shadow: none;
       padding: 0;
-      color: var(--primaryTextColor);
+      color: var(--black);
       max-width: 650px;
     }
   }
@@ -136,7 +138,7 @@
   &__subTagLine {
     font-size: 1.2rem;
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       font-size: 1.5rem;
       max-width: 70%;
     }
@@ -165,7 +167,7 @@
   color: #eee;
   overflow: hidden;
 
-  @include widerThan768 {
+  @include media.widerThan768 {
     margin-top: -10vh;
   }
 
@@ -177,7 +179,7 @@
   }
 
   &__detailsWrap {
-    @include widerThan768 {
+    @include media.widerThan768 {
       margin-top: 10vh;
     }
   }
@@ -209,7 +211,7 @@
       padding: 0.5rem 0.8rem;
       border-radius: 0.5rem;
       background-color: var(--accentColor);
-      color: var(--primaryTextColor);
+      color: var(--black);
     }
   }
 }

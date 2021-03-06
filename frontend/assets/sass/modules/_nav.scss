@@ -1,13 +1,15 @@
+@use "../utils/media";
+
 .nav {
   background-color: var(--brandColor);
-  color: #eee;
+  color: var(--white);
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
   height: 10vh;
   min-height: 3.125rem;
   padding: 0;
 
   &__home {
-    color: var(--primaryBgColor);
+    color: var(--white);
     text-decoration: none;
   }
 
@@ -19,11 +21,11 @@
     align-items: center;
     padding: 0.5rem;
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       padding: 1rem;
     }
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       padding: 2rem;
     }
   }
@@ -36,7 +38,7 @@
     width: 20vw;
     min-width: 150px;
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       width: 40vw;
     }
   }
@@ -53,9 +55,9 @@
   }
 
   &__links {
-    background-color: var(--primaryTextColor);
+    background-color: var(--black);
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       background-color: transparent;
       box-shadow: none;
     }
@@ -68,32 +70,32 @@
     }
 
     &:nth-child(odd) {
-      background-color: var(--primaryTextColor--dark);
+      background-color: var(--black--dark);
 
-      @include widerThan1200 {
+      @include media.widerThan1200 {
         background-color: transparent;
       }
     }
     &:nth-child(even) {
-      background-color: var(--primaryTextColor--light);
+      background-color: var(--black--light);
 
-      @include widerThan1200 {
+      @include media.widerThan1200 {
         background-color: transparent;
       }
     }
   }
 
   &__hamBurger {
-    background-color: var(--primaryBgColor);
+    background-color: var(--white);
     margin-left: 1rem;
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       display: none;
     }
 
     &::before,
     &::after {
-      background-color: var(--primaryBgColor);
+      background-color: var(--white);
     }
     &::after {
       width: 1.5rem;
@@ -130,8 +132,8 @@
     height: 30vh;
 
     .btn {
-      background-color: var(--primaryBgColor);
-      color: var(--primaryTextColor);
+      background-color: var(--white);
+      color: var(--black);
       text-align: center;
       margin-left: 0;
       font-size: 1.2rem;

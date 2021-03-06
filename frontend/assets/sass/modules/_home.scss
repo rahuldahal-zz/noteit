@@ -28,7 +28,7 @@
 }
 
 .savedNote a {
-  color: var(--primaryTextColor);
+  color: var(--black);
   margin-left: 1rem;
 }
 
@@ -45,11 +45,11 @@
     left: -35%;
     width: 1000px;
     height: 100%;
-    background-color: var(--primaryTextColor);
+    background-color: var(--black);
     box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.4);
     transform: skewX(-20deg);
 
-    @include widerThan768 {
+    @include media.widerThan768 {
       left: -25%;
     }
   }
@@ -67,7 +67,7 @@
   &__thankingIllustration {
     position: relative;
 
-    @include widerThan1200 {
+    @include media.widerThan1200 {
       width: 40%;
     }
   }
