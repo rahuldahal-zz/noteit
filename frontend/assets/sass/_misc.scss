@@ -51,14 +51,12 @@ p {
 
 //triggers
 
-.triggerTarget {
-  .close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: #eee;
-    color: #333;
-  }
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #eee;
+  color: #333;
 }
 
 .visible {

@@ -6,7 +6,7 @@
   "scripts": {
     "backend": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
     "frontend": "webpack-dev-server",
-    "dev": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
+    "dev": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\" \"webpack-dev-server\"",
     "build": "webpack",
     "check-build": "concurrently \"webpack\" \"node init\"",
     "test": "jest --runInBand",
