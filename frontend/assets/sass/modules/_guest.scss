@@ -215,3 +215,59 @@
     }
   }
 }
+
+.loginOptions {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 18;
+  min-width: 100%;
+  height: 100vh;
+  background-color: rgba($color: #fff, $alpha: 0.8);
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--brandTransparent);
+  }
+
+  &__buttons {
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: auto;
+    width: 60vw;
+    height: 30vh;
+
+    .btn {
+      text-align: center;
+      color: var(--white);
+      text-align: center;
+      margin-left: 0;
+      font-size: 1.2rem;
+      padding: 1.2rem;
+      min-width: 100%;
+
+      span {
+        margin: auto;
+      }
+
+      svg {
+        transform: scale(1.5);
+        margin-left: 1.5rem;
+      }
+    }
+
+    .btn:first-child {
+      background: #3b5998;
+    }
+    .btn:last-child {
+      background: #dd4b39;
+    }
+  }
+}
