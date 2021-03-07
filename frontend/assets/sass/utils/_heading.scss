@@ -1,0 +1,25 @@
+.heading {
+  position: relative;
+  margin: 2rem 0;
+  width: max-content;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    width: 40%;
+    height: 0.5rem;
+    background-color: var(--brandColor);
+    border-radius: 0.5rem;
+  }
+
+  &--white {
+    color: #f4f4f4;
+
+    &::before {
+      background-color: #f4f4f4;
+    }
+  }
+}

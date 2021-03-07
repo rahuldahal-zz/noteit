@@ -27,7 +27,7 @@
 
     &--active {
       background-color: #f4f4f4;
-      color: var(--primaryTextColor);
+      color: var(--black);
     }
   }
 }
@@ -39,7 +39,7 @@
   padding: 7vh 1rem;
   width: 365px;
   height: 90vh;
-  background-color: var(--primaryTextColor);
+  background-color: var(--black);
   color: #f4f4f4;
   overflow-y: scroll;
 
@@ -85,7 +85,7 @@
 
 .user {
   padding: 1rem;
-  background-color: var(--primaryTextColor);
+  background-color: var(--black);
   color: #f4f4f4;
   width: 380px;
   height: 400px;

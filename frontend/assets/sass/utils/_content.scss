@@ -1,0 +1,26 @@
+@use "media";
+
+main,
+section {
+  padding: 0.5rem;
+
+  @include media.widerThan768 {
+    padding: 1rem;
+  }
+
+  @include media.widerThan1200 {
+    padding: 2rem;
+  }
+}
+
+.maximumWidth {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.content {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+}

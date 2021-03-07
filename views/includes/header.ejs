@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoteIT</title>
   <%-include("styles")%>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&display=swap"
-    rel="stylesheet">
-  <script defer src="https://kit.fontawesome.com/2628210dc1.js" crossorigin="anonymous"
-    data-auto-add-css="false"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500&display=swap"
+      rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/2628210dc1.js" crossorigin="anonymous"
+      data-auto-add-css="false"></script>
 </head>
 
 <body>
@@ -20,71 +20,60 @@
       <div class="nav__wrap flex">
         <%if(user){%>
 
-        <h2>
-          <a href="/" class="nav__home"><%=user.firstName%></a>
-        </h2>
+          <h2>
+            <a href="/" class="nav__home">
+              <%=user.firstName%>
+            </a>
+          </h2>
 
-        <div class="nav__items">
-          <div class="nav__userActions">
-            <%if(user.isApproved && !["readyToGo", "admin/dashboard"].includes(toRender)){%>
-            <button type="button" id="searchNoteBtn" class="btn">Search Note</button>
-            <%}%> 
-    
-        <%if(user.roles.includes("contributor")){%>
-            <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
-            <%}%>
-    
-        <form action="/auth/logout" method="GET" id="logoutForm" class="">
-          <button type="submit" class="btn btn--outline">Logout
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
-        </form>
-    </div>
-  </div>
+          <div class="nav__items">
+            <div class="nav__userActions">
+              <%if(user.isApproved && !["readyToGo", "admin/dashboard" ].includes(toRender)){%>
+                <button type="button" id="searchNoteBtn" class="btn">Search Note</button>
+                <%}%>
 
-  <div class="nav__hamBurger" tabindex="0"></div>
+                  <%if(user.roles.includes("contributor")){%>
+                    <a href="/contributors/<%=user.username%>" class="btn">ContributorScreen</a>
+                    <%}%>
 
-  <%} else {%>
+                      <form action="/auth/logout" method="GET" id="logoutForm" class="">
+                        <button type="submit" class="btn btn--outline">Logout
+                          <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                      </form>
+            </div>
+          </div>
+
+          <div class="nav__hamBurger" tabindex="0"></div>
+
+          <%} else {%>
             <h2>
               <a href="/" class="nav__home">NoteIT</a>
             </h2>
 
 
             <%if(!toRender.includes("readyToGo")){%>
-            <div class="nav__items">
+              <div class="nav__items">
 
-              <ul class="nav__links">
-                <li class="nav__link">About <i class="fas fa-info-circle link__icon"></i></li>
-                <li class="nav__link">Colleges <i class="fas fa-university link__icon"></i></li>
-                <li class="nav__link">Team <i class="fas fa-users link__icon"></i></li>
-              </ul>
+                <ul class="nav__links">
+                  <li class="nav__link">About <i class="fas fa-info-circle link__icon"></i></li>
+                  <li class="nav__link">Colleges <i class="fas fa-university link__icon"></i></li>
+                  <li class="nav__link">Team <i class="fas fa-users link__icon"></i></li>
+                </ul>
 
-              <button type="button" class="btn btn--accent" data-trigger-type="add" data-trigger-target="loginOptions"
-                data-trigger-action="loginOptions--visible">
-                Login
-                <i class="fas fa-sign-in-alt btn__icon"></i>
-              </button>
-
-
-              <div class="nav__hamBurger" tabindex="0"></div>
-            </div>
+                <button type="button" class="btn btn--accent" data-trigger-type="add" data-trigger-target="loginOptions"
+                  data-trigger-action="loginOptions--visible">
+                  Login
+                  <i class="fas fa-sign-in-alt btn__icon"></i>
+                </button>
 
 
-            <%}%>
-
-  <%}%>
-          </div>
-    </nav>
+                <div class="nav__hamBurger" tabindex="0"></div>
+              </div>
 
 
-    <div id="loginOptions" class="loginOptions flex triggerTarget" aria-hidden="true">
-      <div class="flex loginOptions__buttons">
-        <a href="/auth/facebook" class="btn link">Facebook<i class="fab fa-facebook-square link__icon"></i></a>
-        <a href="/auth/google" class="btn link">Google<i class="fab fa-google-plus-square link__icon"></i></a>
+              <%}%>
+
+                <%}%>
       </div>
-
-      <button class="close" data-trigger-type="remove" data-trigger-target="loginOptions"
-        data-trigger-action="loginOptions--visible">
-        Close
-      </button>
-    </div>
+    </nav>

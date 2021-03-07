@@ -1,0 +1,19 @@
+.textWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+
+  svg {
+    margin-right: 0.5em;
+  }
+
+  &--iconRight {
+    flex-direction: row-reverse;
+
+    svg {
+      margin-right: 0;
+      margin-left: 0.5em;
+    }
+  }
+}

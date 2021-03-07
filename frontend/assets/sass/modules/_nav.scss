@@ -1,0 +1,104 @@
+@use "../utils/media";
+
+.nav {
+  background-color: var(--brandColor);
+  color: var(--white);
+  box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
+  height: 10vh;
+  min-height: 3.125rem;
+  padding: 0;
+
+  &__home {
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  &__wrap {
+    max-width: 1600px;
+    margin: 0 auto;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+
+    @include media.widerThan768 {
+      padding: 1rem;
+    }
+
+    @include media.widerThan1200 {
+      padding: 2rem;
+    }
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: flex-end;
+    width: 20vw;
+    min-width: 150px;
+
+    @include media.widerThan1200 {
+      width: 40vw;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__userActions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__links {
+    background-color: var(--black);
+
+    @include media.widerThan1200 {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  &__link {
+    a {
+      text-decoration: none;
+      color: #f4f4f4;
+    }
+
+    &:nth-child(odd) {
+      background-color: var(--black--dark);
+
+      @include media.widerThan1200 {
+        background-color: transparent;
+      }
+    }
+    &:nth-child(even) {
+      background-color: var(--black--light);
+
+      @include media.widerThan1200 {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &__hamBurger {
+    background-color: var(--white);
+    margin-left: 1rem;
+
+    @include media.widerThan1200 {
+      display: none;
+    }
+
+    &::before,
+    &::after {
+      background-color: var(--white);
+    }
+    &::after {
+      width: 1.5rem;
+    }
+  }
+}

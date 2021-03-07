@@ -1,0 +1,55 @@
+button,
+[type="submit"] {
+  background-color: var(--accentColor);
+  color: var(--black);
+}
+
+.btn {
+  position: relative;
+  text-decoration: none;
+  transform-origin: left;
+  transition-timing-function: linear;
+
+  &--secondary {
+    background-color: #333 !important;
+    color: var(--white);
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+  }
+
+  &--large {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+  }
+
+  &--accent {
+    background-color: var(--accentColor) !important;
+    color: var(--black) !important;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    transform-origin: bottom;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
