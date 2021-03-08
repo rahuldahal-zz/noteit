@@ -4,6 +4,7 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 let cssConfig = {
   test: /\.(sa|sc|c)ss$/i,
@@ -26,7 +27,7 @@ let config = {
   module: {
     rules: [svgLoader, babelConfig, cssConfig],
   },
-  plugins: [],
+  plugins: [new Dotenv()],
   resolve: {
     alias: {
       "@svgs": path.resolve(__dirname, "./frontend/assets/svgs"),

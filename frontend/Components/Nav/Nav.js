@@ -1,11 +1,13 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
-import getIconPaths from "@utils/iconDetails";
-import TextWithIcon from "../TextWithIcon";
 import Links from "./Links";
 import linksData from "./utils/linksData";
+import LoginButton from "@components/Buttons/LoginButton";
+import LogoutButton from "@components/Buttons/LogoutButton";
 
 export default function Nav() {
+  const { isAuthenticated } = useAuth0();
   return (
     <nav className="nav">
       <div className="nav__wrap flex">
@@ -18,22 +20,7 @@ export default function Nav() {
         <div className="nav__items">
           <Links links={linksData} />
           <div className="nav__actions">
-            <button
-              type="button"
-              className="btn btn--accent"
-              data-trigger-type="add"
-              data-trigger-target="loginOptions"
-              data-trigger-action="loginOptions--visible"
-            >
-              <TextWithIcon
-                textContent="Login"
-                pathData={getIconPaths("login")}
-                viewBox="0 0 24 24"
-                fill="none"
-                strokeWidth="2"
-                iconWidth="1.5rem"
-              />
-            </button>
+            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
             <div className="nav__hamBurger" tabIndex="0"></div>
           </div>
         </div>
