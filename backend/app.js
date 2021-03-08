@@ -10,6 +10,7 @@ const csrf = require("csurf");
 const helmet = require("helmet");
 const contentSecurityPolicy = require("helmet-csp");
 const app = express();
+const path = require("path");
 
 const currentTask = process.env.npm_lifecycle_event;
 
@@ -21,9 +22,6 @@ const currentTask = process.env.npm_lifecycle_event;
 //   app.use(cors(corsOptions));
 // }
 
-// while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
-app.use(express.static("public"));
-app.set("views", "views");
 app.use(helmet());
 
 app.use(
@@ -105,6 +103,14 @@ const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
+
+// server static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../build/index.html"));
+  });
+}
 
 //using the routers
 app.use("/", rootRouter);

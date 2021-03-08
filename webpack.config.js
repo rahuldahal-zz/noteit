@@ -4,6 +4,7 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ClosurePlugin = require("closure-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 let cssConfig = {
@@ -45,7 +46,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
   config.devtool = "inline-source-map";
   config.devServer = {
     port: 5000,
-    contentBase: path.resolve(__dirname, "/frontend/public"),
+    contentBase: path.resolve(__dirname, "/build"),
     hot: true,
     proxy: {
       "/api": "http://127.0.0.1:3000",
@@ -64,7 +65,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
   );
   config.output = {
     filename: "main-bundled.js",
-    path: path.resolve(__dirname, "./frontend/public"),
+    path: path.resolve(__dirname, "./build"),
   };
 }
 
@@ -73,14 +74,14 @@ if (currentTask === "build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
-    filename: "[name].js",
-    chunkFilename: "[name].js",
-    path: path.resolve(__dirname, "./frontend/public"),
-    publicPath: "/public",
+    filename: "./static/[name].js",
+    chunkFilename: "./static/[name].js",
+    path: path.resolve(__dirname, "./build"),
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
-  }; //separates vendors and custom scripts (vendor = editor.js)
+    minimizer: [new ClosurePlugin({ mode: "STANDARD" })],
+  };
   config.plugins.push(
     new HtmlWebPackPlugin({
       filename: "index.html",
@@ -88,7 +89,7 @@ if (currentTask === "build") {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.css",
+      filename: "./static/styles.css",
     })
   );
 }
