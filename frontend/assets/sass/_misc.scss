@@ -1,0 +1,69 @@
+@use "utils/media";
+
+:root {
+  --brandColor: #0970c8;
+  --brandRGB: 39, 129, 207;
+  --accentColor: #f2e419;
+  --brandTransparent: rgba(39, 129, 207, 0.6);
+  --brandLight: #3082c8;
+  --white: #efefef;
+  --black--light: #031524;
+  --black: #000b14;
+  --black--dark: #02060a;
+  --bodyFont: "open sans";
+  --headingFont: "roboto";
+  font-size: 0.9375rem;
+
+  @include media.widerThan768 {
+    font-size: 1rem;
+  }
+  scroll-behavior: smooth;
+}
+
+#app {
+  margin: auto;
+  padding: 10vh 0 0 0;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--white);
+}
+
+p {
+  line-height: calc(1.5em + 0.2vw); // ref. smashing magazine
+  margin: calc(1em + 0.5vw) 0;
+}
+
+.font-3x {
+  font-size: 3rem;
+}
+
+.brandText {
+  color: var(--brandColor);
+}
+
+//modifier
+
+.loginOptions--visible {
+  visibility: visible !important;
+}
+
+//triggers
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #eee;
+  color: #333;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.form,
+fieldset {
+  padding-left: 0;
+}

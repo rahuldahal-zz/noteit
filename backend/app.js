@@ -10,12 +10,18 @@ const csrf = require("csurf");
 const helmet = require("helmet");
 const contentSecurityPolicy = require("helmet-csp");
 const app = express();
+const path = require("path");
 
 const currentTask = process.env.npm_lifecycle_event;
 
-// while using helmet.js, webpack-dev-middleware does not seem to work("eval" thing error...). Therefore, using the following condition.
-app.use(express.static("public"));
-app.set("views", "views");
+// // accept request from dev server
+// if (currentTask === "dev") {
+//   const cors = require("cors");
+//   const corsOptions = require("./routers/utils/corsConfig");
+
+//   app.use(cors(corsOptions));
+// }
+
 app.use(helmet());
 
 app.use(
@@ -55,7 +61,7 @@ let sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
-  store: new MongoStore({ client: require("../db")(true) }),
+  store: new MongoStore({ client: require("./db")(true) }),
 };
 
 app.use(session(sessionOptions));
@@ -66,14 +72,6 @@ app.use(initializeFlashHelper);
 // initialize passport in our app, important
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use((req, res, next) => {
-  res.renderTemplate = function (template, data = null) {
-    console.log(`renders ${template}`);
-    return res.render("index", { toRender: template, data });
-  };
-  return next();
-});
 
 // this middle-ware sets the requested user object as a property to "locals" object, so that the templates can use
 app.use((req, res, next) => {
@@ -105,6 +103,14 @@ const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
+
+// server static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../build/index.html"));
+  });
+}
 
 //using the routers
 app.use("/", rootRouter);
