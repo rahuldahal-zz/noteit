@@ -2,13 +2,18 @@ const { User } = require("../models/User");
 const { sendFlashMessage } = require("./utils/respond");
 
 exports.root = (req, res) => {
-  if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
+  // if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
+  if (!req.user) return res.json({ message: "No user, render guest screen" });
 
   if (!req.user.faculty || !req.user.semester) {
-    return res.renderTemplate("index", { toRender: "saveFacultyAndSemester" });
+    // return res.renderTemplate("index", { toRender: "saveFacultyAndSemester" });
+    return res.json({
+      message: "No faculty and sem, render saveFacultyAndSem",
+    });
   }
 
-  return res.redirect(303, "/home");
+  // return res.redirect(303, "/home");
+  return res.json({ message: "user is present, render home screen" });
 };
 
 exports.saveFacultyAndSemester = (req, res, next) => {
