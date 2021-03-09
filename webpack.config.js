@@ -1,5 +1,6 @@
 const currentTask = process.env.npm_lifecycle_event;
 
+const webpack = require("webpack");
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -80,9 +81,12 @@ if (currentTask === "build") {
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
-    minimizer: [new ClosurePlugin({ mode: "STANDARD" })],
   };
   config.plugins.push(
+    new webpack.EnvironmentPlugin({
+      AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+      AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    }),
     new HtmlWebPackPlugin({
       filename: "index.html",
       template: "./frontend/index.ejs",

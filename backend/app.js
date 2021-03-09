@@ -30,12 +30,13 @@ app.use(
       defaultSrc: [
         "'self'",
         "https://ka-f.fontawesome.com",
+        "https://res.cloudinary.com",
         "https://fonts.gstatic.com",
         "https://lh3.googleusercontent.com",
         "https://platform-lookaside.fbsbx.com",
       ],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
-      connectSrc: ["'self'", "https://ka-f.fontawesome.com"],
+      connectSrc: ["'self'"],
       styleSrc: [
         "'self'",
         "'unsafe-inline'",
