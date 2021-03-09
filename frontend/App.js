@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Nav from "./Components/Nav/Nav";
+import Nav from "@components/Nav/Nav";
+import Footer from "@components/Footer/Footer";
 import Home from "./Screens/Home";
 import About from "./Screens/About";
 import Team from "./Screens/Team";
@@ -29,6 +30,7 @@ function App() {
             <Team />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </>
   );

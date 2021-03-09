@@ -174,8 +174,15 @@
   &__wave {
     position: absolute;
     z-index: -1;
+    top: 0;
     left: 0;
-    width: 100%;
+    width: auto;
+    height: 100%;
+
+    @include media.widerThan768 {
+      width: 100%;
+      height: unset;
+    }
   }
 
   &__detailsWrap {

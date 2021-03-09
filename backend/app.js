@@ -36,7 +36,7 @@ app.use(
         "https://platform-lookaside.fbsbx.com",
       ],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com"],
-      connectSrc: ["'self'"],
+      connectSrc: ["'self'", "https://dev-ot7h-cfg.us.auth0.com"],
       styleSrc: [
         "'self'",
         "'unsafe-inline'",
