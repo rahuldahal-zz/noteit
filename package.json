@@ -4,7 +4,7 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "backend": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
+    "backend": "NODE_ENV=development concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
     "frontend": "webpack-dev-server",
     "dev": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\" \"webpack-dev-server\"",
     "build": "webpack",
@@ -42,6 +42,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.0",
     "mongoose": "^5.9.19",
+    "morgan": "^1.10.0",
     "nodemon": "^1.19.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
