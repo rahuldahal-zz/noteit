@@ -6,9 +6,12 @@ const {
   mustBeLoggedIn,
   saveFacultyAndSemester,
 } = require("../controllers/userController");
+
 const {
   sendNotesDescriptionToClient,
 } = require("../controllers/notesController");
+
+const mustHaveToken = require("../controllers/middlewares/mustHaveToken");
 
 router.get(
   "/availableNotes",
@@ -19,6 +22,10 @@ router.get(
 
 router.post("/create", create);
 
+router.get("/protected", mustHaveToken, (req, res) =>
+  res.json({ message: "go to the controller" })
+);
+
 router.post("/saveFacultyAndSemester", saveFacultyAndSemester);
 
-module.exports = router; //exports "router" to the app.js
+module.exports = router;

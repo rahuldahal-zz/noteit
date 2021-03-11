@@ -34,7 +34,7 @@ User.prototype.validateAndCleanUp = function () {
 
   this.data = {
     OAuthId: this.data.id,
-    email: this.data.email.trim(),
+    email: this.data.email,
     firstName: this.data.firstName,
     lastName: this.data.lastName,
     picture: this.data.picture,

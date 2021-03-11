@@ -1,17 +1,38 @@
 const { User } = require("../models/User");
+const { signToken } = require("../utils/jwtConfig");
+const getSubObject = require("../utils/getSubObject");
 const { sendFlashMessage } = require("./utils/respond");
+
+// if exists already, then return existing; else create new
 
 exports.create = async (req, res) => {
   const { id } = req.body;
   const OAuthProvider = id.split("|")[0];
   const user = new User(req.body, OAuthProvider);
-  let data;
+  const propertiesToReturn = [
+    "_id",
+    "email",
+    "firstName",
+    "lastName",
+    "picture",
+    "savedNotes",
+  ];
   try {
-    data = await user.findBy({ criteria: "OAuthId", value: "abc" });
+    const existingUser = await user.findBy({
+      criteria: "OAuthId",
+      value: id,
+    });
+    const payload = getSubObject(existingUser, propertiesToReturn);
+
+    return res.status(200).json({ token: signToken(payload) });
   } catch (error) {
-    data = error;
+    if (error.reason === "noUser") {
+      const newUser = await user.createUser();
+      const payload = getSubObject(newUser, propertiesToReturn);
+
+      return res.status(201).json({ token: signToken(payload) });
+    }
   }
-  res.status(202).json({ message: data });
 };
 
 exports.root = (req, res) => {
