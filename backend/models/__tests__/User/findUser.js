@@ -62,52 +62,58 @@ describe("findUser method", () => {
 
   describe("should find at least one", () => {
     test("user for given faculty", async () => {
-      const { _id } = createdUser;
-      const anotherUser = await user.createUser();
-      const mockUserOne = new User({ _id });
-      const mockUserTwo = new User(anotherUser);
-      await mockUserOne.saveFacultyAndSemester("bim", "second");
-      await mockUserTwo.saveFacultyAndSemester("bim", "first");
-      const userQuery = await user.findBy({
-        criteria: "faculty",
-        value: "bim",
-      });
-      expect(userQuery[0].faculty).toEqual("bim");
-      expect(userQuery[1].faculty).toEqual("bim");
+      const newUserOne = new User(googleOAuthData, "google");
+      const newUserTwo = new User(googleOAuthData, "google");
+      try {
+        await newUserOne.createUser();
+        await newUserTwo.createUser();
+        await newUserOne.saveFacultyAndSemester("bim", "second");
+        await newUserTwo.saveFacultyAndSemester("bim", "sixth");
+        const userQuery = await newUserOne.findBy({
+          criteria: "faculty",
+          value: "bim",
+        });
+        expect(userQuery[0].faculty).toEqual("bim");
+        expect(userQuery[1].faculty).toEqual("bim");
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     test("user for given semester", async () => {
-      const { _id } = createdUser;
-      const anotherUser = await user.createUser();
-      const mockUserOne = new User({ _id });
-      const mockUserTwo = new User(anotherUser);
-      await mockUserOne.saveFacultyAndSemester("bim", "second");
-      await mockUserTwo.saveFacultyAndSemester("csit", "second");
-      const userQuery = await user.findBy({
-        criteria: "semester",
-        value: "second",
-      });
-      expect(userQuery[0].semester).toEqual("second");
-      expect(userQuery[1].semester).toEqual("second");
+      const newUserOne = new User(googleOAuthData, "google");
+      const newUserTwo = new User(googleOAuthData, "google");
+      try {
+        await newUserOne.createUser();
+        await newUserTwo.createUser();
+        await newUserOne.saveFacultyAndSemester("bim", "second");
+        await newUserTwo.saveFacultyAndSemester("bca", "second");
+        const userQuery = await newUserOne.findBy({
+          criteria: "semester",
+          value: "second",
+        });
+        expect(userQuery[0].semester).toEqual("second");
+        expect(userQuery[1].semester).toEqual("second");
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     test("user for given role", async () => {
       const newUser = new User(googleOAuthData, "google");
-      // const { _id } = await newUser.createUser();
-      // const x = await usersCollection.findOneAndUpdate(
-      //   { _id },
-      //   { $push: { roles: "moderator" } },
-      //   { returnOriginal: false }
-      // );
-      // console.log(x);
-      // const userQuery = await user.findBy({
-      //   criteria: "role",
-      //   value: "moderator",
-      // });
-      // expect(userQuery[0].roles).toEqual(
-      //   expect.arrayContaining(["basic", "moderator"])
-      // );
-      expect(true).toBeTruthy();
+      const { _id } = await newUser.createUser();
+      const x = await usersCollection.findOneAndUpdate(
+        { _id },
+        { $push: { roles: "moderator" } },
+        { returnOriginal: false }
+      );
+      const userQuery = await user.findBy({
+        criteria: "role",
+        value: "moderator",
+      });
+      expect(userQuery[0].roles).toEqual(
+        expect.arrayContaining(["basic", "moderator"])
+      );
     });
   });
 

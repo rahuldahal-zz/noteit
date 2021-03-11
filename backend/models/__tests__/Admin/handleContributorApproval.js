@@ -9,7 +9,7 @@ describe("handleContributorApproval method", () => {
   const facebookOAuthData = {
     id: "123456FacebookID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
+
     first_name: "Rahul",
     last_name: "Dahal",
     picture: {

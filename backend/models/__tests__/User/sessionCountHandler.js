@@ -22,11 +22,11 @@ describe("createUser", () => {
   });
 
   const googleOAuthData = {
-    sub: "123456GoogleID",
+    id: "123456GoogleID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
-    given_name: "Rahul",
-    family_name: "Dahal",
+
+    firstName: "Rahul",
+    lastName: "Dahal",
     picture: "https://pictureAPI.com",
   };
 
@@ -44,8 +44,9 @@ describe("createUser", () => {
 
   test("should reject for invalid ObjectID", async () => {
     try {
-      await user.createUser();
-      await user.sessionCountHandler("abcInvalidID", "decrement");
+      const newUser = new User(googleOAuthData, "google");
+      await newUser.createUser();
+      await newUser.sessionCountHandler("abcInvalidID", "decrement");
     } catch (rejectionMessage) {
       expect(rejectionMessage).toEqual("Invalid ObjectID is provided.");
     }
@@ -53,8 +54,9 @@ describe("createUser", () => {
 
   test("should reject for invalid action", async () => {
     try {
-      const { _id } = await user.createUser();
-      await user.sessionCountHandler(_id, "invalidArgument");
+      const newUser = new User(googleOAuthData, "google");
+      const { _id } = await newUser.createUser();
+      await newUser.sessionCountHandler(_id, "invalidArgument");
     } catch (rejectionMessage) {
       expect(rejectionMessage).toEqual(
         "Invalid action is provided. Only increment and decrement are accepted."
@@ -64,8 +66,9 @@ describe("createUser", () => {
 
   test("should reject for unmatched ObjectID", async () => {
     try {
-      await user.createUser();
-      await user.sessionCountHandler(new ObjectID(), "increment");
+      const newUser = new User(googleOAuthData, "google");
+      await newUser.createUser();
+      await newUser.sessionCountHandler(new ObjectID(), "increment");
     } catch (rejectionMessage) {
       expect(rejectionMessage).toEqual("Cannot find the user");
     }

@@ -19,14 +19,18 @@ let User = function (data, provider) {
   this.errors = [];
 };
 
-User.prototype.cleanUp = function () {
-  if (typeof this.data.id != "string") this.data.id = "";
-  if (typeof this.data.email != "string") this.data.email = "";
-  if (typeof this.data.firstName != "string") this.data.given_name = "";
-  if (typeof this.data.lastName != "string") this.data.family_name = "";
-  if (typeof this.data.picture != "string") this.data.picture = "";
-
-  // ignore bogus properties
+User.prototype.validateAndCleanUp = function () {
+  const validProperties = ["id", "email", "firstName", "lastName", "picture"];
+  for (const property in this.data) {
+    if (!validProperties.includes(property)) {
+      return this.errors.push(`bogus property ${property} received`);
+    }
+    if (typeof this.data[property] !== "string") {
+      return this.errors.push(
+        `unacceptable value type on ${property} property`
+      );
+    }
+  }
 
   this.data = {
     OAuthId: this.data.id,
@@ -82,7 +86,10 @@ User.prototype.validateFacultyAndSemester = function (faculty, semester) {
 
 User.prototype.createUser = function () {
   return new Promise((resolve, reject) => {
-    this.cleanUp();
+    this.validateAndCleanUp();
+    if (this.errors.length > 0) {
+      return reject(this.errors);
+    }
     usersCollection
       .insertOne(this.data)
       .then((newUser) => {

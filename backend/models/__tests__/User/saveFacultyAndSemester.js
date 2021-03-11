@@ -23,11 +23,11 @@ describe("createUser", () => {
   });
 
   const googleOAuthData = {
-    sub: "123456GoogleID",
+    id: "123456GoogleID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
-    given_name: "Rahul",
-    family_name: "Dahal",
+
+    firstName: "Rahul",
+    lastName: "Dahal",
     picture: "https://pictureAPI.com",
   };
   const newUser = new User(googleOAuthData, "google");
@@ -46,7 +46,8 @@ describe("createUser", () => {
   });
 
   test("should reject for conflict in type of arguments", async () => {
-    const user = await newUser.createUser();
+    const user = new User(googleOAuthData, "google");
+    const createdUser = await user.createUser();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester({}, {});
@@ -56,7 +57,8 @@ describe("createUser", () => {
   });
 
   test("should reject for conflict in the acceptable enum", async () => {
-    const user = await newUser.createUser();
+    const user = new User(googleOAuthData, "google");
+    const createdUser = await user.createUser();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester("bbs", "ninth");
@@ -76,7 +78,8 @@ describe("createUser", () => {
     );
     const bogusValues = await response.json();
     for (let i = 0; i < bogusValues.length; i += 2) {
-      const user = await newUser.createUser();
+      const user = new User(googleOAuthData, "google");
+      const createdUser = await user.createUser();
       const thatUserData = new User(user);
       try {
         if (i + 1 < bogusValues.length) {
