@@ -20,51 +20,21 @@ let User = function (data, provider) {
 };
 
 User.prototype.cleanUp = function () {
-  if (this.provider === "google") {
-    if (typeof this.data.sub != "string") this.data.sub = "";
-    if (typeof this.data.email != "string") this.data.email = "";
-    if (typeof this.data.name != "string") this.data.name = "";
-    if (typeof this.data.given_name != "string") this.data.given_name = "";
-    if (typeof this.data.family_name != "string") this.data.family_name = "";
-    if (typeof this.data.picture != "string") this.data.picture = "";
+  if (typeof this.data.id != "string") this.data.id = "";
+  if (typeof this.data.email != "string") this.data.email = "";
+  if (typeof this.data.firstName != "string") this.data.given_name = "";
+  if (typeof this.data.lastName != "string") this.data.family_name = "";
+  if (typeof this.data.picture != "string") this.data.picture = "";
 
-    //ignore bogus properties
-
-    this.userDetails = {
-      OAuthId: this.data.sub,
-      email: this.data.email.trim(),
-      name: this.data.name,
-      firstName: this.data.given_name,
-      lastName: this.data.family_name,
-      picture: this.data.picture,
-      provider: this.provider,
-    };
-  }
-
-  if (this.provider === "facebook") {
-    if (typeof this.data.id != "string") this.data.id = "";
-    if (typeof this.data.email != "string") this.data.email = "";
-    if (typeof this.data.name != "string") this.data.name = "";
-    if (typeof this.data.first_name != "string") this.data.first_name = "";
-    if (typeof this.data.last_name != "string") this.data.last_name = "";
-    if (typeof this.data.picture.data.url != "string") this.data.picture = "";
-    else this.picture = this.data.picture.data.url;
-
-    //ignore bogus properties
-
-    this.userDetails = {
-      OAuthId: this.data.id,
-      email: this.data.email.trim(),
-      name: this.data.name,
-      firstName: this.data.first_name,
-      lastName: this.data.last_name,
-      picture: this.picture,
-      provider: this.provider,
-    };
-  }
+  // ignore bogus properties
 
   this.data = {
-    ...this.userDetails,
+    OAuthId: this.data.id,
+    email: this.data.email.trim(),
+    firstName: this.data.firstName,
+    lastName: this.data.lastName,
+    picture: this.data.picture,
+    provider: this.provider,
     faculty: null,
     semester: null,
     roles: ["basic"], // ["basic", "contributor", "moderator", "admin"]
@@ -256,14 +226,20 @@ User.prototype.findBy = function ({ criteria, value, update }) {
         criteria
       )
     ) {
-      return reject("Invalid criteria is provided");
+      return reject({
+        reason: "invalidArgument",
+        message: "Invalid criteria is provided",
+      });
     }
 
     if (
       update &&
       (typeof update !== "string" || !["lastLogin"].includes(update))
     ) {
-      return reject("Invalid update value is provided");
+      return reject({
+        reason: "invalidArgument",
+        message: "Invalid update value is provided",
+      });
     }
 
     let queryObject,
@@ -304,7 +280,10 @@ User.prototype.findBy = function ({ criteria, value, update }) {
               return resolve(users);
             }
           }
-          return reject(`Cannot find any user with that ${criteria}`);
+          return reject({
+            reason: "noUser",
+            message: `Cannot find any user with that ${criteria}`,
+          });
         })
         .catch((error) => console.log(error));
     } else {
@@ -324,7 +303,10 @@ User.prototype.findBy = function ({ criteria, value, update }) {
           if (updatedUser.value) {
             return resolve(updatedUser.value);
           } else {
-            return reject(`Cannot find any user with that ${criteria}`);
+            return reject({
+              reason: "noUser",
+              message: `Cannot find any user with that ${criteria} to update`,
+            });
           }
         })
         .catch((err) => console.log(err));

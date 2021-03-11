@@ -1,6 +1,19 @@
 const { User } = require("../models/User");
 const { sendFlashMessage } = require("./utils/respond");
 
+exports.create = async (req, res) => {
+  const { id } = req.body;
+  const OAuthProvider = id.split("|")[0];
+  const user = new User(req.body, OAuthProvider);
+  let data;
+  try {
+    data = await user.findBy({ criteria: "OAuthId", value: "abc" });
+  } catch (error) {
+    data = error;
+  }
+  res.status(202).json({ message: data });
+};
+
 exports.root = (req, res) => {
   // if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
   if (!req.user) return res.json({ message: "No user, render guest screen" });
