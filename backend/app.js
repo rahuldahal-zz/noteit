@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 
 app.use(require("morgan")("combined"));
+app.use(require("cookie-parser")());
 app.use(require("helmet")());
 app.use(require("./utils/cspConfig"));
 
