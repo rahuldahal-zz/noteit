@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
+const passport = require("passport");
+const passportController = require("./controllers/passportController"); // this needs to be here, in order to "run"
 const path = require("path");
 
 app.use(require("morgan")("combined"));
 app.use(require("cookie-parser")());
 app.use(require("helmet")());
 app.use(require("./utils/cspConfig"));
+app.use(passport.initialize());
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +16,7 @@ app.use(express.json());
 
 // routers
 const rootRouter = require("./routers/rootRouter");
+const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
@@ -28,6 +32,7 @@ if (process.env.NODE_ENV === "production") {
 
 // using the routers
 app.use("/", rootRouter);
+app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);

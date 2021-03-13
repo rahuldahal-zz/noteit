@@ -8,25 +8,13 @@ const { User } = require("../models/User");
 
 passport.serializeUser((user, done) => {
   // user.id = ObjectId
-  console.log("from serialize, user id is ", user._id);
-  User.prototype
-    .sessionCountHandler(user._id, "increment")
-    .then(() => done(null, user._id))
-    .catch((err) => console.log("from serialize: " + err));
+  console.log("from serialize, user id is ", user);
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((user, done) => {
   console.log("deserialize fires...");
-  User.prototype
-    .findBy({
-      criteria: "ObjectId",
-      value: id,
-      update: "lastLogin",
-    })
-    .then((user) => {
-      done(null, user);
-    })
-    .catch((error) => done(error));
+  done(null, user);
 });
 
 passport.use(
@@ -97,6 +85,25 @@ passport.use(
 
 function createUser(profile, done, provider) {
   console.log("creating a new user...");
+  if (provider === "google") {
+    const { sub, given_name, family_name, email, picture } = profile;
+    profile = {
+      id: sub,
+      firstName: given_name,
+      lastName: family_name,
+      email: email,
+      picture: picture,
+    };
+  } else {
+    const { id, first_name, last_name, email, picture } = profile;
+    profile = {
+      id: id,
+      firstName: first_name,
+      lastName: lastName,
+      email: email,
+      picture: picture.data.url,
+    };
+  }
   let user = new User(profile, provider);
   user
     .createUser()
