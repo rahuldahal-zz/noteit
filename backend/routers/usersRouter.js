@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const {
-  create,
   mustBeApproved,
   mustBeLoggedIn,
   saveFacultyAndSemester,
@@ -19,8 +18,6 @@ router.get(
   mustBeApproved,
   sendNotesDescriptionToClient
 );
-
-router.post("/create", create);
 
 router.get("/protected", mustHaveToken, (req, res) =>
   res.json({ message: "go to the controller" })

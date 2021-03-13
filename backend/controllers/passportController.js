@@ -7,14 +7,25 @@ dotenv.config();
 const { User } = require("../models/User");
 
 passport.serializeUser((user, done) => {
-  // user.id = ObjectId
-  console.log("from serialize, user id is ", user);
-  done(null, user);
+  console.log("from serialize, user id is ", user._id);
+  User.prototype
+    .sessionCountHandler(user._id, "increment")
+    .then(() => done(null, user._id))
+    .catch((err) => console.log("from serialize: " + err));
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((id, done) => {
   console.log("deserialize fires...");
-  done(null, user);
+  User.prototype
+    .findBy({
+      criteria: "ObjectId",
+      value: id,
+      update: "lastLogin",
+    })
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((error) => done(error));
 });
 
 passport.use(
@@ -108,7 +119,6 @@ function createUser(profile, done, provider) {
   user
     .createUser()
     .then((response) => {
-      console.log(response);
       done(null, response);
     })
     .catch((error) => console.log(error));

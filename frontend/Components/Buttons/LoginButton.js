@@ -3,9 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 
-export default function LoginButton({ size }) {
-  const { loginWithRedirect } = useAuth0();
-
+export default function LoginButton({ size, setShowLoginOptions }) {
   return (
     <button
       type="button"
@@ -14,7 +12,7 @@ export default function LoginButton({ size }) {
           ? "hero__cta btn btn--accent btn--large"
           : "btn btn--accent"
       }
-      onClick={() => loginWithRedirect()}
+      onClick={() => setShowLoginOptions(true)}
     >
       <TextWithIcon
         textContent="Let's NoteIT"

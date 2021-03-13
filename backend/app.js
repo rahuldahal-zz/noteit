@@ -2,13 +2,21 @@ const express = require("express");
 const app = express();
 const passport = require("passport");
 const passportController = require("./controllers/passportController"); // this needs to be here, in order to "run"
+const cookieSession = require("cookie-session");
 const path = require("path");
 
 app.use(require("morgan")("combined"));
 app.use(require("cookie-parser")());
 app.use(require("helmet")());
 app.use(require("./utils/cspConfig"));
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 100,
+    keys: [process.env.SESSION_SECRET],
+  })
+);
 app.use(passport.initialize());
+app.use(passport.session());
 
 // ways to submit data to the server
 app.use(express.urlencoded({ extended: true }));

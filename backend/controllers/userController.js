@@ -1,59 +1,7 @@
 const { User } = require("../models/User");
-const { signToken } = require("../utils/jwtConfig");
-const getSubObject = require("../utils/getSubObject");
 const { sendFlashMessage } = require("./utils/respond");
 
-// if exists already, then return existing; else create new
-
-exports.create = async (req, res) => {
-  const { id } = req.body;
-  const OAuthProvider = id.split("|")[0];
-
-  // cookie options
-  const cookieOptions = {
-    httpOnly: true,
-    secure: process.NODE_ENV === "production",
-    expires: new Date(Date.now() + 8 * 3600000),
-  };
-
-  const user = new User(req.body, OAuthProvider);
-  const propertiesToReturn = [
-    "_id",
-    "email",
-    "firstName",
-    "lastName",
-    "picture",
-    "savedNotes",
-  ];
-  try {
-    const existingUser = await user.findBy({
-      criteria: "OAuthId",
-      value: id,
-    });
-    const payload = getSubObject(existingUser, propertiesToReturn);
-    const signedToken = signToken(payload);
-
-    return res
-      .status(200)
-      .cookie("token", signedToken, cookieOptions)
-      .json({ token: signedToken });
-  } catch (error) {
-    if (error.reason === "noUser") {
-      const newUser = await user.createUser();
-      const payload = getSubObject(newUser, propertiesToReturn);
-      const signedToken = signToken(payload);
-
-      return res
-        .status(201)
-        .cookie("token", signedToken, cookieOptions)
-        .json({ token: signedToken });
-    }
-  }
-};
-
 exports.root = (req, res) => {
-  // const receivedTokenInCookie = req.cookies.token;
-  return res.status(200).json({ cookie: req.cookies });
   // if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
   if (!req.user) return res.json({ message: "No user, render guest screen" });
 

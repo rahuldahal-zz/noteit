@@ -3,7 +3,7 @@ import ExamTimeIllustration from "@svgs/examTime.svg";
 import isScreenLargerThan from "@utils/screenSize";
 import LoginButton from "@components/Buttons/LoginButton";
 
-export default function Hero() {
+export default function Hero({ setShowLoginOptions }) {
   const [isScreenWide, setIsScreenWide] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Hero() {
             to refer and understand.
           </p>
 
-          <LoginButton size="large" />
+          <LoginButton size="large" setShowLoginOptions={setShowLoginOptions} />
         </div>
 
         <div className="hero__mockupWrap">

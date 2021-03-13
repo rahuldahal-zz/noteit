@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { TokenProvider } from "./contexts/TokenProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
@@ -40,13 +40,13 @@ function App() {
 }
 
 ReactDOM.render(
-  <Auth0Provider
+  <TokenProvider
     domain={domain}
     clientId={clientId}
     redirectUri={window.location.origin}
   >
     <App />
-  </Auth0Provider>,
+  </TokenProvider>,
   document.getElementById("app")
 );
 
