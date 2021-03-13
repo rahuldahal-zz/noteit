@@ -6,10 +6,11 @@ import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
 import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
-import Home from "./Screens/Home";
-import About from "./Screens/About";
-import Team from "./Screens/Team";
-import Guest from "./Screens/Guest";
+import Home from "@screens/Home";
+import About from "@screens/About";
+import Team from "@screens/Team";
+import Guest from "@screens/Guest";
+import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
@@ -26,7 +27,12 @@ function App() {
         <Route exact path="/">
           <Guest history={history} />
         </Route>
-        <PrivateRoute exact component={Home} path="/home"></PrivateRoute>
+        <PrivateRoute exact component={Home} path="/home" />
+        <Route
+          exact
+          component={SaveFacultyAndSemester}
+          path="/save-faculty-and-semester"
+        />
         <Route exact path="/about">
           <About />
         </Route>
