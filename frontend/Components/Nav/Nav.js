@@ -1,13 +1,13 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import Links from "./Links";
 import linksData from "./utils/linksData";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
+import { useAuth } from "../../contexts/AuthProvider";
 
-export default function Nav() {
-  const { isAuthenticated } = useAuth0();
+export default function Nav({ setShowLoginOptions }) {
+  const { token } = useAuth();
   return (
     <nav className="nav">
       <div className="nav__wrap flex">
@@ -20,7 +20,11 @@ export default function Nav() {
         <div className="nav__items">
           <Links links={linksData} />
           <div className="nav__actions">
-            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+            {token ? (
+              <LogoutButton />
+            ) : (
+              <LoginButton setShowLoginOptions={setShowLoginOptions} />
+            )}
             <div className="nav__hamBurger" tabIndex="0"></div>
           </div>
         </div>

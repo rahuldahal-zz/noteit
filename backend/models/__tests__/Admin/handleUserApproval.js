@@ -7,11 +7,11 @@ describe("handleUserApproval method", () => {
   let connection, db, userCollection, sessionCollection;
   let createdUser;
   const googleOAuthData = {
-    sub: "123456GoogleID",
+    id: "123456GoogleID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
-    given_name: "Rahul",
-    family_name: "Dahal",
+
+    firstName: "Rahul",
+    lastName: "Dahal",
     picture: "https://pictureAPI.com",
   };
   const user = new User(googleOAuthData, "google");
