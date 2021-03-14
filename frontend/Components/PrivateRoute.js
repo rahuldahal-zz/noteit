@@ -1,15 +1,19 @@
 import React from "react";
-import { useToken } from "../contexts/TokenProvider";
+import { useAuth } from "../contexts/AuthProvider";
 import { Redirect, Route } from "react-router";
 
-export default function PrivateRoute({ component: Component, ...rest }) {
-  const { token } = useToken();
+export default function PrivateRoute({
+  newUser,
+  component: Component,
+  ...rest
+}) {
+  const { isNewUser, isAuthenticated } = useAuth();
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        token ? <Component {...props} /> : <Redirect to="/" />
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );

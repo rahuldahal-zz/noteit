@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const passport = require("passport");
-const passportController = require("./controllers/passportController"); // this needs to be here, in order to "run"
+require("./controllers/passportController"); // this needs to be here, in order to "run"
 const cookieSession = require("cookie-session");
 const path = require("path");
 
 app.use(require("morgan")("combined"));
-app.use(require("cookie-parser")());
 app.use(require("helmet")());
 app.use(require("./utils/cspConfig"));
 app.use(

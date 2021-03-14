@@ -110,8 +110,8 @@ function createUser(profile, done, provider) {
     profile = {
       id: id,
       firstName: first_name,
-      lastName: lastName,
-      email: email,
+      lastName: last_name,
+      email: email ? email : "",
       picture: picture.data.url,
     };
   }

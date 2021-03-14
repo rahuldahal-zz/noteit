@@ -4,10 +4,10 @@ import Links from "./Links";
 import linksData from "./utils/linksData";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
-import { useToken } from "../../contexts/TokenProvider";
+import { useAuth } from "../../contexts/AuthProvider";
 
 export default function Nav({ setShowLoginOptions }) {
-  const { token } = useToken();
+  const { token } = useAuth();
   return (
     <nav className="nav">
       <div className="nav__wrap flex">

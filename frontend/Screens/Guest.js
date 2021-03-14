@@ -3,13 +3,13 @@ import Hero from "@components/Guest/Hero";
 import Info from "@components/Guest/Info";
 import Process from "@components/Guest/Process";
 import { withRouter } from "react-router-dom";
-import { useToken } from "../contexts/TokenProvider";
+import { useAuth } from "../contexts/AuthProvider";
 import { LoginOptions } from "@components/Guest/LoginOptions";
 
 export default withRouter(function Guest({ history }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginOptions, setShowLoginOptions] = useState(false);
-  const { token } = useToken();
+  const { token } = useAuth();
 
   useEffect(() => {
     setIsLoading(false);

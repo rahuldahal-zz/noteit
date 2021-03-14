@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { TokenProvider } from "./contexts/TokenProvider";
+import { AuthProvider } from "./contexts/AuthProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
@@ -40,13 +40,13 @@ function App() {
 }
 
 ReactDOM.render(
-  <TokenProvider
+  <AuthProvider
     domain={domain}
     clientId={clientId}
     redirectUri={window.location.origin}
   >
     <App />
-  </TokenProvider>,
+  </AuthProvider>,
   document.getElementById("app")
 );
 
