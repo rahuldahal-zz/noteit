@@ -1,14 +1,9 @@
-import React from "react";
-import FormFields from "./Fields";
+import React, { useEffect } from "react";
 
-export default function Form({ fieldsDetail, children, ...props }) {
-  async function handleSubmit(e) {
-    e.preventDefault();
-  }
-
+export default function Form({ fieldsJSX, children, ...props }) {
   return (
-    <form {...props} onSubmit={(e) => handleSubmit(e)}>
-      <FormFields fieldsDetail={fieldsDetail} />
+    <form {...props}>
+      {fieldsJSX}
       {children}
     </form>
   );

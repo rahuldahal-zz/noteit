@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "@components/Form/Form";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import Greeting from "./Greeting";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
+import getFormFields from "@components/Form/utils/getFormFields";
 
 export default function Header() {
+  const { fieldRefs, fieldsJSX } = getFormFields(formFieldsDetail);
+
   async function handleFormSubmit(e) {
     e.preventDefault();
     console.log("submitting form...");
+    fieldRefs.forEach((field) => console.log(field.current.value));
   }
 
   return (
@@ -18,7 +22,7 @@ export default function Header() {
         className="form"
         action="/users/saveFacultyAndSemester"
         method="POST"
-        fieldsDetail={formFieldsDetail}
+        fieldsJSX={fieldsJSX}
         onSubmit={(e) => handleFormSubmit(e)}
       >
         <button type="submit" className="btn btn--large">
