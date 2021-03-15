@@ -32,17 +32,18 @@ const adminRouter = require("./routers/adminRouter");
 // server static assets in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
-  app.get("*", (req, res) => {
+  app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../build/index.html"));
   });
 }
 
 // using the routers
-app.use("/", rootRouter);
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
+
+app.get("*", (req, res) => res.send("<h1>Error 404: Page not found</h1>"));
 
 module.exports = app;
