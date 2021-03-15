@@ -72,7 +72,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
 }
 
 //separate for "production"
-if (currentTask === "build") {
+if (currentTask === "build" || currentTask === "check-build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
