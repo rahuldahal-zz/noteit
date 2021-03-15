@@ -45,7 +45,7 @@
     align-items: center;
   }
 
-  &__details {
+  &__header {
     position: relative;
     padding: 0;
     color: #eee;
@@ -61,6 +61,7 @@
   }
 
   &__illustration {
+    fill: pink;
     width: 20vw;
   }
 }
