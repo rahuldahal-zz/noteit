@@ -1,0 +1,35 @@
+:root{
+
+    // colors;
+
+    // primary
+    --brand-300: #0B7EE0;
+    --brand-400: #0970c8;
+    --brand-500: #0A63AF;
+    --brandRGB: 39, 129, 207;
+
+    // secondary
+    --secondary-400: #542C96;
+    
+    // tertiary
+    --accent-400: #f2e419;
+    --accent-500: #FED253;
+
+    // gradients
+    --background-gradient: linear-gradient(90deg, var(--brand-400) 0%, var(--secondary-400) 100%);
+    --button-gradient: linear-gradient(90deg, var(--accent-400) 0%, var(--accent-500) 100%);
+
+    // typography    
+    --white: #efefef;
+    --black: #001323;
+
+    // spacing
+
+    --space-300-em: 0.25em;
+    --space-400-em: 0.5em;
+    --space-500-em: 0.75em;
+
+    --space-300-rem: 0.25rem;
+    --space-400-rem: 0.5rem;
+    --space-500-rem: 0.75rem;
+}

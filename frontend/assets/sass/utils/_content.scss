@@ -1,8 +1,10 @@
 @use "media";
+@use "./customProperties";
+
 
 main,
 section {
-  padding: 0.5rem;
+  padding: var(--space-400-rem);
 
   @include media.widerThan768 {
     padding: 1rem;

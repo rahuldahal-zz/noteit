@@ -5,17 +5,17 @@ import linksData from "./utils/linksData";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
+import Logo from "@svgs/logoAlt.svg";
 
 export default function Nav({ setShowLoginOptions }) {
   const { token } = useAuth();
   return (
     <nav className="nav">
       <div className="nav__wrap flex">
-        <h2>
-          <Link to="/" className="nav__home">
-            NoteIT
-          </Link>
-        </h2>
+        <Link to="/" className="nav__home">
+          <strong>note</strong>
+          <Logo className="nav__logo" />
+        </Link>
 
         <div className="nav__items">
           <Links links={linksData} />

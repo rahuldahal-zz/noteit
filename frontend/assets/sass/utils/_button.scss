@@ -1,6 +1,8 @@
+@use "./customProperties";
+
 button,
 [type="submit"] {
-  background-color: var(--accentColor);
+  background: var(--button-gradient);
   color: var(--black);
 }
 
@@ -27,7 +29,7 @@ button,
   }
 
   &--accent {
-    background-color: var(--accentColor) !important;
+    background: var(--button-gradient) !important;
     color: var(--black) !important;
   }
 

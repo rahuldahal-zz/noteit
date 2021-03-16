@@ -1,3 +1,5 @@
+@use "../utils/customProperties";
+
 .saveFacultyAndSemester {
   height: 93vh;
   position: relative;
@@ -11,12 +13,12 @@
     left: 0;
     width: 100vw;
     height: 100%;
-    background-color: var(--black--light);
+    background-color: var(--black);
 
     @include media.widerThan768 {
       max-width: 70vw;
       transform: skewX(10deg);
-      background-color: var(--accentColor);
+      background-color: var(--accent-400);
       box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.2);
     }
   }

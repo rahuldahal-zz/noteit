@@ -1,17 +1,7 @@
 @use "utils/media";
+@use "utils/customProperties";
 
 :root {
-  --brandColor: #0970c8;
-  --brandRGB: 39, 129, 207;
-  --accentColor: #f2e419;
-  --brandTransparent: rgba(39, 129, 207, 0.6);
-  --brandLight: #3082c8;
-  --white: #efefef;
-  --black--light: #031524;
-  --black: #000b14;
-  --black--dark: #02060a;
-  --bodyFont: "open sans";
-  --headingFont: "roboto";
   font-size: 0.9375rem;
 
   @include media.widerThan768 {
@@ -28,6 +18,8 @@
 
 body {
   background: var(--white);
+  --bodyFont: "roboto";
+  --headingFont: "roboto";
 }
 
 p {
@@ -40,7 +32,7 @@ p {
 }
 
 .brandText {
-  color: var(--brandColor);
+  color: var(--brand-400);
 }
 
 //modifier
@@ -53,8 +45,8 @@ p {
 
 .close {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: var(--space-400-rem);
+  right: var(--space-400-rem);
   background: #eee;
   color: #333;
 }
