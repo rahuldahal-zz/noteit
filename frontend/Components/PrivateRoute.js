@@ -1,20 +1,27 @@
-import React from "react";
-import { useAuth } from "../contexts/AuthProvider";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@contexts/AuthProvider";
 import { Redirect, Route } from "react-router";
 
 export default function PrivateRoute({
-  newUser,
+  condition,
   component: Component,
   ...rest
 }) {
   const { isNewUser, isAuthenticated } = useAuth();
+  const [componentToRender, setComponentToRender] = useState(null);
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
-      }
-    />
+  const routerJSX = (
+    <Route {...rest} render={(props) => <Component {...props} />} />
   );
+
+  useEffect(() => {
+    console.log(condition);
+    switch (condition) {
+      case "newUser":
+        isNewUser && setComponentToRender(routerJSX);
+        break;
+    }
+  }, []);
+
+  return !isAuthenticated ? <Redirect to="/" /> : componentToRender;
 }

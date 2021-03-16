@@ -36,6 +36,7 @@ let config = {
       "@utils": path.resolve(__dirname, "./frontend/utils"),
       "@components": path.resolve(__dirname, "./frontend/Components"),
       "@screens": path.resolve(__dirname, "./frontend/Screens"),
+      "@contexts": path.resolve(__dirname, "./frontend/Contexts"),
     },
   },
 };

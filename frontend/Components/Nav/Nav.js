@@ -4,7 +4,7 @@ import Links from "./Links";
 import linksData from "./utils/linksData";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
-import { useAuth } from "../../contexts/AuthProvider";
+import { useAuth } from "@contexts/AuthProvider";
 
 export default function Nav({ setShowLoginOptions }) {
   const { token } = useAuth();

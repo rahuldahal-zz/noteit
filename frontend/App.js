@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { AuthProvider } from "./contexts/AuthProvider";
+import { AuthProvider } from "@contexts/AuthProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
@@ -27,11 +27,17 @@ function App() {
         <Route exact path="/">
           <Guest history={history} />
         </Route>
-        <PrivateRoute exact component={Home} path="/home" />
-        <Route
+        <PrivateRoute
+          exact
+          component={Home}
+          path="/home"
+          condition="isAuthenticated"
+        />
+        <PrivateRoute
           exact
           component={SaveFacultyAndSemester}
           path="/save-faculty-and-semester"
+          condition="newUser"
         />
         <Route exact path="/about">
           <About />

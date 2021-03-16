@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import parseJwt from "@utils/parseJWT";
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
@@ -8,8 +9,12 @@ export default function AuthProvider({ children }) {
     fetch("/auth")
       .then((res) => res.json())
       .then((responseFromServer) => {
-        setAuthState(responseFromServer);
-        console.log(responseFromServer);
+        const { isAuthenticated, token } = responseFromServer;
+        if (isAuthenticated) {
+          const user = parseJwt(token);
+          return setAuthState({ ...responseFromServer, user });
+        }
+        return setAuthState(responseFromServer);
       })
       .catch((err) => console.log(err));
   }, []);

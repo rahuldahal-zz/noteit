@@ -3,20 +3,23 @@ import Hero from "@components/Guest/Hero";
 import Info from "@components/Guest/Info";
 import Process from "@components/Guest/Process";
 import { withRouter } from "react-router-dom";
-import { useAuth } from "../contexts/AuthProvider";
+import { useAuth } from "@contexts/AuthProvider";
 import { LoginOptions } from "@components/Guest/LoginOptions";
 
 export default withRouter(function Guest({ history }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginOptions, setShowLoginOptions] = useState(false);
-  const { token } = useAuth();
+  const { token, isAuthenticated, isNewUser } = useAuth();
 
   useEffect(() => {
     setIsLoading(false);
     // console.log({ userData });
   }, []);
 
-  if (token) {
+  if (isAuthenticated && isNewUser) {
+    history.push("/save-faculty-and-semester");
+    return null;
+  } else if (isAuthenticated && token) {
     history.push("/home");
     return null;
   }

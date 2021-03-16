@@ -1,9 +1,12 @@
+import { useAuth } from "@contexts/AuthProvider";
 import React from "react";
 
 export default function Greeting() {
+  const { user } = useAuth();
+
   return (
     <div className="saveFacultyAndSemester__greeting">
-      <h1>Hello, username*</h1>
+      <h1>Hello, {user.firstName}</h1>
       <h2>
         Welcome to <span className="color--brand">NoteIT</span>
       </h2>
