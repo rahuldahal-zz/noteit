@@ -12,27 +12,6 @@ button,
   transform-origin: left;
   transition-timing-function: linear;
 
-  &--secondary {
-    background-color: #333 !important;
-    color: var(--white);
-  }
-
-  &--outline {
-    background-color: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-  }
-
-  &--large {
-    padding: 1rem 2rem;
-    font-size: 1.3rem;
-  }
-
-  &--accent {
-    background: var(--button-gradient) !important;
-    color: var(--black) !important;
-  }
-
   &::before {
     content: "";
     position: absolute;
@@ -53,5 +32,34 @@ button,
     &::before {
       opacity: 1;
     }
+  }
+
+  &--secondary {
+    background-color: #333 !important;
+    color: var(--white);
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+
+    &:hover {
+      transform: translateY(0);
+
+      &::before {
+        opacity: 0;
+      }
+    }
+  }
+
+  &--large {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+  }
+
+  &--accent {
+    background: var(--button-gradient);
+    color: var(--black);
   }
 }

@@ -1,7 +1,8 @@
 @use "../utils/customProperties";
+@use "../utils/media";
 
 .saveFacultyAndSemester {
-  height: 93vh;
+  min-height: 93vh;
   position: relative;
   overflow: hidden;
 
@@ -13,7 +14,7 @@
     left: 0;
     width: 100vw;
     height: 100%;
-    background-color: var(--black);
+    background: var(--background-gradient);
 
     @include media.widerThan768 {
       max-width: 70vw;
@@ -27,16 +28,19 @@
     content: "";
     position: absolute;
     z-index: 2;
-    top: 0;
-    left: -35%;
-    width: 85vw;
-    height: 100%;
-    background-color: var(--black);
-    box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.4);
-    transform: skewX(-20deg);
+    top: -12%;
+    left: -22vw;
+    width: 119vw;
+    height: 96vh;
+    background: var(--background-gradient);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.4);
+    transform: rotate(-14deg);
 
     @include media.widerThan768 {
-      left: -25%;
+      left: -35%;
+      width: 85vw;
+      height: 120vh;
+      transform: skewX(-20deg);
     }
   }
 
@@ -50,7 +54,7 @@
   &__header {
     position: relative;
     padding: 0;
-    color: #eee;
+    color: var(--white);
     max-width: 600px;
   }
 
@@ -59,6 +63,20 @@
 
     h1 {
       margin-bottom: 1rem;
+    }
+  }
+
+  &__form {
+    max-width: 480px;
+
+    input {
+      box-shadow: 0 0 0pt 0pt var(--accent-400);
+      transition: box-shadow 0.1s linear;
+    }
+
+    input:focus {
+      border: unset;
+      box-shadow: 0 0 3pt 2pt var(--accent-400);
     }
   }
 

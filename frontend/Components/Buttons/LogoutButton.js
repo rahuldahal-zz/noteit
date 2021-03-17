@@ -17,7 +17,7 @@ export default function LogoutButton() {
   return (
     <button
       type="button"
-      className="hero__cta btn"
+      className="btn btn--outline"
       onClick={() => handleLogout()}
     >
       <TextWithIcon

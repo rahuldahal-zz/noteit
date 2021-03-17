@@ -19,7 +19,7 @@ export default function Header() {
     <section className="saveFacultyAndSemester__header">
       <Greeting />
       <Form
-        className="form"
+        className="form saveFacultyAndSemester__form"
         action="/users/saveFacultyAndSemester"
         method="POST"
         fieldsJSX={fieldsJSX}
@@ -28,10 +28,10 @@ export default function Header() {
         <button type="submit" className="btn btn--large">
           <TextWithIcon
             textContent="Save"
-            pathData={getIconPaths("login")}
-            viewBox="0 0 24 24"
-            fill="none"
-            strokeWidth="2"
+            pathData={getIconPaths("save")}
+            viewBox="0 0 512 512"
+            fill="var(--black)"
+            strokeWidth="0"
             iconWidth="2rem"
           />
         </button>
