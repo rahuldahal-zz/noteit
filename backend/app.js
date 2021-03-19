@@ -30,14 +30,6 @@ const notesRouter = require("./routers/notesRouter");
 const contributorsRouter = require("./routers/contributorsRouter");
 const adminRouter = require("./routers/adminRouter");
 
-// server static assets in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-  app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../build/index.html"));
-  });
-}
-
 // using the routers
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
@@ -45,6 +37,14 @@ app.use("/notes", notesRouter);
 app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
-app.get("*", (req, res) => res.send("<h1>Error 404: Page not found</h1>"));
+// server static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../build/index.html"));
+  });
+} else {
+  app.use((req, res) => res.status(404).json({ message: "Route not found" }));
+}
 
 module.exports = app;
