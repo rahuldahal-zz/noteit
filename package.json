@@ -30,7 +30,7 @@
     "dotenv-webpack": "^1.8.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "extended-normalize.css": "^2.1.1",
+    "extended-normalize.css": "^2.4.0",
     "helmet": "^4.0.0",
     "helmet-csp": "^3.2.0",
     "jsonwebtoken": "^8.5.1",

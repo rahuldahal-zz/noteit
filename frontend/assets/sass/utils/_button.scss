@@ -63,3 +63,23 @@ button,
     color: var(--black);
   }
 }
+
+.fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--accent-500);
+  color: var(--black);
+  box-shadow: -8px -8px 16px 8px rgba(0, 0, 0, 0.2);
+
+  span {
+    margin: 0;
+  }
+
+  .textWithIcon__text {
+    display: none;
+  }
+}
