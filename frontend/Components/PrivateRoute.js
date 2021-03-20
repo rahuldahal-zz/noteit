@@ -20,6 +20,9 @@ export default function PrivateRoute({
       case "newUser":
         isNewUser && setComponentToRender(routerJSX);
         break;
+      case "isAuthenticated":
+        !isNewUser && setComponentToRender(routerJSX);
+        break;
     }
   }, []);
 

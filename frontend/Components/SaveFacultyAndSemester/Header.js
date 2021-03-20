@@ -5,14 +5,33 @@ import getIconPaths from "@utils/iconDetails";
 import Greeting from "./Greeting";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
 import getFormFields from "@components/Form/utils/getFormFields";
+import { useAuth } from "@contexts/AuthProvider";
 
 export default function Header() {
+  const { token } = useAuth();
   const { fieldRefs, fieldsJSX } = getFormFields(formFieldsDetail);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
     console.log("submitting form...");
-    fieldRefs.forEach((field) => console.log(field.current.value));
+    const data = {};
+    fieldRefs.forEach((field) => {
+      const { name, value } = field.current;
+      data[name] = value;
+    });
+    try {
+      const { status } = await fetch("/users/saveFacultyAndSemester", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(status);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

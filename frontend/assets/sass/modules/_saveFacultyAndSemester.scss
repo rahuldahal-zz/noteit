@@ -69,14 +69,35 @@
   &__form {
     max-width: 480px;
 
-    input {
-      box-shadow: 0 0 0pt 0pt var(--accent-400);
-      transition: box-shadow 0.1s linear;
+    .select {
+      position: relative;
+      border: 0;
+      width: 100%;
+      cursor: pointer;
     }
 
-    input:focus {
-      border: unset;
-      box-shadow: 0 0 3pt 2pt var(--accent-400);
+    #chevron {
+      display: none;
+    }
+
+    .selectWrap {
+      position: relative;
+
+      &::after {
+        content: url("https://res.cloudinary.com/rdaahal/image/upload/v1616226938/noteit/images/doubleChevron_aobayy.svg");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20%;
+        height: 100%;
+        border-top-right-radius: var(--space-400-em);
+        border-bottom-right-radius: var(--space-400-em);
+        pointer-events: none;
+        background: var(--accent-400);
+      }
     }
   }
 

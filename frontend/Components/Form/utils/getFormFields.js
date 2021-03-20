@@ -4,7 +4,14 @@ export default function getFormFields(fieldsDetail) {
   const [fieldRefs] = useState([]);
 
   const fieldsJSX = fieldsDetail.map((field, index) => {
-    const { type, displayName, name, defaultValue, placeholder } = field;
+    const {
+      type,
+      options,
+      displayName,
+      name,
+      defaultValue,
+      placeholder,
+    } = field;
     const computedName = name ? name : displayName.toLowerCase();
     const fieldRef = useRef(null);
     const InputElement = (
@@ -17,11 +24,28 @@ export default function getFormFields(fieldsDetail) {
         ref={fieldRef}
       />
     );
+    const SelectElement = (
+      <div className="selectWrap">
+        <select
+          className="select"
+          name={computedName}
+          id={computedName}
+          ref={fieldRef}
+        >
+          {options.map((option, index) => (
+            <option className="select__option" key={index} value={option}>
+              {option}
+            </option>
+          ))}
+          span.
+        </select>
+      </div>
+    );
     fieldRefs.push(fieldRef);
     return (
       <fieldset key={index} className="form__fieldset">
         <label htmlFor={computedName}>{displayName}</label>
-        {InputElement}
+        {type === "select" ? SelectElement : InputElement}
       </fieldset>
     );
   });

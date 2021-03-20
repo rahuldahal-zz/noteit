@@ -23,6 +23,6 @@ router.get("/protected", mustHaveToken, (req, res) =>
   res.json({ message: "go to the controller" })
 );
 
-router.post("/saveFacultyAndSemester", saveFacultyAndSemester);
+router.post("/saveFacultyAndSemester", mustHaveToken, saveFacultyAndSemester);
 
 module.exports = router;
