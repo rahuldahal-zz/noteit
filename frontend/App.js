@@ -8,16 +8,17 @@ import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
 import Home from "@screens/Home";
 import About from "@screens/About";
-import Team from "@screens/Team";
+// import Team from "@screens/Team";
 import Root from "@screens/Root";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
-import Admin from "@screens/Admin";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
 
-const domain = process.env.AUTH0_DOMAIN;
-const clientId = process.env.AUTH0_CLIENT_ID;
+{
+  /* <Admin />; */
+}
+
 const history = createBrowserHistory();
 
 function App() {
@@ -30,15 +31,15 @@ function App() {
         </Route>
         <PrivateRoute
           exact
-          component={Home}
-          path="/home"
-          condition="isAuthenticated"
-        />
-        <PrivateRoute
-          exact
           component={SaveFacultyAndSemester}
           path="/save-faculty-and-semester"
           condition="newUser"
+        />
+        <PrivateRoute
+          exact
+          component={Home}
+          path="/home"
+          condition="existingUser"
         />
         <Route exact path="/about">
           <About />
@@ -59,11 +60,7 @@ function App() {
 }
 
 ReactDOM.render(
-  <AuthProvider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={window.location.origin}
-  >
+  <AuthProvider>
     <App />
   </AuthProvider>,
   document.getElementById("app")

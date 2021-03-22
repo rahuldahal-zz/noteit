@@ -1,10 +1,11 @@
 const { MongoClient } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("createUser", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -81,7 +82,7 @@ describe("createUser", () => {
   test("should reject for non-string value", async () => {
     const invalidData = {
       id: "google|123456",
-      email: function () {},
+      email: () => null,
       firstName: "Rahul",
       lastName: "Dahal",
       picture: "https://pictureAPI.com",

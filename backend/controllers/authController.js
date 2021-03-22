@@ -1,6 +1,6 @@
 const getSubObject = require("../utils/getSubObject");
 const { signToken } = require("../utils/jwtConfig");
-const { User } = require("../models/User");
+const { User } = require("@models/User");
 const { server } = require("../utils/getServer");
 const passport = require("passport");
 

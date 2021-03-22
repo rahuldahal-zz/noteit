@@ -1,8 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/userController");
-const contributorsController = require("../controllers/contributorsController");
-const followController = require("../controllers/followController");
+const router = require("express").Router();
+const userController = require("@controllers/userController");
+const contributorsController = require("@controllers/contributorsController");
+const followController = require("@controllers/followController");
 
 router.get(
   "/contributor-screen",

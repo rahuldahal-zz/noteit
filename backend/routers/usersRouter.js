@@ -1,18 +1,15 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const {
   mustBeApproved,
   mustBeLoggedIn,
   saveFacultyAndSemester,
-} = require("../controllers/userController");
+} = require("@controllers/userController");
 
 const {
   sendNotesDescriptionToClient,
-} = require("../controllers/notesController");
+} = require("@controllers/notesController");
 
-const {
-  mustHaveUserToken,
-} = require("../controllers/middlewares/mustHaveToken");
+const { mustHaveUserToken } = require("@controllers/middlewares/mustHaveToken");
 
 router.get(
   "/availableNotes",

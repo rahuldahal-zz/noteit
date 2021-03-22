@@ -1,5 +1,4 @@
-const { User } = require("../models/User");
-const { sendFlashMessage } = require("./utils/respond");
+const { User } = require("@models/User");
 
 exports.saveFacultyAndSemester = (req, res, next) => {
   let user = new User(req.user);
@@ -58,8 +57,8 @@ exports.checkSubscriptionStatus = (req, res, next) => {
     });
 };
 
-exports.authRole = (role) => {
-  return (req, res, next) => {
+exports.authRole = (role) => (
+  (req, res, next) => {
     if (req.user.roles.includes(role)) {
       return next();
     } else {
@@ -67,4 +66,4 @@ exports.authRole = (role) => {
       return res.json({ message: "This route is restricted to admin(s) only" });
     }
   };
-};
+);

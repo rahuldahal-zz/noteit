@@ -1,6 +1,6 @@
 const reusable = require("../../utils/initForControllersTest");
 
-const { checkForCorrectSubscription } = require("../../notesController");
+const { checkForCorrectSubscription } = require("@controllers/notesController");
 
 describe("Middleware: 'checkForCorrectSubscription'", () => {
   // should call next

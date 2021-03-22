@@ -1,6 +1,6 @@
 const reusable = require("../../utils/initForControllersTest");
 
-const { mustBeLoggedIn } = require("../../userController");
+const { mustBeLoggedIn } = require("@controllers/userController");
 
 describe("Middleware: 'mustBeLoggedIn'", () => {
   test("should call next", async () => {

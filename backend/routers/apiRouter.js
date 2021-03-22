@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const contributorsController = require("../controllers/contributorsController");
-const adminController = require("../controllers/adminController");
+const contributorsController = require("@controllers/contributorsController");
+const adminController = require("@controllers/adminController");
 const cors = require("cors");
 const corsOptions = require("./utils/corsConfig");
-const mustHaveToken = require("../controllers/middlewares/mustHaveToken");
+const mustHaveToken = require("@controllers/middlewares/mustHaveToken");
 
 router.use(cors(corsOptions));
 

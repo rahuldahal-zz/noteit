@@ -1,4 +1,5 @@
-const ObjectID = require("mongodb").ObjectID;
+const { ObjectID } = require("mongodb");
+
 let usersCollection;
 
 require("./utils/dbCollectionInit")(["users"])
@@ -9,28 +10,26 @@ require("./utils/dbCollectionInit")(["users"])
   })
   .catch((error) => console.log(error));
 
-let setCollection = function (collection) {
+const setCollection = function setCollection(collection) {
   usersCollection = collection;
 };
 
-let User = function (data, provider) {
+const User = function User(data, provider) {
   this.data = data;
   this.provider = provider;
   this.errors = [];
 };
 
-User.prototype.validateAndCleanUp = function () {
+User.prototype.validateAndCleanUp = function validateAndCleanUp() {
   const validProperties = ["id", "email", "firstName", "lastName", "picture"];
-  for (const property in this.data) {
+  const dataProperties = Object.keys(this.data);
+  dataProperties.forEach((property) => {
     if (!validProperties.includes(property)) {
-      return this.errors.push(`bogus property ${property} received`);
+      this.errors.push(`bogus property ${property} received`);
+    } else if (typeof this.data[property] !== "string") {
+      this.errors.push(`unacceptable value type on ${property} property`);
     }
-    if (typeof this.data[property] !== "string") {
-      return this.errors.push(
-        `unacceptable value type on ${property} property`
-      );
-    }
-  }
+  });
 
   this.data = {
     OAuthId: this.data.id,
@@ -49,18 +48,22 @@ User.prototype.validateAndCleanUp = function () {
     sessionCount: 0,
     lastLogin: new Date(),
   };
+
+  if (this.errors.length > 0) {
+    return this.errors;
+  }
+  return null;
 };
 
-User.prototype.validateFacultyAndSemester = function (faculty, semester) {
+User.prototype.validateFacultyAndSemester = function validateFacultyAndSemester(
+  faculty,
+  semester
+) {
   // faculty validation
   const acceptableFaculty = ["bim", "bca", "csit"];
-  let isFacultyValid = false;
-  for (let i = 0; i < acceptableFaculty.length; i++) {
-    if (faculty == acceptableFaculty[i]) {
-      isFacultyValid = true;
-      break;
-    }
-  }
+  const isFacultyValid = acceptableFaculty.some(
+    (element) => faculty === element
+  );
   if (!isFacultyValid) this.errors.push("faculty is not valid");
 
   // semester validation
@@ -74,17 +77,13 @@ User.prototype.validateFacultyAndSemester = function (faculty, semester) {
     "seventh",
     "eighth",
   ];
-  let isSemesterValid = false;
-  for (let i = 0; i < acceptableSemester.length; i++) {
-    if (semester == acceptableSemester[i]) {
-      isSemesterValid = true;
-      break;
-    }
-  }
+  const isSemesterValid = acceptableSemester.some(
+    (element) => semester === element
+  );
   if (!isSemesterValid) this.errors.push("semester is not valid");
 };
 
-User.prototype.createUser = function () {
+User.prototype.createUser = function createUser() {
   return new Promise((resolve, reject) => {
     this.validateAndCleanUp();
     if (this.errors.length > 0) {
@@ -94,21 +93,24 @@ User.prototype.createUser = function () {
       .insertOne(this.data)
       .then((newUser) => {
         if (newUser.ops[0]) return resolve(newUser.ops[0]);
-        else return reject("Cannot create the user");
+        return reject(new Error("Cannot create the user"));
       })
       .catch((error) => console.log(error));
+    return null;
   });
 };
 
-User.prototype.sessionCountHandler = function (id, action) {
+User.prototype.sessionCountHandler = function sessionCountHandler(id, action) {
   return new Promise((resolve, reject) => {
     if (new ObjectID(id).toString() !== id.toString()) {
-      return reject("Invalid ObjectID is provided.");
+      return reject(new Error("Invalid ObjectID is provided."));
     }
 
     if (!["increment", "decrement"].includes(action)) {
       return reject(
-        "Invalid action is provided. Only increment and decrement are accepted."
+        new Error(
+          "Invalid action is provided. Only increment and decrement are accepted."
+        )
       );
     }
 
@@ -122,7 +124,7 @@ User.prototype.sessionCountHandler = function (id, action) {
         .then((updatedUser) => {
           if (updatedUser.value) {
             resolve(updatedUser.value);
-          } else reject("Cannot find the user");
+          } else reject(new Error("Cannot find the user"));
         })
         .catch((err) => reject(err));
     }
@@ -137,66 +139,78 @@ User.prototype.sessionCountHandler = function (id, action) {
         .then((updatedUser) => {
           if (updatedUser.value) {
             resolve(updatedUser.value);
-          } else reject("Cannot find the user");
+          } else reject(new Error("Cannot find the user"));
         })
         .catch((err) => reject(err));
     }
+
+    return null;
   });
 };
 
-User.prototype.saveFacultyAndSemester = function (faculty, semester) {
+User.prototype.saveFacultyAndSemester = function saveFacultyAndSemester(
+  faculty,
+  semester
+) {
   return new Promise((resolve, reject) => {
     if (typeof faculty !== "string" || typeof semester !== "string") {
-      return reject("Unacceptable values are provided");
+      return reject(new Error("Unacceptable values are provided"));
     }
 
-    faculty = faculty.toLowerCase();
-    semester = semester.toLowerCase();
+    const facultyLowercase = faculty.toLowerCase();
+    const semesterLowercase = semester.toLowerCase();
 
-    this.validateFacultyAndSemester(faculty, semester);
+    this.validateFacultyAndSemester(facultyLowercase, semesterLowercase);
 
-    if (!this.errors.length) {
+    if (this.errors.length === 0) {
       usersCollection
         .findOneAndUpdate(
           { _id: new ObjectID(this.data._id) },
           {
             $set: {
-              faculty: faculty,
-              semester: semester,
+              faculty: facultyLowercase,
+              semester: semesterLowercase,
             },
           },
           { returnOriginal: false }
         )
         .then((updatedUser) => {
           if (updatedUser.value) return resolve(updatedUser.value);
-          return reject("The requested user cannot be found");
+          return reject(new Error("The requested user cannot be found"));
         })
         .catch((error) => {
           console.log(error);
-          return reject("rejected for server-side error");
+          return reject(new Error("rejected for server-side error"));
         });
     } else {
       return reject(this.errors);
     }
+
+    return null;
   });
 };
 
-User.prototype.saveNotesHandler = function (noteId, action = "save") {
+User.prototype.saveNotesHandler = function saveNotesHandler(
+  noteId,
+  action = "save"
+) {
   return new Promise((resolve, reject) => {
     if (
       !ObjectID.isValid(noteId) ||
       new ObjectID(noteId).toString() !== noteId.toString()
     ) {
-      return reject("Invalid ObjectID is provided for that note.");
+      return reject(new Error("Invalid ObjectID is provided for that note."));
     }
 
     if (!["save", "remove"].includes(action)) {
       return reject(
-        "Invalid action is provided. Only save and remove are accepted."
+        new Error(
+          "Invalid action is provided. Only save and remove are accepted."
+        )
       );
     }
 
-    let queryObject =
+    const queryObject =
       action === "save"
         ? { $push: { savedNotes: noteId } }
         : { $pull: { savedNotes: noteId } };
@@ -207,25 +221,27 @@ User.prototype.saveNotesHandler = function (noteId, action = "save") {
       })
       .then((updatedUser) => {
         if (updatedUser.value) resolve(updatedUser.value);
-        else reject("Cannot find the user");
+        else reject(new Error("Cannot find the user"));
       })
       .catch((error) => console.log(error));
+
+    return null;
   });
 };
 
-User.prototype.findSavedNotes = function () {
+User.prototype.findSavedNotes = function findSavedNotes() {
   return new Promise((resolve, reject) => {
     usersCollection
       .findOne({ _id: new ObjectID(this.data._id) })
       .then((user) => {
         if (user) resolve(user.savedNotes);
-        else reject("Cannot find the user");
+        else reject(new Error("Cannot find the user"));
       })
       .catch((error) => console.log(error));
   });
 };
 
-User.prototype.findBy = function ({ criteria, value, update }) {
+User.prototype.findBy = function findBy({ criteria, value, update }) {
   return new Promise((resolve, reject) => {
     if (
       typeof criteria !== "string" ||
@@ -233,24 +249,32 @@ User.prototype.findBy = function ({ criteria, value, update }) {
         criteria
       )
     ) {
-      return reject({
-        reason: "invalidArgument",
-        message: "Invalid criteria is provided",
-      });
+      return reject(
+        new Error(
+          JSON.stringify({
+            reason: "invalidArgument",
+            message: "Invalid criteria is provided",
+          })
+        )
+      );
     }
 
     if (
       update &&
       (typeof update !== "string" || !["lastLogin"].includes(update))
     ) {
-      return reject({
-        reason: "invalidArgument",
-        message: "Invalid update value is provided",
-      });
+      return reject(
+        new Error(
+          JSON.stringify({
+            reason: "invalidArgument",
+            message: "Invalid update value is provided",
+          })
+        )
+      );
     }
 
-    let queryObject,
-      atMostOne = false;
+    let queryObject;
+    let atMostOne = false;
     switch (criteria) {
       case "ObjectId":
         queryObject = { _id: new ObjectID(value) };
@@ -283,14 +307,17 @@ User.prototype.findBy = function ({ criteria, value, update }) {
           if (users.length) {
             if (atMostOne) {
               return resolve(users[0]);
-            } else {
-              return resolve(users);
             }
+            return resolve(users);
           }
-          return reject({
-            reason: "noUser",
-            message: `Cannot find any user with that ${criteria}`,
-          });
+          return reject(
+            new Error(
+              JSON.stringify({
+                reason: "noUser",
+                message: `Cannot find any user with that ${criteria}`,
+              })
+            )
+          );
         })
         .catch((error) => console.log(error));
     } else {
@@ -309,12 +336,15 @@ User.prototype.findBy = function ({ criteria, value, update }) {
         .then((updatedUser) => {
           if (updatedUser.value) {
             return resolve(updatedUser.value);
-          } else {
-            return reject({
-              reason: "noUser",
-              message: `Cannot find any user with that ${criteria} to update`,
-            });
           }
+          return reject(
+            new Error(
+              JSON.stringify({
+                reason: "noUser",
+                message: `Cannot find any user with that ${criteria} to update`,
+              })
+            )
+          );
         })
         .catch((err) => console.log(err));
     }

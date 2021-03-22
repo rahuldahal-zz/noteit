@@ -1,11 +1,12 @@
 const { MongoClient, ObjectID } = require("mongodb");
-const { User, setCollection } = require("../../User");
 const fetch = require("node-fetch");
-const dotenv = require("dotenv");
-dotenv.config();
+const { User, setCollection } = require("../../User");
+require("dotenv").config();
 
 describe("createUser", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -47,18 +48,20 @@ describe("createUser", () => {
 
   test("should reject for conflict in type of arguments", async () => {
     const user = new User(googleOAuthData, "google");
-    const createdUser = await user.createUser();
+    await user.createUser();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester({}, {});
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("Unacceptable values are provided");
+      expect(rejectionMessage.message).toEqual(
+        "Unacceptable values are provided"
+      );
     }
   });
 
   test("should reject for conflict in the acceptable enum", async () => {
     const user = new User(googleOAuthData, "google");
-    const createdUser = await user.createUser();
+    await user.createUser();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester("bbs", "ninth");
@@ -73,31 +76,38 @@ describe("createUser", () => {
   });
 
   test("should reject for bogus values", async () => {
-    const response = await fetch(
-      "https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json"
-    );
-    const bogusValues = await response.json();
-    for (let i = 0; i < bogusValues.length; i += 2) {
+    try {
+      const response = await fetch(
+        "https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json"
+      );
+      const bogusValues = await response.json();
+      const asyncPromises = [];
       const user = new User(googleOAuthData, "google");
-      const createdUser = await user.createUser();
-      const thatUserData = new User(user);
-      try {
+      await user.createUser();
+
+      for (let i = 0; i < bogusValues.length; i += 2) {
+        const thatUserData = new User(user);
         if (i + 1 < bogusValues.length) {
-          return await thatUserData.saveFacultyAndSemester(
-            bogusValues[i],
-            bogusValues[i + 1]
+          asyncPromises.push(
+            thatUserData.saveFacultyAndSemester(
+              bogusValues[i],
+              bogusValues[i + 1]
+            )
           );
         } else {
-          return await thatUserData.saveFacultyAndSemester(bogusValues[i], "");
+          asyncPromises.push(
+            thatUserData.saveFacultyAndSemester(bogusValues[i], "")
+          );
         }
-      } catch (rejectionMessage) {
-        expect(rejectionMessage).toEqual(
-          expect.arrayContaining([
-            "faculty is not valid",
-            "semester is not valid",
-          ])
-        );
       }
+      await Promise.all(asyncPromises);
+    } catch (rejectionMessage) {
+      expect(rejectionMessage).toEqual(
+        expect.arrayContaining([
+          "faculty is not valid",
+          "semester is not valid",
+        ])
+      );
     }
   });
 
@@ -106,7 +116,9 @@ describe("createUser", () => {
     try {
       await thatUserData.saveFacultyAndSemester("bim", "fourth");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("The requested user cannot be found");
+      expect(rejectionMessage.message).toEqual(
+        "The requested user cannot be found"
+      );
     }
   });
 });

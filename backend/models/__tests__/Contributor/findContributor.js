@@ -1,7 +1,6 @@
 const { MongoClient, ObjectID } = require("mongodb");
 const { Contributor, setCollection } = require("../../Contributors");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("findContributor method", () => {
   let connection, db, contributorsCollection;

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { Contributor } = require("../models/Contributors");
-const { Follow } = require("../models/Follow");
+const { Contributor } = require("@models/Contributors");
+const { Follow } = require("@models/Follow");
 const sendGrid = require("@sendgrid/mail");
 const fs = require("fs");
 const path = require("path");

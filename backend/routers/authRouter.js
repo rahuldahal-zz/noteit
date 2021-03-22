@@ -1,12 +1,11 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const {
   root,
   google,
   facebook,
   callback,
   logout,
-} = require("../controllers/authController");
+} = require("@controllers/authController");
 
 router.get("/logout", logout);
 

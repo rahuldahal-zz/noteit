@@ -1,10 +1,11 @@
-const { MongoClient, ObjectID } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("findUser method", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
   let createdUser;
   const googleOAuthData = {
     id: "google|123456",
@@ -124,7 +125,7 @@ describe("findUser method", () => {
           criteria: "invalidCriteria",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("invalidArgument");
         expect(message).toEqual("Invalid criteria is provided");
       }
@@ -137,7 +138,7 @@ describe("findUser method", () => {
           value: "nonExisting@email.com",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("noUser");
         expect(message).toEqual("Cannot find any user with that email");
       }
@@ -151,7 +152,7 @@ describe("findUser method", () => {
           update: "randomValue",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("invalidArgument");
         expect(message).toEqual("Invalid update value is provided");
       }

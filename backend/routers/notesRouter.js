@@ -1,7 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/userController");
-const notesController = require("../controllers/notesController");
+const router = require("express").Router();
+const userController = require("@controllers/userController");
+const notesController = require("@controllers/notesController");
 
 router.get(
   "/:faculty/:semester/:subject/:unit",

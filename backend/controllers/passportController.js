@@ -1,10 +1,10 @@
+const { User } = require("@models/User");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const dotenv = require("dotenv");
-dotenv.config();
 
-const { User } = require("../models/User");
+dotenv.config();
 
 passport.serializeUser((user, done) => {
   console.log("from serialize, user id is ", user._id);
@@ -108,14 +108,14 @@ function createUser(profile, done, provider) {
   } else {
     const { id, first_name, last_name, email, picture } = profile;
     profile = {
-      id: id,
+      id,
       firstName: first_name,
       lastName: last_name,
       email: email ? email : "",
       picture: picture.data.url,
     };
   }
-  let user = new User(profile, provider);
+  const user = new User(profile, provider);
   user
     .createUser()
     .then((response) => {

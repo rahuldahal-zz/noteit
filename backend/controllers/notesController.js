@@ -1,5 +1,5 @@
-const { User } = require("../models/User");
-const { Notes } = require("../models/Notes");
+const { User } = require("@models/User");
+const { Notes } = require("@models/Notes");
 const GenerateView = require("./generateView");
 
 const { sendFlashMessage } = require("./utils/respond");
@@ -147,16 +147,13 @@ exports.saveNotes = (req, res) => {
   }
 };
 
-exports.sendNotesDescriptionToClient = (req, res, next) => {
-  //finding notes from the db
-  let notes = new Notes(req.user);
+exports.sendNotesDescriptionToClient = (req, res) => {
+  // finding notes from the db
+  const notes = new Notes(req.user);
   // if (!req.hasNotesInLocalStorage) {
   notes
     .findNotes(req.user.faculty, req.user.semester)
-    .then((availableNotes) => {
-      res.status(200).json(availableNotes); //use this in the front end to render subjects and their units, also store in localStorage
-      return;
-    })
+    .then((availableNotes) => res.status(200).json(availableNotes))
     .catch((error) => {
       res.status(400).json(error);
     });

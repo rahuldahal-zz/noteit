@@ -1,10 +1,11 @@
 const { MongoClient, ObjectID } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("createUser", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -48,7 +49,7 @@ describe("createUser", () => {
       await newUser.createUser();
       await newUser.sessionCountHandler("abcInvalidID", "decrement");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("Invalid ObjectID is provided.");
+      expect(rejectionMessage.message).toEqual("Invalid ObjectID is provided.");
     }
   });
 
@@ -58,7 +59,7 @@ describe("createUser", () => {
       const { _id } = await newUser.createUser();
       await newUser.sessionCountHandler(_id, "invalidArgument");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual(
+      expect(rejectionMessage.message).toEqual(
         "Invalid action is provided. Only increment and decrement are accepted."
       );
     }
@@ -70,7 +71,7 @@ describe("createUser", () => {
       await newUser.createUser();
       await newUser.sessionCountHandler(new ObjectID(), "increment");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("Cannot find the user");
+      expect(rejectionMessage.message).toEqual("Cannot find the user");
     }
   });
 });

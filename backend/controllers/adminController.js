@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { Admin } = require("../models/Admin");
+const { Admin } = require("@models/Admin");
 const dotenv = require("dotenv");
 const { signToken } = require("../utils/jwtConfig");
 

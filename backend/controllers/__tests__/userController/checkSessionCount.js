@@ -1,5 +1,5 @@
 const reusable = require("../../utils/initForControllersTest");
-const { checkSessionCount } = require("../../userController");
+const { checkSessionCount } = require("@controllers/userController");
 
 describe("Middleware: 'checkSessionCount'", () => {
   test("should call next", async () => {
