@@ -32,11 +32,12 @@ export default function getFormFields(fieldsDetail) {
           id={computedName}
           ref={fieldRef}
         >
-          {options.map((option, index) => (
-            <option className="select__option" key={index} value={option}>
-              {option}
-            </option>
-          ))}
+          {options &&
+            options.map((option, index) => (
+              <option className="select__option" key={index} value={option}>
+                {option}
+              </option>
+            ))}
           span.
         </select>
       </div>

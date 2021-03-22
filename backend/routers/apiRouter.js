@@ -3,6 +3,7 @@ const contributorsController = require("../controllers/contributorsController");
 const adminController = require("../controllers/adminController");
 const cors = require("cors");
 const corsOptions = require("./utils/corsConfig");
+const mustHaveToken = require("../controllers/middlewares/mustHaveToken");
 
 router.use(cors(corsOptions));
 
@@ -12,21 +13,13 @@ router.use(cors(corsOptions));
 
 // users
 
-router.post(
-  "/admin/users",
-  adminController.mustHaveToken,
-  adminController.sendUsers
-);
+router.post("/admin/users", mustHaveToken, adminController.sendUsers);
 
-router.put(
-  "/admin/users/approve",
-  adminController.mustHaveToken,
-  adminController.approveUser
-);
+router.put("/admin/users/approve", mustHaveToken, adminController.approveUser);
 
 router.put(
   "/admin/users/disapprove",
-  adminController.mustHaveToken,
+  mustHaveToken,
   adminController.disapproveUser
 );
 
@@ -37,23 +30,15 @@ router.put(
 
 router.post(
   "/admin/contributors",
-  adminController.mustHaveToken,
+  mustHaveToken,
   adminController.getAllContributors
 );
 
 // notes
 
-router.post(
-  "/admin/notes",
-  adminController.mustHaveToken,
-  adminController.getAllNotes
-);
+router.post("/admin/notes", mustHaveToken, adminController.getAllNotes);
 
-router.post(
-  "/admin/notes/create",
-  adminController.mustHaveToken,
-  adminController.createNote
-);
+router.post("/admin/notes/create", mustHaveToken, adminController.createNote);
 
 /**
  * Contributors' API
@@ -67,18 +52,18 @@ router.post(
 
 router.put(
   "/admin/contributors/approve",
-  adminController.mustHaveToken,
+  mustHaveToken,
   adminController.approveContributor
 );
 
 router.put(
   "/admin/contributor/disapprove",
-  adminController.mustHaveToken,
+  mustHaveToken,
   adminController.disapproveContributor
 );
 router.post(
   "/contributors/submitNote",
-  adminController.mustHaveToken,
+  mustHaveToken,
   contributorsController.createNoteFileAndMail
 );
 

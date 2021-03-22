@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // routers
-const rootRouter = require("./routers/rootRouter");
 const authRouter = require("./routers/authRouter");
 const usersRouter = require("./routers/usersRouter");
 const notesRouter = require("./routers/notesRouter");

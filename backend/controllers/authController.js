@@ -26,9 +26,10 @@ exports.root = (req, res) => {
     "savedNotes",
   ];
   const payload = getSubObject(req.user, propertiesToReturn);
-  const signedToken = signToken(payload);
+  const signedToken = signToken({ payload });
   responsePrototype.isAuthenticated = true;
   responsePrototype.token = signedToken;
+  responsePrototype.isAdmin = req.user.roles.includes("admin");
 
   if (!req.user.faculty || !req.user.semester) {
     responsePrototype.isNewUser = true;

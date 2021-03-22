@@ -13,19 +13,6 @@ exports.saveFacultyAndSemester = (req, res, next) => {
     .catch((error) => res.status(400).json(error));
 };
 
-exports.home = (req, res) => {
-  if (req.user.faculty && req.user.semester) {
-    res.renderTemplate("index", { toRender: "notes/home" });
-
-    // if not approved, log them out after 30 seconds
-
-    if (!req.user.isApproved) {
-      setTimeout(() => req.logout, 30000);
-      return;
-    }
-  }
-};
-
 exports.mustBeLoggedIn = (req, res, next) => {
   if (req.user && req.user.faculty && req.user.semester) {
     next();
@@ -74,16 +61,10 @@ exports.checkSubscriptionStatus = (req, res, next) => {
 exports.authRole = (role) => {
   return (req, res, next) => {
     if (req.user.roles.includes(role)) {
-      if (role === "admin") {
-        req.admin = req.user.firstName;
-      }
       return next();
     } else {
-      sendFlashMessage({
-        collection: "errors",
-        message: "You do not have the permission to access this page.",
-        redirectURL: "/",
-      });
+      res.status(403);
+      return res.json({ message: "This route is restricted to admin(s) only" });
     }
   };
 };

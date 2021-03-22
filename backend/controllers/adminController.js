@@ -1,38 +1,20 @@
 const jwt = require("jsonwebtoken");
 const { Admin } = require("../models/Admin");
 const dotenv = require("dotenv");
-const reusable = require("./utils/respond");
+const { signToken } = require("../utils/jwtConfig");
 
 dotenv.config();
 
-exports.home = (req, res) => {
-  res.renderTemplate("index", {
-    toRender: "admin/adminLoginPage",
-    data: { admin: req.admin },
-  });
-};
-
 exports.login = (req, res) => {
   if (
-    req.body.username === process.env.ADMINUSERNAME &&
-    req.body.password === process.env.ADMINPASSWORD
+    req.body.username === process.env.ADMIN_USERNAME &&
+    req.body.password === process.env.ADMIN_PASSWORD
   ) {
-    res.renderTemplate("index", {
-      toRender: "admin/dashboard",
-      data: {
-        jwt: jwt.sign(
-          { adminName: req.body.adminName },
-          process.env.JWTSECRET,
-          {
-            expiresIn: "30m",
-          }
-        ),
-      },
-    });
-    // res.renderTemplate("admin/dashboard");
+    const payload = { admin: req.user._id };
+    const token = signToken({ payload, admin: true });
+    return res.status(202).json({ token });
   } else {
-    console.log("incorrect admin credentials");
-    res.redirect("/");
+    return res.status(401).end();
   }
 };
 

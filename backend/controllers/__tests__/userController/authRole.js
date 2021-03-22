@@ -1,4 +1,3 @@
-const reusable = require("../../utils/initForControllersTest");
 const { authRole } = require("../../userController");
 
 describe("Middleware: 'authRole'", () => {
@@ -27,17 +26,19 @@ describe("Middleware: 'authRole'", () => {
         roles: ["basic"],
       },
     };
-    const res = {};
+    const res = {
+      status: jest.fn(),
+      json: jest.fn(),
+    };
     const next = jest.fn();
     const middleware = authRole(ROLE_TO_BE_CHECKED);
     await middleware(req, res, next);
 
     // assertions
     expect(next).not.toBeCalled();
-    expect(reusable.sendFlashMessage).toBeCalledWith({
-      collection: "errors",
-      message: "You do not have the permission to access this page.",
-      redirectURL: "/",
+    expect(res.status).toBeCalledWith(403);
+    expect(res.json).toBeCalledWith({
+      message: "This route is restricted to admin(s) only",
     });
   });
 });

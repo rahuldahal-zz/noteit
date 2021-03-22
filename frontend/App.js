@@ -9,8 +9,9 @@ import Footer from "@components/Footer/Footer";
 import Home from "@screens/Home";
 import About from "@screens/About";
 import Team from "@screens/Team";
-import Guest from "@screens/Guest";
+import Root from "@screens/Root";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
+import Admin from "@screens/Admin";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
@@ -25,7 +26,7 @@ function App() {
       <Nav />
       <Switch>
         <Route exact path="/">
-          <Guest history={history} />
+          <Root history={history} />
         </Route>
         <PrivateRoute
           exact
@@ -45,6 +46,12 @@ function App() {
         <Route exact path="/team">
           <Team />
         </Route>
+        <PrivateRoute
+          exact
+          component={Admin}
+          path="/only-admin"
+          condition="isAdmin"
+        />
       </Switch>
       <Footer />
     </Router>

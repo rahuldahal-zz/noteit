@@ -10,7 +10,9 @@ const {
   sendNotesDescriptionToClient,
 } = require("../controllers/notesController");
 
-const mustHaveToken = require("../controllers/middlewares/mustHaveToken");
+const {
+  mustHaveUserToken,
+} = require("../controllers/middlewares/mustHaveToken");
 
 router.get(
   "/availableNotes",
@@ -19,10 +21,14 @@ router.get(
   sendNotesDescriptionToClient
 );
 
-router.get("/protected", mustHaveToken, (req, res) =>
+router.get("/protected", mustHaveUserToken, (req, res) =>
   res.json({ message: "go to the controller" })
 );
 
-router.post("/saveFacultyAndSemester", mustHaveToken, saveFacultyAndSemester);
+router.post(
+  "/saveFacultyAndSemester",
+  mustHaveUserToken,
+  saveFacultyAndSemester
+);
 
 module.exports = router;

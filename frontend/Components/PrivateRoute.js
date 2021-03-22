@@ -7,7 +7,7 @@ export default function PrivateRoute({
   component: Component,
   ...rest
 }) {
-  const { isNewUser, isAuthenticated } = useAuth();
+  const { isNewUser, isAuthenticated, isAdmin } = useAuth();
   const [componentToRender, setComponentToRender] = useState(null);
 
   const routerJSX = (
@@ -23,8 +23,12 @@ export default function PrivateRoute({
       case "isAuthenticated":
         !isNewUser && setComponentToRender(routerJSX);
         break;
+      case "isAdmin":
+        console.log({ isAdmin });
+        isAdmin && setComponentToRender(routerJSX);
+        break;
     }
-  }, []);
+  }, [condition]);
 
   return !isAuthenticated ? <Redirect to="/" /> : componentToRender;
 }
