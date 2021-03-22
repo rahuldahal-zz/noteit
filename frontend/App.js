@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { AuthProvider } from "@contexts/AuthProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -8,16 +8,13 @@ import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
 import Home from "@screens/Home";
 import About from "@screens/About";
-// import Team from "@screens/Team";
+import Team from "@screens/Team";
 import Root from "@screens/Root";
+import Admin from "@screens/Admin";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
-
-{
-  /* <Admin />; */
-}
 
 const history = createBrowserHistory();
 
