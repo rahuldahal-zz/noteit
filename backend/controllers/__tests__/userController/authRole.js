@@ -1,4 +1,4 @@
-const { authRole } = require("@controllers/userController");
+const { authRole } = require("../../userController");
 
 describe("Middleware: 'authRole'", () => {
   const ROLE_TO_BE_CHECKED = "admin";

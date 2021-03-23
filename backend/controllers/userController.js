@@ -1,7 +1,7 @@
 const { User } = require("@models/User");
 
-exports.saveFacultyAndSemester = (req, res, next) => {
-  let user = new User(req.user);
+exports.saveFacultyAndSemester = (req, res) => {
+  const user = new User(req.user);
   user
     .saveFacultyAndSemester(req.body.faculty, req.body.semester)
     .then(() =>
@@ -12,58 +12,36 @@ exports.saveFacultyAndSemester = (req, res, next) => {
     .catch((error) => res.status(400).json(error));
 };
 
-exports.mustBeLoggedIn = (req, res, next) => {
-  if (req.user && req.user.faculty && req.user.semester) {
-    next();
-    return;
-  } else {
-    return sendFlashMessage({
-      collection: "errors",
-      message: "You must be logged in to perform that action",
-      redirectURL: "/",
-    });
-  }
-};
-
 exports.checkSessionCount = (req, res, next) => {
   if (req.user.sessionCount < 3) {
     return next();
   }
-  return sendFlashMessage({
-    collection: "errors",
-    message: "Account is being used in more than 2 devices",
-    redirectURL: "/",
-  });
+  res.status(400);
+  return res.json({ message: "Account is being used in more than 2 devices" });
 };
 
 exports.mustBeApproved = (req, res, next) => {
   if (req.user.isApproved) {
     next();
     return;
-  } else {
-    res
-      .status(403)
-      .json({ message: "You are not approved to access this page" });
   }
+  res.status(403).json({ message: "You are not approved to access this page" });
 };
 
 exports.checkSubscriptionStatus = (req, res, next) => {
   if (!req.user.isSubscriptionExpired) {
     next();
     return;
-  } else
-    res.status(403).json({
-      message: "Your subscription has expired, UPGRADE your account.",
-    });
+  }
+  res.status(403).json({
+    message: "Your subscription has expired, UPGRADE your account.",
+  });
 };
 
-exports.authRole = (role) => (
-  (req, res, next) => {
-    if (req.user.roles.includes(role)) {
-      return next();
-    } else {
-      res.status(403);
-      return res.json({ message: "This route is restricted to admin(s) only" });
-    }
-  };
-);
+exports.authRole = (role) => (req, res, next) => {
+  if (req.user.roles.includes(role)) {
+    return next();
+  }
+  res.status(403);
+  return res.json({ message: "This route is restricted to admin(s) only" });
+};

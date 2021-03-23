@@ -34,6 +34,7 @@
     "helmet": "^4.0.0",
     "helmet-csp": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.3.2",
     "mongoose": "^5.9.19",
     "morgan": "^1.10.0",
@@ -79,11 +80,23 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.2"
   },
+  "_moduleAliases": {
+    "@routers"      : "./backend/routers",
+    "@controllers"      : "./backend/controllers",
+    "@models"      : "./backend/models",
+    "@utils"      : "./backend/utils"
+  },
   "jest": {
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@routers(.*)$": "<rootDir>/backend/routers$1",
+      "^@controllers(.*)$": "<rootDir>/backend/controllers$1",
+      "^@models(.*)$": "<rootDir>/backend/models$1",
+      "^@utils(.*)$": "<rootDir>/backend/routers$1"
+    } 
   },
   "browserslist": [
     "last 2 Chrome versions"

@@ -1,13 +1,15 @@
 const express = require("express");
-const app = express();
 const passport = require("passport");
-require("./controllers/passportController"); // this needs to be here, in order to "run"
+require("@controllers/passportController");
 const cookieSession = require("cookie-session");
 const path = require("path");
 
+const app = express();
+
 app.use(require("morgan")("combined"));
 app.use(require("helmet")());
-app.use(require("./utils/cspConfig"));
+app.use(require("@utils/cspConfig"));
+
 app.use(
   cookieSession({
     name: "userSession",
@@ -23,17 +25,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // routers
-const authRouter = require("./routers/authRouter");
-const usersRouter = require("./routers/usersRouter");
-const notesRouter = require("./routers/notesRouter");
-const contributorsRouter = require("./routers/contributorsRouter");
-const adminRouter = require("./routers/adminRouter");
+const authRouter = require("@routers/authRouter");
+const usersRouter = require("@routers/usersRouter");
+const notesRouter = require("@routers/notesRouter");
+const adminRouter = require("@routers/adminRouter");
 
 // using the routers
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
-app.use("/contributors", contributorsRouter);
 app.use("/admin", adminRouter);
 
 // server static assets in production
