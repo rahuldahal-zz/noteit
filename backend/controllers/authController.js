@@ -1,8 +1,8 @@
 const { User } = require("@models/User");
 const passport = require("passport");
-const getSubObject = require("../utils/getSubObject");
-const { signToken } = require("../utils/jwtConfig");
-const { server } = require("../utils/getServer");
+const getSubObject = require("@utils/getSubObject");
+const { signToken } = require("@utils/jwtConfig");
+const { server } = require("@utils/getServer");
 
 exports.root = (req, res) => {
   const responsePrototype = {
