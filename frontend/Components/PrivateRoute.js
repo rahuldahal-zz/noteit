@@ -1,34 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
-import { Redirect, Route } from "react-router";
+import { Route, withRouter } from "react-router";
 
-export default function PrivateRoute({
-  condition,
-  component: Component,
-  ...rest
-}) {
-  const { isNewUser, isAuthenticated, isAdmin } = useAuth();
-  const [componentToRender, setComponentToRender] = useState(null);
+export default withRouter(
+  ({ history, condition, component: Component, ...rest }) => {
+    const authContext = useAuth();
+    const [componentToRender, setComponentToRender] = useState(null);
+    const routerJSX = (
+      <Route {...rest} render={(props) => <Component {...props} />} />
+    );
 
-  const routerJSX = (
-    <Route {...rest} render={(props) => <Component {...props} />} />
-  );
-
-  useEffect(() => {
-    console.log(condition);
-    switch (condition) {
-      case "newUser":
-        isNewUser && setComponentToRender(routerJSX);
-        break;
-      case "existingUser":
-        !isNewUser && setComponentToRender(routerJSX);
-        break;
-      case "isAdmin":
-        console.log({ isAdmin });
-        isAdmin && setComponentToRender(routerJSX);
-        break;
+    function handleRouting() {
+      const { isAuthenticated, isNewUser, isAdmin } = authContext;
+      if (!isAuthenticated) {
+        history.push("/");
+      }
+      console.log(condition);
+      switch (condition) {
+        case "newUser":
+          if (isNewUser) {
+            return setComponentToRender(routerJSX);
+          }
+          break;
+        case "existingUser":
+          if (!isNewUser) {
+            return setComponentToRender(routerJSX);
+          }
+          break;
+        case "isAdmin":
+          if (isAdmin) {
+            return setComponentToRender(routerJSX);
+          }
+          break;
+      }
+      return history.push("/");
     }
-  }, [condition]);
 
-  return !isAuthenticated ? <Redirect to="/" /> : componentToRender;
-}
+    useEffect(() => {
+      if (!authContext.isLoading) {
+        handleRouting();
+      }
+    }, [authContext]);
+
+    return componentToRender;
+  }
+);

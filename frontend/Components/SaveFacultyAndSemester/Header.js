@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Form from "@components/Form/Form";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
-import Greeting from "./Greeting";
+import { Redirect } from "react-router";
+import { useAuth } from "@contexts/AuthProvider";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
 import getFormFields from "@components/Form/utils/getFormFields";
-import { useAuth } from "@contexts/AuthProvider";
+import Greeting from "./Greeting";
 
 export default function Header() {
   const { token } = useAuth();
@@ -28,7 +29,9 @@ export default function Header() {
         },
         body: JSON.stringify(data),
       });
-      console.log(status);
+      if (status === 202) {
+        return window.location("/");
+      }
     } catch (error) {
       console.log(error);
     }

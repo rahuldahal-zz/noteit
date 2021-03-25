@@ -1,9 +1,8 @@
 import { useAuth } from "@contexts/AuthProvider";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function UserDashboard() {
   const { user } = useAuth();
-  const { firstName, picture } = user;
   const availableSubjectsData = [
     "Principles of Management",
     "Computer Information System",
@@ -17,7 +16,7 @@ export default function UserDashboard() {
       <section className="home__availableSubjects flex">
         <h5>Available Subjects</h5>
         {availableSubjectsData.map((subject, index) => (
-          <button key={index} className="home__subject">
+          <button type="button" key={index} className="home__subject">
             {subject}
           </button>
         ))}
@@ -26,14 +25,12 @@ export default function UserDashboard() {
   }
 
   return (
-    <main className="home maximumWidth">
-      <div className="content home__content">
-        <h4 className="heading home__heading">
-          {firstName}, here is the list of available notes based on your
-          profile.
-        </h4>
-        <AvailableSubjects />
-      </div>
-    </main>
+    <>
+      <h4 className="heading home__heading">
+        {user.firstName}, here is the list of available notes based on your
+        profile.
+      </h4>
+      <AvailableSubjects />
+    </>
   );
 }

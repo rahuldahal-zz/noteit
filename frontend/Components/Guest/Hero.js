@@ -5,7 +5,6 @@ import LoginButton from "@components/Buttons/LoginButton";
 
 export default function Hero({ setShowLoginOptions }) {
   const [isScreenWide, setIsScreenWide] = useState(false);
-
   useEffect(() => {
     if (isScreenLargerThan(768)) {
       setIsScreenWide(true);
@@ -21,10 +20,10 @@ export default function Hero({ setShowLoginOptions }) {
       )}
       <div className="content hero__content flex">
         <div className="hero__taglineWrap">
-          <h1 className="hero__tagline">
+          <h2 className="hero__tagline">
             We care
             <br /> about your time.
-          </h1>
+          </h2>
           <p className="hero__subTagLine">
             And will help you save it by providing quality notes, that are easy
             to refer and understand.
@@ -40,7 +39,6 @@ export default function Hero({ setShowLoginOptions }) {
             className="hero__mockup"
             width="480px"
           />
-          <i className="fas fa-play font-3x desktop"></i>
         </div>
       </div>
     </section>

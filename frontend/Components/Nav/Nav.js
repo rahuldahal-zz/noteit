@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Links from "./Links";
-import linksData from "./utils/linksData";
+import FAB from "@components/FAB/FAB";
+import Logo from "@svgs/logoAlt.svg";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
-import Logo from "@svgs/logoAlt.svg";
-import TextWithIcon from "@components/TextWithIcon";
-import getIconPaths from "@utils/iconDetails";
-import FAB from "@components/FAB/FAB";
+import Links from "./Links";
+import linksData from "./utils/linksData";
 
 export default function Nav({ setShowLoginOptions }) {
   const { token, isAuthenticated } = useAuth();
@@ -41,7 +39,11 @@ export default function Nav({ setShowLoginOptions }) {
         <div className="nav__items">
           <div className="nav__actions">
             {isAuthenticated ? <UserActions /> : <GuestActions />}
-            <div className="nav__hamBurger" tabIndex="0"></div>
+            <button
+              type="button"
+              aria-label="hamburger button"
+              className="nav__hamBurger"
+            />
           </div>
         </div>
       </div>

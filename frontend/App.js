@@ -31,12 +31,14 @@ function App() {
           component={SaveFacultyAndSemester}
           path="/save-faculty-and-semester"
           condition="newUser"
+          history={history}
         />
         <PrivateRoute
           exact
           component={Home}
           path="/home"
           condition="existingUser"
+          history={history}
         />
         <Route exact path="/about">
           <About />
@@ -49,6 +51,7 @@ function App() {
           component={Admin}
           path="/only-admin"
           condition="isAdmin"
+          history={history}
         />
       </Switch>
       <Footer />
