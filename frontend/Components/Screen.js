@@ -19,7 +19,6 @@ export default withRouter(({ children, root, history }) => {
   }
 
   if (root && authContext.isAuthenticated && !authContext.isNewUser) {
-    console.log(history);
     history.push("/home");
     return null;
   }

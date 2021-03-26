@@ -41,7 +41,6 @@ User.prototype.validateAndCleanUp = function validateAndCleanUp() {
     faculty: null,
     semester: null,
     roles: ["basic"], // ["basic", "contributor", "moderator", "admin"]
-    isApproved: false,
     isSubscriptionExpired: false,
     joinedOn: new Date(),
     savedNotes: [],
@@ -83,7 +82,7 @@ User.prototype.validateFacultyAndSemester = function validateFacultyAndSemester(
   if (!isSemesterValid) this.errors.push("semester is not valid");
 };
 
-User.prototype.createUser = function createUser() {
+User.prototype.create = function create() {
   return new Promise((resolve, reject) => {
     this.validateAndCleanUp();
     if (this.errors.length > 0) {

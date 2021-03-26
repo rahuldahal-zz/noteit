@@ -10,11 +10,11 @@ require("./utils/dbCollectionInit")(["notes"])
   })
   .catch((error) => console.log(error));
 
-const setCollection = function (collection) {
+const setCollection = function setCollection(collection) {
   notesCollection = collection;
 };
 
-const Notes = function (data) {
+const Notes = function Notes(data) {
   this.data = data;
   this.errors = [];
 };

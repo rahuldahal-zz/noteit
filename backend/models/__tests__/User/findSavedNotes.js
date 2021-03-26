@@ -35,7 +35,7 @@ describe("saveNote", () => {
   const mockNoteIDs = [new ObjectID(), new ObjectID()];
 
   test("should resolve by getting savedNotes", async () => {
-    const { _id } = await user.createUser();
+    const { _id } = await user.create();
     const mockUser = new User({ _id });
     await mockUser.saveNotesHandler(mockNoteIDs[0]);
     await mockUser.saveNotesHandler(mockNoteIDs[1]);

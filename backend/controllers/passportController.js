@@ -28,7 +28,7 @@ passport.deserializeUser((id, done) => {
     .catch((error) => done(error));
 });
 
-function createUser(profile, done, provider) {
+function create(profile, done, provider) {
   console.log("creating a new user...");
   if (provider === "google") {
     const { sub, given_name, family_name, email, picture } = profile;
@@ -51,7 +51,7 @@ function createUser(profile, done, provider) {
   }
   const user = new User(profile, provider);
   user
-    .createUser()
+    .create()
     .then((response) => {
       done(null, response);
     })
@@ -85,7 +85,7 @@ passport.use(
           // done will call the serialize
           return done(null, currentUser);
         })
-        .catch((error) => createUser(profile._json, done, "google"));
+        .catch((error) => create(profile._json, done, "google"));
     }
   )
 );
@@ -119,7 +119,7 @@ passport.use(
           // done will call the serialize
           return done(null, currentUser);
         })
-        .catch((error) => createUser(profile._json, done, "facebook"));
+        .catch((error) => create(profile._json, done, "facebook"));
     }
   )
 );

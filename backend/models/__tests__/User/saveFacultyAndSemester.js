@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const { User, setCollection } = require("../../User");
 require("dotenv").config();
 
-describe("createUser", () => {
+describe("create", () => {
   let connection;
   let db;
   let usersCollection;
@@ -34,7 +34,7 @@ describe("createUser", () => {
   const newUser = new User(googleOAuthData, "google");
 
   test("should resolve by saving faculty and semester", async () => {
-    const user = await newUser.createUser();
+    const user = await newUser.create();
     const thatUserData = new User(user);
     const { faculty, semester } = await thatUserData.saveFacultyAndSemester(
       "bim",
@@ -48,7 +48,7 @@ describe("createUser", () => {
 
   test("should reject for conflict in type of arguments", async () => {
     const user = new User(googleOAuthData, "google");
-    await user.createUser();
+    await user.create();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester({}, {});
@@ -61,7 +61,7 @@ describe("createUser", () => {
 
   test("should reject for conflict in the acceptable enum", async () => {
     const user = new User(googleOAuthData, "google");
-    await user.createUser();
+    await user.create();
     const thatUserData = new User(user);
     try {
       await thatUserData.saveFacultyAndSemester("bbs", "ninth");
@@ -83,7 +83,7 @@ describe("createUser", () => {
       const bogusValues = await response.json();
       const asyncPromises = [];
       const user = new User(googleOAuthData, "google");
-      await user.createUser();
+      await user.create();
 
       for (let i = 0; i < bogusValues.length; i += 2) {
         const thatUserData = new User(user);

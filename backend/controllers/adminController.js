@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { Admin } = require("@models/Admin");
 const dotenv = require("dotenv");
+const { Contributor } = require("@models/Contributors");
 const { signToken } = require("../utils/jwtConfig");
 
 dotenv.config();
@@ -13,34 +14,12 @@ exports.login = (req, res) => {
     const payload = { admin: req.user._id };
     const token = signToken({ payload, admin: true });
     return res.status(202).json({ token });
-  } else {
-    return res.status(401).end();
   }
-};
-
-exports.mustHaveToken = function (req, res, next) {
-  try {
-    if (req.method === "GET") {
-      const token = req.headers["authorization"].split(" ")[1];
-      console.log(token);
-      const payload = jwt.verify(token, process.env.JWTSECRET);
-      console.log(payload);
-      return next();
-    }
-
-    const payload = jwt.verify(req.body.token, process.env.JWTSECRET);
-    console.log(payload);
-    // making the payload available for the next middleware
-    req.payload = payload;
-    return next();
-  } catch (error) {
-    res.status(403).json({ message: "You must provide a valid token" });
-  }
+  return res.status(401).end();
 };
 
 exports.sendUsers = (req, res) => {
-  let searchTerm = req.body.searchTerm;
-  let basedOn = req.body.basedOn;
+  const { searchTerm, basedOn } = req.body;
 
   Admin.prototype
     .handleSearch(searchTerm, basedOn)
@@ -103,12 +82,33 @@ exports.disapproveContributor = (req, res) => {
     .catch((error) => res.status(500).json({ message: error }));
 };
 
+exports.createContributor = (req, res, next) => {
+  const { userId } = req.body;
+  const contributor = new Contributor({ userId });
+  contributor
+    .create()
+    .then((createdContributor) => {
+      req.createdContributor = createdContributor;
+      return next();
+    })
+    .catch((error) => res.status(400).send(error));
+};
+
+exports.makeContributor = (req, res) => {
+  Admin.prototype
+    .findAndMakeContributor(req.body.userId)
+    .then(() => {
+      return res.status(201).json(req.createdContributor);
+    })
+    .catch((error) => res.send(error));
+};
+
 exports.removeAsContributor = (req, res, next) => {
-  Admin.findAndRemoveContributor(req.body.userId)
+  Admin.prototype
+    .findAndRemoveContributor(req.body.userId)
     .then((response) => {
       req.recentlyRemovedContributor = response;
-      next();
-      return;
+      return next();
     })
     .catch((error) => res.send(error));
 };

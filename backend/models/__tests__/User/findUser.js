@@ -24,7 +24,7 @@ describe("findUser method", () => {
     db = await connection.db();
     usersCollection = db.collection("users");
     setCollection(usersCollection);
-    createdUser = await user.createUser();
+    createdUser = await user.create();
   });
 
   afterAll(async () => {
@@ -66,8 +66,8 @@ describe("findUser method", () => {
       const newUserOne = new User(googleOAuthData, "google");
       const newUserTwo = new User(googleOAuthData, "google");
       try {
-        await newUserOne.createUser();
-        await newUserTwo.createUser();
+        await newUserOne.create();
+        await newUserTwo.create();
         await newUserOne.saveFacultyAndSemester("bim", "second");
         await newUserTwo.saveFacultyAndSemester("bim", "sixth");
         const userQuery = await newUserOne.findBy({
@@ -85,8 +85,8 @@ describe("findUser method", () => {
       const newUserOne = new User(googleOAuthData, "google");
       const newUserTwo = new User(googleOAuthData, "google");
       try {
-        await newUserOne.createUser();
-        await newUserTwo.createUser();
+        await newUserOne.create();
+        await newUserTwo.create();
         await newUserOne.saveFacultyAndSemester("bim", "second");
         await newUserTwo.saveFacultyAndSemester("bca", "second");
         const userQuery = await newUserOne.findBy({
@@ -102,7 +102,7 @@ describe("findUser method", () => {
 
     test("user for given role", async () => {
       const newUser = new User(googleOAuthData, "google");
-      const { _id } = await newUser.createUser();
+      const { _id } = await newUser.create();
       const x = await usersCollection.findOneAndUpdate(
         { _id },
         { $push: { roles: "moderator" } },

@@ -29,12 +29,14 @@ const authRouter = require("@routers/authRouter");
 const usersRouter = require("@routers/usersRouter");
 const notesRouter = require("@routers/notesRouter");
 const adminRouter = require("@routers/adminRouter");
+const apiRouter = require("@routers/apiRouter");
 
 // using the routers
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/notes", notesRouter);
 app.use("/admin", adminRouter);
+app.use("/api", apiRouter);
 
 // server static assets in production
 if (process.env.NODE_ENV === "production") {

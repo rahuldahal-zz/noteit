@@ -1,0 +1,51 @@
+export default [
+  {
+    type: "number",
+    displayName: "Unit no.",
+    name: "unit",
+    defaultValue: null,
+    placeholder: "Unit no.",
+  },
+  {
+    type: "text",
+    displayName: "Title",
+    name: "title",
+    defaultValue: null,
+    placeholder: "Title for the note",
+  },
+  {
+    type: "select",
+    options: ["BIM", "BCA", "CSIT"],
+    displayName: "Faculty",
+    defaultValue: null,
+    placeholder: "",
+  },
+  {
+    type: "select",
+    options: [
+      "first",
+      "second",
+      "third",
+      "fourth",
+      "fifth",
+      "sixth",
+      "seventh",
+      "eighth",
+    ],
+    displayName: "Semester",
+    defaultValue: null,
+    placeholder: "",
+  },
+  {
+    type: "text",
+    displayName: "Subject",
+    defaultValue: null,
+    placeholder: "Associated Subject",
+  },
+  {
+    type: "textarea",
+    displayName: "Note",
+    defaultValue: null,
+    placeholder: "Note's Markdown",
+  },
+];

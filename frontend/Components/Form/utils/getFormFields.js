@@ -24,6 +24,16 @@ export default function getFormFields(fieldsDetail) {
         ref={fieldRef}
       />
     );
+    const TextArea = (
+      <textarea
+        name={computedName}
+        id={computedName}
+        cols="30"
+        rows="10"
+        placeholder={placeholder}
+        ref={fieldRef}
+      />
+    );
     const SelectElement = (
       <div className="selectWrap">
         <select
@@ -43,10 +53,20 @@ export default function getFormFields(fieldsDetail) {
       </div>
     );
     fieldRefs.push(fieldRef);
+    let fieldToRender = InputElement;
+
+    if (type === "select") {
+      fieldToRender = SelectElement;
+    }
+
+    if (type === "textarea") {
+      fieldToRender = TextArea;
+    }
+
     return (
       <fieldset key={index} className="form__fieldset">
         <label htmlFor={computedName}>{displayName}</label>
-        {type === "select" ? SelectElement : InputElement}
+        {fieldToRender}
       </fieldset>
     );
   });

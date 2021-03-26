@@ -3,7 +3,7 @@ import Form from "@components/Form/Form";
 import getFormFields from "@components/Form/utils/getFormFields";
 import { useAuth } from "@contexts/AuthProvider";
 
-export default function Login() {
+export default function Login({ setAdminToken }) {
   const { token } = useAuth();
   const formFieldsDetail = [
     {
@@ -37,7 +37,9 @@ export default function Login() {
       body: JSON.stringify(data),
     });
     const { token: adminToken } = await res.json();
-    console.log(adminToken);
+    if (adminToken) {
+      return setAdminToken(adminToken);
+    }
   }
   return (
     <Form fieldsJSX={fieldsJSX} onSubmit={(e) => handleSubmit(e)}>

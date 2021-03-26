@@ -35,7 +35,7 @@ describe("saveNote", () => {
   const particularNoteID = new ObjectID();
 
   test("should resolve by saving and removing a particular note", async () => {
-    const { _id } = await user.createUser();
+    const { _id } = await user.create();
     const savedDoc = await new User({ _id }).saveNotesHandler(particularNoteID);
     const removedDoc = await new User({ _id }).saveNotesHandler(
       particularNoteID,

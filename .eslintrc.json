@@ -6,6 +6,7 @@
       "default-case": [0],
       "no-console": 1,
       "no-underscore-dangle": 0,
+      "arrow-body-style": 0,
       "react/prop-types": 0,
       "no-restricted-globals": 1,
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

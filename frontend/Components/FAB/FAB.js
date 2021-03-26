@@ -4,7 +4,7 @@ import getIconPaths from "@utils/iconDetails";
 
 export default function FAB({ icon, textContent, ...rest }) {
   return (
-    <button className="fab" {...rest}>
+    <button type="button" className="fab" {...rest}>
       <TextWithIcon textContent={textContent} pathData={getIconPaths(icon)} />
     </button>
   );

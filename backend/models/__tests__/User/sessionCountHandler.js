@@ -2,7 +2,7 @@ const { MongoClient, ObjectID } = require("mongodb");
 const { User, setCollection } = require("../../User");
 require("dotenv").config();
 
-describe("createUser", () => {
+describe("create", () => {
   let connection;
   let db;
   let usersCollection;
@@ -34,7 +34,7 @@ describe("createUser", () => {
   const user = new User(googleOAuthData, "google");
 
   test("should resolve by increasing or decreasing the sessionCount", async () => {
-    const { _id } = await user.createUser();
+    const { _id } = await user.create();
     const incrementedDoc = await user.sessionCountHandler(_id, "increment");
     const decrementedDoc = await user.sessionCountHandler(_id, "decrement");
     expect(incrementedDoc.sessionCount).toEqual(1);
@@ -46,7 +46,7 @@ describe("createUser", () => {
   test("should reject for invalid ObjectID", async () => {
     try {
       const newUser = new User(googleOAuthData, "google");
-      await newUser.createUser();
+      await newUser.create();
       await newUser.sessionCountHandler("abcInvalidID", "decrement");
     } catch (rejectionMessage) {
       expect(rejectionMessage.message).toEqual("Invalid ObjectID is provided.");
@@ -56,7 +56,7 @@ describe("createUser", () => {
   test("should reject for invalid action", async () => {
     try {
       const newUser = new User(googleOAuthData, "google");
-      const { _id } = await newUser.createUser();
+      const { _id } = await newUser.create();
       await newUser.sessionCountHandler(_id, "invalidArgument");
     } catch (rejectionMessage) {
       expect(rejectionMessage.message).toEqual(
@@ -68,7 +68,7 @@ describe("createUser", () => {
   test("should reject for unmatched ObjectID", async () => {
     try {
       const newUser = new User(googleOAuthData, "google");
-      await newUser.createUser();
+      await newUser.create();
       await newUser.sessionCountHandler(new ObjectID(), "increment");
     } catch (rejectionMessage) {
       expect(rejectionMessage.message).toEqual("Cannot find the user");
