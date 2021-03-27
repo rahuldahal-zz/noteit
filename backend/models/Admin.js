@@ -253,11 +253,11 @@ Admin.prototype.cleanUp = function cleanUp() {
   });
 
   this.data = {
-    unitNo: this.data.unitNo,
+    unit: parseInt(this.data.unit, 10),
     title: this.data.title,
     subject: this.data.subject,
-    faculty: this.data.faculty,
-    semester: this.data.semester,
+    faculty: this.data.faculty.toLowerCase(),
+    semester: this.data.semester.toLowerCase(),
     url: `/notes/${this.data.faculty}/${
       this.data.semester
     }/${encodeURIComponent(this.data.subject)}/${encodeURIComponent(
@@ -269,14 +269,14 @@ Admin.prototype.cleanUp = function cleanUp() {
   };
 };
 
-Admin.prototype.createNote = function createNote() {
-  // return console.log(this);
+Admin.prototype.createNote = function createNote(data) {
+  this.data = data;
   this.cleanUp();
   return new Promise((resolve, reject) => {
     if (!this.errors.length) {
       notesCollection
         .insertOne(this.data)
-        .then(() => resolve("Note Created Successfully"))
+        .then((newNote) => resolve(newNote.ops[0]))
         .catch((error) => reject(error));
     } else reject(this.errors);
   });

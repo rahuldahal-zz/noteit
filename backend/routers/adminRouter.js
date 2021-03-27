@@ -1,8 +1,21 @@
 const router = require("express").Router();
-const { login } = require("@controllers/adminController");
+const {
+  login,
+  getAllNotes,
+  createNote,
+} = require("@controllers/adminController");
 const { authRole } = require("@controllers/userController");
-const { mustHaveUserToken } = require("@controllers/middlewares/mustHaveToken");
+const {
+  mustHaveUserToken,
+  mustHaveAdminToken,
+} = require("@controllers/middlewares/mustHaveToken");
 
 router.post("/login", mustHaveUserToken, authRole("admin"), login);
+
+// notes
+
+router.get("/notes", mustHaveAdminToken, getAllNotes);
+
+router.post("/notes/create", mustHaveAdminToken, createNote);
 
 module.exports = router;

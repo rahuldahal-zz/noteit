@@ -1,6 +1,6 @@
 import React from "react";
 import Form from "@components/Form/Form";
-import getFormFields from "@components/Form/utils/getFormFields";
+import useFormFields from "@components/Form/utils/useFormFields";
 import { useAuth } from "@contexts/AuthProvider";
 
 export default function Login({ setAdminToken }) {
@@ -19,22 +19,18 @@ export default function Login({ setAdminToken }) {
       placeholder: "password",
     },
   ];
-  const { fieldsJSX, fieldRefs } = getFormFields(formFieldsDetail);
+  const [currentValues, fieldsJSX] = useFormFields(formFieldsDetail);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = {};
-    fieldRefs.forEach((ref) => {
-      const { name, value } = ref.current;
-      data[name] = value;
-    });
+    const { username, password } = currentValues;
     const res = await fetch("/admin/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ username, password }),
     });
     const { token: adminToken } = await res.json();
     if (adminToken) {
