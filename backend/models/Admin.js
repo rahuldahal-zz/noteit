@@ -1,35 +1,20 @@
+const { ObjectID } = require("mongodb");
 const { User } = require("./User");
-const ObjectID = require("mongodb").ObjectID;
+
 let userCollection;
-let sessionCollection;
 let contributorsCollection;
 let notesCollection;
 
-require("./utils/dbCollectionInit")([
-  "users",
-  "session",
-  "contributors",
-  "notes",
-])
+require("./utils/dbCollectionInit")(["users", "contributors", "notes"])
   .then((collections) => {
     if (collections !== null) {
-      [
-        userCollection,
-        sessionCollection,
-        contributorsCollection,
-        notesCollection,
-      ] = collections;
+      [userCollection, contributorsCollection, notesCollection] = collections;
     }
   })
   .catch((error) => console.log(error));
 
-let setCollection = function (collections) {
-  ({
-    userCollection,
-    sessionCollection,
-    contributorsCollection,
-    notesCollection,
-  } = collections);
+const setCollection = function setCollection(collections) {
+  ({ userCollection, contributorsCollection, notesCollection } = collections);
 };
 
 function timeAgo(date) {
@@ -65,7 +50,7 @@ function timeAgo(date) {
   }
 }
 
-let Admin = function (data) {
+const Admin = function Admin(data) {
   this.data = data;
   this.errors = [];
 };
@@ -76,7 +61,7 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
       (typeof searchTerm !== "string" && typeof basedOn !== "string") ||
       !["email", "faculty", "semester"].includes(basedOn)
     ) {
-      return reject("The parameters provided are invalid");
+      return reject(new Error("The parameters provided are invalid"));
     }
 
     switch (basedOn) {
@@ -84,18 +69,19 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
         User.prototype
           .findBy({ criteria: "email", value: searchTerm })
           .then((user) => {
-            user.joinedOn = {
+            const modifiedUser = user;
+            modifiedUser.joinedOn = {
               date: user.joinedOn.getDate(),
               month: user.joinedOn.getMonth(),
               year: user.joinedOn.getFullYear(),
             };
-            user.lastLogin = {
+            modifiedUser.lastLogin = {
               date: user.lastLogin.getDate(),
               month: user.lastLogin.getMonth(),
               year: user.lastLogin.getFullYear(),
               timeAgo: timeAgo(user.lastLogin),
             };
-            return resolve(user);
+            return resolve(modifiedUser);
           })
           .catch((err) => reject(err));
         break;
@@ -104,46 +90,49 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
         User.prototype
           .findBy({ criteria: "faculty", value: searchTerm })
           .then((users) => {
-            users = users.map((user) => {
-              user.joinedOn = {
+            const modifiedUsers = users.map((user) => {
+              const modifiedUser = user;
+              modifiedUser.joinedOn = {
                 date: user.joinedOn.getDate(),
                 month: user.joinedOn.getMonth(),
                 year: user.joinedOn.getFullYear(),
               };
-              user.lastLogin = {
+              modifiedUser.lastLogin = {
                 date: user.lastLogin.getDate(),
                 month: user.lastLogin.getMonth(),
                 year: user.lastLogin.getFullYear(),
                 timeAgo: timeAgo(user.lastLogin),
               };
-              return user;
+              return modifiedUser;
             });
-            return resolve(users);
+            return resolve(modifiedUsers);
           })
           .catch((err) => {
             console.log(err);
             return reject(err);
           });
+        break;
 
       case "semester":
         User.prototype
           .findBy({ criteria: "semester", value: searchTerm })
           .then((users) => {
-            users = users.map((user) => {
-              user.joinedOn = {
+            const modifiedUsers = users.map((user) => {
+              const modifiedUser = user;
+              modifiedUser.joinedOn = {
                 date: user.joinedOn.getDate(),
                 month: user.joinedOn.getMonth(),
                 year: user.joinedOn.getFullYear(),
               };
-              user.lastLogin = {
+              modifiedUser.lastLogin = {
                 date: user.lastLogin.getDate(),
                 month: user.lastLogin.getMonth(),
                 year: user.lastLogin.getFullYear(),
                 timeAgo: timeAgo(user.lastLogin),
               };
-              return user;
+              return modifiedUser;
             });
-            return resolve(users);
+            return resolve(modifiedUsers);
           })
           .catch((err) => {
             console.log(err);
@@ -153,119 +142,94 @@ Admin.prototype.handleSearch = (searchTerm, basedOn) => {
   });
 };
 
-/**
- *
- * @param {Object} object - containing the userId and an optional action
- * @param {ObjectID} object.userId - ObjectID of the user in question
- * @param {String} [object.action=approve] - Acceptable: disapprove
- * @summary updates the isApproved field of the user doc.
- * @returns Promise
- */
-Admin.prototype.handleUserApproval = ({ userId, action = "approve" }) => {
-  return new Promise((resolve, reject) => {
-    if (
-      !ObjectID.isValid(userId) ||
-      new ObjectID(userId).toString() !== userId.toString()
-    ) {
-      return reject("Invalid ObjectID is provided");
-    }
-
-    if (!["approve", "disapprove"].includes(action)) {
-      return reject("Invalid action is provided");
-    }
-
-    userId = new ObjectID(userId);
-    let updatedUserReference = false;
-    let updateQuery = { $set: { isApproved: true } };
-
-    if (action === "disapprove") {
-      updateQuery = { $set: { isApproved: false } };
-    }
-
-    userCollection
-      .findOneAndUpdate({ _id: userId }, updateQuery, { returnOriginal: false })
-      .then((updatedUser) => {
-        if (updatedUser.value) {
-          updatedUserReference = updatedUser.value; // check this in the catch block
-          return sessionCollection.deleteOne({ userId: userId });
-        } else return reject("The user was not found");
-      })
-      .then(() => resolve(updatedUserReference))
-      .catch(() => {
-        if (updatedUserReference.value) {
-          return reject(
-            `${action}d the user, but had problem deleting their session`
-          );
-        } else {
-          return reject("Server error, cannot approve the user");
-        }
-      });
-  });
-};
-
-Admin.prototype.handleContributorApproval = ({
-  contributorId,
-  action = "approve",
-}) => {
-  return new Promise((resolve, reject) => {
-    if (
-      !ObjectID.isValid(contributorId) ||
-      new ObjectID(contributorId).toString() !== contributorId.toString()
-    ) {
-      return reject("Invalid ObjectID is provided");
-    }
-
-    if (!["approve", "disapprove"].includes(action)) {
-      return reject("Invalid action is provided");
-    }
-
-    contributorId = new ObjectID(contributorId);
-    let updateQuery = { $set: { isApproved: true } };
-
-    if (action === "disapprove") {
-      updateQuery = { $set: { isApproved: false } };
-    }
-
-    contributorId = new ObjectID(contributorId);
-    contributorsCollection
-      .findOneAndUpdate({ _id: contributorId }, updateQuery, {
-        returnOriginal: false,
-      })
-      .then((updatedContributor) => {
-        if (updatedContributor.value) {
-          return resolve(updatedContributor.value);
-        } else {
-          return reject("The contributor was not found");
-        }
-      })
-      .catch((error) => reject(error));
-  });
-};
-
 Admin.prototype.findAndRemoveContributor = (userId) => {
-  userId = new ObjectID(userId);
   return new Promise((resolve, reject) => {
     userCollection
-      .findOneAndUpdate({ _id: userId }, { $pull: { roles: "contributor" } })
+      .findOneAndUpdate(
+        { _id: new ObjectID(userId) },
+        { $pull: { roles: "contributor" } }
+      )
       .then((recentContributor) => {
         if (recentContributor.value)
           resolve({
             _id: recentContributor.value._id,
             username: recentContributor.value.username,
           });
-        else reject("while removing contributor: no match found for that id");
+        else
+          reject(
+            new Error("while removing contributor: no match found for that id")
+          );
+      })
+      .catch((error) => reject(error));
+  });
+};
+
+Admin.prototype.findAndMakeContributor = (userId) => {
+  return new Promise((resolve, reject) => {
+    userCollection
+      .findOneAndUpdate(
+        { _id: new ObjectID(userId) },
+        { $push: { roles: "contributor" } }
+      )
+      .then((recentContributor) => {
+        if (recentContributor.value)
+          resolve({
+            _id: recentContributor.value._id,
+          });
+        else
+          reject(
+            new Error("while making contributor: no match found for that id")
+          );
       })
       .catch((error) => reject(error));
   });
 };
 
 Admin.prototype.getAllContributors = () => {
+  const aggregation = [
+    {
+      $lookup: {
+        from: "users",
+        as: "user",
+        let: {
+          userId: "$userId",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$userId"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              email: 1,
+              firstName: 1,
+              lastName: 1,
+              lastLogin: 1,
+            },
+          },
+        ],
+      },
+    },
+  ];
   return new Promise((resolve, reject) => {
     contributorsCollection
-      .find({})
+      .aggregate(aggregation)
       .toArray()
-      .then((contributors) => resolve(contributors))
-      .catch((err) => reject(err));
+      .then((contributors) => {
+        const updatedContributors = contributors.map((contributor) => {
+          const { user, ...rest } = contributor;
+          return { ...rest, ...user[0] };
+        });
+        return resolve(updatedContributors);
+      })
+      .catch((err) => {
+        console.log(err);
+        return reject(err);
+      });
   });
 };
 
@@ -279,20 +243,21 @@ Admin.prototype.getAllNotes = () => {
   });
 };
 
-Admin.prototype.cleanUp = function () {
-  for (let key in this.data) {
+Admin.prototype.cleanUp = function cleanUp() {
+  const dataKeys = Object.keys(this.data);
+  dataKeys.forEach((key) => {
     if (typeof this.data[key] !== "string") {
       this.data[key] = "";
       this.errors.push(`"${key}" is not of valid type.`);
     }
-  }
+  });
 
   this.data = {
-    unitNo: this.data.unitNo,
+    unit: parseInt(this.data.unit, 10),
     title: this.data.title,
     subject: this.data.subject,
-    faculty: this.data.faculty,
-    semester: this.data.semester,
+    faculty: this.data.faculty.toLowerCase(),
+    semester: this.data.semester.toLowerCase(),
     url: `/notes/${this.data.faculty}/${
       this.data.semester
     }/${encodeURIComponent(this.data.subject)}/${encodeURIComponent(
@@ -304,14 +269,14 @@ Admin.prototype.cleanUp = function () {
   };
 };
 
-Admin.prototype.createNote = function () {
-  // return console.log(this);
+Admin.prototype.createNote = function createNote(data) {
+  this.data = data;
   this.cleanUp();
   return new Promise((resolve, reject) => {
     if (!this.errors.length) {
       notesCollection
         .insertOne(this.data)
-        .then(() => resolve("Note Created Successfully"))
+        .then((newNote) => resolve(newNote.ops[0]))
         .catch((error) => reject(error));
     } else reject(this.errors);
   });

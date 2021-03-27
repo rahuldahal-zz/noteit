@@ -5,26 +5,25 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ClosurePlugin = require("closure-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
-let cssConfig = {
+const cssConfig = {
   test: /\.(sa|sc|c)ss$/i,
   use: ["css-loader?url=false", "sass-loader"],
 };
 
-let babelConfig = {
+const babelConfig = {
   test: /\.js$/,
   exclude: /node_modules/,
   use: "babel-loader",
 };
 
-let svgLoader = {
+const svgLoader = {
   test: /\.svg$/i,
   use: "@svgr/webpack",
 };
 
-let config = {
+const config = {
   entry: "./frontend/App.js",
   module: {
     rules: [svgLoader, babelConfig, cssConfig],
@@ -41,7 +40,7 @@ let config = {
   },
 };
 
-//separate for "development"
+// separate for "development"
 if (currentTask === "dev" || currentTask === "frontend") {
   cssConfig.use.unshift("style-loader");
   config.mode = "development";
@@ -72,7 +71,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
   };
 }
 
-//separate for "production"
+// separate for "production"
 if (currentTask === "build" || currentTask === "check-build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";

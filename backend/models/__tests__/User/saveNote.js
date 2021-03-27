@@ -1,10 +1,11 @@
 const { MongoClient, ObjectID } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("saveNote", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -34,7 +35,7 @@ describe("saveNote", () => {
   const particularNoteID = new ObjectID();
 
   test("should resolve by saving and removing a particular note", async () => {
-    const { _id } = await user.createUser();
+    const { _id } = await user.create();
     const savedDoc = await new User({ _id }).saveNotesHandler(particularNoteID);
     const removedDoc = await new User({ _id }).saveNotesHandler(
       particularNoteID,
@@ -52,7 +53,7 @@ describe("saveNote", () => {
     try {
       await new User().saveNotesHandler("invalidObjectID");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual(
+      expect(rejectionMessage.message).toEqual(
         "Invalid ObjectID is provided for that note."
       );
     }
@@ -62,7 +63,7 @@ describe("saveNote", () => {
     try {
       await new User().saveNotesHandler(particularNoteID, "invalidAction");
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual(
+      expect(rejectionMessage.message).toEqual(
         "Invalid action is provided. Only save and remove are accepted."
       );
     }
@@ -74,7 +75,7 @@ describe("saveNote", () => {
         particularNoteID
       );
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("Cannot find the user");
+      expect(rejectionMessage.message).toEqual("Cannot find the user");
     }
   });
 });

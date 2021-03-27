@@ -1,76 +1,66 @@
 @use "../utils/customProperties";
 
-.overlay--active::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  background-color: var(--brandTransparent);
-}
-
-#availableUnits {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 6;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.75em;
-  width: 100%;
-}
-
-.savedNote__subject {
-  margin-bottom: var(--space-400-rem);
-}
-
-.savedNote a {
-  color: var(--black);
-  margin-left: 1rem;
-}
-
-.mainContainer {
+.home {
   position: relative;
-  justify-content: space-between;
-  gap: 2rem;
-  overflow: hidden;
+  min-height: 90vh;
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: -35%;
-    width: 1000px;
-    height: 100%;
-    background-color: var(--black);
-    box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.4);
-    transform: skewX(-20deg);
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: var(--background-gradient);
+  }
 
-    @include media.widerThan768 {
-      left: -25%;
+  &__content {
+    margin: 2rem auto;
+  }
+
+  &__heading {
+    width: 480px;
+    max-width: 90vw;
+  }
+
+  &__availableSubjects {
+    position: relative;
+    width: 95vw;
+    margin: auto;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--space-500-rem);
+    align-items: center;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0.5em;
+      background: var(--white);
+      box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h5 {
+      background: var(--background-gradient);
+      background-clip: text;
+      color: transparent;
+      z-index: 2;
+      justify-self: flex-start;
+      align-self: flex-start;
     }
   }
 
-  &__homeText {
+  &__subject {
     position: relative;
-    color: #eee;
-    max-width: 600px;
-
-    .btn {
-      margin-top: 5vh;
-    }
-  }
-
-  &__thankingIllustration {
-    position: relative;
-
-    @include media.widerThan1200 {
-      width: 40%;
-    }
+    z-index: 2;
+    width: 100%;
+    font-size: 1.2rem;
+    margin-bottom: var(--space-500-rem);
+    padding: var(--space-500-em);
   }
 }

@@ -1,7 +1,20 @@
 const router = require("express").Router();
-const contributorsController = require("../controllers/contributorsController");
-const adminController = require("../controllers/adminController");
+const contributorsController = require("@controllers/contributorsController");
+const {
+  sendUsers,
+  createContributor,
+  makeContributor,
+  approveContributor,
+  disapproveContributor,
+  approveUser,
+  disapproveUser,
+  getAllContributors,
+} = require("@controllers/adminController");
+
 const cors = require("cors");
+const {
+  mustHaveAdminToken,
+} = require("@controllers/middlewares/mustHaveToken");
 const corsOptions = require("./utils/corsConfig");
 
 router.use(cors(corsOptions));
@@ -12,74 +25,34 @@ router.use(cors(corsOptions));
 
 // users
 
+router.post("/admin/users", mustHaveAdminToken, sendUsers);
 router.post(
-  "/admin/users",
-  adminController.mustHaveToken,
-  adminController.sendUsers
+  "/admin/users/makeContributor",
+  mustHaveAdminToken,
+  createContributor,
+  makeContributor
 );
 
-router.put(
-  "/admin/users/approve",
-  adminController.mustHaveToken,
-  adminController.approveUser
-);
+router.put("/admin/users/approve", mustHaveAdminToken, approveUser);
 
-router.put(
-  "/admin/users/disapprove",
-  adminController.mustHaveToken,
-  adminController.disapproveUser
-);
+router.put("/admin/users/disapprove", mustHaveAdminToken, disapproveUser);
 
-/**
- * used "post" just to "securely" send JWT via the "req.body",
- * rather than "req.headers"
- */
-
-router.post(
-  "/admin/contributors",
-  adminController.mustHaveToken,
-  adminController.getAllContributors
-);
-
-// notes
-
-router.post(
-  "/admin/notes",
-  adminController.mustHaveToken,
-  adminController.getAllNotes
-);
-
-router.post(
-  "/admin/notes/create",
-  adminController.mustHaveToken,
-  adminController.createNote
-);
+router.get("/admin/contributors", mustHaveAdminToken, getAllContributors);
 
 /**
  * Contributors' API
  */
 
-router.post(
-  "/contributors/create",
-  contributorsController.isContributorAlreadyRegistered,
-  contributorsController.create
-);
-
 router.put(
   "/admin/contributors/approve",
-  adminController.mustHaveToken,
-  adminController.approveContributor
+  mustHaveAdminToken,
+  approveContributor
 );
 
 router.put(
-  "/admin/contributor/disapprove",
-  adminController.mustHaveToken,
-  adminController.disapproveContributor
-);
-router.post(
-  "/contributors/submitNote",
-  adminController.mustHaveToken,
-  contributorsController.createNoteFileAndMail
+  "/admin/contributors/disapprove",
+  mustHaveAdminToken,
+  disapproveContributor
 );
 
 router.get("/contributors", contributorsController.getAll);

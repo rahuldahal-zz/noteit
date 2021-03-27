@@ -13,7 +13,7 @@ export default function Process() {
               className="processContainer__process card"
               data-process-no={++index}
             >
-              <h3>{title}</h3>
+              <h5>{title}</h5>
               <p>{description}</p>
             </div>
           );
@@ -25,7 +25,7 @@ export default function Process() {
   return (
     <section className="processContainer maximumWidth">
       <div className="content">
-        <h2 className="heading">This is how it works</h2>
+        <h3 className="heading">This is how it works</h3>
         <Processes />
       </div>
     </section>

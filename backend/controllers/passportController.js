@@ -1,17 +1,17 @@
+const { User } = require("@models/User");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const dotenv = require("dotenv");
-dotenv.config();
 
-const { User } = require("../models/User");
+dotenv.config();
 
 passport.serializeUser((user, done) => {
   console.log("from serialize, user id is ", user._id);
   User.prototype
     .sessionCountHandler(user._id, "increment")
     .then(() => done(null, user._id))
-    .catch((err) => console.log("from serialize: " + err));
+    .catch((error) => console.log(error));
 });
 
 passport.deserializeUser((id, done) => {
@@ -28,6 +28,36 @@ passport.deserializeUser((id, done) => {
     .catch((error) => done(error));
 });
 
+function create(profile, done, provider) {
+  console.log("creating a new user...");
+  if (provider === "google") {
+    const { sub, given_name, family_name, email, picture } = profile;
+    profile = {
+      id: sub,
+      firstName: given_name,
+      lastName: family_name,
+      email: email,
+      picture: picture,
+    };
+  } else {
+    const { id, first_name, last_name, email, picture } = profile;
+    profile = {
+      id,
+      firstName: first_name,
+      lastName: last_name,
+      email: email ? email : "",
+      picture: picture.data.url,
+    };
+  }
+  const user = new User(profile, provider);
+  user
+    .create()
+    .then((response) => {
+      done(null, response);
+    })
+    .catch((error) => console.log(error));
+}
+
 passport.use(
   new GoogleStrategy(
     {
@@ -43,7 +73,7 @@ passport.use(
 
       // profile: passport will bring-back the user's profile info from google
 
-      //check if user exists
+      // check if user exists
 
       User.prototype
         .findBy({
@@ -55,7 +85,7 @@ passport.use(
           // done will call the serialize
           return done(null, currentUser);
         })
-        .catch((error) => createUser(profile._json, done, "google"));
+        .catch((error) => create(profile._json, done, "google"));
     }
   )
 );
@@ -76,7 +106,7 @@ passport.use(
       ],
     },
     (accessToken, refreshToken, profile, done) => {
-      //check if user exists
+      // check if user exists
 
       User.prototype
         .findBy({
@@ -89,40 +119,10 @@ passport.use(
           // done will call the serialize
           return done(null, currentUser);
         })
-        .catch((error) => createUser(profile._json, done, "facebook"));
+        .catch((error) => create(profile._json, done, "facebook"));
     }
   )
 );
-
-function createUser(profile, done, provider) {
-  console.log("creating a new user...");
-  if (provider === "google") {
-    const { sub, given_name, family_name, email, picture } = profile;
-    profile = {
-      id: sub,
-      firstName: given_name,
-      lastName: family_name,
-      email: email,
-      picture: picture,
-    };
-  } else {
-    const { id, first_name, last_name, email, picture } = profile;
-    profile = {
-      id: id,
-      firstName: first_name,
-      lastName: last_name,
-      email: email ? email : "",
-      picture: picture.data.url,
-    };
-  }
-  let user = new User(profile, provider);
-  user
-    .createUser()
-    .then((response) => {
-      done(null, response);
-    })
-    .catch((error) => console.log(error));
-}
 
 // the "cookie-session" package helps to manage user's session on our website, if user is logged in or not
 // cookie is encrypted with the "keys" defined in it's option

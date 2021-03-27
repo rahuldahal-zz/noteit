@@ -1,14 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Links from "./Links";
-import linksData from "./utils/linksData";
+import FAB from "@components/FAB/FAB";
+import Logo from "@svgs/logoAlt.svg";
 import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
-import Logo from "@svgs/logoAlt.svg";
+import Links from "./Links";
+import linksData from "./utils/linksData";
 
 export default function Nav({ setShowLoginOptions }) {
-  const { token } = useAuth();
+  const { token, isAuthenticated } = useAuth();
+
+  function GuestActions() {
+    return (
+      <>
+        <Links links={linksData} />
+        <LoginButton setShowLoginOptions={setShowLoginOptions} />
+      </>
+    );
+  }
+
+  function UserActions() {
+    return (
+      <>
+        <FAB icon="search" textContent="Search" />
+      </>
+    );
+  }
+
   return (
     <nav className="nav">
       <div className="nav__wrap flex">
@@ -18,14 +37,13 @@ export default function Nav({ setShowLoginOptions }) {
         </Link>
 
         <div className="nav__items">
-          <Links links={linksData} />
           <div className="nav__actions">
-            {token ? (
-              <LogoutButton />
-            ) : (
-              <LoginButton setShowLoginOptions={setShowLoginOptions} />
-            )}
-            <div className="nav__hamBurger" tabIndex="0"></div>
+            {isAuthenticated ? <UserActions /> : <GuestActions />}
+            <button
+              type="button"
+              aria-label="hamburger button"
+              className="nav__hamBurger"
+            />
           </div>
         </div>
       </div>

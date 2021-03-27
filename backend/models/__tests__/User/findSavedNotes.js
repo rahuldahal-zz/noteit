@@ -1,10 +1,11 @@
 const { MongoClient, ObjectID } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("saveNote", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -34,7 +35,7 @@ describe("saveNote", () => {
   const mockNoteIDs = [new ObjectID(), new ObjectID()];
 
   test("should resolve by getting savedNotes", async () => {
-    const { _id } = await user.createUser();
+    const { _id } = await user.create();
     const mockUser = new User({ _id });
     await mockUser.saveNotesHandler(mockNoteIDs[0]);
     await mockUser.saveNotesHandler(mockNoteIDs[1]);
@@ -46,7 +47,7 @@ describe("saveNote", () => {
     try {
       await new User({ _id: new ObjectID() }).findSavedNotes();
     } catch (rejectionMessage) {
-      expect(rejectionMessage).toEqual("Cannot find the user");
+      expect(rejectionMessage.message).toEqual("Cannot find the user");
     }
   });
 });

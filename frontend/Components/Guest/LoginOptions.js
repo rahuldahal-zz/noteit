@@ -2,7 +2,10 @@ import TextWithIcon from "@components/TextWithIcon";
 import React, { useRef } from "react";
 import getIconPaths from "@utils/iconDetails";
 
-export function LoginOptions({ showOptions = false, setShowLoginOptions }) {
+export default function LoginOptions({
+  showOptions = false,
+  setShowLoginOptions,
+}) {
   const loginOptionsRef = useRef(null);
 
   return (

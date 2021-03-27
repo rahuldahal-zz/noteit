@@ -1,10 +1,11 @@
 const { MongoClient } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
-describe("createUser", () => {
-  let connection, db, usersCollection;
+describe("create", () => {
+  let connection;
+  let db;
+  let usersCollection;
 
   beforeAll(async () => {
     connection = await MongoClient.connect("mongodb://localhost/test", {
@@ -26,7 +27,6 @@ describe("createUser", () => {
     provider: expect.stringMatching(/(facebook)?(google)?/),
     faculty: null,
     semester: null,
-    isApproved: false,
     isSubscriptionExpired: false,
     joinedOn: expect.any(Date),
     lastLogin: expect.any(Date),
@@ -44,10 +44,7 @@ describe("createUser", () => {
       picture: "https://pictureAPI.com",
     };
 
-    const newUser = await new User(
-      userDataFromAuthProvider,
-      "google"
-    ).createUser();
+    const newUser = await new User(userDataFromAuthProvider, "google").create();
 
     expect(newUser).toEqual({
       OAuthId: userDataFromAuthProvider.id,
@@ -70,7 +67,7 @@ describe("createUser", () => {
     };
 
     try {
-      await new User(bogusData, "google").createUser();
+      await new User(bogusData, "google").create();
     } catch (rejectionMessage) {
       expect(rejectionMessage).toEqual(
         expect.arrayContaining(["bogus property bogusProp received"])
@@ -81,14 +78,14 @@ describe("createUser", () => {
   test("should reject for non-string value", async () => {
     const invalidData = {
       id: "google|123456",
-      email: function () {},
+      email: () => null,
       firstName: "Rahul",
       lastName: "Dahal",
       picture: "https://pictureAPI.com",
     };
 
     try {
-      await new User(invalidData, "google").createUser();
+      await new User(invalidData, "google").create();
     } catch (rejectionMessage) {
       expect(rejectionMessage).toEqual(
         expect.arrayContaining(["unacceptable value type on email property"])

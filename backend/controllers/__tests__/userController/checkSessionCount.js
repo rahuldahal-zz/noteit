@@ -1,5 +1,4 @@
-const reusable = require("../../utils/initForControllersTest");
-const { checkSessionCount } = require("../../userController");
+const { checkSessionCount } = require("@controllers/userController");
 
 describe("Middleware: 'checkSessionCount'", () => {
   test("should call next", async () => {
@@ -16,23 +15,24 @@ describe("Middleware: 'checkSessionCount'", () => {
     expect(next).toBeCalledTimes(1);
   });
 
-  test("should send a flash error", async () => {
+  test("should respond status 400 with message", async () => {
     const req = {
       user: {
         sessionCount: 3,
       },
     };
-    const res = {};
     const next = jest.fn();
+    const res = {
+      status: jest.fn(),
+      json: jest.fn(),
+    };
     await checkSessionCount(req, res, next);
 
     // assertions
     expect(next).not.toBeCalled();
-    expect(reusable.sendFlashMessage).toBeCalledTimes(1);
-    expect(reusable.sendFlashMessage).toBeCalledWith({
-      collection: "errors",
+    expect(res.status).toBeCalledWith(400);
+    expect(res.json).toBeCalledWith({
       message: "Account is being used in more than 2 devices",
-      redirectURL: "/",
     });
   });
 });

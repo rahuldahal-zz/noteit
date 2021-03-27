@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { AuthProvider } from "@contexts/AuthProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,14 +9,13 @@ import Footer from "@components/Footer/Footer";
 import Home from "@screens/Home";
 import About from "@screens/About";
 import Team from "@screens/Team";
-import Guest from "@screens/Guest";
+import Root from "@screens/Root";
+import Admin from "@screens/Admin";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
 
-const domain = process.env.AUTH0_DOMAIN;
-const clientId = process.env.AUTH0_CLIENT_ID;
 const history = createBrowserHistory();
 
 function App() {
@@ -25,19 +24,21 @@ function App() {
       <Nav />
       <Switch>
         <Route exact path="/">
-          <Guest history={history} />
+          <Root history={history} />
         </Route>
-        <PrivateRoute
-          exact
-          component={Home}
-          path="/home"
-          condition="isAuthenticated"
-        />
         <PrivateRoute
           exact
           component={SaveFacultyAndSemester}
           path="/save-faculty-and-semester"
           condition="newUser"
+          history={history}
+        />
+        <PrivateRoute
+          exact
+          component={Home}
+          path="/home"
+          condition="existingUser"
+          history={history}
         />
         <Route exact path="/about">
           <About />
@@ -45,6 +46,13 @@ function App() {
         <Route exact path="/team">
           <Team />
         </Route>
+        <PrivateRoute
+          exact
+          component={Admin}
+          path="/only-admin"
+          condition="isAdmin"
+          history={history}
+        />
       </Switch>
       <Footer />
     </Router>
@@ -52,11 +60,7 @@ function App() {
 }
 
 ReactDOM.render(
-  <AuthProvider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={window.location.origin}
-  >
+  <AuthProvider>
     <App />
   </AuthProvider>,
   document.getElementById("app")

@@ -1,24 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Form from "@components/Form/Form";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
-import Greeting from "./Greeting";
-import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
-import getFormFields from "@components/Form/utils/getFormFields";
 import { useAuth } from "@contexts/AuthProvider";
+import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
+import useFormFields from "@components/Form/utils/useFormFields";
+import Greeting from "./Greeting";
 
 export default function Header() {
   const { token } = useAuth();
-  const { fieldRefs, fieldsJSX } = getFormFields(formFieldsDetail);
+  const [currentValues, fieldsJSX] = useFormFields(formFieldsDetail);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
     console.log("submitting form...");
-    const data = {};
-    fieldRefs.forEach((field) => {
-      const { name, value } = field.current;
-      data[name] = value;
-    });
     try {
       const { status } = await fetch("/users/saveFacultyAndSemester", {
         method: "POST",
@@ -26,9 +21,11 @@ export default function Header() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(currentValues),
       });
-      console.log(status);
+      if (status === 202) {
+        return window.location("/");
+      }
     } catch (error) {
       console.log(error);
     }

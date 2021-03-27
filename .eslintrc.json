@@ -1,0 +1,66 @@
+{
+    "root": true,
+    "parser": "babel-eslint",
+    "rules": {
+      "quotes": [2, "double"],
+      "default-case": [0],
+      "no-console": 1,
+      "no-underscore-dangle": 0,
+      "arrow-body-style": 0,
+      "react/prop-types": 0,
+      "no-restricted-globals": 1,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+      "jsx-a11y/label-has-associated-control": [2, {
+        "depth": 2
+      }]
+    } ,
+    "extends": [
+      "eslint:recommended",
+      "plugin:import/warnings",
+      "plugin:import/errors",
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended",
+      "airbnb",
+      "prettier",
+      "plugin:react-hooks/recommended"
+    ],
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "node": true,
+      "jest/globals": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      },
+      "import/resolver": {
+        "alias": {
+          "map": [
+            ["@svgs", "./frontend/assets/svgs/"],
+            ["@components", "./frontend/Components/"],
+            ["@utils", "./frontend/utils/"],
+            ["@screens", "./frontend/Screens/"],
+            ["@contexts", "./frontend/Contexts/"],
+            ["@models", "./backend/models/"],
+            ["@controllers", "./backend/controllers/"],
+            ["@routers", "./backend/routers/"]
+          ]
+        },
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    },
+    "plugins": ["react", "import", "jsx-a11y", "react-hooks", "jest"]
+}
+  

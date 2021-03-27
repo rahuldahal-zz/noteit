@@ -15,7 +15,7 @@
     text-decoration: none;
   }
 
-  &__logo{
+  &__logo {
     margin-left: var(--space-300-rem);
     width: 2rem;
     fill: var(--white);
@@ -94,8 +94,8 @@
   }
 
   &__hamBurger {
-    background-color: var(--white);
-    margin-left: 1rem;
+    display: block;
+    background: var(--white);
 
     @include media.widerThan1200 {
       display: none;

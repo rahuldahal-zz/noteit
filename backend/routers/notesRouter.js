@@ -1,35 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/userController");
-const notesController = require("../controllers/notesController");
+const router = require("express").Router();
+const { saveNote, removeSaved } = require("@controllers/notesController");
+const { mustHaveUserToken } = require("@controllers/middlewares/mustHaveToken");
 
-router.get(
-  "/:faculty/:semester/:subject/:unit",
-  userController.mustBeLoggedIn,
-  userController.checkSessionCount,
-  userController.checkSubscriptionStatus,
-  userController.mustBeApproved,
-  notesController.checkForCorrectSubscription,
-  notesController.findSavedNotes,
-  notesController.hasUserSavedThisNote,
-  notesController.viewParticularUnit
-);
+router.get("/save/:noteId", mustHaveUserToken, saveNote);
 
-router.get(
-  "/save/:noteId",
-  userController.mustBeLoggedIn,
-  userController.checkSessionCount,
-  userController.mustBeApproved,
-  notesController.findSavedNotes,
-  notesController.hasUserSavedThisNote,
-  notesController.saveNotes
-);
-router.get(
-  "/search/:searchTerm",
-  userController.mustBeLoggedIn,
-  userController.checkSessionCount,
-  userController.mustBeApproved,
-  notesController.handleSearch
-);
+router.get("/removeSaved/:noteId", mustHaveUserToken, removeSaved);
 
-module.exports = router; //exports "router" to the app.js
+module.exports = router;

@@ -1,8 +1,8 @@
-const getSubObject = require("../utils/getSubObject");
-const { signToken } = require("../utils/jwtConfig");
-const { User } = require("../models/User");
-const { server } = require("../utils/getServer");
+const { User } = require("@models/User");
 const passport = require("passport");
+const getSubObject = require("@utils/getSubObject");
+const { signToken } = require("@utils/jwtConfig");
+const { server } = require("@utils/getServer");
 
 exports.root = (req, res) => {
   const responsePrototype = {
@@ -26,9 +26,10 @@ exports.root = (req, res) => {
     "savedNotes",
   ];
   const payload = getSubObject(req.user, propertiesToReturn);
-  const signedToken = signToken(payload);
+  const signedToken = signToken({ payload });
   responsePrototype.isAuthenticated = true;
   responsePrototype.token = signedToken;
+  responsePrototype.isAdmin = req.user.roles.includes("admin");
 
   if (!req.user.faculty || !req.user.semester) {
     responsePrototype.isNewUser = true;

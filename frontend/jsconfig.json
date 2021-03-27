@@ -1,12 +1,12 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-          "@svgs": ["./assets/svgs"],
-          "@utils": ["./utils"],
-          "@components": ["./Components"],
-          "@screens": ["./Screens"],
-          "@contexts": ["./Contexts"],
-        }
-    },
-  }
+  "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@svgs/*": ["./assets/svgs/*"],
+        "@utils/*": ["./utils/*"],
+        "@components/*": ["./Components/*"],
+        "@screens/*": ["./Screens/*"],
+        "@contexts/*": ["./Contexts/*"],
+      }
+  },
+}

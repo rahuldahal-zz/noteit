@@ -1,10 +1,11 @@
-const { MongoClient, ObjectID } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const { User, setCollection } = require("../../User");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 describe("findUser method", () => {
-  let connection, db, usersCollection;
+  let connection;
+  let db;
+  let usersCollection;
   let createdUser;
   const googleOAuthData = {
     id: "google|123456",
@@ -23,7 +24,7 @@ describe("findUser method", () => {
     db = await connection.db();
     usersCollection = db.collection("users");
     setCollection(usersCollection);
-    createdUser = await user.createUser();
+    createdUser = await user.create();
   });
 
   afterAll(async () => {
@@ -65,8 +66,8 @@ describe("findUser method", () => {
       const newUserOne = new User(googleOAuthData, "google");
       const newUserTwo = new User(googleOAuthData, "google");
       try {
-        await newUserOne.createUser();
-        await newUserTwo.createUser();
+        await newUserOne.create();
+        await newUserTwo.create();
         await newUserOne.saveFacultyAndSemester("bim", "second");
         await newUserTwo.saveFacultyAndSemester("bim", "sixth");
         const userQuery = await newUserOne.findBy({
@@ -84,8 +85,8 @@ describe("findUser method", () => {
       const newUserOne = new User(googleOAuthData, "google");
       const newUserTwo = new User(googleOAuthData, "google");
       try {
-        await newUserOne.createUser();
-        await newUserTwo.createUser();
+        await newUserOne.create();
+        await newUserTwo.create();
         await newUserOne.saveFacultyAndSemester("bim", "second");
         await newUserTwo.saveFacultyAndSemester("bca", "second");
         const userQuery = await newUserOne.findBy({
@@ -101,7 +102,7 @@ describe("findUser method", () => {
 
     test("user for given role", async () => {
       const newUser = new User(googleOAuthData, "google");
-      const { _id } = await newUser.createUser();
+      const { _id } = await newUser.create();
       const x = await usersCollection.findOneAndUpdate(
         { _id },
         { $push: { roles: "moderator" } },
@@ -124,7 +125,7 @@ describe("findUser method", () => {
           criteria: "invalidCriteria",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("invalidArgument");
         expect(message).toEqual("Invalid criteria is provided");
       }
@@ -137,7 +138,7 @@ describe("findUser method", () => {
           value: "nonExisting@email.com",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("noUser");
         expect(message).toEqual("Cannot find any user with that email");
       }
@@ -151,7 +152,7 @@ describe("findUser method", () => {
           update: "randomValue",
         });
       } catch (rejectionMessage) {
-        const { reason, message } = rejectionMessage;
+        const { reason, message } = JSON.parse(rejectionMessage.message);
         expect(reason).toEqual("invalidArgument");
         expect(message).toEqual("Invalid update value is provided");
       }

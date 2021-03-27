@@ -1,10 +1,9 @@
 const mongodb = require("mongodb");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 let clientReference = null;
 
-module.exports = function (returnClientOnly) {
+module.exports = function returnClient(returnClientOnly) {
   if (returnClientOnly) {
     return clientReference;
   }
@@ -15,7 +14,8 @@ module.exports = function (returnClientOnly) {
     (err, client) => {
       if (err) {
         console.log(err);
-        return console.log("Cannot connect to MongoDB");
+        console.log("Cannot connect to MongoDB");
+        return;
       }
 
       clientReference = client;

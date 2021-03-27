@@ -1,4 +1,5 @@
-const ObjectID = require("mongodb").ObjectID;
+const { ObjectID } = require("mongodb");
+
 let contributorsCollection;
 
 require("./utils/dbCollectionInit")(["contributors"])
@@ -9,35 +10,23 @@ require("./utils/dbCollectionInit")(["contributors"])
   })
   .catch((error) => console.log(error));
 
-let setCollection = function (collection) {
+const setCollection = function setCollection(collection) {
   contributorsCollection = collection;
 };
-let Contributor = function (data) {
+const Contributor = function Contributor(data) {
   this.data = data;
   this.errors = [];
 };
 
-Contributor.prototype.cleanUp = function () {
-  for (let key in this.data) {
-    if (key !== "picture" && typeof this.data[key] !== "string") {
-      this.data[key] = "";
-      this.errors.push(`"${key}" is not of valid type.`);
-    }
-    if (key === "picture" && typeof this.data[key].data.url !== "string") {
-      this.data[key].data.url = "";
-      this.errors.push("Picture URL is not of valid type");
-    }
+Contributor.prototype.cleanUp = function cleanUp() {
+  if (typeof this.data.userId !== "string") {
+    this.errors.push("Invalid userId received");
+    return;
   }
 
   this.data = {
-    OAuthId: this.data.id,
-    name: this.data.name,
-    firstName: this.data.first_name,
-    lastName: this.data.last_name,
-    email: this.data.email,
-    picture: this.data.picture.data.url,
+    userId: ObjectID(this.data.userId),
     joinedOn: new Date(),
-    isApproved: false,
     recentContribution: null,
     contacts: {
       facebookProfileUrl: null,
@@ -48,24 +37,24 @@ Contributor.prototype.cleanUp = function () {
   };
 };
 
-Contributor.prototype.findBy = function ({ criteria, value, update }) {
+Contributor.prototype.findBy = function findBy({ criteria, value, update }) {
   return new Promise((resolve, reject) => {
     if (
       typeof criteria !== "string" ||
       !["ObjectId", "OAuthId", "email"].includes(criteria)
     ) {
-      return reject("Invalid criteria is provided");
+      return reject(new Error("Invalid criteria is provided"));
     }
 
     if (
       update &&
       (typeof update !== "string" || !["lastLogin"].includes(update))
     ) {
-      return reject("Invalid update value is provided");
+      return reject(new Error("Invalid update value is provided"));
     }
 
-    let queryObject,
-      atMostOne = false;
+    let queryObject;
+    let atMostOne = false;
     switch (criteria) {
       case "ObjectId":
         queryObject = { _id: value };
@@ -89,11 +78,12 @@ Contributor.prototype.findBy = function ({ criteria, value, update }) {
           if (contributors.length) {
             if (atMostOne) {
               return resolve(contributors[0]);
-            } else {
-              return resolve(contributors);
             }
+            return resolve(contributors);
           }
-          return reject(`Cannot find any contributor with that ${criteria}`);
+          return reject(
+            new Error(`Cannot find any contributor with that ${criteria}`)
+          );
         })
         .catch((error) => console.log(error));
     } else {
@@ -112,20 +102,21 @@ Contributor.prototype.findBy = function ({ criteria, value, update }) {
         .then((updatedContributor) => {
           if (updatedContributor.value) {
             return resolve(updatedContributor.value);
-          } else {
-            return reject(`Cannot find any contributor with that ${criteria}`);
           }
+          return reject(
+            new Error(`Cannot find any contributor with that ${criteria}`)
+          );
         })
         .catch((err) => console.log(err));
     }
   });
 };
 
-Contributor.prototype.create = function () {
+Contributor.prototype.create = function create() {
   this.cleanUp();
   return new Promise((resolve, reject) => {
     if (this.errors.length > 0) {
-      return reject({ clientError: this.errors });
+      return reject(this.errors);
     }
     contributorsCollection
       .insertOne(this.data)
@@ -134,16 +125,7 @@ Contributor.prototype.create = function () {
   });
 };
 
-Contributor.removeOne = function (userId) {
-  return new Promise((resolve, reject) => {
-    contributorsCollection
-      .deleteOne({ userId: new ObjectID(userId) })
-      .then(() => resolve())
-      .catch((error) => reject(error));
-  });
-};
-
-Contributor.getAll = function () {
+Contributor.getAll = function getAll() {
   return new Promise((resolve, reject) => {
     contributorsCollection
       .find({})
@@ -152,39 +134,6 @@ Contributor.getAll = function () {
         return resolve(contributors);
       })
       .catch((err) => reject(err));
-  });
-};
-
-Contributor.editContacts = function (data) {
-  let {
-    contributorId,
-    facebookProfileUrl,
-    twitterProfileUrl,
-    githubProfileUrl,
-    websiteProfileUrl,
-  } = data;
-  let contacts = {
-    facebookProfileUrl: facebookProfileUrl,
-    twitterProfileUrl: twitterProfileUrl,
-    githubProfileUrl: githubProfileUrl,
-    websiteProfileUrl: websiteProfileUrl,
-  };
-  return new Promise((resolve, reject) => {
-    if (
-      typeof facebookProfileUrl !== "string" ||
-      typeof twitterProfileUrl !== "string" ||
-      typeof githubProfileUrl !== "string" ||
-      typeof websiteProfileUrl !== "string"
-    ) {
-      return reject("the data is not a string");
-    }
-    contributorsCollection
-      .findOneAndUpdate(
-        { _id: new ObjectID(contributorId) },
-        { $set: { contacts: contacts } }
-      )
-      .then((response) => resolve(response.value))
-      .catch((error) => console.log(error));
   });
 };
 

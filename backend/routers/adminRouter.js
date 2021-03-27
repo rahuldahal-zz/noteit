@@ -1,20 +1,21 @@
-const express = require("express");
-const router = express.Router();
-const adminController = require("../controllers/adminController");
-const userController = require("../controllers/userController");
+const router = require("express").Router();
+const {
+  login,
+  getAllNotes,
+  createNote,
+} = require("@controllers/adminController");
+const { authRole } = require("@controllers/userController");
+const {
+  mustHaveUserToken,
+  mustHaveAdminToken,
+} = require("@controllers/middlewares/mustHaveToken");
 
-router.get(
-  "/",
-  userController.mustBeLoggedIn,
-  userController.authRole("admin"),
-  adminController.home
-);
+router.post("/login", mustHaveUserToken, authRole("admin"), login);
 
-router.post(
-  "/login",
-  userController.mustBeLoggedIn,
-  userController.authRole("admin"),
-  adminController.login
-);
+// notes
 
-module.exports = router; //exports "router" to the app.js
+router.get("/notes", mustHaveAdminToken, getAllNotes);
+
+router.post("/notes/create", mustHaveAdminToken, createNote);
+
+module.exports = router;
