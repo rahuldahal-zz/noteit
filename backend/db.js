@@ -1,5 +1,4 @@
 const mongodb = require("mongodb");
-const { currentTask } = require("./getCurrentTask");
 const dotenv = require("dotenv");
 dotenv.config();
 

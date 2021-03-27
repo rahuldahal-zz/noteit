@@ -25,7 +25,7 @@ body {
       #notesScreen__savedUnits {
         position: sticky;
         top: 7vh;
-        border-left: 2px solid var(--brandColor);
+        border-left: 2px solid var(--brand-400);
         padding: 0.25rem;
         flex: 1;
         height: 93vh;
@@ -54,7 +54,7 @@ aside {
     background-color: #eee;
 
     &__header {
-      padding: 0.5rem 0.75rem;
+      padding: var(--space-400-rem) 0.75rem;
       width: 100%;
       display: inline-grid;
       grid-template-columns: 80% 20%;
@@ -85,8 +85,8 @@ aside {
       position: relative;
       width: 100%;
       height: 7vh;
-      line-height: calc(7vh - 0.5rem);
-      padding: 0.5rem 0.75rem;
+      line-height: calc(7vh - var(--space-400-rem));
+      padding: var(--space-400-rem) 0.75rem;
       border-bottom: 1px solid #333;
       text-decoration: none;
       color: #333;
@@ -105,18 +105,18 @@ aside {
         display: inline-block;
         width: 4px;
         height: 100%;
-        background-color: var(--brandColor);
+        background-color: var(--brand-400);
       }
     }
   }
 
   #internalLinksSideBarWrapper {
-    padding: 0.5rem;
+    padding: var(--space-400-rem);
     height: 400px;
     overflow-y: scroll;
 
     .internalLink {
-      margin-bottom: 0.5rem;
+      margin-bottom: var(--space-400-rem);
     }
   }
 }
@@ -204,9 +204,9 @@ h4 {
   position: sticky;
   z-index: 3;
   top: 7vh;
-  background-color: var(--brandColor);
+  background-color: var(--brand-400);
   color: #eee;
-  padding: 0.5rem;
+  padding: var(--space-400-rem);
   width: max-content;
   max-width: 700px;
 }
@@ -227,7 +227,7 @@ img {
 //actions
 
 #saveNoteBtn {
-  background-color: var(--brandColor);
+  background-color: var(--brand-400);
 }
 .saveNote--saved {
   background-color: #009985 !important;

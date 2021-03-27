@@ -1,15 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
-const notesController = require("../controllers/notesController");
+const {
+  mustBeApproved,
+  mustBeLoggedIn,
+  saveFacultyAndSemester,
+} = require("../controllers/userController");
+
+const {
+  sendNotesDescriptionToClient,
+} = require("../controllers/notesController");
+
+const mustHaveToken = require("../controllers/middlewares/mustHaveToken");
 
 router.get(
   "/availableNotes",
-  userController.mustBeLoggedIn,
-  userController.mustBeApproved,
-  notesController.sendNotesDescriptionToClient
+  mustBeLoggedIn,
+  mustBeApproved,
+  sendNotesDescriptionToClient
 );
 
-router.post("/saveFacultyAndSemester", userController.saveFacultyAndSemester);
+router.get("/protected", mustHaveToken, (req, res) =>
+  res.json({ message: "go to the controller" })
+);
 
-module.exports = router; //exports "router" to the app.js
+router.post("/saveFacultyAndSemester", mustHaveToken, saveFacultyAndSemester);
+
+module.exports = router;

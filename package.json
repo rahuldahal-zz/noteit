@@ -4,11 +4,11 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "backend": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
+    "backend": "NODE_ENV=development concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
     "frontend": "webpack-dev-server",
-    "dev": "concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\" \"webpack-dev-server\"",
+    "dev": "NODE_ENV=development concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\" \"webpack-dev-server\"",
     "build": "webpack",
-    "check-build": "concurrently \"webpack\" \"node init\"",
+    "check-build": "NODE_ENV=production concurrently \"webpack\" \"node backend/init\"",
     "test": "jest --runInBand",
     "test-watch": "jest --watch --runInBand"
   },
@@ -20,26 +20,23 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.12.13",
     "@sendgrid/mail": "^6.5.5",
-    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
-    "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
-    "connect-flash": "^0.1.1",
-    "connect-mongo": "^3.0.0",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "csurf": "^1.10.0",
     "dompurify": "^2.2.6",
     "dotenv": "^8.1.0",
-    "ejs": "^2.6.2",
+    "dotenv-webpack": "^1.8.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "extended-normalize.css": "^2.1.1",
     "helmet": "^4.0.0",
     "helmet-csp": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.3.0",
+    "mongodb": "^3.3.2",
     "mongoose": "^5.9.19",
+    "morgan": "^1.10.0",
     "nodemon": "^1.19.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
@@ -54,9 +51,12 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
+    "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^3.0.0",
+    "closure-webpack-plugin": "^2.5.0",
     "concurrently": "^5.3.0",
     "css-loader": "^4.2.2",
+    "google-closure-compiler": "^20210302.0.0",
     "html-webpack-plugin": "^4.4.1",
     "jest": "^26.1.0",
     "mini-css-extract-plugin": "^0.11.0",
@@ -75,5 +75,8 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
-  }
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }

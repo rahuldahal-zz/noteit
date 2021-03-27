@@ -1,7 +1,8 @@
 @use "../utils/media";
+@use "../utils/customProperties";
 
 .nav {
-  background-color: var(--brandColor);
+  background: var(--background-gradient);
   color: var(--white);
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
   height: 10vh;
@@ -9,8 +10,15 @@
   padding: 0;
 
   &__home {
+    font-size: 1.5rem;
     color: var(--white);
     text-decoration: none;
+  }
+
+  &__logo{
+    margin-left: var(--space-300-rem);
+    width: 2rem;
+    fill: var(--white);
   }
 
   &__wrap {
@@ -19,7 +27,7 @@
     height: 100%;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem;
+    padding: var(--space-400-rem);
 
     @include media.widerThan768 {
       padding: 1rem;
@@ -77,7 +85,7 @@
       }
     }
     &:nth-child(even) {
-      background-color: var(--black--light);
+      background-color: var(--black);
 
       @include media.widerThan1200 {
         background-color: transparent;

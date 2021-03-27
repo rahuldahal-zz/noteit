@@ -7,7 +7,6 @@ dotenv.config();
 const { User } = require("../models/User");
 
 passport.serializeUser((user, done) => {
-  // user.id = ObjectId
   console.log("from serialize, user id is ", user._id);
   User.prototype
     .sessionCountHandler(user._id, "increment")
@@ -97,11 +96,29 @@ passport.use(
 
 function createUser(profile, done, provider) {
   console.log("creating a new user...");
+  if (provider === "google") {
+    const { sub, given_name, family_name, email, picture } = profile;
+    profile = {
+      id: sub,
+      firstName: given_name,
+      lastName: family_name,
+      email: email,
+      picture: picture,
+    };
+  } else {
+    const { id, first_name, last_name, email, picture } = profile;
+    profile = {
+      id: id,
+      firstName: first_name,
+      lastName: last_name,
+      email: email ? email : "",
+      picture: picture.data.url,
+    };
+  }
   let user = new User(profile, provider);
   user
     .createUser()
     .then((response) => {
-      console.log(response);
       done(null, response);
     })
     .catch((error) => console.log(error));

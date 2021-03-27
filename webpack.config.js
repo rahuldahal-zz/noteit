@@ -1,9 +1,12 @@
 const currentTask = process.env.npm_lifecycle_event;
 
+const webpack = require("webpack");
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ClosurePlugin = require("closure-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 let cssConfig = {
   test: /\.(sa|sc|c)ss$/i,
@@ -26,13 +29,14 @@ let config = {
   module: {
     rules: [svgLoader, babelConfig, cssConfig],
   },
-  plugins: [],
+  plugins: [new Dotenv()],
   resolve: {
     alias: {
       "@svgs": path.resolve(__dirname, "./frontend/assets/svgs"),
       "@utils": path.resolve(__dirname, "./frontend/utils"),
       "@components": path.resolve(__dirname, "./frontend/Components"),
       "@screens": path.resolve(__dirname, "./frontend/Screens"),
+      "@contexts": path.resolve(__dirname, "./frontend/Contexts"),
     },
   },
 };
@@ -44,8 +48,9 @@ if (currentTask === "dev" || currentTask === "frontend") {
   config.devtool = "inline-source-map";
   config.devServer = {
     port: 5000,
-    contentBase: path.resolve(__dirname, "/frontend/public"),
+    contentBase: path.resolve(__dirname, "/build"),
     hot: true,
+    historyApiFallback: true,
     proxy: {
       "/api": "http://127.0.0.1:3000",
       "/auth": "http://127.0.0.1:3000",
@@ -63,31 +68,34 @@ if (currentTask === "dev" || currentTask === "frontend") {
   );
   config.output = {
     filename: "main-bundled.js",
-    path: path.resolve(__dirname, "./frontend/public"),
+    path: path.resolve(__dirname, "./build"),
   };
 }
 
 //separate for "production"
-if (currentTask === "build") {
+if (currentTask === "build" || currentTask === "check-build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
-    filename: "[name].js",
-    chunkFilename: "[name].js",
-    path: path.resolve(__dirname, "./frontend/public"),
-    publicPath: "/public",
+    filename: "./static/[name].js",
+    chunkFilename: "./static/[name].js",
+    path: path.resolve(__dirname, "./build"),
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
-  }; //separates vendors and custom scripts (vendor = editor.js)
+  };
   config.plugins.push(
+    new webpack.EnvironmentPlugin({
+      AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+      AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    }),
     new HtmlWebPackPlugin({
       filename: "index.html",
       template: "./frontend/index.ejs",
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.css",
+      filename: "./static/styles.css",
     })
   );
 }

@@ -1,23 +1,13 @@
 const { User } = require("../models/User");
 const { sendFlashMessage } = require("./utils/respond");
 
-exports.root = (req, res) => {
-  if (!req.user) return res.renderTemplate("index", { toRender: "home-guest" });
-
-  if (!req.user.faculty || !req.user.semester) {
-    return res.renderTemplate("index", { toRender: "saveFacultyAndSemester" });
-  }
-
-  return res.redirect(303, "/home");
-};
-
 exports.saveFacultyAndSemester = (req, res, next) => {
   let user = new User(req.user);
   user
     .saveFacultyAndSemester(req.body.faculty, req.body.semester)
     .then(() =>
       res
-        .status("200")
+        .status(202)
         .json({ message: "Faculty and Semester Saved Successfully." })
     )
     .catch((error) => res.status(400).json(error));

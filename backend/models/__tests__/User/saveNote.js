@@ -22,11 +22,11 @@ describe("saveNote", () => {
   });
 
   const googleOAuthData = {
-    sub: "123456GoogleID",
+    id: "123456GoogleID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
-    given_name: "Rahul",
-    family_name: "Dahal",
+
+    firstName: "Rahul",
+    lastName: "Dahal",
     picture: "https://pictureAPI.com",
   };
 

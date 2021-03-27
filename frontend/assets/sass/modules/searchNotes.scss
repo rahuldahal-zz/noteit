@@ -1,4 +1,4 @@
-//search
+@use "../utils/customProperties";
 
 #searchOverlay{
     visibility: hidden;
@@ -80,7 +80,7 @@
         width: max-content;
         padding: 1rem 1.5rem;
         background-color: #fff;
-        border-radius: 0.5rem;
+        border-radius: var(--space-400-rem);
         text-decoration: none;
         color: #333;
         margin: 5px;
@@ -90,7 +90,7 @@
         text-align: center;
         background-color: #fff;
         color: #333;
-        padding: 0.5rem 1rem;
+        padding: var(--space-400-rem) 1rem;
       }
     }
   }

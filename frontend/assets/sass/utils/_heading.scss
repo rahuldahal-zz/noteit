@@ -1,3 +1,5 @@
+@use "./customProperties";
+
 .heading {
   position: relative;
   margin: 2rem 0;
@@ -10,16 +12,16 @@
     top: -1rem;
     left: 0;
     width: 40%;
-    height: 0.5rem;
-    background-color: var(--brandColor);
-    border-radius: 0.5rem;
+    height: var(--space-400-rem);
+    background: var(--background-gradient);
+    border-radius: var(--space-400-rem);
   }
 
   &--white {
     color: #f4f4f4;
 
     &::before {
-      background-color: #f4f4f4;
+      background: #f4f4f4;
     }
   }
 }

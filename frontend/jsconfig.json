@@ -5,7 +5,8 @@
           "@svgs": ["./assets/svgs"],
           "@utils": ["./utils"],
           "@components": ["./Components"],
-          "@Screens": ["./Screens"]
+          "@screens": ["./Screens"],
+          "@contexts": ["./Contexts"],
         }
     },
   }

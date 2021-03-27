@@ -1,6 +1,6 @@
-import React from "react";
-import Guest from "@components/Guest/Guest";
+import React, { useEffect, useState } from "react";
+import UserDashboard from "@components/UserDashboard/UserDashboard";
 
 export default function Home() {
-  return <Guest />;
+  return <UserDashboard />;
 }

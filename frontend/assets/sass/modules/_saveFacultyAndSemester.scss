@@ -1,0 +1,108 @@
+@use "../utils/customProperties";
+@use "../utils/media";
+
+.saveFacultyAndSemester {
+  min-height: 93vh;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    background: var(--background-gradient);
+
+    @include media.widerThan768 {
+      max-width: 70vw;
+      transform: skewX(10deg);
+      background-color: var(--accent-400);
+      box-shadow: 12px -12px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: -12%;
+    left: -22vw;
+    width: 119vw;
+    height: 96vh;
+    background: var(--background-gradient);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.4);
+    transform: rotate(-14deg);
+
+    @include media.widerThan768 {
+      left: -35%;
+      width: 85vw;
+      height: 120vh;
+      transform: skewX(-20deg);
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 3;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__header {
+    position: relative;
+    padding: 0;
+    color: var(--white);
+    max-width: 600px;
+  }
+
+  &__greeting {
+    margin-bottom: 5vh;
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__form {
+    max-width: 480px;
+
+    .select {
+      position: relative;
+      border: 0;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    #chevron {
+      display: none;
+    }
+
+    .selectWrap {
+      position: relative;
+
+      &::after {
+        content: url("https://res.cloudinary.com/rdaahal/image/upload/v1616226938/noteit/images/doubleChevron_aobayy.svg");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20%;
+        height: 100%;
+        border-top-right-radius: var(--space-400-em);
+        border-bottom-right-radius: var(--space-400-em);
+        pointer-events: none;
+        background: var(--accent-400);
+      }
+    }
+  }
+
+  &__illustration {
+    fill: pink;
+    width: 20vw;
+  }
+}

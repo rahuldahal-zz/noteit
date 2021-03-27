@@ -1,1 +1,1 @@
-web: node init.js
+web: node backend/init.js

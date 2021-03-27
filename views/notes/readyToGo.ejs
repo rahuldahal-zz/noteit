@@ -1,8 +1,0 @@
-<main id="readyToGoScreen">
-  <h2>You are now successfully authenticated via <%=user.provider%></h2>
-  <p>Click the "continue" button below to proceed.</p>
-  <form action="/sendNotesToClient" method="POST" id="readyToGoForm">
-    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
-    <button type="submit" class="btn">Continue</button>
-  </form>
-</main>

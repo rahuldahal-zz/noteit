@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ExamTimeIllustration from "@svgs/examTime.svg";
 import isScreenLargerThan from "@utils/screenSize";
-import TextWithIcon from "@components/TextWithIcon";
-import getIconPaths from "@utils/iconDetails";
+import LoginButton from "@components/Buttons/LoginButton";
 
 export default function Hero({ setShowLoginOptions }) {
   const [isScreenWide, setIsScreenWide] = useState(false);
@@ -31,20 +30,7 @@ export default function Hero({ setShowLoginOptions }) {
             to refer and understand.
           </p>
 
-          <button
-            type="button"
-            className="hero__cta btn btn--accent btn--large"
-            onClick={() => setShowLoginOptions(true)}
-          >
-            <TextWithIcon
-              textContent="Let's NoteIT"
-              pathData={getIconPaths("login")}
-              viewBox="0 0 24 24"
-              fill="none"
-              strokeWidth="2"
-              iconWidth="2rem"
-            />
-          </button>
+          <LoginButton size="large" setShowLoginOptions={setShowLoginOptions} />
         </div>
 
         <div className="hero__mockupWrap">

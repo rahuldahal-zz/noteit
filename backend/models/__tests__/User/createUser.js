@@ -35,53 +35,64 @@ describe("createUser", () => {
     sessionCount: 0,
   };
 
-  test("should insert an user with google OAuth Data", async () => {
-    const googleOAuthData = {
-      sub: "123456GoogleID",
+  test("should insert an user with user data", async () => {
+    const userDataFromAuthProvider = {
+      id: "google|123456",
       email: "test@testing.com",
-      name: "Rahul Dahal",
-      given_name: "Rahul",
-      family_name: "Dahal",
+      firstName: "Rahul",
+      lastName: "Dahal",
       picture: "https://pictureAPI.com",
     };
 
-    const newUser = await new User(googleOAuthData, "google").createUser();
+    const newUser = await new User(
+      userDataFromAuthProvider,
+      "google"
+    ).createUser();
 
     expect(newUser).toEqual({
-      OAuthId: googleOAuthData.sub,
-      email: googleOAuthData.email,
-      name: googleOAuthData.name,
-      picture: googleOAuthData.picture,
-      firstName: googleOAuthData.given_name,
-      lastName: googleOAuthData.family_name,
+      OAuthId: userDataFromAuthProvider.id,
+      email: userDataFromAuthProvider.email,
+      picture: userDataFromAuthProvider.picture,
+      firstName: userDataFromAuthProvider.firstName,
+      lastName: userDataFromAuthProvider.lastName,
       ...additionalDefaults,
     });
   });
 
-  test("should insert an user with facebook OAuth Data", async () => {
-    const facebookOAuthData = {
-      id: "123456FacebookID",
+  test("should reject for bogus property", async () => {
+    const bogusData = {
+      bogusProp: "hahaha",
+      id: "google|123456",
       email: "test@testing.com",
-      name: "Rahul Dahal",
-      first_name: "Rahul",
-      last_name: "Dahal",
-      picture: {
-        data: {
-          url: "https://pictureAPI.com",
-        },
-      },
+      firstName: "Rahul",
+      lastName: "Dahal",
+      picture: "https://pictureAPI.com",
     };
 
-    const newUser = await new User(facebookOAuthData, "facebook").createUser();
+    try {
+      await new User(bogusData, "google").createUser();
+    } catch (rejectionMessage) {
+      expect(rejectionMessage).toEqual(
+        expect.arrayContaining(["bogus property bogusProp received"])
+      );
+    }
+  });
 
-    expect(newUser).toEqual({
-      OAuthId: facebookOAuthData.id,
-      email: facebookOAuthData.email,
-      name: facebookOAuthData.name,
-      picture: facebookOAuthData.picture.data.url,
-      firstName: facebookOAuthData.first_name,
-      lastName: facebookOAuthData.last_name,
-      ...additionalDefaults,
-    });
+  test("should reject for non-string value", async () => {
+    const invalidData = {
+      id: "google|123456",
+      email: function () {},
+      firstName: "Rahul",
+      lastName: "Dahal",
+      picture: "https://pictureAPI.com",
+    };
+
+    try {
+      await new User(invalidData, "google").createUser();
+    } catch (rejectionMessage) {
+      expect(rejectionMessage).toEqual(
+        expect.arrayContaining(["unacceptable value type on email property"])
+      );
+    }
   });
 });

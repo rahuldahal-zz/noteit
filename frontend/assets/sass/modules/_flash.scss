@@ -1,3 +1,5 @@
+@use "../utils/customProperties";
+
 #flash-wrap {
   visibility: hidden;
   position: fixed;
@@ -15,7 +17,7 @@
   p {
     color: #fff;
     padding: 1rem 1.3rem;
-    border-radius: 0.5rem;
+    border-radius: var(--space-400-rem);
     margin-top: 1rem;
     width: max-content;
   }

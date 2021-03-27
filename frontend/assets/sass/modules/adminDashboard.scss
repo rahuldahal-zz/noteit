@@ -1,3 +1,5 @@
+@use "../utils/customProperties";
+
 .adminDashboard {
   position: relative;
   min-height: 93vh;
@@ -7,7 +9,7 @@
   position: fixed;
   top: 10vh;
   left: 0;
-  background-color: var(--brandColor);
+  background-color: var(--brand-400);
   color: #f4f4f4;
   width: 165px;
   height: 90vh;
@@ -21,7 +23,7 @@
   &__item {
     display: block;
     width: 100% !important;
-    background-color: var(--brandLight);
+    background-color: var(--brand-300);
     color: #f4f4f4;
     font-weight: bold;
 
@@ -89,7 +91,7 @@
   color: #f4f4f4;
   width: 380px;
   height: 400px;
-  border-radius: 0.5rem;
+  border-radius: var(--space-400-rem);
   box-shadow: 6px 6px 12px -6px rgba(0, 0, 0, 0.5);
 
   &__info {
@@ -110,7 +112,7 @@
 
   hr {
     color: #c4c4c4;
-    border-radius: 0.5rem;
+    border-radius: var(--space-400-rem);
     margin: 1rem 0;
   }
 
@@ -141,12 +143,12 @@
 .contributorBadge {
   display: inline-block;
   width: max-content;
-  padding: 3px 0.5rem;
-  border-radius: 0.5rem;
+  padding: 3px var(--space-400-rem);
+  border-radius: var(--space-400-rem);
 }
 
 .basicBadge {
-  background-color: var(--brandColor);
+  background-color: var(--brand-400);
   color: #f4f4f4;
 }
 

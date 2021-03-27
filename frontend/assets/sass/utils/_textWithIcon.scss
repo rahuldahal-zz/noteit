@@ -1,3 +1,5 @@
+@use "./customProperties";
+
 .textWithIcon {
   display: flex;
   align-items: center;
@@ -5,7 +7,7 @@
   width: max-content;
 
   svg {
-    margin-right: 0.5em;
+    margin-right: var(--space-400-em);
   }
 
   &--iconRight {
@@ -13,7 +15,7 @@
 
     svg {
       margin-right: 0;
-      margin-left: 0.5em;
+      margin-left: var(--space-400-em);
     }
   }
 }

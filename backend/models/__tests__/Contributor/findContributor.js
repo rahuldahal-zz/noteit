@@ -7,11 +7,11 @@ describe("findContributor method", () => {
   let connection, db, contributorsCollection;
   let createdUser;
   const googleOAuthData = {
-    sub: "123456GoogleID",
+    id: "123456GoogleID",
     email: "test@testing.com",
-    name: "Rahul Dahal",
-    given_name: "Rahul",
-    family_name: "Dahal",
+
+    firstName: "Rahul",
+    lastName: "Dahal",
     picture: "https://pictureAPI.com",
   };
   const contributor = new Contributor(googleOAuthData, "google");
