@@ -22,28 +22,21 @@
     max-height: 70vh;
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    background: rgba(var(--brandRGB), 0.6);
-
-    @include media.widerThan768 {
-      background: transparent;
-      visibility: hidden;
-    }
-  }
-
   &__illustration {
     position: absolute;
-    left: 0;
+    left: 3.75rem;
+    bottom: 3.75rem;
     width: 100%;
     height: 100%;
-    filter: blur(5px);
+    transform: rotate(90deg);
+    filter: blur(2px);
+
+    @include media.widerThan1200 {
+      transform: rotate(0);
+      left: 0;
+      bottom: unset;
+      filter: blur(5px);
+    }
   }
 
   &__content {
@@ -54,14 +47,10 @@
   }
 
   &__mockupWrap {
-    position: absolute;
-    top: 25%;
-    left: 12%;
-    transform: rotate(-30deg) scale(1.4);
-    border-radius: var(--space-400-rem);
-    transition: transform 0.3s ease-in-out;
+    display: none;
 
-    @include media.widerThan768 {
+    @include media.widerThan1200 {
+      display: block;
       position: relative;
       z-index: 5;
       top: unset;
@@ -81,7 +70,7 @@
       bottom: 0;
       border-radius: var(--space-400-rem);
 
-      @include media.widerThan768 {
+      @include media.widerThan1200 {
         box-shadow: -6px 6px 12px rgba(0, 0, 0, 0.4);
       }
     }
@@ -104,7 +93,7 @@
     border-radius: var(--space-400-rem);
     filter: blur(2px);
 
-    @include media.widerThan768 {
+    @include media.widerThan1200 {
       filter: blur(0px);
     }
   }
@@ -113,15 +102,11 @@
     position: relative;
     z-index: 3;
     margin-bottom: 2rem;
-    background-color: rgba(#000b14, 0.5);
     border-radius: var(--space-400-rem);
-    box-shadow: 6px 6px 12px rgba(#000b14, 0.3);
-    color: #f4f4f4;
-    padding: var(--space-500-em);
+    color: var(--black);
     max-width: 90%;
 
-    @include media.widerThan768 {
-      background-color: transparent;
+    @include media.widerThan1200 {
       box-shadow: none;
       padding: 0;
       color: var(--black);
@@ -139,6 +124,7 @@
   }
 
   &__cta {
+    margin-top: 2rem;
     position: relative;
     z-index: 3;
     box-shadow: 6px 6px 12px rgba(#000b14, 0.3);
@@ -154,14 +140,14 @@
   position: relative;
   z-index: 3;
   align-items: flex-end;
-  margin-top: -10vh;
+  margin-top: -15vh;
   padding-top: 10vh;
   padding-bottom: 10vh;
   width: 100%;
   color: #eee;
   overflow: hidden;
 
-  @include media.widerThan768 {
+  @include media.widerThan1200 {
     margin-top: -10vh;
   }
 
@@ -173,7 +159,7 @@
     width: auto;
     height: 100%;
 
-    @include media.widerThan768 {
+    @include media.widerThan1200 {
       width: 100%;
       height: unset;
     }

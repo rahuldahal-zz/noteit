@@ -1,38 +1,50 @@
-:root{
+:root {
+  // colors;
 
-    // colors;
+  // primary
+  --brand-300: #0b7ee0;
+  --brand-400: #0970c8;
+  --brand-500: #0a63af;
+  --brandRGB: 39, 129, 207;
 
-    // primary
-    --brand-300: #0B7EE0;
-    --brand-400: #0970c8;
-    --brand-500: #0A63AF;
-    --brandRGB: 39, 129, 207;
+  // secondary
+  --secondary-400: #542c96;
+  --secondaryRGB: 84, 44, 150;
 
-    // secondary
-    --secondary-400: #542C96;
-    --secondaryRGB: 84, 44, 150;
-    
-    // tertiary
-    --accent-400: #f2e419;
-    --accent-500: #FED253;
+  // tertiary
+  --accent-400: #f2e419;
+  --accent-500: #fed253;
+  --accentRGB: 242, 228, 25;
 
-    // gradients
-    --alpha: 0.6;
-    --background-gradient: linear-gradient(90deg, var(--brand-400) 0%, var(--secondary-400) 100%);
-    --background-gradient-alpha: linear-gradient(90deg, rgba(var(--brandRGB), var(--alpha)) 0%, rgba(var(--secondaryRGB), var(--alpha)) 100%);
-    --button-gradient: linear-gradient(90deg, var(--accent-400) 0%, var(--accent-500) 100%);
+  // gradients
+  --alpha: 0.6;
+  --background-gradient: linear-gradient(
+    90deg,
+    var(--brand-400) 0%,
+    var(--secondary-400) 100%
+  );
+  --background-gradient-alpha: linear-gradient(
+    90deg,
+    rgba(var(--brandRGB), var(--alpha)) 0%,
+    rgba(var(--secondaryRGB), var(--alpha)) 100%
+  );
+  --button-gradient: linear-gradient(
+    90deg,
+    var(--accent-400) 0%,
+    var(--accent-500) 100%
+  );
 
-    // typography    
-    --white: #efefef;
-    --black: #001323;
+  // typography
+  --white: #efefef;
+  --black: #001323;
 
-    // spacing
+  // spacing
 
-    --space-300-em: 0.25em;
-    --space-400-em: 0.5em;
-    --space-500-em: 0.75em;
+  --space-300-em: 0.25em;
+  --space-400-em: 0.5em;
+  --space-500-em: 0.75em;
 
-    --space-300-rem: 0.25rem;
-    --space-400-rem: 0.5rem;
-    --space-500-rem: 0.75rem;
+  --space-300-rem: 0.25rem;
+  --space-400-rem: 0.5rem;
+  --space-500-rem: 0.75rem;
 }
