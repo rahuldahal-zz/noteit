@@ -258,11 +258,9 @@ Admin.prototype.cleanUp = function cleanUp() {
     subject: this.data.subject,
     faculty: this.data.faculty.toLowerCase(),
     semester: this.data.semester.toLowerCase(),
-    url: `/notes/${this.data.faculty}/${
-      this.data.semester
-    }/${encodeURIComponent(this.data.subject)}/${encodeURIComponent(
-      this.data.title
-    )}`,
+    url: `/notes/${this.data.faculty.toLowerCase()}/${this.data.semester.toLowerCase()}/${encodeURIComponent(
+      this.data.subject.toLowerCase()
+    )}/${encodeURIComponent(this.data.title.toLowerCase())}`,
     contributor: new ObjectID(this.data.contributor),
     note: this.data.note,
     createdDate: Date.now(),
