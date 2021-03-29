@@ -19,15 +19,102 @@ const Notes = function Notes(data) {
   this.errors = [];
 };
 
-Notes.prototype.findNotes = function findNotes() {
+Notes.prototype.findNotes = function findNotes(faculty, semester) {
   return new Promise((resolve, reject) => {
+    const aggregationArray = [
+      {
+        $match: {
+          faculty,
+          semester,
+        },
+      },
+      {
+        $lookup: {
+          from: "contributors",
+          as: "contributorUserId",
+          let: {
+            contributor: "$contributor",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$contributor"],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                userId: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          as: "contributorInfo",
+          let: {
+            contributorUserId: {
+              $arrayElemAt: ["$contributorUserId.userId", 0],
+            },
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$contributorUserId"],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                firstName: 1,
+                lastName: 1,
+                picture: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $set: {
+          contributorInfo: {
+            $arrayElemAt: ["$contributorInfo", 0],
+          },
+        },
+      },
+      {
+        $project: {
+          contributor: 0,
+          contributorUserId: 0,
+          faculty: 0,
+          semester: 0,
+        },
+      },
+    ];
     notesCollection
-      .find({
-        faculty: this.data.faculty,
-        semester: this.data.semester,
-      })
+      .aggregate(aggregationArray)
       .toArray()
-      .then((notes) => resolve(notes))
+      .then((notes) => {
+        const subjectWiseNote = {};
+        notes.forEach((note) => {
+          const { subject, ...rest } = note;
+          const isSubjectAProperty = Object.prototype.hasOwnProperty.call(
+            subjectWiseNote,
+            subject
+          );
+          if (isSubjectAProperty) {
+            subjectWiseNote[subject] = [...subjectWiseNote[subject], rest];
+          } else {
+            subjectWiseNote[subject] = [rest];
+          }
+        });
+        return resolve(subjectWiseNote);
+      })
       .catch((error) => reject(new Error(error)));
   });
 };

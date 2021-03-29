@@ -1,9 +1,13 @@
+@use "../utils/media";
 @use "./customProperties";
 
 .heading {
   position: relative;
   margin: 2rem 0;
-  width: max-content;
+
+  @include media.widerThan1200 {
+    width: max-content;
+  }
 
   &::before {
     content: "";
