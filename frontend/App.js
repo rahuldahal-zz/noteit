@@ -12,6 +12,7 @@ import Team from "@screens/Team";
 import Root from "@screens/Root";
 import Admin from "@screens/Admin";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
+import Page404 from "@screens/404";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
@@ -53,6 +54,7 @@ function App() {
           condition="isAdmin"
           history={history}
         />
+        <Route path="*" component={Page404} />
       </Switch>
       <Footer />
     </Router>

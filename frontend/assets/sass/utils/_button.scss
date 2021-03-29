@@ -11,6 +11,7 @@ button,
   text-decoration: none;
   transform-origin: left;
   transition-timing-function: linear;
+  background: var(--black);
 
   &::before {
     content: "";
@@ -35,8 +36,12 @@ button,
   }
 
   &--secondary {
-    background-color: #333 !important;
+    background-color: #333;
     color: var(--white);
+  }
+
+  &--brand {
+    background: var(--brand-400);
   }
 
   &--outline {

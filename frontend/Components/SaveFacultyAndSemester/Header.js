@@ -24,7 +24,7 @@ export default function Header() {
         body: JSON.stringify(currentValues),
       });
       if (status === 202) {
-        return window.location("/");
+        return window.location.replace("/");
       }
     } catch (error) {
       console.log(error);
