@@ -1,23 +1,10 @@
 import TextWithIcon from "@components/TextWithIcon";
-import React, { useRef } from "react";
+import React from "react";
 import getIconPaths from "@utils/iconDetails";
 
-export default function LoginOptions({
-  showOptions = false,
-  setShowLoginOptions,
-}) {
-  const loginOptionsRef = useRef(null);
-
+export default function LoginOptions({ setShowLoginOptions }) {
   return (
-    <div
-      className={
-        showOptions
-          ? "loginOptions loginOptions--visible flex"
-          : "loginOptions flex"
-      }
-      aria-hidden="true"
-      ref={loginOptionsRef}
-    >
+    <div className="loginOptions loginOptions--visible flex" aria-hidden="true">
       <div className="flex loginOptions__buttons">
         <a href="/auth/facebook" className="btn link">
           <TextWithIcon
@@ -36,11 +23,9 @@ export default function LoginOptions({
       </div>
 
       <button
+        type="button"
         className="close"
-        onClick={() => {
-          loginOptionsRef.current.classList.remove("loginOptions--visible");
-          setShowLoginOptions(false);
-        }}
+        onClick={() => setShowLoginOptions(false)}
       >
         Close
       </button>
