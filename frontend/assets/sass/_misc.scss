@@ -36,6 +36,10 @@ p {
   color: var(--brand-400);
 }
 
+select {
+  -webkit-appearance: initial;
+}
+
 //modifier
 
 .loginOptions--visible {

@@ -23,7 +23,7 @@ export default function UserDashboard() {
     const availableSubjects = Object.keys(availableNotes);
     return (
       <section className="home__availableSubjects flex">
-        <h5>Available Subjects</h5>
+        <h6>Available Subjects</h6>
         {availableSubjects.map((subject, index) => (
           <button type="button" key={index} className="home__subject">
             {subject}
@@ -37,10 +37,10 @@ export default function UserDashboard() {
     <h3>Fetching notes...</h3>
   ) : (
     <>
-      <h4 className="heading home__heading">
+      <h5 className="heading home__heading">
         {user.firstName}, here is the list of available notes based on your
         profile.
-      </h4>
+      </h5>
       <AvailableSubjects />
     </>
   );

@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ExamTimeIllustration from "@svgs/examTime.svg";
-import isScreenLargerThan from "@utils/screenSize";
 import LoginButton from "@components/Buttons/LoginButton";
 
 export default function Hero({ setShowLoginOptions }) {
-  const [isScreenWide, setIsScreenWide] = useState(false);
-  useEffect(() => {
-    if (isScreenLargerThan(768)) {
-      setIsScreenWide(true);
-    }
-  }, []);
-
   return (
     <section className="hero maximumWidth">
-      {isScreenWide ? (
-        <ExamTimeIllustration className="hero__illustration" />
-      ) : (
-        ""
-      )}
+      <ExamTimeIllustration className="hero__illustration" />
       <div className="content hero__content flex">
         <div className="hero__taglineWrap">
           <h2 className="hero__tagline">
