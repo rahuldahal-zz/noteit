@@ -45,12 +45,12 @@ describe("handleContributorApproval method", () => {
   });
 
   describe("should resolve by", () => {
-    test("creating  contributor document", async () => {
+    test("creating  note document", async () => {
       const additionalDefaults = {
         _id: expect.any(require("mongodb").ObjectID),
-        url: `/notes/${note.faculty}/${note.semester}/${encodeURIComponent(
-          note.subject
-        )}/${encodeURIComponent(note.title)}`,
+        url: `/notes/${note.faculty.toLowerCase()}/${note.semester.toLowerCase()}/${encodeURIComponent(
+          note.subject.toLowerCase()
+        )}/${encodeURIComponent(note.title.toLowerCase())}`,
         createdDate: expect.any(Number),
       };
       const createdNote = await admin.createNote(note);
