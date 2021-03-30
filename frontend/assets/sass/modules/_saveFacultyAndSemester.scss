@@ -16,7 +16,7 @@
     height: 100%;
     background: var(--background-gradient);
 
-    @include media.widerThan768 {
+    @include media.widerThan1200 {
       max-width: 70vw;
       transform: skewX(10deg);
       background-color: var(--accent-400);
@@ -36,7 +36,7 @@
     box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.4);
     transform: rotate(-14deg);
 
-    @include media.widerThan768 {
+    @include media.widerThan1200 {
       left: -35%;
       width: 85vw;
       height: 120vh;
@@ -102,7 +102,11 @@
   }
 
   &__illustration {
-    fill: pink;
-    width: 20vw;
+    display: none;
+
+    @include media.widerThan1200 {
+      display: block;
+      width: 20vw;
+    }
   }
 }

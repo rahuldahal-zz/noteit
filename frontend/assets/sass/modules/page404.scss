@@ -1,0 +1,9 @@
+.page404 {
+  min-height: 90vh;
+
+  &__general,
+  &__joke {
+    max-width: 37.5rem;
+    margin-bottom: 10vh;
+  }
+}

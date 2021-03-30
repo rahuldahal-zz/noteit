@@ -8,14 +8,14 @@ import { useAuth } from "@contexts/AuthProvider";
 import Links from "./Links";
 import linksData from "./utils/linksData";
 
-export default function Nav({ setShowLoginOptions }) {
+export default function Nav() {
   const { token, isAuthenticated } = useAuth();
 
   function GuestActions() {
     return (
       <>
         <Links links={linksData} />
-        <LoginButton setShowLoginOptions={setShowLoginOptions} />
+        <LoginButton />
       </>
     );
   }
