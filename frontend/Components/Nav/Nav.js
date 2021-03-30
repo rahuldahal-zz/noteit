@@ -7,6 +7,7 @@ import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
 import Links from "./Links";
 import linksData from "./utils/linksData";
+import Profile from "./Profile";
 
 export default function Nav() {
   const { token, isAuthenticated } = useAuth();
@@ -23,6 +24,7 @@ export default function Nav() {
   function UserActions() {
     return (
       <>
+        <Profile />
         <FAB icon="search" textContent="Search" />
       </>
     );

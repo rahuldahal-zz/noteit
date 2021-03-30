@@ -21,6 +21,22 @@
     fill: var(--white);
   }
 
+  &__profile {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid var(--white);
+
+    &::after {
+      display: none;
+    }
+
+    img {
+      border-radius: inherit;
+    }
+  }
+
   &__wrap {
     max-width: 1600px;
     margin: 0 auto;
