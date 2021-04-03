@@ -3,6 +3,7 @@ const currentTask = process.env.npm_lifecycle_event;
 const webpack = require("webpack");
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -28,7 +29,21 @@ const config = {
   module: {
     rules: [svgLoader, babelConfig, cssConfig],
   },
-  plugins: [new Dotenv()],
+  plugins: [
+    new Dotenv(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "./frontend/manifest.json"),
+          to: path.resolve(__dirname, "./build/manifest.json"),
+        },
+        {
+          from: path.resolve(__dirname, "./frontend/service-worker.js"),
+          to: path.resolve(__dirname, "./build/service-worker.js"),
+        },
+      ],
+    }),
+  ],
   resolve: {
     alias: {
       "@svgs": path.resolve(__dirname, "./frontend/assets/svgs"),
@@ -48,6 +63,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
   config.devServer = {
     port: 5000,
     contentBase: path.resolve(__dirname, "/build"),
+    contentBasePublicPath: "/",
     hot: true,
     historyApiFallback: true,
     proxy: {
@@ -67,6 +83,7 @@ if (currentTask === "dev" || currentTask === "frontend") {
   );
   config.output = {
     filename: "main-bundled.js",
+    publicPath: "/",
     path: path.resolve(__dirname, "./build"),
   };
 }
