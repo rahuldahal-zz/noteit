@@ -9,7 +9,7 @@ const STATIC_ASSETS = [
   "/static/styles.css",
   "/static/1.styles.css",
   "/manifest.json",
-  "https://res.cloudinary.com/rdaahal/image/upload/v1613298797/noteit/images/noteit_j0dofz.png",
+  "https://res.cloudinary.com/rdaahal/image/upload/v1617460505/noteit/icons/noteit-96x96_xvnvdt.png",
 ];
 
 self.addEventListener("install", (event) => {
