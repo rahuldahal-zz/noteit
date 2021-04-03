@@ -3,13 +3,13 @@
     "name": "NoteIT",
     "icons": [
         {
-          "src": "https://res.cloudinary.com/rdaahal/image/upload/v1609246224/FootballStats/Icons/juggle-192x192_jbowkw.png",
+          "src": "https://res.cloudinary.com/rdaahal/image/upload/v1617448875/noteit/icons/manifest-icon-192_qymdie.png",
           "sizes": "192x192",
           "type": "image/png",
           "purpose": "maskable any"
         },
         {
-          "src": "https://res.cloudinary.com/rdaahal/image/upload/v1609246225/FootballStats/Icons/juggle-512x512_d9enn1.png",
+          "src": "https://res.cloudinary.com/rdaahal/image/upload/v1617448875/noteit/icons/manifest-icon-512_o1vco5.png",
           "sizes": "512x512",
           "type": "image/png",
           "purpose": "maskable any"
