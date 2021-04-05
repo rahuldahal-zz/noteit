@@ -1,6 +1,12 @@
 const { MongoClient } = require("mongodb");
+const atob = require("atob");
 const { User, setCollection } = require("../../User");
 require("dotenv").config();
+
+function getJWTHeader(token) {
+  const header = token.split(".")[0];
+  return JSON.parse(atob(header));
+}
 
 describe("create", () => {
   let connection;
@@ -45,6 +51,8 @@ describe("create", () => {
     };
 
     const newUser = await new User(userDataFromAuthProvider, "google").create();
+    const decodedJWT = getJWTHeader(newUser.refreshToken);
+    delete newUser.refreshToken;
 
     expect(newUser).toEqual({
       OAuthId: userDataFromAuthProvider.id,
@@ -54,6 +62,7 @@ describe("create", () => {
       lastName: userDataFromAuthProvider.lastName,
       ...additionalDefaults,
     });
+    expect(decodedJWT).toEqual({ alg: "HS256", typ: "JWT" });
   });
 
   test("should reject for bogus property", async () => {

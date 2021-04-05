@@ -20,6 +20,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.12.13",
     "@sendgrid/mail": "^6.5.5",
+    "atob": "^2.1.2",
     "babel-loader": "^8.0.6",
     "compression": "^1.7.4",
     "cookie-session": "^1.4.0",
@@ -96,7 +97,7 @@
       "^@routers(.*)$": "<rootDir>/backend/routers$1",
       "^@controllers(.*)$": "<rootDir>/backend/controllers$1",
       "^@models(.*)$": "<rootDir>/backend/models$1",
-      "^@utils(.*)$": "<rootDir>/backend/routers$1"
+      "^@utils(.*)$": "<rootDir>/backend/utils$1"
     }
   },
   "browserslist": [

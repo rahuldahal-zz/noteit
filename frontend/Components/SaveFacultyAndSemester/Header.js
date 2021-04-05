@@ -8,7 +8,7 @@ import useFormFields from "@components/Form/utils/useFormFields";
 import Greeting from "./Greeting";
 
 export default function Header() {
-  const { token } = useAuth();
+  const { accessToken } = useAuth();
   const [currentValues, fieldsJSX] = useFormFields(formFieldsDetail);
 
   async function handleFormSubmit(e) {
@@ -19,7 +19,7 @@ export default function Header() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(currentValues),
       });

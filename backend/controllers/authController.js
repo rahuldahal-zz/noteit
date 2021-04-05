@@ -8,7 +8,8 @@ exports.root = (req, res) => {
   const responsePrototype = {
     isAuthenticated: false,
     isNewUser: false,
-    token: null,
+    accessToken: null,
+    refreshToken: null,
   };
 
   if (!req.user) {
@@ -28,7 +29,8 @@ exports.root = (req, res) => {
   const payload = getSubObject(req.user, propertiesToReturn);
   const signedToken = signToken({ payload });
   responsePrototype.isAuthenticated = true;
-  responsePrototype.token = signedToken;
+  responsePrototype.accessToken = signedToken;
+  responsePrototype.refreshToken = req.user.refreshToken;
   responsePrototype.isAdmin = req.user.roles.includes("admin");
 
   if (!req.user.faculty || !req.user.semester) {

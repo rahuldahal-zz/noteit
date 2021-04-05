@@ -4,6 +4,7 @@
       "paths": {
         "@svgs/*": ["./assets/svgs/*"],
         "@utils/*": ["./utils/*"],
+        "@hooks/*": ["./hooks/*"],
         "@components/*": ["./Components/*"],
         "@screens/*": ["./Screens/*"],
         "@contexts/*": ["./Contexts/*"],

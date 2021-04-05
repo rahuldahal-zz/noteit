@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
+import useFetch from "@hooks/useFetch";
 
 export default function UserDashboard() {
-  const { user, token } = useAuth();
+  const { user, accessToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [availableNotes, setAvailableNotes] = useState([]);
 
+  const [status, data] = useFetch("/users/availableNotes", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
   useEffect(() => {
-    fetch("/users/availableNotes", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAvailableNotes(data);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    console.log(status);
+    if (data !== null) {
+      setAvailableNotes(data);
+      setIsLoading(false);
+    }
+  }, [status, data]);
 
   function AvailableSubjects() {
     const availableSubjects = Object.keys(availableNotes);

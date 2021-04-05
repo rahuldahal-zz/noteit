@@ -141,16 +141,12 @@
   position: relative;
   z-index: 3;
   align-items: flex-end;
-  margin-top: -15vh;
+  margin-top: -10vh;
   padding-top: 10vh;
   padding-bottom: 10vh;
   width: 100%;
   color: #eee;
   overflow: hidden;
-
-  @include media.widerThan1200 {
-    margin-top: -10vh;
-  }
 
   &__wave {
     position: absolute;

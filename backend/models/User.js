@@ -1,3 +1,4 @@
+const { signRefreshToken } = require("@utils/jwtConfig");
 const { ObjectID } = require("mongodb");
 
 let usersCollection;
@@ -46,6 +47,10 @@ User.prototype.validateAndCleanUp = function validateAndCleanUp() {
     savedNotes: [],
     sessionCount: 0,
     lastLogin: new Date(),
+    refreshToken: signRefreshToken({
+      OAuthId: this.data.id,
+      name: this.data.firstName,
+    }),
   };
 
   if (this.errors.length > 0) {

@@ -7,9 +7,9 @@ async function fetchAuthStatus() {
   try {
     const res = await fetch("/auth");
     const responseFromServer = await res.json();
-    const { isAuthenticated, token } = responseFromServer;
+    const { isAuthenticated, accessToken } = responseFromServer;
     if (isAuthenticated) {
-      const user = parseJwt(token);
+      const user = parseJwt(accessToken);
       return { ...responseFromServer, user };
     }
     console.log(responseFromServer);
@@ -24,9 +24,11 @@ function AuthProvider({ children }) {
   const [authState, setAuthState] = useState({ isLoading: true });
 
   useEffect(() => {
-    fetchAuthStatus()
-      .then((response) => setAuthState(response))
-      .catch((error) => setAuthState(error));
+    if (authState.isLoading) {
+      fetchAuthStatus()
+        .then((response) => setAuthState(response))
+        .catch((error) => setAuthState(error));
+    }
   }, []);
 
   return (

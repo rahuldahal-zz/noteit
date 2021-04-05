@@ -6,6 +6,9 @@ const {
   callback,
   logout,
 } = require("@controllers/authController");
+const { mustHaveUserToken } = require("@controllers/middlewares/mustHaveToken");
+
+router.get("/refreshToken", mustHaveUserToken, (req, res) => res.status(202));
 
 router.get("/logout", logout);
 

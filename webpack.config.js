@@ -48,6 +48,7 @@ const config = {
     alias: {
       "@svgs": path.resolve(__dirname, "./frontend/assets/svgs"),
       "@utils": path.resolve(__dirname, "./frontend/utils"),
+      "@hooks": path.resolve(__dirname, "./frontend/hooks"),
       "@components": path.resolve(__dirname, "./frontend/Components"),
       "@screens": path.resolve(__dirname, "./frontend/Screens"),
       "@contexts": path.resolve(__dirname, "./frontend/Contexts"),
