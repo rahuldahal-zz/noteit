@@ -26,6 +26,7 @@ jobs:
       run: |
         touch .env
         echo JWT_SECRET_USER_REFRESH =${{ secrets.JWT_SECRET_USER_REFRESH }} >> .env
+        echo JWT_SECRET_USER = ${{secrets.JWT_SECRET_USER}} >> .env
     - run: npm ci
     - run: npm test
   deploy:
