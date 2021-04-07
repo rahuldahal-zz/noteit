@@ -3,6 +3,8 @@ name: Run tests and then deploy
 on:  
   push:
     branches: [ master ]
+env:
+  JWT_SECRET_USER_REFRESH: ${{secrets.JWT_SECRET_USER_REFRESH}}
 
 jobs:  
   testing:
