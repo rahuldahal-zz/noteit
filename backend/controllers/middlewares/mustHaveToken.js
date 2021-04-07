@@ -13,7 +13,13 @@ async function renewAccessToken(refreshToken) {
     });
     return newAccessToken;
   } catch (error) {
-    return error;
+    if (error.message === "jwt expired") {
+      console.log(
+        "Caught on mustHaveToken middlewware, refresh token is expired"
+      );
+      return null;
+    }
+    return undefined;
   }
 }
 
@@ -24,9 +30,12 @@ exports.mustHaveUserToken = async function mustHaveUserToken(req, res, next) {
     req.payload = payload;
     return next();
   } catch (error) {
+    let accessToken;
     if (error.message === "jwt expired") {
-      const accessToken = await renewAccessToken(req.query.refreshToken);
-      return res.status(203).json({ accessToken });
+      accessToken = await renewAccessToken(req.query.refreshToken);
+      return accessToken !== null
+        ? res.status(401).json({ accessToken })
+        : res.status(403).json(error.message);
     }
     return res.status(403).json(error.message);
   }

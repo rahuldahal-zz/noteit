@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "@components/Form/Form";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
@@ -6,30 +6,38 @@ import { useAuth } from "@contexts/AuthProvider";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
 import useFormFields from "@components/Form/utils/useFormFields";
 import Greeting from "./Greeting";
+import useFetch from "@hooks/useFetch";
 
 export default function Header() {
   const { accessToken } = useAuth();
   const [currentValues, fieldsJSX] = useFormFields(formFieldsDetail);
+  const [startFetching, status, data] = useFetch();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
     console.log("submitting form...");
     try {
-      const { status } = await fetch("/users/saveFacultyAndSemester", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+      startFetching({
+        url: "/users/saveFacultyAndSemester",
+        options: {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(currentValues),
         },
-        body: JSON.stringify(currentValues),
       });
-      if (status === 202) {
-        return window.location.replace("/");
-      }
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log(status);
+    if (status === 202) {
+      window.location.replace("/");
+    }
+  }, [status]);
 
   return (
     <section className="saveFacultyAndSemester__header">

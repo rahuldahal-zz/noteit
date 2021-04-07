@@ -7,9 +7,13 @@ export default function UserDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [availableNotes, setAvailableNotes] = useState([]);
 
-  const [status, data] = useFetch("/users/availableNotes", {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  const [startFetching, status, data] = useFetch();
+
+  useEffect(() => {
+    startFetching({
+      url: "/users/availableNotes",
+    });
+  }, []);
 
   useEffect(() => {
     console.log(status);

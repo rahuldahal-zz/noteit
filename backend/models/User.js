@@ -104,6 +104,24 @@ User.prototype.create = function create() {
   });
 };
 
+User.prototype.updateRefreshToken = function updateRefreshToken(_id) {
+  return new Promise((resolve, reject) => {
+    const refreshToken = signRefreshToken({ _id });
+    usersCollection
+      .findOneAndUpdate({ _id }, { $set: { refreshToken } })
+      .then(({ n, updatedExisting, value }) => {
+        if (n === 1 && updatedExisting === true) {
+          return resolve(value.refreshToken);
+        }
+        return reject(new Error(`User with _id: ${_id} is not found`));
+      })
+      .catch((err) => {
+        console.log(err);
+        return reject(err);
+      });
+  });
+};
+
 User.prototype.sessionCountHandler = function sessionCountHandler(id, action) {
   return new Promise((resolve, reject) => {
     if (new ObjectID(id).toString() !== id.toString()) {

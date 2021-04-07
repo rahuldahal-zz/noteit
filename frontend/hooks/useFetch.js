@@ -1,31 +1,45 @@
 import { useAuth } from "@contexts/AuthProvider";
 import React, { useEffect, useState } from "react";
 
-export default function useFetch(url, options) {
+export default function useFetch() {
+  const [fetchArgs, startFetching] = useState(null);
+  const [renewedAccessToken, setRenewedAccessToken] = useState(null);
   const [fetchStatus, setFetchStatus] = useState("idle");
   const [data, setData] = useState(null);
-  const { refreshToken } = useAuth();
+  const { accessToken, refreshToken } = useAuth();
 
-  async function fetchData(renewedAccessToken) {
-    if (renewedAccessToken) {
-      options.headers.Authorization = `Bearer ${renewedAccessToken}`;
-    }
+  async function fetchWrapper() {
+    let { url, options = {} } = fetchArgs;
+    options = {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${renewedAccessToken || accessToken}`,
+      },
+    };
+
     try {
       setFetchStatus("fetching");
       const res = await fetch(`${url}/?refreshToken=${refreshToken}`, options);
       setFetchStatus(res.status);
-      if (res.status === 203) {
-        const { accessToken } = await res.json();
-        return fetchData(accessToken);
+      const clonedResponse = res.clone();
+      if (res.status === 401) {
+        const { accessToken: newToken } = await res.json();
+        setRenewedAccessToken(newToken);
       }
-      const parsedData = await res.json();
-      return setData(parsedData);
+      if (
+        res.headers.get("content-type") === "application/json; charset=utf-8"
+      ) {
+        const parsedData = await clonedResponse.json();
+        return setData(parsedData);
+      }
     } catch (err) {
       console.log(err);
       return setFetchStatus("failed");
     }
   }
-  useEffect(() => fetchData(), [url]);
 
-  return [fetchStatus, data];
+  useEffect(() => fetchArgs && fetchWrapper(), [fetchArgs, renewedAccessToken]);
+
+  return [startFetching, fetchStatus, data];
 }

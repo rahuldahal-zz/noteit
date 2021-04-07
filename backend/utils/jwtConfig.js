@@ -6,7 +6,7 @@ exports.signToken = function signToken({ payload, admin = false }) {
     ? process.env.JWT_SECRET_ADMIN
     : process.env.JWT_SECRET_USER;
   return jwt.sign(payload, SECRET, {
-    expiresIn: "20s",
+    expiresIn: "5m",
   });
 };
 

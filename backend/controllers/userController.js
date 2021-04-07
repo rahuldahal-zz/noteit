@@ -2,6 +2,7 @@ const { User } = require("@models/User");
 
 exports.saveFacultyAndSemester = (req, res) => {
   const user = new User(req.user);
+  console.log(req.body.faculty, req.body.semester);
   user
     .saveFacultyAndSemester(req.body.faculty, req.body.semester)
     .then(() =>
@@ -9,7 +10,10 @@ exports.saveFacultyAndSemester = (req, res) => {
         .status(202)
         .json({ message: "Faculty and Semester Saved Successfully." })
     )
-    .catch((error) => res.status(400).json(error));
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json(error);
+    });
 };
 
 exports.checkSessionCount = (req, res, next) => {

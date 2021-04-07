@@ -1,10 +1,18 @@
 const { User } = require("@models/User");
 const passport = require("passport");
 const getSubObject = require("@utils/getSubObject");
-const { signToken } = require("@utils/jwtConfig");
+const { signToken, verifyRefreshToken } = require("@utils/jwtConfig");
 const { server } = require("@utils/getServer");
 
-exports.root = (req, res) => {
+async function updateRefreshToken(_id) {
+  try {
+    return await User.prototype.updateRefreshToken(_id);
+  } catch (error) {
+    return error;
+  }
+}
+
+exports.root = async (req, res) => {
   const responsePrototype = {
     isAuthenticated: false,
     isNewUser: false,
@@ -13,32 +21,50 @@ exports.root = (req, res) => {
   };
 
   if (!req.user) {
-    return res.status(401).json(responsePrototype);
+    res.status(401);
+    return res.json(responsePrototype);
   }
 
   // user is Authenticated
-  console.log("sending user data...");
-  const propertiesToReturn = [
-    "_id",
-    "email",
-    "firstName",
-    "lastName",
-    "picture",
-    "savedNotes",
-  ];
-  const payload = getSubObject(req.user, propertiesToReturn);
-  const signedToken = signToken({ payload });
-  responsePrototype.isAuthenticated = true;
-  responsePrototype.accessToken = signedToken;
-  responsePrototype.refreshToken = req.user.refreshToken;
-  responsePrototype.isAdmin = req.user.roles.includes("admin");
 
-  if (!req.user.faculty || !req.user.semester) {
-    responsePrototype.isNewUser = true;
-    return res.status(200).json(responsePrototype);
+  try {
+    await verifyRefreshToken(req.user.refreshToken);
+    console.log("refresh token is not expired");
+
+    responsePrototype.refreshToken = req.user.refreshToken;
+  } catch (error) {
+    console.log(error.message);
+    if (error.message === "jwt expired") {
+      const updatedRefreshToken = updateRefreshToken(req.user._id);
+      if (typeof updateRefreshToken === "object") {
+        res.status(500);
+        return res.end();
+      }
+      responsePrototype.refreshToken = updatedRefreshToken;
+    }
+  } finally {
+    console.log("sending user data...");
+    const propertiesToReturn = [
+      "_id",
+      "email",
+      "firstName",
+      "lastName",
+      "picture",
+      "savedNotes",
+    ];
+    const payload = getSubObject(req.user, propertiesToReturn);
+    const signedToken = signToken({ payload });
+    responsePrototype.isAuthenticated = true;
+    responsePrototype.accessToken = signedToken;
+    responsePrototype.isAdmin = req.user.roles.includes("admin");
+
+    if (!req.user.faculty || !req.user.semester) {
+      responsePrototype.isNewUser = true;
+    }
+
+    res.status(200);
+    res.json(responsePrototype);
   }
-
-  return res.status(200).json(responsePrototype);
 };
 
 exports.google = passport.authenticate("google", {
