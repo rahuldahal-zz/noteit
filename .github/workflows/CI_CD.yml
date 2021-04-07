@@ -20,6 +20,10 @@ jobs:
       uses: superchargejs/mongodb-github-action@1.0.0
       with:
         mongodb-version: 4
+    - name: create env file
+      run: |
+        touch .env
+        echo JWT_SECRET_USER_REFRESH =${{ secrets.JWT_SECRET_USER_REFRESH }} >> .env
     - run: npm ci
     - run: npm test
   deploy:
