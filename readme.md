@@ -8,7 +8,7 @@ Provides reference notes of **BIM**, **BCA**, and **CSIT**, based on the syllabu
 
 ## Contributing
 
-Follow [this](https://github.com/mynoteit/noteit/blob/master/CONTRIBUTING.md) contributing guideline to get the project up-and-running.
+Follow [this](https://github.com/mynoteit/noteit/blob/master/CONTRIBUTING.md) contributing guidelines to get the project up-and-running.
 
 ### See it live via [this beta link](https://mynoteit.herokuapp.com)
 

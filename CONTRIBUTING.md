@@ -22,7 +22,7 @@ cd noteit
 ```
 
 ```bash
-npm install
+npm install # installs both frontend and backend dependencies
 ```
 
 ## The generic workflow
@@ -33,7 +33,7 @@ npm install
 git pull upstream master
 ```
 
-2. Then, create a branch for every new feature/bug fix
+2. Then, create a separate branch for every new feature/bug fix
 
 ```bash
 git checkout -b [branchName] # eg. git checkout -b signup-feature
@@ -42,10 +42,10 @@ git checkout -b [branchName] # eg. git checkout -b signup-feature
 3. Start the server
 
 ```bash
-npm run dev # on http://localhost:3000
+npm run dev # frontend on http://localhost:5000, backend on http://localhost:3000
 ```
 
-> This will start the mongodb server (locally), express server and webpack (within express via [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware))
+> This will start the mongodb server (locally), express server and webpack (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 
 4. Do your change / Implement a new feature
 5. Don't forget to keep pushing your progress to the remote (your _forked_ repository)
@@ -56,7 +56,9 @@ git commit -m "brief about your change..."
 git push -u origin [branchName]
 ```
 
-[message me](https://twitter.com/raahuldaahal) if you have any problem
+> we recommend you to follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) instructions for writing commit messages.
+
+### [message me](https://twitter.com/raahuldaahal) if you have any problem
 
 # Getting ready to send a Pull Request
 
@@ -69,4 +71,5 @@ npm test # should pass all the checks
 2. Create a pull request,
    - Go to your _forked_ repository on github,
    - If there are no conflicts, you will see a button saying **create a new Pull Request**.
-   - click on that big green button.
+   - Make sure to select the `develop` branch as your pull request target.
+   - Click on that big green button.
