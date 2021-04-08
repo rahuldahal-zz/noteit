@@ -1,5 +1,5 @@
 const CACHE_NAMES = {
-  static: "static-v0.1",
+  static: "static-v0.2",
   general: "general-v0.1",
 };
 const STATIC_ASSETS = [
@@ -17,7 +17,10 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAMES.static)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then((cache) => {
+        console.log("caching static assets");
+        cache.addAll(STATIC_ASSETS);
+      })
       .catch((err) => console.log(err))
   );
   self.skipWaiting();

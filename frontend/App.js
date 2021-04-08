@@ -13,6 +13,7 @@ import Root from "@screens/Root";
 import Admin from "@screens/Admin";
 import SaveFacultyAndSemester from "@screens/SaveFacultyAndSemester";
 import Page404 from "@screens/404";
+import PWA from "@screens/PWA";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route exact path="/team">
           <Team />
+        </Route>
+        <Route exact path="/pwa">
+          <PWA />
         </Route>
         <PrivateRoute
           exact

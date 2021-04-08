@@ -12,6 +12,12 @@ export default withRouter(({ children, root, history }) => {
     }
   }, [authContext]);
 
+  if (matchMedia("(display-mode: standalone)").matches) {
+    console.log("Launched as a PWA");
+    history.push("/pwa");
+    return null;
+  }
+
   if (root && authContext.isNewUser) {
     console.log("is new user");
     history.push("/save-faculty-and-semester");
