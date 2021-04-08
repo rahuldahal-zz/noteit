@@ -10,7 +10,7 @@ import linksData from "./utils/linksData";
 import Profile from "./Profile";
 
 export default function Nav() {
-  const { token, isAuthenticated } = useAuth();
+  const { isAuthenticated, isNewUser } = useAuth();
 
   function GuestActions() {
     return (
@@ -25,7 +25,7 @@ export default function Nav() {
     return (
       <>
         <Profile />
-        <FAB icon="search" textContent="Search" />
+        {!isNewUser && <FAB icon="search" textContent="Search" />}
       </>
     );
   }

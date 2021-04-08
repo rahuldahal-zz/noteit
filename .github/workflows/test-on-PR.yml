@@ -1,24 +1,31 @@
 name: Run tests on PR
 
-on:  
+on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
+  push:
+    branches: [develop]
 
-jobs:  
+jobs:
   testing:
     runs-on: ubuntu-latest
     steps:
-    - name: Git checkout
-      uses: actions/checkout@v1
+      - name: Git checkout
+        uses: actions/checkout@v1
+      - name: create env file
+        run: |
+          touch .env
+          echo JWT_SECRET_USER_REFRESH =${{ secrets.JWT_SECRET_USER_REFRESH }} >> .env
+          echo JWT_SECRET_USER = ${{secrets.JWT_SECRET_USER}} >> .env
 
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-    - name: Start MongoDB
-      uses: superchargejs/mongodb-github-action@1.0.0
-      with:
-        mongodb-version: 4
-    - run: npm ci
-    - run: npm test
+      - name: Start MongoDB
+        uses: superchargejs/mongodb-github-action@1.0.0
+        with:
+          mongodb-version: 4
+      - run: npm ci
+      - run: npm test

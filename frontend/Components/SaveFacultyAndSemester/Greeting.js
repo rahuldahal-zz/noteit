@@ -6,8 +6,8 @@ export default function Greeting() {
 
   return (
     <div className="saveFacultyAndSemester__greeting">
-      <h2>Hello, {user.firstName}</h2>
-      <h3>Welcome to NoteIT</h3>
+      <h3>Hello, {user.firstName}</h3>
+      <h4>Welcome to NoteIT</h4>
       <p className="saveFacultyAndSemester__subHeading">
         Help us personalize the app for you by choosing your current faculty and
         semester.
