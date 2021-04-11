@@ -23,7 +23,8 @@ body {
   --primaryTextColor: var(--black);
 }
 
-p {
+p,
+q {
   line-height: calc(1.5em + 0.2vw); // ref. smashing magazine
   margin: calc(1em + 0.5vw) 0;
 }

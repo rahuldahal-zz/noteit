@@ -13,8 +13,8 @@ export default function Hero({ setShowLoginOptions }) {
             <br /> about your time.
           </h2>
           <p className="hero__subTagLine">
-            And will help you save it by providing quality notes, that are easy
-            to refer and understand.
+            And will help you get the most out of it by providing{" "}
+            <a href="#info">a bit more</a> than just the reference notes.
           </p>
 
           <LoginButton size="large" setShowLoginOptions={setShowLoginOptions} />

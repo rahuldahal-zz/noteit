@@ -133,8 +133,12 @@
 }
 
 .info,
-.processContainer {
+.testimonialContainer {
   margin: 3rem 0;
+}
+
+.testimonialContainer {
+  margin-top: 10vh;
 }
 
 .info {
@@ -177,36 +181,55 @@
   }
 }
 
-.processContainer {
-  &__process {
-    position: relative;
-    background-color: #f4f4f4;
-    border: 4px solid var(--secondary-400);
-    max-width: 350px;
-    margin: 2rem;
-    padding-top: 1rem;
-    line-height: 1.5;
+.testimonials {
+  display: flex;
+}
 
-    &:nth-child(even) {
-      border-top-width: 0px;
-      border-right-width: 0px;
-    }
+.testimonial {
+  position: relative;
+  background: var(--white);
+  box-shadow: 10px 10px 17px #bfbfbf, -10px -10px 17px #ffffff;
+  border-right: 2px solid var(--brand-400);
+  border-radius: var(--space-400-rem);
+  padding: var(--space-400-rem);
+  margin: 5rem 3rem 1rem 1rem;
+  width: calc(85% - 1rem);
+  max-width: 420px;
 
-    &:nth-child(odd) {
-      border-bottom-width: 0px;
-      border-left-width: 0px;
-    }
+  &::before {
+    content: url("/static/svgs/quote.svg");
+    position: absolute;
+    top: -3rem;
+    left: 1rem;
+  }
 
-    &::before {
-      content: attr(data-process-no);
-      position: absolute;
-      top: -1rem;
-      left: -1rem;
-      font-weight: 600;
-      padding: var(--space-400-rem) 0.8rem;
-      border-radius: var(--space-400-rem);
+  &__avatar {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    width: 3.125rem;
+    border: 2px solid var(--accent-400);
+    border-radius: 50%;
+  }
+
+  &__quote {
+    display: block;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  &__credit {
+    font-size: 0.875rem;
+
+    strong {
+      color: transparent;
       background: var(--background-gradient);
-      color: var(--white);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    em {
+      opacity: 0.8;
     }
   }
 }

@@ -41,6 +41,10 @@ const config = {
           from: path.resolve(__dirname, "./frontend/service-worker.js"),
           to: path.resolve(__dirname, "./build/service-worker.js"),
         },
+        {
+          from: path.resolve(__dirname, "./frontend/assets/svgs"),
+          to: path.resolve(__dirname, "./build/static/svgs"),
+        },
       ],
     }),
   ],

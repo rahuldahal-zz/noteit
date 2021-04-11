@@ -3,33 +3,38 @@ import Wave from "@svgs/wave.svg";
 
 export default function Info() {
   return (
-    <section className="maximumWidth info">
+    <section className="maximumWidth info" id="info">
       <Wave className="info__wave" />
       <div className="info__detailsWrap content">
-        <h3 className="info__heading heading heading--white">
-          What is NoteIT ?
-        </h3>
+        <h4 className="info__heading heading heading--white">
+          What exactly does NoteIT offer ?
+        </h4>
         <div className="info__details">
           <p>
-            Being a student, its pretty challenging to prepare &quot;well
-            organized&quot; notes.
+            Our mission is to provide a platform for students that once we, the
+            creators dreamed about back when we were students.
           </p>
-          <p>Maybe because of,</p>
+          <h5>We wanted</h5>
           <ul className="info__list">
-            <li>lack of time,</li>
-            <li>&quot;confusion&quot; regarding the topic or,</li>
-            <li>lack of &quot;good&quot; reference.</li>
+            <li>the teachers to understand our level and teach accordingly.</li>
+            <li>
+              the institution to listen to our problems, from our perspectives.
+            </li>
+            <li>
+              to step out of the box and understand the real-world applications
+              of the topics we read.
+            </li>
           </ul>
           <p>
-            Whatever the reason is, most of us will agree that its pretty
-            difficult to prepare &quot;organized&quot; and &quot;readable&quot;
-            notes.{" "}
+            Overall, we wanted a flexible and inspirational teaching-learning
+            experience.
           </p>
 
-          <h4>That is the reason why we created NoteIT.</h4>
+          <h5>The sad part ?</h5>
           <p>
-            We will provide well organized notes that are easy to read and
-            understand, based on the exact syllabus provided by the TU.
+            There were no institutions or platforms back then that focused(or,
+            at least tried to focus) on students, rather than the business side
+            of theirs.
           </p>
         </div>
       </div>
