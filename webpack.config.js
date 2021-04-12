@@ -106,10 +106,6 @@ if (currentTask === "build" || currentTask === "check-build") {
     splitChunks: { chunks: "all" },
   };
   config.plugins.push(
-    new webpack.EnvironmentPlugin({
-      AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-      AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-    }),
     new HtmlWebPackPlugin({
       filename: "index.html",
       template: "./frontend/index.ejs",
