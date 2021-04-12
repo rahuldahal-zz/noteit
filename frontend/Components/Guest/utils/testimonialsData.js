@@ -5,15 +5,15 @@ const testimonials = [
     semester: "first",
     quote:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem consequatur rerum illum aperiam. Quisquam, fugiat consequuntur! Laudantium illo quis sint.",
-    joinedOn: new Date(),
+    joinedOn: "2020-10-13T00:00:00.000Z",
   },
   {
-    name: "Uday majhi",
-    faculty: "bim",
+    name: "Naman Kunwar",
+    faculty: "bca",
     semester: "first",
     quote:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem consequatur rerum illum aperiam. Quisquam, fugiat consequuntur! Laudantium illo quis sint.",
-    joinedOn: new Date(),
+    joinedOn: "2021-01-13T00:00:00.000Z",
   },
 ];
 

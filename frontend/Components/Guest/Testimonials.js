@@ -2,40 +2,42 @@ import React from "react";
 import testimonialsData from "./utils/testimonialsData";
 
 export default function Testimonials() {
-  function Testimonials() {
+  function Testimonial() {
     return (
       <div>
         <h5>Here is what happy students say</h5>
         <div className="testimonials">
-          {testimonialsData.map((testimonial, index) => {
-            const {
-              name,
-              faculty,
-              semester,
-              joinedOn,
-              quote,
-              picture,
-            } = testimonial;
-            return (
-              <div className="testimonial">
-                <img
-                  src={picture || "https://i.pravatar.cc/80"}
-                  alt={`${name} posing to the camera`}
-                  width="3.125rem"
-                  height="3.125rem"
-                  className="testimonial__avatar"
-                />
-                <q className="testimonial__quote">{quote}</q>
-                <div className="testimonial__credit">
-                  <strong>{name}</strong>
-                  <br />
-                  <em>{`${faculty.toUpperCase()} ${semester}, member since ${new Date(
-                    joinedOn
-                  ).getYear()}`}</em>
+          <div className="testimonials__content">
+            {testimonialsData.map((testimonial, index) => {
+              const {
+                name,
+                faculty,
+                semester,
+                joinedOn,
+                quote,
+                picture,
+              } = testimonial;
+              return (
+                <div className="testimonial">
+                  <img
+                    src={picture || "https://i.pravatar.cc/80"}
+                    alt={`${name} posing to the camera`}
+                    width="3.125rem"
+                    height="3.125rem"
+                    className="testimonial__avatar"
+                  />
+                  <q className="testimonial__quote">{quote}</q>
+                  <div className="testimonial__credit">
+                    <strong>{name}</strong>
+                    <br />
+                    <em>{`${faculty.toUpperCase()} ${semester}, member since ${new Date(
+                      joinedOn
+                    ).getFullYear()}`}</em>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     );
@@ -54,7 +56,7 @@ export default function Testimonials() {
             the platform to learn in the best possible way.
           </p>
         </header>
-        <Testimonials />
+        <Testimonial />
       </div>
     </section>
   );

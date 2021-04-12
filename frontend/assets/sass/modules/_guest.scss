@@ -182,7 +182,12 @@
 }
 
 .testimonials {
-  display: flex;
+  overflow-x: auto;
+
+  &__content {
+    display: flex;
+    width: max-content;
+  }
 }
 
 .testimonial {
@@ -192,8 +197,8 @@
   border-right: 2px solid var(--brand-400);
   border-radius: var(--space-400-rem);
   padding: var(--space-400-rem);
-  margin: 5rem 3rem 1rem 1rem;
-  width: calc(85% - 1rem);
+  margin: 5rem 1rem 1rem 1rem;
+  width: calc(85vw - 1rem);
   max-width: 420px;
 
   &::before {
