@@ -1,7 +1,7 @@
 import Form from "@components/Form/Form";
 import SelectOption from "@components/Form/SelectOption";
 import Field from "@components/Form/utils/Field";
-import useFormFields from "@components/Form/utils/useFormFields";
+import useFormFields from "@hooks/useFormFields";
 import React, { useEffect, useRef, useState } from "react";
 import createNoteFormFields from "./utils/createNoteFormFields";
 

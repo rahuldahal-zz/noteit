@@ -4,7 +4,7 @@ import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import { useAuth } from "@contexts/AuthProvider";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
-import useFormFields from "@components/Form/utils/useFormFields";
+import useFormFields from "@hooks/useFormFields";
 import Greeting from "./Greeting";
 import useFetch from "@hooks/useFetch";
 

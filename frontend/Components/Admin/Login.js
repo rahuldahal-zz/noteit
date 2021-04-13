@@ -1,6 +1,6 @@
 import React from "react";
 import Form from "@components/Form/Form";
-import useFormFields from "@components/Form/utils/useFormFields";
+import useFormFields from "@hooks/useFormFields";
 import { useAuth } from "@contexts/AuthProvider";
 
 export default function Login({ setAdminToken }) {
