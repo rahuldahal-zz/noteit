@@ -1,4 +1,10 @@
 .pwa {
+  &__guest {
+    .btn {
+      margin-bottom: 1rem;
+    }
+  }
+
   &__testimonials {
     margin-top: 5vh;
   }

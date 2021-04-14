@@ -3,6 +3,7 @@ import { useAuth } from "@contexts/AuthProvider";
 import Container from "@components/Container";
 import { Testimonial } from "@components/Guest/Testimonials";
 import LoginButton from "@components/Buttons/LoginButton";
+import UserDashboard from "@components/UserDashboard/UserDashboard";
 
 export default function PWA() {
   const { isAuthenticated } = useAuth();
@@ -24,7 +25,7 @@ export default function PWA() {
 
   return (
     <Container className="pwa">
-      {isAuthenticated ? <h4>You are logged in</h4> : <Guest />}
+      {isAuthenticated ? <UserDashboard /> : <Guest />}
     </Container>
   );
 }
