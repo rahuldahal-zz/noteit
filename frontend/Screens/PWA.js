@@ -16,6 +16,7 @@ export default function PWA() {
           the platform to learn in the best possible way.
         </p>
         <LoginButton />
+        <hr />
         <Testimonial className="pwa__testimonials" />
       </section>
     );

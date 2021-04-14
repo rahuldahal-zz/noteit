@@ -48,7 +48,6 @@ export function Testimonial({ className }) {
                 <q className="testimonial__quote">{quote}</q>
                 <div className="testimonial__credit">
                   <strong>{name}</strong>
-                  <br />
                   <em>{`${faculty.toUpperCase()} ${semester}, member since ${new Date(
                     joinedOn
                   ).getFullYear()}`}</em>

@@ -224,13 +224,16 @@
   }
 
   &__credit {
+    margin-top: 1rem;
     font-size: 0.875rem;
 
     strong {
+      display: block;
       color: transparent;
       background: var(--background-gradient);
       background-clip: text;
       -webkit-background-clip: text;
+      margin-bottom: 0.25rem;
     }
 
     em {
