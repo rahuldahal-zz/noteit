@@ -1,5 +1,5 @@
 const CACHE_NAMES = {
-  static: "static-v0.3",
+  static: "static-v0.4",
   general: "general-v0.1",
 };
 const STATIC_ASSETS = [
@@ -48,7 +48,12 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const { host, href, pathname } = new URL(request.url);
-  const fetchAndCache = [/:\/\/cloudinary/, /fonts.(googleapis|gstatic)/];
+  const fetchAndCache = [
+    /:\/\/[a-z0-9]+.cloudinary/,
+    /:\/\/[a-z0-9]+.googleusercontent/,
+    /\/users\/availableNote/,
+    /fonts.(googleapis|gstatic)/,
+  ];
 
   return event.respondWith(
     caches
