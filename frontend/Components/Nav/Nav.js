@@ -7,10 +7,23 @@ import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
 import Links from "./Links";
 import linksData from "./utils/linksData";
-import Profile from "./Profile";
 
 export default function Nav() {
-  const { isAuthenticated, isNewUser } = useAuth();
+  const { isAuthenticated, isNewUser, user } = useAuth();
+
+  function ProfilePicture() {
+    return (
+      <button type="button" className="nav__profile">
+        <img
+          src={user.picture}
+          alt={`Avatar of ${user.firstName}`}
+          width="40px"
+          height="40px"
+          className="nav__avatar"
+        />
+      </button>
+    );
+  }
 
   function GuestActions() {
     return (
@@ -24,7 +37,7 @@ export default function Nav() {
   function UserActions() {
     return (
       <>
-        <Profile />
+        <ProfilePicture />
         {!isNewUser && <FAB icon="search" textContent="Search" />}
       </>
     );
