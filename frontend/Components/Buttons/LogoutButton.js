@@ -2,7 +2,7 @@ import React from "react";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 
-export default function LogoutButton() {
+export default function LogoutButton({ className }) {
   async function handleLogout() {
     try {
       const { status } = await fetch("/auth/logout");
@@ -17,7 +17,7 @@ export default function LogoutButton() {
   return (
     <button
       type="button"
-      className="btn btn--outline"
+      className={`${className || ""} btn btn--outline`}
       onClick={() => handleLogout()}
     >
       <TextWithIcon
