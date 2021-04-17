@@ -49,6 +49,10 @@ exports.root = async (req, res) => {
       "email",
       "firstName",
       "lastName",
+      "faculty",
+      "semester",
+      "joinedOn",
+      "sessionCount",
       "picture",
       "savedNotes",
     ];
