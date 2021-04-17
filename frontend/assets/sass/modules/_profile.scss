@@ -92,17 +92,22 @@
   &__logout {
     display: block;
     margin: auto;
-    margin-top: 2rem;
+    margin-top: 4rem;
     width: 100%;
 
     .textWithIcon {
       margin: auto;
-      font-size: 1.3em;
+      font-size: 1.5em;
     }
+  }
 
-    svg {
-      width: 1.3em;
-    }
+  &__back {
+    position: absolute;
+    top: 10vh;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border-radius: 0;
+    border-bottom-right-radius: 0.5em;
   }
 }
 

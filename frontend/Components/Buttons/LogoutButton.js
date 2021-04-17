@@ -17,7 +17,7 @@ export default function LogoutButton({ className }) {
   return (
     <button
       type="button"
-      className={`${className || ""} btn btn--outline`}
+      className={`${className || ""} btn--outline`}
       onClick={() => handleLogout()}
     >
       <TextWithIcon
@@ -26,6 +26,7 @@ export default function LogoutButton({ className }) {
         viewBox="0 0 24 24"
         fill="none"
         strokeWidth="2"
+        iconWidth="1.3em"
       />
     </button>
   );

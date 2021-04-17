@@ -6,9 +6,9 @@ import LoginButton from "@components/Buttons/LoginButton";
 import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
 import Modal from "@components/Modal";
+import UserProfile from "@components/UserProfile/UserProfile";
 import Links from "./Links";
 import linksData from "./utils/linksData";
-import UserProfile from "@components/UserProfile/UserProfile";
 
 export default function Nav() {
   const [showUserProfile, setShowUserProfile] = useState(false);
@@ -74,7 +74,7 @@ export default function Nav() {
 
       {showUserProfile ? (
         <Modal>
-          <UserProfile />
+          <UserProfile setShowUserProfile={setShowUserProfile} />
         </Modal>
       ) : null}
     </>
