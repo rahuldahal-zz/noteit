@@ -1,3 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-</svg>
+<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M8 16A8 8 0 108 0a8 8 0 000 16zM9 4a1 1 0 00-2 0v4c0 .3.1.5.3.7l2.8 2.8a1 1 0 001.4-1.4L9 7.6V4z"
+    fill="url(#paint0_linear)"
+  /><defs><linearGradient
+      id="paint0_linear"
+      x1="0"
+      y1="8"
+      x2="15.6"
+      y2="8"
+      gradientUnits="userSpaceOnUse"
+    ><stop stop-color="#0970C8" /><stop
+        offset="1"
+        stop-color="#542C96"
+      /></linearGradient></defs></svg>

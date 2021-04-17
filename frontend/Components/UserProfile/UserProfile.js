@@ -2,6 +2,11 @@ import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
 import React, { useEffect } from "react";
 import Clock from "@svgs/clock.svg";
+import Choice from "@svgs/choice.svg";
+import GraduationCap from "@svgs/graduationCap.svg";
+import Devices from "@svgs/devices.svg";
+import TextWithIcon from "@components/TextWithIcon";
+import getIconPaths from "@utils/iconDetails";
 
 export default function UserProfile() {
   const { user } = useAuth();
@@ -17,7 +22,7 @@ export default function UserProfile() {
           alt=""
           className="profile__picture"
         />
-        <h6 className="profile__name">{`${user.firstName} ${user.lastName}`}</h6>
+        <h4 className="profile__name">{`${user.firstName} ${user.lastName}`}</h4>
       </div>
     );
   }
@@ -46,7 +51,7 @@ export default function UserProfile() {
             name="Joined On"
             value={new Date(user.joinedOn).toLocaleString().split(",")[0]}
           />
-          <Datum Icon={Clock} name="Session" value={user.sessionCount} />
+          <Datum Icon={Devices} name="Session" value={user.sessionCount} />
         </div>
       </div>
     );
@@ -59,13 +64,19 @@ export default function UserProfile() {
           <small>Subscription</small>
         </p>
         <div className="profile__data">
-          <Datum Icon={Clock} name="Type" value="basic" />
+          <Datum Icon={Choice} name="Type" value="basic" />
           <Datum
-            Icon={Clock}
+            Icon={GraduationCap}
             name="Course"
             value={`${user.faculty} ${user.semester}`}
           />
         </div>
+        <button type="button">
+          <TextWithIcon
+            textContent="Upgrade"
+            pathData={getIconPaths("ascending")}
+          />
+        </button>
       </div>
     );
   }

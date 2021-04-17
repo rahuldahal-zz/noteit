@@ -16,7 +16,7 @@
     border-top-right-radius: 2rem;
     border-top-left-radius: 2rem;
     background: var(--background-gradient);
-    box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   }
 
   &__info {
@@ -26,8 +26,10 @@
   }
 
   &__picture {
+    display: block;
+    margin: auto;
     width: 140px;
-    border: 2px solid var(--brand-400);
+    border: 4px solid var(--brand-400);
     border-radius: 50%;
   }
 
@@ -39,6 +41,7 @@
   &__data {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 0.25rem;
   }
 
   &__status,
@@ -80,6 +83,12 @@
     }
   }
 
+  &__subscription {
+    button {
+      margin-top: 2rem;
+    }
+  }
+
   &__logout {
     display: block;
     margin: auto;
@@ -106,7 +115,7 @@
   border-radius: var(--space-300-rem);
 
   &__icon {
-    width: 3rem;
+    width: 2rem;
     margin-right: 0.5rem;
   }
 
