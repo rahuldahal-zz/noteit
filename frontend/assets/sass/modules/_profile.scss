@@ -5,7 +5,12 @@
   height: 100vh;
   background: var(--white);
   transform: translateX(100%);
-  animation: pushLeft 0.3s ease-in-out forwards;
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+
+  &--active {
+    transform: translateX(0);
+  }
 
   &__content {
     position: absolute;

@@ -27,11 +27,9 @@ export default function LoginButton({ size }) {
         />
       </button>
 
-      {showLoginOptions ? (
-        <Modal>
-          <LoginOptions setShowLoginOptions={setShowLoginOptions} />
-        </Modal>
-      ) : null}
+      <Modal shouldOpen={showLoginOptions}>
+        <LoginOptions setShowLoginOptions={setShowLoginOptions} />
+      </Modal>
     </>
   );
 }

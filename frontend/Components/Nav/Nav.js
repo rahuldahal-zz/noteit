@@ -72,11 +72,9 @@ export default function Nav() {
         </div>
       </nav>
 
-      {showUserProfile ? (
-        <Modal>
-          <UserProfile setShowUserProfile={setShowUserProfile} />
-        </Modal>
-      ) : null}
+      <Modal shouldOpen={showUserProfile} classToToggle="profile--active">
+        <UserProfile setShowUserProfile={setShowUserProfile} />
+      </Modal>
     </>
   );
 }

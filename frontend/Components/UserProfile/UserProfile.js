@@ -88,7 +88,7 @@ export default function UserProfile({ setShowUserProfile }) {
         className="profile__back"
         onClick={() => setShowUserProfile(false)}
       >
-        Back
+        <TextWithIcon textContent="Back" pathData={getIconPaths("arrowLeft")} />
       </button>
       <div className="profile__content">
         <NameAndPicture />
