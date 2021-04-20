@@ -16,7 +16,6 @@
     position: absolute;
     top: 25vh;
     width: 100%;
-    height: 75vh;
     padding: var(--space-400-rem);
     border-top-right-radius: 2rem;
     border-top-left-radius: 2rem;
@@ -34,6 +33,7 @@
     display: block;
     margin: auto;
     width: 140px;
+    background: var(--white);
     border: 4px solid var(--brand-400);
     border-radius: 50%;
   }
