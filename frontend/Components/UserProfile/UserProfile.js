@@ -10,18 +10,13 @@ import getIconPaths from "@utils/iconDetails";
 
 export default function UserProfile({ setShowUserProfile }) {
   const { user } = useAuth();
-  console.log(user);
 
   function NameAndPicture() {
     return (
-      <div className="profile__info">
-        <img
-          src={user.picture}
-          width="140px"
-          height="140px"
-          alt=""
-          className="profile__picture"
-        />
+      <div className="profile__general">
+        <div className="profile__picture">
+          <img src={user.picture} width="140px" height="140px" alt="" />
+        </div>
         <h4 className="profile__name">{`${user.firstName} ${user.lastName}`}</h4>
       </div>
     );
@@ -68,7 +63,7 @@ export default function UserProfile({ setShowUserProfile }) {
           <Datum
             Icon={GraduationCap}
             name="Course"
-            value={`${user.faculty} ${user.semester}`}
+            value={`${user.faculty.toUpperCase()} ${user.semester}`}
           />
         </div>
         <button type="button">

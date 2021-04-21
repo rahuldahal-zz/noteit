@@ -31,13 +31,14 @@ passport.deserializeUser((id, done) => {
 function create(profile, done, provider) {
   console.log("creating a new user...");
   if (provider === "google") {
+    /* eslint-disable */
     const { sub, given_name, family_name, email, picture } = profile;
     profile = {
       id: sub,
       firstName: given_name,
       lastName: family_name,
-      email: email,
-      picture: picture,
+      email,
+      picture: picture.replace("s96", "s200"), // change size from 96(default) to 200
     };
   } else {
     const { id, first_name, last_name, email, picture } = profile;
@@ -101,7 +102,7 @@ passport.use(
         "displayName",
         "first_name",
         "last_name",
-        "photos",
+        "picture.type(large)",
         "email",
       ],
     },
