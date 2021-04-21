@@ -1,6 +1,6 @@
 const CACHE_NAMES = {
-  static: "static-v0.4",
-  general: "general-v0.1",
+  static: "static-v0.5",
+  general: "general-v0.2",
 };
 const STATIC_ASSETS = [
   "/",

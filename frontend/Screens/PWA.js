@@ -10,7 +10,7 @@ export default function PWA() {
 
   function Guest() {
     return (
-      <section className="pwa__guest">
+      <div className="pwa__guest">
         <h3 className="heading">This is NoteIT</h3>
         <p>
           An idea that focuses on the students and their problems, giving them
@@ -19,7 +19,7 @@ export default function PWA() {
         <LoginButton />
         <hr />
         <Testimonial className="pwa__testimonials" />
-      </section>
+      </div>
     );
   }
 
