@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { AuthProvider } from "@contexts/AuthProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
+import ReactGA from "react-ga";
 import Nav from "@components/Nav/Nav";
 import Footer from "@components/Footer/Footer";
 import Home from "@screens/Home";
@@ -21,6 +22,11 @@ import "./assets/sass/style.scss";
 const history = createBrowserHistory();
 
 function App() {
+  useEffect(() => {
+    ReactGA.initialize("UA-195205173-1");
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   return (
     <Router history={history}>
       <Nav />

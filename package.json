@@ -45,6 +45,7 @@
     "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-ga": "^3.3.0",
     "react-router-dom": "^5.2.0",
     "sanitize-html": "^1.20.1",
     "sass": "^1.32.8",

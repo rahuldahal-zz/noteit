@@ -3,9 +3,19 @@ import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import LoginOptions from "@components/Guest/LoginOptions";
 import Modal from "@components/Modal";
+import ReactGA from "react-ga";
 
 export default function LoginButton({ size, className }) {
   const [showLoginOptions, setShowLoginOptions] = useState(false);
+
+  function handleClick() {
+    ReactGA.event({
+      category: "button",
+      action: "Clicked on Login button",
+    });
+    setShowLoginOptions(true);
+  }
+
   return (
     <>
       <button
@@ -15,7 +25,7 @@ export default function LoginButton({ size, className }) {
             ? `${className} hero__cta btn btn--large`
             : `${className} btn`
         }
-        onClick={() => setShowLoginOptions(true)}
+        onClick={() => handleClick()}
       >
         <TextWithIcon
           textContent="Let's NoteIT"
