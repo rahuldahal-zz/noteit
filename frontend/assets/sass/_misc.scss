@@ -42,6 +42,12 @@ q {
   margin: calc(1em + 0.5vw) 0;
 }
 
+button {
+  &::after {
+    visibility: hidden;
+  }
+}
+
 .font-3x {
   font-size: 3rem;
 }

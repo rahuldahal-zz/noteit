@@ -66,7 +66,7 @@ export default function UserProfile({ setShowUserProfile }) {
             value={`${user.faculty.toUpperCase()} ${user.semester}`}
           />
         </div>
-        <button type="button">
+        <button type="button" className="btn--large">
           <TextWithIcon
             textContent="Upgrade"
             pathData={getIconPaths("ascending")}
@@ -89,7 +89,7 @@ export default function UserProfile({ setShowUserProfile }) {
         <NameAndPicture />
         <Status />
         <Subscription />
-        <LogoutButton className="profile__logout" />
+        <LogoutButton className="btn--large profile__logout" />
       </div>
     </div>
   );
