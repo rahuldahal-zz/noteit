@@ -18,10 +18,10 @@
 
 #modal {
   position: absolute;
+  top: 0;
   z-index: 5;
-  min-height: 100vh;
-  min-width: 100vw;
-  overflow-x: hidden;
+  width: 100%;
+  background: var(--white);
 }
 
 body {
