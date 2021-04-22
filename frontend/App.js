@@ -23,8 +23,12 @@ const history = createBrowserHistory();
 
 function App() {
   useEffect(() => {
-    ReactGA.initialize("UA-195205173-1");
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    if (window.location.hostname !== "localhost") {
+      ReactGA.initialize("UA-195205173-1");
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    } else {
+      console.log("not registering analytics on development mode");
+    }
   }, []);
 
   return (

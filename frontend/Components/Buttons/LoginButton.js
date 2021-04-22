@@ -3,17 +3,18 @@ import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import LoginOptions from "@components/Guest/LoginOptions";
 import Modal from "@components/Modal";
-import ReactGA from "react-ga";
+import useAnalytics from "@hooks/useAnalytics";
 
 export default function LoginButton({ size, className }) {
   const [showLoginOptions, setShowLoginOptions] = useState(false);
+  const [sendEventToAnalytics] = useAnalytics();
 
   function handleClick() {
-    ReactGA.event({
-      category: "button",
+    sendEventToAnalytics({
+      category: "click",
       action: "Clicked on Login button",
+      callback: () => setShowLoginOptions(true),
     });
-    setShowLoginOptions(true);
   }
 
   return (
