@@ -40,7 +40,8 @@ button,
   }
 
   &--brand {
-    background: var(--brand-400);
+    background: var(--background-gradient);
+    color: var(--white);
   }
 
   &--outline {

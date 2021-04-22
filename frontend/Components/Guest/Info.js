@@ -33,8 +33,8 @@ export default function Info() {
           <h5>The sad part ?</h5>
           <p>
             There were no institutions or platforms back then that focused(or,
-            at least tried to focus) on students, rather than the business side
-            of theirs.
+            at least tried to focus) more on students, rather than the
+            &ldquo;business&rdquo; aspect.
           </p>
         </div>
       </div>

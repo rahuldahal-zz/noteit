@@ -4,7 +4,7 @@ import getIconPaths from "@utils/iconDetails";
 import LoginOptions from "@components/Guest/LoginOptions";
 import Modal from "@components/Modal";
 
-export default function LoginButton({ size }) {
+export default function LoginButton({ size, className }) {
   const [showLoginOptions, setShowLoginOptions] = useState(false);
   return (
     <>
@@ -12,8 +12,8 @@ export default function LoginButton({ size }) {
         type="button"
         className={
           size === "large"
-            ? "hero__cta btn btn--accent btn--large"
-            : "btn btn--accent"
+            ? `${className} hero__cta btn btn--large`
+            : `${className} btn`
         }
         onClick={() => setShowLoginOptions(true)}
       >

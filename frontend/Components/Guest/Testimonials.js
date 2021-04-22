@@ -1,3 +1,4 @@
+import LoginButton from "@components/Buttons/LoginButton";
 import React from "react";
 import testimonialsData from "./utils/testimonialsData";
 
@@ -16,6 +17,7 @@ export default function Testimonials() {
           </p>
         </header>
         <Testimonial />
+        <LoginButton className="mt20 btn--brand" />
       </div>
     </section>
   );

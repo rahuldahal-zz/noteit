@@ -1,18 +1,21 @@
-<svg  xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1366 856.9">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 856.9">
       <defs>
-    <linearGradient id="background-gradient-vertical" gradientTransform="rotate(90)">
-      <stop offset="0%"  stop-color="var(--brand-400)" />
+    <linearGradient
+      id="background-gradient-vertical"
+      gradientTransform="rotate(90)"
+    >
+      <stop offset="0%" stop-color="var(--brand-400)" />
       <stop offset="100%" stop-color="var(--secondary-400)" />
     </linearGradient>
     
     <linearGradient id="background-gradient-horizontal">
-      <stop offset="0%"  stop-color="var(--brand-400)" />
+      <stop offset="0%" stop-color="var(--brand-400)" />
       <stop offset="100%" stop-color="var(--secondary-400)" />
     </linearGradient>
   </defs>
 
     <path
-        d="M1366 125s-175-20-359-34c-135-10-274-17-353-9C467 100 335 4 228 0S0 27 0 27v830h1366z"
-        fill="url(#background-gradient-vertical)"/>
+    d="M1366 125s-175-20-359-34c-135-10-274-17-353-9C467 100 335 4 228 0S0 27 0 27v830s267.8-113.2 435-72c219 54 931 72 931 72V125z"
+    fill="url(#background-gradient-vertical)"
+  />
 </svg>

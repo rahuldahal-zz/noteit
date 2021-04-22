@@ -149,17 +149,12 @@ a {
 .btn {
   border: none;
   padding: var(--space-400-rem) 1rem;
-  background-color: #333;
-  color: #fff;
+  background: var(--button-gradient);
+  color: var(--black);
   width: max-content;
   border-radius: 0.3rem;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-
-  &:hover,
-  &:focus {
-    transform: translateY(-5px);
-  }
 }
 
 .color--brand {
