@@ -4,6 +4,7 @@ import getIconPaths from "@utils/iconDetails";
 import LoginOptions from "@components/Guest/LoginOptions";
 import Modal from "@components/Modal";
 import useAnalytics from "@hooks/useAnalytics";
+import Button from "./Button";
 
 export default function LoginButton({ size, className }) {
   const [showLoginOptions, setShowLoginOptions] = useState(false);
@@ -19,7 +20,7 @@ export default function LoginButton({ size, className }) {
 
   return (
     <>
-      <button
+      <Button
         type="button"
         className={
           size === "large"
@@ -36,7 +37,7 @@ export default function LoginButton({ size, className }) {
           strokeWidth="2"
           iconWidth="2rem"
         />
-      </button>
+      </Button>
 
       <Modal shouldOpen={showLoginOptions}>
         <LoginOptions setShowLoginOptions={setShowLoginOptions} />

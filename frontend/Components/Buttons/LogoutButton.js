@@ -1,6 +1,7 @@
 import React from "react";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
+import Button from "./Button";
 
 export default function LogoutButton({ className }) {
   async function handleLogout() {
@@ -15,7 +16,7 @@ export default function LogoutButton({ className }) {
   }
 
   return (
-    <button
+    <Button
       type="button"
       className={`${className || ""} btn--outline`}
       onClick={() => handleLogout()}
@@ -28,6 +29,6 @@ export default function LogoutButton({ className }) {
         strokeWidth="2"
         iconWidth="1.3em"
       />
-    </button>
+    </Button>
   );
 }

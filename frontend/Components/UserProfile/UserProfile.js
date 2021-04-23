@@ -7,6 +7,7 @@ import GraduationCap from "@svgs/graduationCap.svg";
 import Devices from "@svgs/devices.svg";
 import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
+import Button from "@components/Buttons/Button";
 
 export default function UserProfile({ setShowUserProfile }) {
   const { user } = useAuth();
@@ -66,12 +67,12 @@ export default function UserProfile({ setShowUserProfile }) {
             value={`${user.faculty.toUpperCase()} ${user.semester}`}
           />
         </div>
-        <button type="button" className="btn--large">
+        <Button type="button" className="btn--large">
           <TextWithIcon
             textContent="Upgrade"
             pathData={getIconPaths("ascending")}
           />
-        </button>
+        </Button>
       </div>
     );
   }

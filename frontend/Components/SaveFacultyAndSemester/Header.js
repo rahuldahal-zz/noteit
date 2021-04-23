@@ -7,6 +7,7 @@ import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formField
 import useFormFields from "@hooks/useFormFields";
 import Greeting from "./Greeting";
 import useFetch from "@hooks/useFetch";
+import Button from "@components/Buttons/Button";
 
 export default function Header() {
   const { accessToken } = useAuth();
@@ -49,7 +50,7 @@ export default function Header() {
         fieldsJSX={fieldsJSX}
         onSubmit={(e) => handleFormSubmit(e)}
       >
-        <button type="submit" className="btn btn--large">
+        <Button type="submit" className="btn btn--large">
           <TextWithIcon
             textContent="Save"
             pathData={getIconPaths("save")}
@@ -58,7 +59,7 @@ export default function Header() {
             strokeWidth="0"
             iconWidth="2rem"
           />
-        </button>
+        </Button>
       </Form>
     </section>
   );
