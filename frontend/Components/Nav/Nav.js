@@ -1,36 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import FAB from "@components/FAB/FAB";
 import Logo from "@svgs/logoAlt.svg";
 import LoginButton from "@components/Buttons/LoginButton";
-import LogoutButton from "@components/Buttons/LogoutButton";
 import { useAuth } from "@contexts/AuthProvider";
-import Modal from "@components/Modal";
-import UserProfile from "@components/UserProfile/UserProfile";
 import Links from "./Links";
 import linksData from "./utils/linksData";
+import ProfilePicture from "./ProfilePicture";
 
 export default function Nav() {
-  const [showUserProfile, setShowUserProfile] = useState(false);
-  const { isAuthenticated, isNewUser, user } = useAuth();
-
-  function ProfilePicture() {
-    return (
-      <button
-        type="button"
-        className="nav__profile"
-        onClick={() => setShowUserProfile(true)}
-      >
-        <img
-          src={user.picture}
-          alt={`Avatar of ${user.firstName}`}
-          width="40px"
-          height="40px"
-          className="nav__avatar"
-        />
-      </button>
-    );
-  }
+  const { isAuthenticated, isNewUser } = useAuth();
 
   function GuestActions() {
     return (
@@ -71,10 +50,6 @@ export default function Nav() {
           </div>
         </div>
       </nav>
-
-      <Modal shouldOpen={showUserProfile} classToToggle="profile--active">
-        <UserProfile setShowUserProfile={setShowUserProfile} />
-      </Modal>
     </>
   );
 }
