@@ -51,6 +51,7 @@ self.addEventListener("fetch", (event) => {
   const fetchAndCache = [
     /:\/\/[a-z0-9]+.cloudinary/,
     /:\/\/[a-z0-9]+.googleusercontent/,
+    /:\/\/platform-lookaside.fbsbx.com/,
     /\/users\/availableNote/,
     /fonts.(googleapis|gstatic)/,
   ];
