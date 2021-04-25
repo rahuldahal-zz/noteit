@@ -4,7 +4,14 @@ import getIconPaths from "@utils/iconDetails";
 
 export default function LoginOptions({ setShowLoginOptions }) {
   return (
-    <div className="loginOptions loginOptions--visible flex" aria-hidden="true">
+    <div className="loginOptions" aria-hidden="true">
+      <div className="loginOptions__header">
+        <h4>This is NoteIT.</h4>
+        <p>Login using either facebook or google.</p>
+        <small>
+          <em>Don&apos;t worry. Your data will never be shared.</em>
+        </small>
+      </div>
       <div className="flex loginOptions__buttons">
         <a href="/auth/facebook" className="btn link">
           <TextWithIcon
@@ -27,7 +34,7 @@ export default function LoginOptions({ setShowLoginOptions }) {
         className="close"
         onClick={() => setShowLoginOptions(false)}
       >
-        Close
+        <TextWithIcon textContent="Close" pathData={getIconPaths("cross")} />
       </button>
     </div>
   );

@@ -7,17 +7,17 @@ export default function Button({
   className,
   onClick: callback,
 }) {
-  const [isClicked, setIsClicked] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   function getClassName() {
-    if (isClicked) {
+    if (showLoader) {
       return "btn--loading";
     }
     return "";
   }
 
   function handleClick() {
-    setIsClicked(true);
+    setShowLoader(true);
     callback();
   }
 
@@ -26,8 +26,9 @@ export default function Button({
       type={type}
       className={`${className} ${getClassName()}`}
       onClick={handleClick}
+      onBlur={() => setShowLoader(false)}
     >
-      {isClicked ? <Loader /> : children}
+      {showLoader ? <Loader /> : children}
     </button>
   );
 }

@@ -16,12 +16,25 @@
   overflow-x: hidden;
 }
 
-#modal {
-  position: absolute;
+.modal {
   top: 0;
   z-index: 5;
   width: 100%;
-  background: var(--white);
+
+  &--login,
+  &--profile {
+    min-height: 100vh;
+  }
+
+  &--login {
+    position: fixed;
+    background: var(--background-gradient-alpha);
+  }
+
+  &--profile {
+    position: absolute;
+    background: var(--white);
+  }
 }
 
 body {
@@ -57,8 +70,8 @@ select {
 
 //modifier
 
-.loginOptions--visible {
-  visibility: visible !important;
+.loginOptions--active {
+  transform: translateY(0);
 }
 
 //triggers
@@ -67,8 +80,8 @@ select {
   position: absolute;
   top: var(--space-400-rem);
   right: var(--space-400-rem);
-  background: #eee;
-  color: #333;
+  background: var(--black);
+  color: var(--white);
 }
 
 .visible {

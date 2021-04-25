@@ -2,6 +2,7 @@ import React, { createRef, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const modalRoot = document.getElementById("modal");
+modalRoot.classList.add("modal");
 
 export default function Modal({
   shouldOpen,
@@ -10,20 +11,23 @@ export default function Modal({
   children,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { modal: modalClass, child: childClass } = classToToggle;
 
   function doAfterOpen() {
     if (!modalRoot.children[0]) {
       return null;
     }
-    modalRoot.children[0].classList.add(classToToggle);
+    modalRoot.classList.add(modalClass);
+    modalRoot.children[0].classList.add(childClass);
     return undefined;
   }
 
   function doBeforeClose() {
-    if (!modalRoot.children[0] || !classToToggle) {
+    if (!modalRoot.children[0]) {
       return null;
     }
-    modalRoot.children[0].classList.remove(classToToggle);
+    modalRoot.classList.remove(modalClass);
+    modalRoot.children[0].classList.remove(childClass);
     setTimeout(() => {
       setIsModalOpen(false);
     }, transitionDuration);
@@ -32,12 +36,12 @@ export default function Modal({
 
   useEffect(() => {
     if (shouldOpen) {
-      classToToggle && doAfterOpen();
+      doAfterOpen();
       setIsModalOpen(true);
     }
   }, [shouldOpen]);
 
-  if (classToToggle && isModalOpen && !shouldOpen) {
+  if (isModalOpen && !shouldOpen) {
     doBeforeClose();
     return createPortal(children, modalRoot);
   }

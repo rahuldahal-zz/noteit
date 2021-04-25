@@ -39,7 +39,13 @@ export default function LoginButton({ size, className }) {
         />
       </Button>
 
-      <Modal shouldOpen={showLoginOptions}>
+      <Modal
+        shouldOpen={showLoginOptions}
+        classToToggle={{
+          modal: "modal--login",
+          child: "loginOptions--active",
+        }}
+      >
         <LoginOptions setShowLoginOptions={setShowLoginOptions} />
       </Modal>
     </>

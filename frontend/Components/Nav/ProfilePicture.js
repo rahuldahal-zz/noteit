@@ -23,7 +23,13 @@ export default function ProfilePicture() {
         />
       </button>
 
-      <Modal shouldOpen={showUserProfile} classToToggle="profile--active">
+      <Modal
+        shouldOpen={showUserProfile}
+        classToToggle={{
+          modal: "modal--profile",
+          child: "profile--active",
+        }}
+      >
         <UserProfile setShowUserProfile={setShowUserProfile} />
       </Modal>
     </>

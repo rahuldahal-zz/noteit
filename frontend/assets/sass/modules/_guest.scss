@@ -53,7 +53,6 @@
     @include media.widerThan1200 {
       display: block;
       position: relative;
-      z-index: 5;
       top: unset;
       left: unset;
       transform-origin: bottom right;
@@ -245,35 +244,41 @@
 }
 
 .loginOptions {
-  position: fixed;
-  top: 10vh;
+  position: absolute;
+  bottom: 0;
   left: 0;
   z-index: 18;
   min-width: 100%;
-  height: 100vh;
-  background-color: rgba($color: #fff, $alpha: 0.8);
+  padding: var(--space-400-rem);
+  padding-top: 5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: var(--white);
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
 
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(var(--brandRGB), 0.8);
+  &__header,
+  &__buttons {
+    @include media.widerThan768 {
+      width: 60vw;
+      margin: auto;
+    }
+  }
+
+  &__header {
+    margin-bottom: 3rem;
+
+    p {
+      margin-bottom: 0.5rem;
+    }
   }
 
   &__buttons {
     flex-direction: column;
     justify-content: space-evenly;
     margin: auto;
-    width: 90vw;
+    width: 100%;
     height: 30vh;
-
-    @include media.widerThan768 {
-      width: 60vw;
-    }
 
     .btn {
       text-align: center;
