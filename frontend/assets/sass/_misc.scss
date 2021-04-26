@@ -20,6 +20,7 @@
   top: 0;
   z-index: 5;
   width: 100%;
+  overflow-x: hidden;
 
   &--login,
   &--profile {
