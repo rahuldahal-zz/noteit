@@ -29,6 +29,7 @@ export default function ProfilePicture() {
           modal: "modal--profile",
           child: "profile--active",
         }}
+        setStateRef={setShowUserProfile}
       >
         <UserProfile setShowUserProfile={setShowUserProfile} />
       </Modal>

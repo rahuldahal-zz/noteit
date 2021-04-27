@@ -45,7 +45,7 @@ export default function LoginButton({ size, className }) {
           modal: "modal--login",
           child: "loginOptions--active",
         }}
-        stateRef={setShowLoginOptions}
+        setStateRef={setShowLoginOptions}
       >
         <LoginOptions setShowLoginOptions={setShowLoginOptions} />
       </Modal>

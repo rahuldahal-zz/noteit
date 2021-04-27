@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 const modalRoot = document.getElementById("modal");
@@ -8,7 +8,7 @@ export default function Modal({
   shouldOpen,
   classToToggle,
   transitionDuration = 300,
-  stateRef,
+  setStateRef,
   children,
 }) {
   const [modalState, setModalState] = useState("initial");
@@ -21,7 +21,6 @@ export default function Modal({
   }
 
   function doAfterOpen() {
-    console.log("runs");
     if (!modalRoot.children[0]) {
       return null;
     }
@@ -39,7 +38,7 @@ export default function Modal({
     modalRoot.children[0].classList.remove(childClass);
     setTimeout(() => {
       setModalState("closed");
-      stateRef(false);
+      setStateRef(false);
     }, transitionDuration);
     return undefined;
   }
