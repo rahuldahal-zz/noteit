@@ -17,13 +17,16 @@
 }
 
 .modal {
+  position: absolute;
   top: 0;
   z-index: 5;
   width: 100%;
+  overflow-x: hidden;
+  min-height: 100vh;
+  pointer-events: none;
 
-  &--login,
-  &--profile {
-    min-height: 100vh;
+  & > * {
+    pointer-events: all;
   }
 
   &--login {

@@ -71,6 +71,7 @@ export default function UserProfile({ setShowUserProfile }) {
           <TextWithIcon
             textContent="Upgrade"
             pathData={getIconPaths("ascending")}
+            iconWidth="2rem"
           />
         </Button>
       </div>

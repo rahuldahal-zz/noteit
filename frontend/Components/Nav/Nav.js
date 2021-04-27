@@ -23,7 +23,7 @@ export default function Nav() {
   function UserActions() {
     return (
       <>
-        <ProfilePicture />
+        {!isNewUser && <ProfilePicture />}
         {!isNewUser && <FAB icon="search" textContent="Search" />}
       </>
     );

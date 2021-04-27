@@ -1,9 +1,18 @@
 .profile {
+  position: relative;
   margin-top: 40vh;
   background: var(--white);
   transform: translateX(100%);
   transform-origin: left;
   transition: transform 0.3s ease-out;
+
+  &::before {
+    content: url("/static/svgs/blob.svg");
+    position: absolute;
+    width: 100%;
+    top: -30vh;
+    left: -20vw;
+  }
 
   &--active {
     transform: translateX(0);
@@ -66,6 +75,14 @@
     margin-top: 0.25rem;
   }
 
+  &__status {
+    --style-width: 77vw;
+  }
+
+  &__subscription {
+    --style-width: 67vw;
+  }
+
   &__status,
   &__subscription {
     margin-top: 2rem;
@@ -96,8 +113,8 @@
           content: "";
           position: absolute;
           top: 50%;
-          right: calc((0.25rem + 100%) * -1);
-          width: 100%;
+          right: calc((0.25rem + var(--style-width)) * -1);
+          width: var(--style-width);
           height: 1px;
           background: var(--white);
         }
@@ -125,7 +142,7 @@
   }
 
   &__back {
-    position: absolute;
+    position: fixed;
     top: -30vh;
     font-size: 1.2rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
