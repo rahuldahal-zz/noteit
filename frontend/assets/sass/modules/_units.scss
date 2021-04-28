@@ -1,0 +1,52 @@
+@use "../utils/customProperties";
+
+.home {
+  &__units-wrapper {
+    margin-top: 10vh;
+    background: var(--background-gradient);
+    color: var(--white);
+    padding: var(--space-400-rem);
+    padding-top: 2rem;
+    min-height: 100vh;
+
+    h6::before {
+      background: var(--button-gradient);
+    }
+
+    hr {
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__units {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.unit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  background: var(--white);
+  color: var(--black);
+  padding: var(--space-400-rem);
+  border-radius: var(--space-400-rem);
+  text-decoration: none;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__save {
+    width: 1.8rem;
+  }
+
+  em {
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+  }
+}
