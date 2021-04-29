@@ -34,6 +34,10 @@
     background: var(--background-gradient-alpha);
   }
 
+  &--units {
+    z-index: 11;
+  }
+
   &--profile {
     position: absolute;
     background: var(--white);

@@ -9,7 +9,7 @@ import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import Button from "@components/Buttons/Button";
 
-export default function UserProfile({ setShowUserProfile }) {
+export default function UserProfile() {
   const { user } = useAuth();
 
   function NameAndPicture() {
@@ -80,13 +80,6 @@ export default function UserProfile({ setShowUserProfile }) {
 
   return (
     <div className="profile">
-      <button
-        type="button"
-        className="profile__back"
-        onClick={() => setShowUserProfile(false)}
-      >
-        <TextWithIcon textContent="Back" pathData={getIconPaths("arrowLeft")} />
-      </button>
       <div className="profile__content">
         <NameAndPicture />
         <Status />
