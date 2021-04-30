@@ -5,31 +5,28 @@ import { Route, withRouter } from "react-router";
 export default withRouter(
   ({ history, condition, component: Component, ...rest }) => {
     const authContext = useAuth();
-    const [componentToRender, setComponentToRender] = useState(null);
-    const routerJSX = (
-      <Route {...rest} render={(props) => <Component {...props} />} />
-    );
+    const [isLoading, setIsLoading] = useState(true);
 
     function handleRouting() {
       const { isAuthenticated, isNewUser, isAdmin } = authContext;
       if (!isAuthenticated) {
-        history.push("/");
+        return history.push("/");
       }
       console.log(condition);
       switch (condition) {
         case "newUser":
           if (isNewUser) {
-            return setComponentToRender(routerJSX);
+            return setIsLoading(false);
           }
           break;
         case "existingUser":
           if (!isNewUser) {
-            return setComponentToRender(routerJSX);
+            return setIsLoading(false);
           }
           break;
         case "isAdmin":
           if (isAdmin) {
-            return setComponentToRender(routerJSX);
+            return setIsLoading(false);
           }
           break;
       }
@@ -37,11 +34,16 @@ export default withRouter(
     }
 
     useEffect(() => {
+      console.log({ authContext });
       if (!authContext.isLoading) {
         handleRouting();
       }
     }, [authContext]);
 
-    return componentToRender;
+    return isLoading ? (
+      <h3>Loading private route</h3>
+    ) : (
+      <Route {...rest} render={(props) => <Component {...props} />} />
+    );
   }
 );

@@ -18,6 +18,7 @@ import PWA from "@screens/PWA";
 
 import "extended-normalize.css";
 import "./assets/sass/style.scss";
+import Note from "@screens/Note";
 
 const history = createBrowserHistory();
 
@@ -49,6 +50,13 @@ function App() {
           exact
           component={Home}
           path="/home"
+          condition="existingUser"
+          history={history}
+        />
+        <PrivateRoute
+          exact
+          component={Note}
+          path="/notes/:faculty/:semester/:subject/:unit"
           condition="existingUser"
           history={history}
         />

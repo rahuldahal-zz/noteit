@@ -29,7 +29,5 @@ export default withRouter(({ children, root, history }) => {
     return null;
   }
 
-  console.log("rendering children");
-
   return isLoading ? <h1>Loading...</h1> : children;
 });
