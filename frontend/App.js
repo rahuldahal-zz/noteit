@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { AuthProvider } from "@contexts/AuthProvider";
+import { NoteProvider } from "@contexts/NoteProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "@components/PrivateRoute";
 import { createBrowserHistory } from "history";
@@ -46,20 +47,22 @@ function App() {
           condition="newUser"
           history={history}
         />
-        <PrivateRoute
-          exact
-          component={Home}
-          path="/home"
-          condition="existingUser"
-          history={history}
-        />
-        <PrivateRoute
-          exact
-          component={Note}
-          path="/notes/:faculty/:semester/:subject/:unit"
-          condition="existingUser"
-          history={history}
-        />
+        <NoteProvider>
+          <PrivateRoute
+            exact
+            component={Home}
+            path="/home"
+            condition="existingUser"
+            history={history}
+          />
+          <PrivateRoute
+            exact
+            component={Note}
+            path="/notes/:faculty/:semester/:subject/:unit"
+            condition="existingUser"
+            history={history}
+          />
+        </NoteProvider>
         <Route exact path="/about">
           <About />
         </Route>

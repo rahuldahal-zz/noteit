@@ -34,7 +34,6 @@ export default withRouter(
     }
 
     useEffect(() => {
-      console.log({ authContext });
       if (!authContext.isLoading) {
         handleRouting();
       }

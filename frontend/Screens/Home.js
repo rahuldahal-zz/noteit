@@ -3,26 +3,19 @@ import Container from "@components/Container";
 import Screen from "@components/Screen";
 import AvailableSubjects from "@components/UserDashboard/AvailableSubjects";
 import useFetch from "@hooks/useFetch";
+import { useNote } from "@contexts/NoteProvider";
 
 export default function Home() {
   const [availableNotes, setAvailableNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [startFetching, status, data] = useFetch();
-
-  useEffect(() => {
-    startFetching({
-      url: "/users/availableNotes",
-    });
-  }, []);
+  const noteContext = useNote();
 
   useEffect(() => {
-    console.log(status);
-    if (data !== null) {
-      setAvailableNotes(data);
+    if (!noteContext.isLoading) {
+      setAvailableNotes(noteContext);
       setIsLoading(false);
     }
-  }, [status, data]);
+  }, [noteContext]);
 
   return (
     <Screen>
