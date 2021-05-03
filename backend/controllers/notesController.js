@@ -14,7 +14,7 @@ exports.sendNotesDescriptionToClient = (req, res) => {
 exports.saveNote = (req, res) => {
   const user = new User(req.user);
   user
-    .saveNotesHandler({ noteId: req.params.noteId })
+    .saveNotesHandler({ noteId: req.body.noteId })
     .then(() => {
       console.log("Saved...", req.body.noteId);
       return res.status(200).json({ message: "Note is saved successfully!" });

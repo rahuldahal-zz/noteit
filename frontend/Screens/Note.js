@@ -1,8 +1,9 @@
 import Screen from "@components/Screen";
-import RenderedUnit from "@components/Unit/RenderedUnit";
+import RenderedNote from "@components/Note/RenderedNote";
 import { useNote } from "@contexts/NoteProvider";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import SaveNoteButton from "@components/Buttons/SaveNoteButton";
 
 export default function Note() {
   const { faculty, semester, subject, unit } = useParams();
@@ -14,7 +15,9 @@ export default function Note() {
   function getCurrentUnit() {
     const units =
       availableNotes[
-        Object.keys(availableNotes).find((key) => key.toLowerCase() === subject)
+        Object.keys(availableNotes).find(
+          (key) => key.toLowerCase() === subject.toLowerCase()
+        )
       ];
     return units.find((u) => u.title.toLowerCase() === unit);
   }
@@ -43,7 +46,10 @@ export default function Note() {
       {isLoading ? (
         <h3>Loading Unit...</h3>
       ) : (
-        <RenderedUnit unit={currentUnit} />
+        <main className="note">
+          <RenderedNote unit={currentUnit} />
+          <SaveNoteButton noteId={currentUnit._id} />
+        </main>
       )}
     </Screen>
   );
