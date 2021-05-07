@@ -37,8 +37,8 @@ describe("saveNote", () => {
   test("should resolve by getting savedNotes", async () => {
     const { _id } = await user.create();
     const mockUser = new User({ _id });
-    await mockUser.saveNotesHandler(mockNoteIDs[0]);
-    await mockUser.saveNotesHandler(mockNoteIDs[1]);
+    await mockUser.saveNotesHandler({ noteId: mockNoteIDs[0] });
+    await mockUser.saveNotesHandler({ noteId: mockNoteIDs[1] });
     const savedNotes = await mockUser.findSavedNotes();
     expect(savedNotes).toEqual(expect.arrayContaining(mockNoteIDs));
   });
