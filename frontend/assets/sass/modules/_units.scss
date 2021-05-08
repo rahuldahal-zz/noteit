@@ -43,6 +43,10 @@
 
   &__save {
     width: 1.8rem;
+
+    &--saved {
+      fill: var(--white);
+    }
   }
 
   em {
