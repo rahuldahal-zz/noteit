@@ -1,48 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
-import { Route, withRouter } from "react-router";
+import { Route, useParams, withRouter } from "react-router";
 
 export default withRouter(
   ({ history, condition, component: Component, ...rest }) => {
+    const { faculty, semester } = useParams();
     const authContext = useAuth();
     const [isLoading, setIsLoading] = useState(true);
+    const [isConditionValid, setIsConditionValid] = useState(false);
 
-    function handleRouting() {
-      const { isAuthenticated, isNewUser, isAdmin } = authContext;
-      if (!isAuthenticated) {
-        return history.push("/");
-      }
+    function shouldRender() {
+      const { isAuthenticated, isNewUser, isAdmin, user } = authContext;
+      // if (!isAuthenticated) {
+      //   return history.push("/");
+      // }
       console.log(condition);
       switch (condition) {
         case "newUser":
           if (isNewUser) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
           }
           break;
         case "existingUser":
           if (!isNewUser) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
           }
           break;
         case "isAdmin":
           if (isAdmin) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
           }
           break;
       }
-      return history.push("/");
+      setIsLoading(false);
     }
 
-    useEffect(() => {
-      if (!authContext.isLoading) {
-        handleRouting();
+    useEffect(() => shouldRender(), []);
+
+    function RenderRouteOrRedirect() {
+      if (!isConditionValid) {
+        history.push("/");
+        return null;
       }
-    }, [authContext]);
+
+      return <Route {...rest} render={(props) => <Component {...props} />} />;
+    }
 
     return isLoading ? (
       <h3>Loading private route</h3>
     ) : (
-      <Route {...rest} render={(props) => <Component {...props} />} />
+      <RenderRouteOrRedirect />
     );
   }
 );

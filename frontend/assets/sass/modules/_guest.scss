@@ -257,15 +257,8 @@
   transform: translateY(100%);
   transition: transform 0.3s ease-out;
 
-  &__header,
-  &__buttons {
-    @include media.widerThan768 {
-      width: 60vw;
-      margin: auto;
-    }
-  }
-
   &__header {
+    margin: auto;
     margin-bottom: 3rem;
 
     p {
@@ -304,6 +297,13 @@
     }
     .btn:last-child {
       background: #dd4b39;
+    }
+  }
+
+  &__header,
+  &__buttons {
+    @include media.widerThan768 {
+      width: 60vw;
     }
   }
 }
