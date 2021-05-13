@@ -4,6 +4,7 @@ import { useNote } from "@contexts/NoteProvider";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import SaveNoteButton from "@components/Buttons/SaveNoteButton";
+import ContributorCredit from "@components/Note/ContributorCredit";
 
 export default function Note() {
   const { faculty, semester, subject, unit } = useParams();
@@ -49,6 +50,7 @@ export default function Note() {
         <main className="note">
           <RenderedNote unit={currentUnit} />
           <SaveNoteButton noteId={currentUnit._id} />
+          <ContributorCredit contributor={currentUnit.contributorInfo} />
         </main>
       )}
     </Screen>

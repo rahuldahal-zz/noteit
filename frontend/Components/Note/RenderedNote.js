@@ -48,7 +48,6 @@ const renderer = {
     }
 
     const { 1: quote, 2: cite } = text.match(/<p>([^]+):([^]+)/);
-    console.log({ quote, cite });
 
     return `
             <blockquote class="quote">
@@ -57,10 +56,17 @@ const renderer = {
             </blockquote>`;
   },
   paragraph(text) {
-    const match = text.match(/dfn:\s?([^]+)/);
-    if (match) {
-      return `<p class="definition">${match[1].trim()}</p>`;
+    const isDefinition = text.match(/dfn:\s?([^]+)/);
+    if (isDefinition) {
+      return `<p class="definition">${isDefinition[1].trim()}</p>`;
     }
+
+    // TODO: parse word-meaning
+    // const hasMeaning = text.match(/(\[[a-zA-Z\s]+\]\[[a-zA-Z\s]+\])/g);
+    // if(hasMeaning){
+    //   const {1:word, 2:meaning} = k.match(/\[([a-zA-Z\s?]+)\]\s?\[([a-zA-Z\s?]+)\]/);
+
+    // }
 
     return `<p>${text}</p>`;
   },
@@ -82,9 +88,9 @@ const renderer = {
 
     if (description) {
       return `
-      <details>
-        <summary>${summary.trim()}</summary>
-        ${description.trim()}
+      <details class="details">
+        <summary class="details__summary">${summary.trim()}</summary>
+        <p class="details__content">${description.trim()}</p>
       </details>
     `;
     }
