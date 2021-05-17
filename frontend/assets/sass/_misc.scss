@@ -39,7 +39,8 @@
   }
 
   &--profile {
-    position: absolute;
+    position: fixed;
+    height: 100%;
     background: var(--white);
   }
 }

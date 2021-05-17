@@ -1,4 +1,6 @@
 .note {
+  padding: 0;
+
   &__save {
     position: fixed;
     top: 10vh;
@@ -9,6 +11,7 @@
   }
 
   &__content {
+    padding: var(--space-400-rem);
     max-width: 48rem;
     margin: auto;
   }
