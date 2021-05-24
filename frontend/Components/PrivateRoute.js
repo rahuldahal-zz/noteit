@@ -1,45 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
-import { Route, useParams, withRouter } from "react-router";
+import { Redirect, Route, useParams, withRouter } from "react-router";
 
 export default withRouter(
   ({ history, condition, component: Component, ...rest }) => {
-    const { faculty, semester } = useParams();
+    console.log(history.location.pathname);
     const authContext = useAuth();
+    const { user } = authContext;
     const [isLoading, setIsLoading] = useState(true);
-    const [isConditionValid, setIsConditionValid] = useState(false);
+    const [isConditionValid, setIsConditionValid] = useState(null);
+    const [routeProps, setRouteProps] = useState(null);
 
     function shouldRender() {
-      const { isAuthenticated, isNewUser, isAdmin, user } = authContext;
-      // if (!isAuthenticated) {
-      //   return history.push("/");
-      // }
+      const { isAuthenticated, isNewUser, isAdmin } = authContext;
+      if (!isAuthenticated) {
+        return setIsLoading(false);
+      }
       console.log(condition);
       switch (condition) {
         case "newUser":
           if (isNewUser) {
             setIsConditionValid(true);
+            setIsLoading(false);
           }
           break;
         case "existingUser":
           if (!isNewUser) {
             setIsConditionValid(true);
+            setIsLoading(false);
           }
+          break;
+        case "correctSubscription":
+          getRouteProps();
           break;
         case "isAdmin":
           if (isAdmin) {
             setIsConditionValid(true);
+            setIsLoading(false);
           }
           break;
       }
-      setIsLoading(false);
     }
+
+    function getRouteProps() {
+      const { faculty } = rest.computedMatch.params;
+      const { semester } = rest.computedMatch.params;
+
+      setRouteProps({ faculty, semester });
+    }
+
+    function isCorrectSubscription() {
+      console.log({
+        faculty: routeProps.faculty,
+        semester: routeProps.semester,
+      });
+
+      return (
+        routeProps.faculty === user.faculty &&
+        routeProps.semester === user.semester
+      );
+    }
+
+    useEffect(() => {
+      if (routeProps) {
+        setIsConditionValid(isCorrectSubscription()); // this is where 'isConditionValid' may contain the boolean 'false'
+        setIsLoading(false);
+      }
+    }, [routeProps]);
+
+    useEffect(() => console.log({ isLoading }), [isLoading]);
 
     useEffect(() => shouldRender(), []);
 
+    useEffect(() => {
+      if (routeProps === null && isConditionValid === false) {
+        console.log("runs");
+        history.push("/home");
+        setIsConditionValid(true);
+        setIsLoading(false);
+      }
+    }, [routeProps, isConditionValid]);
+
     function RenderRouteOrRedirect() {
       if (!isConditionValid) {
-        history.push("/");
+        console.log("invalid condition");
+        setRouteProps(null);
+        setIsLoading(true);
         return null;
       }
 

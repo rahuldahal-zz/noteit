@@ -48,20 +48,22 @@ function App() {
           history={history}
         />
         <NoteProvider>
-          <PrivateRoute
-            exact
-            component={Home}
-            path="/home"
-            condition="existingUser"
-            history={history}
-          />
-          <PrivateRoute
-            exact
-            component={Note}
-            path="/notes/:faculty/:semester/:subject/:unit"
-            condition="existingUser"
-            history={history}
-          />
+          <Switch>
+            <PrivateRoute
+              exact
+              component={Home}
+              path="/home"
+              condition="existingUser"
+              history={history}
+            />
+            <PrivateRoute
+              exact
+              component={Note}
+              path="/notes/:faculty/:semester/:subject/:unit"
+              condition="correctSubscription"
+              history={history}
+            />
+          </Switch>
         </NoteProvider>
         <Route exact path="/about">
           <About />
