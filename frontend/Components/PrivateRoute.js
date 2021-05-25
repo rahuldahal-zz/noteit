@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
-import { Redirect, Route, useParams, withRouter } from "react-router";
+import { Route, withRouter } from "react-router";
 
 export default withRouter(
-  ({ history, condition, component: Component, ...rest }) => {
-    console.log(history.location.pathname);
+  ({ history, condition, match, component: Component, ...rest }) => {
     const authContext = useAuth();
     const { user } = authContext;
     const [isLoading, setIsLoading] = useState(true);
@@ -43,8 +42,8 @@ export default withRouter(
     }
 
     function getRouteProps() {
-      const { faculty } = rest.computedMatch.params;
-      const { semester } = rest.computedMatch.params;
+      const { faculty } = match.params;
+      const { semester } = match.params;
 
       setRouteProps({ faculty, semester });
     }

@@ -49,8 +49,8 @@ function App() {
           condition="newUser"
           history={history}
         />
-        <NoteProvider>
-          <Switch>
+        <Route exact path="/home">
+          <NoteProvider>
             <PrivateRoute
               exact
               component={Home}
@@ -58,6 +58,10 @@ function App() {
               condition="existingUser"
               history={history}
             />
+          </NoteProvider>
+        </Route>
+        <Route exact path="/notes/:faculty/:semester/:subject/:unit">
+          <NoteProvider>
             <PrivateRoute
               exact
               component={Note}
@@ -65,8 +69,8 @@ function App() {
               condition="correctSubscription"
               history={history}
             />
-          </Switch>
-        </NoteProvider>
+          </NoteProvider>
+        </Route>
         <Route exact path="/about">
           <About />
         </Route>
@@ -74,7 +78,9 @@ function App() {
           <Team />
         </Route>
         <Route exact path="/pwa">
-          <PWA />
+          <NoteProvider>
+            <PWA />
+          </NoteProvider>
         </Route>
         <PrivateRoute
           exact
