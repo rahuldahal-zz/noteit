@@ -38,6 +38,12 @@
     z-index: 11;
   }
 
+  &--search {
+    z-index: 11;
+    background: unset;
+    height: 100%;
+  }
+
   &--profile {
     position: fixed;
     height: 100%;

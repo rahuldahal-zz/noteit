@@ -35,7 +35,9 @@ function App() {
 
   return (
     <Router history={history}>
-      <Nav />
+      <NoteProvider>
+        <Nav />
+      </NoteProvider>
       <Switch>
         <Route exact path="/">
           <Root history={history} />

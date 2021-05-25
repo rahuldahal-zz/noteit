@@ -1,0 +1,16 @@
+@use "../utils/media";
+@use "../utils/customProperties";
+
+.search {
+  height: 100vh;
+  background: var(--background-gradient-alpha);
+
+  input {
+    width: 100%;
+    font-size: 1.2rem;
+    border: unset;
+    border-radius: 0;
+    padding: 1rem;
+    background: var(--white);
+  }
+}
