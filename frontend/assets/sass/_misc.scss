@@ -45,8 +45,8 @@
   }
 
   &--profile {
-    position: fixed;
-    height: 100%;
+    height: min-content;
+    overflow-y: scroll;
     background: var(--white);
   }
 }
