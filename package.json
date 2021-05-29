@@ -84,7 +84,7 @@
     "supertest": "^6.0.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^3.1.11"
   },
   "_moduleAliases": {
     "@routers": "./backend/routers",
