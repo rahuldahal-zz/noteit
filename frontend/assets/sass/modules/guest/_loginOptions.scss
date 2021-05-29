@@ -1,0 +1,67 @@
+@use "../../utils/media";
+@use "../../utils/customProperties";
+
+.loginOptions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 18;
+  min-width: 100%;
+  padding: var(--space-400-rem);
+  padding-top: 5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: var(--white);
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+
+  &__header {
+    margin: auto;
+    margin-bottom: 3rem;
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__buttons {
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: auto;
+    width: 100%;
+    height: 30vh;
+
+    .btn {
+      text-align: center;
+      color: var(--white);
+      text-align: center;
+      margin-left: 0;
+      font-size: 1.2rem;
+      padding: 1.2rem;
+      min-width: 100%;
+
+      span {
+        margin: auto;
+      }
+
+      svg {
+        transform: scale(1.5);
+        margin-left: 1.5rem;
+      }
+    }
+
+    .btn:first-child {
+      background: #3b5998;
+    }
+    .btn:last-child {
+      background: #dd4b39;
+    }
+  }
+
+  &__header,
+  &__buttons {
+    @include media.widerThan768 {
+      width: 60vw;
+    }
+  }
+}

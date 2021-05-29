@@ -1,0 +1,42 @@
+@use "../../utils/media";
+@use "../../utils/customProperties";
+
+.info {
+  position: relative;
+  z-index: 3;
+  align-items: flex-end;
+  margin-top: -10vh;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+  width: 100%;
+  color: #eee;
+  overflow: hidden;
+
+  &__wave {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+
+    @include media.widerThan1200 {
+      width: 100%;
+      height: unset;
+    }
+  }
+
+  &__detailsWrap {
+    @include media.widerThan768 {
+      margin-top: 10vh;
+    }
+  }
+
+  &__details {
+    max-width: 600px;
+  }
+
+  &__list {
+    font-style: italic;
+  }
+}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Container from "@components/Container";
 import Screen from "@components/Screen";
 import AvailableSubjects from "@components/UserDashboard/AvailableSubjects";
-import useFetch from "@hooks/useFetch";
 import { useNote } from "@contexts/NoteProvider";
 
 export default function Home() {

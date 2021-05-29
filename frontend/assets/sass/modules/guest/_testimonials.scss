@@ -1,0 +1,65 @@
+@use "../../utils/media";
+@use "../../utils/customProperties";
+
+.testimonials {
+  overflow-x: auto;
+
+  &__content {
+    display: flex;
+    width: max-content;
+    padding: 1.25rem;
+    padding-left: 0;
+  }
+}
+
+.testimonial {
+  position: relative;
+  background: var(--white);
+  box-shadow: 10px 10px 17px #bfbfbf, -10px -10px 17px #ffffff;
+  border-right: 2px solid var(--brand-400);
+  border-radius: var(--space-400-rem);
+  padding: var(--space-400-rem);
+  margin: 5rem 1rem 1rem 1rem;
+  width: calc(85vw - 1rem);
+  max-width: 420px;
+
+  &::before {
+    content: url("/static/svgs/quote.svg");
+    position: absolute;
+    top: -3rem;
+    left: 1rem;
+  }
+
+  &__avatar {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    width: 3.125rem;
+    border: 2px solid var(--accent-400);
+    border-radius: 50%;
+  }
+
+  &__quote {
+    display: block;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  &__credit {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+
+    strong {
+      display: block;
+      color: transparent;
+      background: var(--background-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      margin-bottom: 0.25rem;
+    }
+
+    em {
+      opacity: 0.8;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+.note {
+  padding: 0;
+
+  &__save {
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  &__content {
+    padding: var(--space-400-rem);
+    max-width: 48rem;
+    margin: auto;
+  }
+
+  &__title {
+    margin-top: 13vh;
+    max-width: 24ch;
+  }
+
+  &__contributor {
+    margin-top: 4rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--background-gradient);
+    color: var(--white);
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.details {
+  margin-bottom: 1rem;
+  transition: height 0.3s ease-in-out;
+
+  &__summary {
+    padding: 0.5rem 0.75rem;
+    background: var(--background-gradient);
+    color: var(--white);
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  &__content {
+    margin: 0;
+    padding: 0.5rem;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+details[open] summary ~ * {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.quote {
+  position: relative;
+  margin: 3rem auto 3rem 2rem;
+  text-align: right;
+
+  &__text {
+    font-size: 1.1rem;
+    text-align: left;
+  }
+
+  &__cite {
+    opacity: 0.8;
+    letter-spacing: 0.075rem;
+
+    &::before {
+      content: "-";
+      margin-right: 0.5rem;
+    }
+  }
+
+  &::before {
+    content: url("/static/svgs/quote.svg");
+    position: absolute;
+    top: 0;
+    left: -5vw;
+    opacity: 0.1;
+  }
+}

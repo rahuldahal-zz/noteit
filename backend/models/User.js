@@ -212,10 +212,10 @@ User.prototype.saveFacultyAndSemester = function saveFacultyAndSemester(
   });
 };
 
-User.prototype.saveNotesHandler = function saveNotesHandler(
+User.prototype.saveNotesHandler = function saveNotesHandler({
   noteId,
-  action = "save"
-) {
+  action = "save",
+}) {
   return new Promise((resolve, reject) => {
     if (
       !ObjectID.isValid(noteId) ||
