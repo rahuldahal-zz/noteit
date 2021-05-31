@@ -102,10 +102,11 @@ const renderer = {
 marked.use({ tokenizer, renderer });
 
 export default function RenderedNote({ unit }) {
+  const noteWithLineBreak = unit.note.replace(/\\n/g, "\n"); // Mongodb Atlas issue https://stackoverflow.com/a/62704914
   return (
     <article
       className="note__content"
-      dangerouslySetInnerHTML={{ __html: marked(unit.note) }}
+      dangerouslySetInnerHTML={{ __html: marked(noteWithLineBreak) }}
     />
   );
 }
