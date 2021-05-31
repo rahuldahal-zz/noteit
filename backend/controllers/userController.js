@@ -49,3 +49,43 @@ exports.authRole = (role) => (req, res, next) => {
   res.status(403);
   return res.json({ message: "This route is restricted to admin(s) only" });
 };
+
+exports.saveNote = (req, res) => {
+  const { noteId } = req.body;
+  if (!noteId) {
+    return res
+      .status(400)
+      .json({ message: "NoteId is not passed in the body" });
+  }
+  const user = new User(req.user);
+  user
+    .saveNotesHandler({ noteId })
+    .then(() => {
+      console.log("Saved...");
+      return res.status(200).json({ message: "Note is saved successfully!" });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.send(error);
+    });
+};
+
+exports.removeSaved = (req, res) => {
+  const { noteId } = req.body;
+  if (!noteId) {
+    return res
+      .status(400)
+      .json({ message: "NoteId is not passed in the body" });
+  }
+  const user = new User(req.user);
+  user
+    .saveNotesHandler({ noteId, action: "remove" })
+    .then(() => {
+      console.log("removed...", noteId);
+      return res.status(200).json({ message: "Note is removed successfully!" });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.send(error);
+    });
+};

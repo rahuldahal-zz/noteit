@@ -2,7 +2,7 @@ import { useAuth } from "@contexts/AuthProvider";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router";
 
-export default withRouter(({ children, root, history }) => {
+export default withRouter(({ children, root, history, match }) => {
   const authContext = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,7 +12,10 @@ export default withRouter(({ children, root, history }) => {
     }
   }, [authContext]);
 
-  if (matchMedia("(display-mode: standalone)").matches) {
+  if (
+    matchMedia("(display-mode: standalone)").matches &&
+    !Object.prototype.hasOwnProperty.call(match.params, "faculty")
+  ) {
     console.log("Launched as a PWA");
     history.push("/pwa");
     return null;

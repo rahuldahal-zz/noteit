@@ -36,11 +36,13 @@ describe("saveNote", () => {
 
   test("should resolve by saving and removing a particular note", async () => {
     const { _id } = await user.create();
-    const savedDoc = await new User({ _id }).saveNotesHandler(particularNoteID);
-    const removedDoc = await new User({ _id }).saveNotesHandler(
-      particularNoteID,
-      "remove"
-    );
+    const savedDoc = await new User({ _id }).saveNotesHandler({
+      noteId: particularNoteID,
+    });
+    const removedDoc = await new User({ _id }).saveNotesHandler({
+      noteId: particularNoteID,
+      action: "remove",
+    });
     expect(savedDoc.savedNotes).toEqual(
       expect.arrayContaining([particularNoteID])
     );
@@ -61,7 +63,10 @@ describe("saveNote", () => {
 
   test("should reject for invalid action", async () => {
     try {
-      await new User().saveNotesHandler(particularNoteID, "invalidAction");
+      await new User().saveNotesHandler({
+        noteId: particularNoteID,
+        action: "invalidAction",
+      });
     } catch (rejectionMessage) {
       expect(rejectionMessage.message).toEqual(
         "Invalid action is provided. Only save and remove are accepted."
@@ -71,9 +76,9 @@ describe("saveNote", () => {
 
   test("should reject for unmatched ObjectID of user", async () => {
     try {
-      await new User({ _id: new ObjectID() }).saveNotesHandler(
-        particularNoteID
-      );
+      await new User({ _id: new ObjectID() }).saveNotesHandler({
+        noteId: particularNoteID,
+      });
     } catch (rejectionMessage) {
       expect(rejectionMessage.message).toEqual("Cannot find the user");
     }

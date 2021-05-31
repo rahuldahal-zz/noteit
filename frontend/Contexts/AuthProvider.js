@@ -32,7 +32,9 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authState}>
+      {authState.isLoading ? <h3>Authenticating...</h3> : children}
+    </AuthContext.Provider>
   );
 }
 

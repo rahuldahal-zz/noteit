@@ -3,46 +3,98 @@ import { useAuth } from "@contexts/AuthProvider";
 import { Route, withRouter } from "react-router";
 
 export default withRouter(
-  ({ history, condition, component: Component, ...rest }) => {
+  ({ history, condition, match, component: Component, ...rest }) => {
     const authContext = useAuth();
+    const { user } = authContext;
     const [isLoading, setIsLoading] = useState(true);
+    const [isConditionValid, setIsConditionValid] = useState(null);
+    const [routeProps, setRouteProps] = useState(null);
 
-    function handleRouting() {
+    function shouldRender() {
       const { isAuthenticated, isNewUser, isAdmin } = authContext;
       if (!isAuthenticated) {
-        return history.push("/");
+        return setIsLoading(false);
       }
       console.log(condition);
       switch (condition) {
         case "newUser":
           if (isNewUser) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
+            setIsLoading(false);
           }
           break;
         case "existingUser":
           if (!isNewUser) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
+            setIsLoading(false);
           }
+          break;
+        case "correctSubscription":
+          getRouteProps();
           break;
         case "isAdmin":
           if (isAdmin) {
-            return setIsLoading(false);
+            setIsConditionValid(true);
+            setIsLoading(false);
           }
           break;
       }
-      return history.push("/");
+    }
+
+    function getRouteProps() {
+      const { faculty } = match.params;
+      const { semester } = match.params;
+
+      setRouteProps({ faculty, semester });
+    }
+
+    function isCorrectSubscription() {
+      console.log({
+        faculty: routeProps.faculty,
+        semester: routeProps.semester,
+      });
+
+      return (
+        routeProps.faculty === user.faculty &&
+        routeProps.semester === user.semester
+      );
     }
 
     useEffect(() => {
-      if (!authContext.isLoading) {
-        handleRouting();
+      if (routeProps) {
+        setIsConditionValid(isCorrectSubscription()); // this is where 'isConditionValid' may contain the boolean 'false'
+        setIsLoading(false);
       }
-    }, [authContext]);
+    }, [routeProps]);
+
+    useEffect(() => console.log({ isLoading }), [isLoading]);
+
+    useEffect(() => shouldRender(), []);
+
+    useEffect(() => {
+      if (routeProps === null && isConditionValid === false) {
+        console.log("runs");
+        history.push("/home");
+        setIsConditionValid(true);
+        setIsLoading(false);
+      }
+    }, [routeProps, isConditionValid]);
+
+    function RenderRouteOrRedirect() {
+      if (!isConditionValid) {
+        console.log("invalid condition");
+        setRouteProps(null);
+        setIsLoading(true);
+        return null;
+      }
+
+      return <Route {...rest} render={(props) => <Component {...props} />} />;
+    }
 
     return isLoading ? (
       <h3>Loading private route</h3>
     ) : (
-      <Route {...rest} render={(props) => <Component {...props} />} />
+      <RenderRouteOrRedirect />
     );
   }
 );
