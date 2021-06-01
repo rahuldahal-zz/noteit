@@ -98,9 +98,10 @@ if (currentTask === "build" || currentTask === "check-build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
   config.output = {
-    filename: "./static/[name].js",
-    chunkFilename: "./static/[name].js",
+    filename: "static/[name].js",
+    chunkFilename: "static/[name].js",
     path: path.resolve(__dirname, "./build"),
+    publicPath: "/",
   };
   config.optimization = {
     splitChunks: { chunks: "all" },
@@ -109,10 +110,11 @@ if (currentTask === "build" || currentTask === "check-build") {
     new HtmlWebPackPlugin({
       filename: "index.html",
       template: "./frontend/index.ejs",
+      publicPath: "/",
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "./static/styles.css",
+      filename: "static/styles.css",
     })
   );
 }
