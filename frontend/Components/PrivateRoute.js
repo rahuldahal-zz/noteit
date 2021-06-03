@@ -13,6 +13,7 @@ export default withRouter(
     function shouldRender() {
       const { isAuthenticated, isNewUser, isAdmin } = authContext;
       if (!isAuthenticated) {
+        setIsConditionValid(false);
         return setIsLoading(false);
       }
       console.log(condition);
@@ -74,7 +75,7 @@ export default withRouter(
     useEffect(() => {
       if (routeProps === null && isConditionValid === false) {
         console.log("runs");
-        history.push("/home");
+        history.push("/");
         setIsConditionValid(true);
         setIsLoading(false);
       }
@@ -84,7 +85,6 @@ export default withRouter(
       if (!isConditionValid) {
         console.log("invalid condition");
         setRouteProps(null);
-        setIsLoading(true);
         return null;
       }
 
