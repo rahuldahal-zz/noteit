@@ -5,18 +5,24 @@ import getIconPaths from "@utils/iconDetails";
 import { useAuth } from "@contexts/AuthProvider";
 import formFieldsDetail from "@components/SaveFacultyAndSemester/utils/formFieldsDetail";
 import useFormFields from "@hooks/useFormFields";
-import Greeting from "./Greeting";
-import useFetch from "@hooks/useFetch";
 import Button from "@components/Buttons/Button";
+import useFetch from "@hooks/useFetch";
+import useFlash from "@hooks/useFlash";
+import FlashMessage from "@components/FlashMessage";
+import Greeting from "./Greeting";
 
 export default function Header() {
   const { accessToken } = useAuth();
   const [currentValues, fieldsJSX] = useFormFields(formFieldsDetail);
   const [startFetching, status, data] = useFetch();
+  const [flashMessage, setFlashMessage] = useFlash();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    console.log("submitting form...");
+    setFlashMessage({
+      type: "info",
+      message: "Your subscription is being submitted...",
+    });
     try {
       startFetching({
         url: "/users/saveFacultyAndSemester",
@@ -30,12 +36,20 @@ export default function Header() {
       });
     } catch (error) {
       console.log(error);
+      setFlashMessage({
+        type: "error",
+        message: error.message,
+      });
     }
   }
 
   useEffect(() => {
     console.log(status);
     if (status === 202) {
+      setFlashMessage({
+        type: "success",
+        message: "You have successfully subscribed to NoteIT",
+      });
       window.location.replace("/");
     }
   }, [status]);
@@ -61,6 +75,7 @@ export default function Header() {
           />
         </Button>
       </Form>
+      <FlashMessage flashDetails={flashMessage} setStateRef={setFlashMessage} />
     </section>
   );
 }
