@@ -51,6 +51,39 @@
   }
 }
 
+.flashMessage {
+  position: fixed;
+  bottom: 2rem;
+  left: 1rem;
+  background: var(--white);
+  color: var(--black);
+  text-align: center;
+  padding: 1rem 1.25rem;
+  border-left: 8px solid var(--brand-300);
+  border-radius: 0.5rem;
+  box-shadow: 1rem 1rem 2rem -1rem rgba(0, 0, 0, 0.4);
+  transform: translateY(15vh);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+  &--active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &--success {
+    border-color: #09c85d;
+  }
+
+  &--warning {
+    border-color: var(--accent-400);
+  }
+
+  &--error {
+    border-color: #c80909;
+  }
+}
+
 body {
   background: var(--white);
   --bodyFont: "roboto";

@@ -30,6 +30,8 @@ export default function TextWithIcon({
             <path
               key={index}
               strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
               strokeLinejoin="round"
               strokeWidth={strokeWidth}
               d={data}
