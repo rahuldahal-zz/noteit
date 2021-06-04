@@ -1,3 +1,10 @@
+<p align="center">
+    <a href="https://mynoteit.herokuapp.com">
+        <img src="https://res.cloudinary.com/rdaahal/image/upload/v1617460505/noteit/icons/noteit-192x192_zk9ord.png" align="center" alt="noteit-icon"/>
+    </a>
+</p>
+<h1 align="center" style="border: 0;"> NoteIT </h1>
+
 # A content-heavy website designed for students
 
 ![Build Status](https://img.shields.io/github/workflow/status/mynoteit/noteit/Run%20tests%20and%20then%20deploy)
