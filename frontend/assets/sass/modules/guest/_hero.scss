@@ -48,6 +48,7 @@
 
     @include media.widerThan1200 {
       display: block;
+      max-width: 768px;
       position: relative;
       top: unset;
       left: unset;

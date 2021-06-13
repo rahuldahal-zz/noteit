@@ -23,6 +23,10 @@
   width: calc(85vw - 1rem);
   max-width: 420px;
 
+  @include media.widerThan1200 {
+    margin-right: 4rem;
+  }
+
   &::before {
     content: url("/static/svgs/quote.svg");
     position: absolute;

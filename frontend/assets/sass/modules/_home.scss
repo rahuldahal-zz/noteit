@@ -1,4 +1,5 @@
 @use "../utils/customProperties";
+@use "../utils/media";
 
 .home {
   position: relative;
@@ -33,6 +34,11 @@
     justify-content: flex-end;
     padding: var(--space-500-rem);
     align-items: center;
+
+    @include media.widerThan1200 {
+      width: 40%;
+      margin: unset;
+    }
 
     &::after {
       content: "";

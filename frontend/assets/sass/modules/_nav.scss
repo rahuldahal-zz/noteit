@@ -46,12 +46,8 @@
     align-items: center;
     padding: var(--space-400-rem);
 
-    @include media.widerThan768 {
-      padding: 1rem;
-    }
-
-    @include media.widerThan1200 {
-      padding: 2rem;
+    @include media.widerThan1600 {
+      padding: unset;
     }
   }
 
