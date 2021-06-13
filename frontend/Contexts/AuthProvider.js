@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import parseJwt from "@utils/parseJWT";
+import Loader from "@components/Loader";
 
 const AuthContext = createContext(null);
 
@@ -33,7 +34,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={authState}>
-      {authState.isLoading ? <h3>Authenticating...</h3> : children}
+      {authState.isLoading ? <Loader /> : children}
     </AuthContext.Provider>
   );
 }

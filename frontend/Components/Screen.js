@@ -1,6 +1,7 @@
 import { useAuth } from "@contexts/AuthProvider";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router";
+import Loader from "./Loader";
 
 export default withRouter(({ children, root, history, match }) => {
   const authContext = useAuth();
@@ -32,5 +33,5 @@ export default withRouter(({ children, root, history, match }) => {
     return null;
   }
 
-  return isLoading ? <h1>Loading...</h1> : children;
+  return isLoading ? <Loader /> : children;
 });
