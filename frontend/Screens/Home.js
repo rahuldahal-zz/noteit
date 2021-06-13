@@ -16,10 +16,6 @@ export default function Home() {
     if (!noteContext.isLoading) {
       setAvailableNotes(noteContext);
       setIsLoading(false);
-      setFlashMessage({
-        type: "success",
-        message: "Available notes loaded successfully.",
-      });
     }
   }, [noteContext]);
 
