@@ -50,6 +50,7 @@
             ["@svgs", "./frontend/assets/svgs/"],
             ["@components", "./frontend/Components/"],
             ["@utils", "./frontend/utils/"],
+            ["@hooks", "./frontend/hooks/"],
             ["@screens", "./frontend/Screens/"],
             ["@contexts", "./frontend/Contexts/"],
             ["@models", "./backend/models/"],
