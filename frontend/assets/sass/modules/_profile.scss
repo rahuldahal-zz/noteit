@@ -1,18 +1,10 @@
 .profile {
   position: relative;
-  margin-top: 40vh;
+  margin-top: 25vh;
   background: var(--white);
   transform: translateX(100%);
   transform-origin: left;
   transition: transform 0.3s ease-out;
-
-  &::before {
-    content: url("/static/svgs/blob.svg");
-    position: absolute;
-    width: 80vw;
-    top: -24vh;
-    left: -7vw;
-  }
 
   &--active {
     transform: translateX(0);
