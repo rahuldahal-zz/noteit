@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import SaveNoteButton from "@components/Buttons/SaveNoteButton";
 import ContributorCredit from "@components/Note/ContributorCredit";
+import Loader from "@components/Loader";
 
 export default function Note() {
   const { faculty, semester, subject, unit } = useParams();
@@ -45,7 +46,7 @@ export default function Note() {
   return (
     <Screen>
       {isLoading ? (
-        <h3>Loading Unit...</h3>
+        <Loader />
       ) : (
         <main className="note">
           <RenderedNote unit={currentUnit} />

@@ -5,6 +5,7 @@ import { Testimonial } from "@components/Guest/Testimonials";
 import LoginButton from "@components/Buttons/LoginButton";
 import AvailableSubjects from "@components/UserDashboard/AvailableSubjects";
 import { useNote } from "@contexts/NoteProvider";
+import Loader from "@components/Loader";
 
 export default function PWA() {
   const [availableNotes, setAvailableNotes] = useState(null);
@@ -36,7 +37,7 @@ export default function PWA() {
 
   function User() {
     return isLoading ? (
-      <h3>Loading...</h3>
+      <Loader />
     ) : (
       <AvailableSubjects notes={availableNotes} />
     );
