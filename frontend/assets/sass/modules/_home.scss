@@ -26,6 +26,11 @@
     margin-bottom: 3rem;
   }
 
+  &__notesList {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__availableSubjects {
     position: relative;
     width: 95vw;

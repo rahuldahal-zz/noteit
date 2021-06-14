@@ -1,0 +1,29 @@
+@use "../utils/customProperties";
+@use "../utils/media";
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  background: var(--background-gradient);
+  width: 100vw;
+  padding: 0.75rem;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.4);
+
+  @include media.widerThan1200 {
+    display: none;
+  }
+
+  &__button {
+    padding: 1rem;
+    background: unset;
+    color: var(--white);
+
+    &--active {
+      background: var(--white);
+      color: var(--black);
+    }
+  }
+}

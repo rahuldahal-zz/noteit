@@ -51,7 +51,7 @@ export default function Note() {
         <main className="note">
           <RenderedNote unit={currentUnit} />
           <SaveNoteButton noteId={currentUnit._id} />
-          <ContributorCredit contributor={currentUnit.contributorInfo} />
+          {/* <ContributorCredit contributor={currentUnit.contributorInfo} /> */}
         </main>
       )}
     </Screen>

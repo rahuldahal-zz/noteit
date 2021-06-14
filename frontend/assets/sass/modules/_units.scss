@@ -65,3 +65,18 @@
   border-radius: 0;
   border-bottom-right-radius: 0.5em;
 }
+
+.savedNotes {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+
+  &__unit {
+    width: 100%;
+    flex-direction: column;
+    text-align: left;
+    background: var(--button-gradient);
+    color: var(--black);
+    align-items: unset;
+  }
+}
