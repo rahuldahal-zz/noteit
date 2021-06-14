@@ -68,6 +68,12 @@ button,
     background: var(--button-gradient);
     color: var(--black);
   }
+
+  &--loading {
+    svg {
+      width: 80%;
+    }
+  }
 }
 
 .fab {
