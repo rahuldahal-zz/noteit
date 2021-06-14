@@ -72,15 +72,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    @include media.widerThan1200 {
-      flex-direction: row-reverse;
-    }
   }
 
   &__userActions {
     display: flex;
     gap: 1rem;
+
+    @include media.widerThan1200 {
+      flex-direction: row-reverse;
+    }
   }
 
   &__links {
