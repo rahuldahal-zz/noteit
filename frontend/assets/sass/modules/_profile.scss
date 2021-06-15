@@ -1,10 +1,20 @@
+@use "../utils/customProperties";
+@use "../utils/media";
+
 .profile {
   position: relative;
   margin-top: 25vh;
   background: var(--white);
   transform: translateX(100%);
   transform-origin: left;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, background-color 0.3s ease-in-out;
+
+  @include media.widerThan768 {
+    max-width: 400px;
+    background: unset;
+    margin: auto;
+    margin-top: 10vh;
+  }
 
   &--active {
     transform: translateX(0);
@@ -37,6 +47,11 @@
     background: var(--white);
     border-radius: 50%;
     box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+
+    @include media.widerThan768 {
+      width: 90px;
+      height: 90px;
+    }
 
     &::after {
       --border-size: -0.25rem;
@@ -79,10 +94,14 @@
   &__subscription {
     margin-top: 2rem;
 
+    @include media.widerThan768 {
+      margin-top: 0;
+    }
+
     p {
       margin-bottom: 0;
 
-      small {
+      strong {
         position: relative;
         color: var(--white);
         padding: var(--space-300-rem);
@@ -90,6 +109,15 @@
         margin-left: 1.5rem;
         font-variant: all-small-caps;
         letter-spacing: 1px;
+
+        @include media.widerThan768 {
+          margin-left: 0;
+
+          &::after,
+          &::before {
+            display: none;
+          }
+        }
 
         &::before {
           content: "";

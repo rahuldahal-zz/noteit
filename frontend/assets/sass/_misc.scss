@@ -50,6 +50,14 @@
     overflow-y: scroll;
     background: var(--white);
   }
+
+  &--profile--wide {
+    position: absolute;
+    z-index: 11;
+    background: unset;
+    right: 0;
+    width: 500px;
+  }
 }
 
 .flashMessage {

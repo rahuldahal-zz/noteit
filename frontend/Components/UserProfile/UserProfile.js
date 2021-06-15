@@ -9,7 +9,7 @@ import TextWithIcon from "@components/TextWithIcon";
 import getIconPaths from "@utils/iconDetails";
 import Button from "@components/Buttons/Button";
 
-export default function UserProfile() {
+export default function UserProfile({ isScreenWide }) {
   const { user } = useAuth();
 
   function NameAndPicture() {
@@ -29,7 +29,7 @@ export default function UserProfile() {
         {<Icon className="datum__icon" /> || <small>ICOn here</small>}
         <span className="datum__content">
           <strong className="datum__title">{name}</strong>
-          <em className="datum__value">{value}</em>
+          <small className="datum__value">{value}</small>
         </span>
       </div>
     );
@@ -39,7 +39,7 @@ export default function UserProfile() {
     return (
       <div className="profile__status">
         <p>
-          <small>About</small>
+          <strong>About</strong>
         </p>
         <div className="profile__data">
           <Datum
@@ -57,7 +57,7 @@ export default function UserProfile() {
     return (
       <div className="profile__subscription">
         <p>
-          <small>Subscription</small>
+          <strong>Subscription</strong>
         </p>
         <div className="profile__data">
           <Datum Icon={Choice} name="Type" value="basic" />
@@ -67,7 +67,7 @@ export default function UserProfile() {
             value={`${user.faculty.toUpperCase()} ${user.semester}`}
           />
         </div>
-        <Button type="button" className="btn--large">
+        <Button type="button">
           <TextWithIcon
             textContent="Upgrade"
             pathData={getIconPaths("ascending")}
@@ -84,7 +84,7 @@ export default function UserProfile() {
         <NameAndPicture />
         <Status />
         <Subscription />
-        <LogoutButton className="btn--large profile__logout" />
+        <LogoutButton className="profile__logout" />
       </div>
     </div>
   );
