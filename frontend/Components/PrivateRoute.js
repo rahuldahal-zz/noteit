@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthProvider";
 import { Route, withRouter } from "react-router";
+import Loader from "./Loader";
 
 export default withRouter(
   ({ history, condition, match, component: Component, ...rest }) => {
@@ -91,10 +92,6 @@ export default withRouter(
       return <Route {...rest} render={(props) => <Component {...props} />} />;
     }
 
-    return isLoading ? (
-      <h3>Loading private route</h3>
-    ) : (
-      <RenderRouteOrRedirect />
-    );
+    return isLoading ? <Loader /> : <RenderRouteOrRedirect />;
   }
 );
