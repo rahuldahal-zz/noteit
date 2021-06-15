@@ -78,9 +78,7 @@ function App() {
           <Team />
         </Route>
         <Route exact path="/pwa">
-          <NoteProvider>
-            <PWA />
-          </NoteProvider>
+          <PWA />
         </Route>
         <PrivateRoute
           exact
