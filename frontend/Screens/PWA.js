@@ -12,7 +12,7 @@ export default function PWA() {
           An idea that focuses on the students and their problems, giving them
           the platform to learn in the best possible way.
         </p>
-        <LoginButton />
+        <LoginButton className="btn--brand" />
         <hr />
         <Testimonial className="pwa__testimonials" />
       </div>
