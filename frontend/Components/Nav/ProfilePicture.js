@@ -34,7 +34,7 @@ export default function ProfilePicture() {
       <Modal
         shouldOpen={showUserProfile}
         classToToggle={{
-          modal: `${isScreenWide ? "modal--profile--wide" : "modal--profile"}`,
+          modal: `${isScreenWide ? "modal--wide" : "modal--profile"}`,
           child: "profile--active",
         }}
         setStateRef={setShowUserProfile}
