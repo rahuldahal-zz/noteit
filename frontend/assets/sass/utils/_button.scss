@@ -26,12 +26,14 @@ button,
     opacity: 0;
   }
 
-  &:hover {
-    transform: translateY(-3px);
-    transform-origin: bottom;
+  @include media.widerThan768 {
+    &:hover {
+      transform: translateY(-3px);
+      transform-origin: bottom;
 
-    &::before {
-      opacity: 1;
+      &::before {
+        opacity: 1;
+      }
     }
   }
 
@@ -71,7 +73,7 @@ button,
 
   &--loading {
     svg {
-      width: 80%;
+      height: 100%;
     }
   }
 }
