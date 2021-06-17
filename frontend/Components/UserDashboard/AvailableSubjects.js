@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "@components/Modal";
 import Units from "./Units";
 import isScreenLargerThan from "@utils/screenSize";
+import Button from "@components/Buttons/Button";
 
 export default function AvailableSubjects({ notes }) {
   const [subjects] = useState(Object.keys(notes));
@@ -29,14 +30,13 @@ export default function AvailableSubjects({ notes }) {
       <section className="home__availableSubjects flex">
         <h6>Available Subjects</h6>
         {subjects.map((subject, index) => (
-          <button
-            type="button"
+          <Button
             key={index}
-            className="home__subject"
+            className="btn home__subject"
             onClick={() => handleClick(subject)}
           >
             {subject}
-          </button>
+          </Button>
         ))}
       </section>
       <Modal
