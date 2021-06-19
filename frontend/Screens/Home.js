@@ -80,7 +80,7 @@ export default function Home() {
           >
             <TextWithIcon
               textContent="Available"
-              pathData={getIconPaths("ascending")}
+              pathData={getIconPaths("collection")}
             />
           </Button>
           <Button
@@ -94,7 +94,7 @@ export default function Home() {
           >
             <TextWithIcon
               textContent="Saved"
-              pathData={getIconPaths("ascending")}
+              pathData={getIconPaths("bookmark")}
             />
           </Button>
         </BottomNav>
