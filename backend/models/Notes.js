@@ -135,4 +135,35 @@ Notes.prototype.findRequestedNote = function findRequestedNote(_id) {
   });
 };
 
+Notes.prototype.searchNotes = function searchNotes(searchTerm) {
+  return new Promise((resolve, reject) => {
+    const aggregationArray = [
+      {
+        $search: {
+          text: {
+            query: searchTerm,
+            path: "note",
+          },
+        },
+      },
+      {
+        $project: {
+          url: 1,
+          title: 1,
+          unit: 1,
+          score: {
+            $meta: "searchScore",
+          },
+        },
+      },
+    ];
+
+    notesCollection
+      .aggregate(aggregationArray)
+      .toArray()
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+};
+
 module.exports = { Notes, setCollection };
