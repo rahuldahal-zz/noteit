@@ -39,6 +39,7 @@
   }
 
   &--search {
+    position: fixed;
     z-index: 11;
     background: unset;
     height: 100%;

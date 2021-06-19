@@ -43,6 +43,7 @@ export default function SearchNote() {
       <input
         type="text"
         name="searchTerm"
+        placeholder="Title of the Unit..."
         onChange={(e) => handleOnChange(e)}
       />
     </form>
