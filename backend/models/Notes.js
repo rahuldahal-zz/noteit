@@ -151,6 +151,7 @@ Notes.prototype.searchNotes = function searchNotes(searchTerm) {
           url: 1,
           title: 1,
           unit: 1,
+          subject: 1,
           score: {
             $meta: "searchScore",
           },
