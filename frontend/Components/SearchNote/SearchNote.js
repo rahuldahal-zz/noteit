@@ -1,27 +1,21 @@
-import { useNote } from "@contexts/NoteProvider";
 import React, { useEffect, useState } from "react";
+import useFetch from "@hooks/useFetch";
+import { Link } from "react-router-dom";
 
 export default function SearchNote() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [availableNotes, setAvailableNotes] = useState([]);
-  const noteContext = useNote();
+  const [isLoading, setIsLoading] = useState(true);
+  const [startFetching, status, data] = useFetch();
 
-  useEffect(() => {
-    if (!noteContext.isLoading) {
-      setAvailableNotes(noteContext);
+  function sendSearchQuery() {
+    try {
+      startFetching({
+        url: "/users/notes/search",
+        params: { searchTerm },
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }, [noteContext]);
-
-  function filterData() {
-    const notes = Object.values(availableNotes);
-    const filtered = [];
-
-    notes.forEach((note) => {
-      const matches = note.filter((unit) => unit.title.includes(searchTerm));
-      filtered.push(...matches);
-    });
-
-    console.log(filtered);
   }
 
   function handleOnChange(e) {
@@ -34,18 +28,47 @@ export default function SearchNote() {
 
   useEffect(() => {
     if (searchTerm !== "") {
-      filterData();
+      sendSearchQuery();
     }
   }, [searchTerm]);
 
+  useEffect(() => {
+    if (data !== null) {
+      setIsLoading(false);
+    }
+  }, [data]);
+
+  function SearchResults() {
+    if (data.length === 0) {
+      return <h3>No results found!</h3>;
+    }
+    return (
+      <div className="search__results">
+        {data.map((unit) => {
+          const { unit: number, title, subject, url, _id } = unit;
+          return (
+            <Link to={url} className="result" key={_id}>
+              <h5 className="result__title">{title}</h5>
+              <h6 className="result__subject">
+                Unit {number} | {subject}
+              </h6>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
-    <form className="search">
+    <div className="search">
       <input
+        className="search__field"
         type="text"
         name="searchTerm"
-        placeholder="Title of the Unit..."
+        placeholder="Type any keywords..."
         onChange={(e) => handleOnChange(e)}
       />
-    </form>
+      {isLoading ? <h3>Loading...</h3> : <SearchResults />}
+    </div>
   );
 }
