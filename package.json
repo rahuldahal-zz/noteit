@@ -4,7 +4,7 @@
   "description": "A content heavy website, providing notes for Tribhuvan University students",
   "main": "main.js",
   "scripts": {
-    "backend": "cross-env NODE_ENV=development concurrently \"mongod\" \"nodemon backend/init  --ignore node_modules/\"",
+    "backend": "cross-env NODE_ENV=development nodemon backend/init  --ignore node_modules/",
     "frontend": "webpack serve",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "build": "webpack",
