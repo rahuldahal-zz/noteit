@@ -9,7 +9,7 @@ export default function useFetch() {
   const { accessToken, refreshToken } = useAuth();
 
   async function fetchWrapper() {
-    let { url, options = {} } = fetchArgs;
+    let { url, params, options = {} } = fetchArgs;
     options = {
       ...options,
       headers: {
@@ -18,9 +18,14 @@ export default function useFetch() {
       },
     };
 
+    const formattedParams = new URLSearchParams({
+      ...params,
+      refreshToken,
+    }).toString();
+
     try {
       setFetchStatus("fetching");
-      const res = await fetch(`${url}/?refreshToken=${refreshToken}`, options);
+      const res = await fetch(`${url}/?${formattedParams}`, options);
       setFetchStatus(res.status);
       const clonedResponse = res.clone();
       if (res.status === 401) {
