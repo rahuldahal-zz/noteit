@@ -73,7 +73,10 @@ export default function Modal({
     return createPortal(children, modalRoot);
   }
 
-  if (!shouldOpen || modalState === "closed") return null;
+  if (!shouldOpen || modalState === "closed") {
+    modalRoot.classList.remove(modalClass);
+    return null;
+  }
 
   return createPortal(children, modalRoot);
 }
