@@ -46,4 +46,9 @@ if (process.env.NODE_ENV === "production") {
   app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 }
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).sendFile(path.resolve(__dirname, "./500.html"));
+});
+
 module.exports = app;
