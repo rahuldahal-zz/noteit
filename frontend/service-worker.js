@@ -1,5 +1,5 @@
 const CACHE_NAMES = {
-  static: "static-v0.6",
+  static: "static-v0.7",
   general: "general-v0.3",
 };
 const STATIC_ASSETS = [
