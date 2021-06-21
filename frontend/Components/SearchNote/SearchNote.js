@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "@hooks/useFetch";
-import { Link } from "react-router-dom";
+import Results from "./Results";
 
 export default function SearchNote() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,27 +38,6 @@ export default function SearchNote() {
     }
   }, [data]);
 
-  function SearchResults() {
-    if (data.length === 0) {
-      return <h3>No results found!</h3>;
-    }
-    return (
-      <div className="search__results">
-        {data.map((unit) => {
-          const { unit: number, title, subject, url, _id } = unit;
-          return (
-            <Link to={url} className="result" key={_id}>
-              <h5 className="result__title">{title}</h5>
-              <h6 className="result__subject">
-                Unit {number} | {subject}
-              </h6>
-            </Link>
-          );
-        })}
-      </div>
-    );
-  }
-
   return (
     <div className="search">
       <input
@@ -68,7 +47,7 @@ export default function SearchNote() {
         placeholder="Type any keywords..."
         onChange={(e) => handleOnChange(e)}
       />
-      {isLoading ? <h3>Loading...</h3> : <SearchResults />}
+      {isLoading ? <h3>Loading...</h3> : <Results data={data} />}
     </div>
   );
 }
